@@ -60,6 +60,8 @@ class Google_Maps_Builder_Admin {
 		//Custom Meta Fields
 		add_action( 'cmb2_render_google_geocoder', array( $this, 'cmb2_render_google_geocoder' ), 10, 2 );
 		add_action( 'cmb2_render_google_maps_preview', array( $this, 'cmb2_render_google_maps_preview' ), 10, 2 );
+//		add_action( 'cmb2_render_destination_point', array( $this, 'cmb2_render_destination_point' ), 10, 5 );
+//		add_action( 'cmb2_sanitize_destination_point', array( $this, 'cmb2_sanitize_destination_point' ), 10, 5 );
 		add_action( 'cmb2_render_search_options', array( $this, 'cmb2_render_search_options' ), 10, 2 );
 		add_action( 'cmb2_render_width_height', array( $this, 'cmb2_render_width_height' ), 10, 2 );
 		add_action( 'cmb2_render_lat_lng', array( $this, 'cmb2_render_lat_lng' ), 10, 2 );
@@ -236,8 +238,40 @@ class Google_Maps_Builder_Admin {
 			'type' => 'textarea_code',
 		) );
 
-		// SEARCH OPTIONS
+		// Directions
+		$directions_box = cmb2_get_metabox( array(
+			'id'           => 'google_maps_directions',
+			'title'        => __( 'Add Directions', $this->plugin_slug ),
+			'object_types' => array( 'google_maps' ), // post type
+			'context'      => 'normal', //  'normal', 'advanced', or 'side'
+			'priority'     => 'low', //  'high', 'core', 'default' or 'low'
+			'show_names'   => true, // Show field names on the left
+		) );
 
+		$group_field_id = $directions_box->add_field( array(
+			'id'          => $prefix . 'directions_group',
+			'type'        => 'group',
+			'description' => __( 'Add sets of directions below.', $this->plugin_slug ),
+			'options'     => array(
+				'group_title'   => __( 'Directions: {#}', 'cmb' ),
+				'add_button'    => __( 'Add Directions', $this->plugin_slug ),
+				'remove_button' => __( 'Remove Directions', $this->plugin_slug ),
+				'sortable'      => true, // beta
+			),
+		) );
+		$directions_box->add_group_field( $group_field_id, array(
+			'name'       => __( 'Destinations', $this->plugin_slug ),
+			'id'         => 'point',
+			'type'       => 'destination',
+			'repeatable' => true,
+			'options'    => array(
+				'add_row_text'  => __( 'Add Destination', $this->plugin_slug ),
+				'remove_button' => __( 'Remove Destination', $this->plugin_slug ),
+				'sortable'      => true, // beta
+			),
+		) );
+
+		// SEARCH OPTIONS
 		$search_options = cmb2_get_metabox( array(
 			'id'           => 'google_maps_search_options',
 			'title'        => __( 'Google Places', $this->plugin_slug ),
@@ -488,7 +522,6 @@ class Google_Maps_Builder_Admin {
 		) );
 
 		// CONTROL OPTIONS
-
 		$control_options = cmb2_get_metabox( array(
 			'id'           => 'google_maps_control_options',
 			'title'        => __( 'Map Controls', $this->plugin_slug ),
@@ -577,6 +610,7 @@ class Google_Maps_Builder_Admin {
 				'true' => __( 'Standard', $this->plugin_slug ),
 			),
 		) );
+
 
 	}
 
@@ -704,6 +738,7 @@ class Google_Maps_Builder_Admin {
 		echo $output;
 
 	}
+
 
 	/**
 	 * Setup Custom CPT Columns

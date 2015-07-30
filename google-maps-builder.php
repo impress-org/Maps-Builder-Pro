@@ -233,6 +233,7 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 
 				//Admin
 				require_once GMB_PLUGIN_PATH . 'includes/admin/class-gmb-admin.php';
+				require_once GMB_PLUGIN_PATH . 'includes/admin/cmb2-field-directions.php';
 
 			}
 
