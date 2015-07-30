@@ -1709,24 +1709,68 @@ CMB2
 #poststuff .inner-sidebar .cmb-td.cmb-nested, #poststuff #side-sortables .cmb-td.cmb-nested {
   padding-left: 12px;
   padding-right: 12px; }
-#poststuff .inner-sidebar #gmb_markers_group_repeat .cmb-group-title, #poststuff #side-sortables #gmb_markers_group_repeat .cmb-group-title {
+#poststuff .inner-sidebar .cmb-repeatable-group .cmb-group-title, #poststuff #side-sortables .cmb-repeatable-group .cmb-group-title {
   margin: 0;
   padding: 6px 8px 6px 30px;
   font-weight: normal;
   cursor: pointer; }
-#poststuff .inner-sidebar #gmb_markers_group_repeat .cmb-field-list, #poststuff #side-sortables #gmb_markers_group_repeat .cmb-field-list {
+#poststuff .inner-sidebar .cmb-repeatable-group .cmb-field-list, #poststuff #side-sortables .cmb-repeatable-group .cmb-field-list {
   border-left: 1px solid #EEE;
   border-right: 1px solid #EEE; }
-#poststuff .inner-sidebar #gmb_markers_group_repeat .cmb-remove-row, #poststuff #side-sortables #gmb_markers_group_repeat .cmb-remove-row {
+#poststuff .inner-sidebar .cmb-repeatable-group .cmb-remove-row, #poststuff #side-sortables .cmb-repeatable-group .cmb-remove-row {
   margin: 0;
   padding: 0; }
-#poststuff .inner-sidebar #gmb_markers_group_repeat .cmb-remove-group-row, #poststuff #side-sortables #gmb_markers_group_repeat .cmb-remove-group-row {
+#poststuff .inner-sidebar .cmb-repeatable-group .cmb-remove-group-row, #poststuff #side-sortables .cmb-repeatable-group .cmb-remove-group-row {
   top: 4px; }
-#poststuff .inner-sidebar #gmb_markers_group_repeat .cmbhandle, #poststuff #side-sortables #gmb_markers_group_repeat .cmbhandle {
+#poststuff .inner-sidebar .cmb-repeatable-group .cmbhandle, #poststuff #side-sortables .cmb-repeatable-group .cmbhandle {
   right: 0;
   top: -2px; }
-#poststuff .inner-sidebar #gmb_markers_group_repeat .cmb-add-row, #poststuff #side-sortables #gmb_markers_group_repeat .cmb-add-row {
+#poststuff .inner-sidebar .cmb-repeatable-group .cmb-add-row, #poststuff #side-sortables .cmb-repeatable-group .cmb-add-row {
   margin: 15px 0 10px; }
+
+#gmb_directions_group_repeat .gmb-travel-mode {
+  width: 98%; }
+#gmb_directions_group_repeat .gmb-destination-fieldset {
+  background: url('../img/default-marker.png') no-repeat left center transparent;
+  padding-left: 25px; }
+#gmb_directions_group_repeat .cmb-type-destination .cmb-field-list {
+  border: none !important; }
+  #gmb_directions_group_repeat .cmb-type-destination .cmb-field-list .cmb-td {
+    padding: 0;
+    width: 100%; }
+#gmb_directions_group_repeat .cmb-type-destination label {
+  padding-right: 0; }
+#gmb_directions_group_repeat .cmb-type-destination .destination-longitude {
+  margin-right: 2%; }
+#gmb_directions_group_repeat .cmb-type-destination .gmb-directions-autocomplete {
+  width: 100%; }
+  #gmb_directions_group_repeat .cmb-type-destination .gmb-directions-autocomplete input {
+    width: 100%; }
+#gmb_directions_group_repeat .cmb-type-destination .destination-longitude, #gmb_directions_group_repeat .cmb-type-destination .destination-latitude {
+  width: 49%;
+  float: left; }
+  #gmb_directions_group_repeat .cmb-type-destination .destination-longitude input, #gmb_directions_group_repeat .cmb-type-destination .destination-latitude input {
+    padding: 3px;
+    font-size: 12px;
+    width: 100%; }
+#gmb_directions_group_repeat .cmb-type-destination .destination-place-id {
+  display: none; }
+#gmb_directions_group_repeat .cmb-type-destination .cmb-remove-field-row {
+  background: #333; }
+#gmb_directions_group_repeat .cmb-repeatable-grouping .button {
+  padding: 3px 5px;
+  height: auto;
+  font-size: 11px;
+  vertical-align: middle;
+  line-height: 1em;
+  margin: 2px 0 0;
+  top: 0 !important; }
+  #gmb_directions_group_repeat .cmb-repeatable-grouping .button.cmb-shift-rows {
+    margin-top: 0;
+    margin-right: 5px; }
+    #gmb_directions_group_repeat .cmb-repeatable-grouping .button.cmb-shift-rows span {
+      line-height: 11px;
+      height: auto; }
 
 #postbox-container-2 #cmb2-metabox-google_maps_markers .toggle-repeater-groups {
   float: right; }

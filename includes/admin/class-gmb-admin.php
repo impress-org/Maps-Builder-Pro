@@ -60,8 +60,8 @@ class Google_Maps_Builder_Admin {
 		//Custom Meta Fields
 		add_action( 'cmb2_render_google_geocoder', array( $this, 'cmb2_render_google_geocoder' ), 10, 2 );
 		add_action( 'cmb2_render_google_maps_preview', array( $this, 'cmb2_render_google_maps_preview' ), 10, 2 );
-//		add_action( 'cmb2_render_destination_point', array( $this, 'cmb2_render_destination_point' ), 10, 5 );
-//		add_action( 'cmb2_sanitize_destination_point', array( $this, 'cmb2_sanitize_destination_point' ), 10, 5 );
+		//		add_action( 'cmb2_render_destination_point', array( $this, 'cmb2_render_destination_point' ), 10, 5 );
+		//		add_action( 'cmb2_sanitize_destination_point', array( $this, 'cmb2_sanitize_destination_point' ), 10, 5 );
 		add_action( 'cmb2_render_search_options', array( $this, 'cmb2_render_search_options' ), 10, 2 );
 		add_action( 'cmb2_render_width_height', array( $this, 'cmb2_render_width_height' ), 10, 2 );
 		add_action( 'cmb2_render_lat_lng', array( $this, 'cmb2_render_lat_lng' ), 10, 2 );
@@ -257,6 +257,20 @@ class Google_Maps_Builder_Admin {
 				'add_button'    => __( 'Add Directions', $this->plugin_slug ),
 				'remove_button' => __( 'Remove Directions', $this->plugin_slug ),
 				'sortable'      => true, // beta
+			),
+		) );
+		$directions_box->add_group_field( $group_field_id, array(
+			'name'       => __( 'Travel Mode', $this->plugin_slug ),
+			'id'         => 'travel_mode',
+			'type'       => 'select',
+			'attributes' => array(
+				'class' => 'gmb-travel-mode',
+			),
+			'options'    => array(
+				'DRIVING'   => __( 'Driving', $this->plugin_slug ),
+				'WALKING'   => __( 'Walking', $this->plugin_slug ),
+				'BICYCLING' => __( 'Bicycling', $this->plugin_slug ),
+				'TRANSIT'   => __( 'Transit', $this->plugin_slug ),
 			),
 		) );
 		$directions_box->add_group_field( $group_field_id, array(

@@ -27,8 +27,8 @@ function gmb_cmb2_render_destination_field_callback( $field, $value, $object_id,
 	) );
 
 	?>
-	<div class="gmb-destination-fieldset">
-		<div>
+	<div class="gmb-destination-fieldset clear">
+		<div class="destination-autocomplete">
 			<?php echo $field_type_object->input( array(
 				'class' => 'gmb-directions-autocomplete',
 				'name'  => $field_type_object->_name( '[destination]' ),
@@ -36,28 +36,33 @@ function gmb_cmb2_render_destination_field_callback( $field, $value, $object_id,
 				'value' => $value['destination'],
 			) ); ?>
 		</div>
-		<div>
+		<div class="destination-longitude">
 			<?php echo $field_type_object->input( array(
-				'class' => 'gmb-directions-longitude',
-				'name'  => $field_type_object->_name( '[longitude]' ),
-				'id'    => $field_type_object->_id( '_longitude' ),
-				'value' => $value['longitude'],
+				'class'    => 'gmb-directions-longitude',
+				'name'     => $field_type_object->_name( '[longitude]' ),
+				'id'       => $field_type_object->_id( '_longitude' ),
+				'value'    => $value['longitude'],
+				'readonly' => 'readonly',
+				'placeholder' => __('Longitude', Google_Maps_Builder()->get_plugin_slug()),
 			) ); ?>
 		</div>
-		<div>
+		<div class="destination-latitude">
 			<?php echo $field_type_object->input( array(
-				'class' => 'gmb-directions-latitude',
-				'name'  => $field_type_object->_name( '[latitude]' ),
-				'id'    => $field_type_object->_id( '_latitude' ),
-				'value' => $value['latitude'],
+				'class'    => 'gmb-directions-latitude',
+				'name'     => $field_type_object->_name( '[latitude]' ),
+				'id'       => $field_type_object->_id( '_latitude' ),
+				'value'    => $value['latitude'],
+				'readonly' => 'readonly',
+				'placeholder' => __('Latitude', Google_Maps_Builder()->get_plugin_slug()),
 			) ); ?>
 		</div>
-		<div>
+		<div class="destination-place-id">
 			<?php echo $field_type_object->input( array(
-				'class' => 'gmb-directions-place_id',
-				'name'  => $field_type_object->_name( '[place_id]' ),
-				'id'    => $field_type_object->_id( '_place_id' ),
-				'value' => $value['place_id'],
+				'class'    => 'gmb-directions-place_id',
+				'name'     => $field_type_object->_name( '[place_id]' ),
+				'id'       => $field_type_object->_id( '_place_id' ),
+				'value'    => $value['place_id'],
+				'readonly' => 'readonly',
 			) ); ?>
 		</div>
 	</div>
