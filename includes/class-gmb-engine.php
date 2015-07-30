@@ -47,7 +47,7 @@ class Google_Maps_Builder_Engine {
 
 		global $post;
 
-		if ( is_main_query() && is_singular('google_maps') || is_post_type_archive('google_maps') ) {
+		if ( is_main_query() && is_singular( 'google_maps' ) || is_post_type_archive( 'google_maps' ) ) {
 
 			$shortcode = '[google_maps ';
 			$shortcode .= 'id="' . $post->ID . '"';
@@ -112,6 +112,11 @@ class Google_Maps_Builder_Engine {
 		$map_marker_array   = array();
 		$markers_repeatable = isset( $all_meta['gmb_markers_group'][0] ) ? maybe_unserialize( $all_meta['gmb_markers_group'][0] ) : '';
 
+		//Put destination into an array for JS usage
+		$destination_markers = array();
+		$destination_markers = isset( $all_meta['gmb_directions_group'][0] ) ? maybe_unserialize( $all_meta['gmb_directions_group'][0] ) : '';
+		$text_directions     = isset( $all_meta['gmb_text_directions'][0] ) ? maybe_unserialize( $all_meta['gmb_text_directions'][0] ) : 'none';
+
 		if ( is_array( $markers_repeatable ) ) {
 			foreach ( $markers_repeatable as $marker ) {
 				array_push( $map_marker_array, $marker );
@@ -123,8 +128,8 @@ class Google_Maps_Builder_Engine {
 		//@see: http://benjaminrojas.net/using-wp_localize_script-dynamically/
 		$localized_data = apply_filters( 'gmb_localized_data', array(
 			$post->ID => array(
-				'id'               => $atts['id'],
-				'map_params'       => array(
+				'id'                  => $atts['id'],
+				'map_params'          => array(
 					'title'          => $post->post_title,
 					'width'          => $visual_info['width'],
 					'height'         => $visual_info['height'],
@@ -133,7 +138,7 @@ class Google_Maps_Builder_Engine {
 					'zoom'           => ! empty( $all_meta['gmb_zoom'][0] ) ? $all_meta['gmb_zoom'][0] : '15',
 					'default_marker' => apply_filters( 'gmb_default_marker', GMB_PLUGIN_URL . 'assets/img/default-marker.png' ),
 				),
-				'map_controls'     => array(
+				'map_controls'        => array(
 					'zoom_control'      => ! empty( $all_meta['gmb_zoom_control'][0] ) ? strtoupper( $all_meta['gmb_zoom_control'][0] ) : 'STANDARD',
 					'pan_control'       => ! empty( $all_meta['gmb_pan'][0] ) ? $all_meta['gmb_pan'][0] : 'none',
 					'map_type_control'  => ! empty( $all_meta['gmb_map_type_control'][0] ) ? $all_meta['gmb_map_type_control'][0] : 'none',
@@ -142,18 +147,20 @@ class Google_Maps_Builder_Engine {
 					'wheel_zoom'        => ! empty( $all_meta['gmb_wheel_zoom'][0] ) ? $all_meta['gmb_wheel_zoom'][0] : 'none',
 					'street_view'       => ! empty( $all_meta['gmb_street_view'][0] ) ? $all_meta['gmb_street_view'][0] : 'none',
 				),
-				'map_theme'        => array(
+				'map_theme'           => array(
 					'map_type'       => ! empty( $all_meta['gmb_type'][0] ) ? $all_meta['gmb_type'][0] : 'RoadMap',
 					'map_theme_json' => ! empty( $all_meta['gmb_theme_json'][0] ) ? $all_meta['gmb_theme_json'][0] : 'none',
 
 				),
-				'map_markers'      => $map_marker_array,
-				'places_api'       => array(
+				'map_markers'         => $map_marker_array,
+				'destination_markers' => $destination_markers,
+				'text_directions'     => $text_directions,
+				'places_api'          => array(
 					'show_places'   => ! empty( $all_meta['gmb_show_places'][0] ) ? $all_meta['gmb_show_places'][0] : 'no',
 					'search_radius' => ! empty( $all_meta['gmb_search_radius'][0] ) ? $all_meta['gmb_search_radius'][0] : '3000',
 					'search_places' => ! empty( $all_meta['gmb_places_search_multicheckbox'][0] ) ? maybe_unserialize( $all_meta['gmb_places_search_multicheckbox'][0] ) : '',
 				),
-				'map_markers_icon' => ! empty( $all_meta['gmb_map_marker'] ) ? $all_meta['gmb_map_marker'][0] : 'none',
+				'map_markers_icon'    => ! empty( $all_meta['gmb_map_marker'] ) ? $all_meta['gmb_map_marker'][0] : 'none',
 			)
 		) );
 

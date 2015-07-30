@@ -96,6 +96,10 @@ var gmb_data;
 				return;
 			}
 
+			//Add new row
+
+			//$( element ).parents( '.cmb-type-destination' ).find( '.cmb-add-row-button' ).trigger( 'click' );
+
 			calc_routes();
 
 		} );
@@ -129,9 +133,6 @@ var gmb_data;
 			var end_lat = repeatable_row.last().find( '.gmb-directions-latitude' ).val();
 			var end_lng = repeatable_row.last().find( '.gmb-directions-longitude' ).val();
 			var travel_mode = $( this ).find( '.gmb-travel-mode' ).val();
-
-			console.log( travel_mode );
-
 			var waypts = [];
 
 			repeatable_row.not( ':first' ).not( ':last' ).each( function ( index, value ) {
@@ -158,7 +159,7 @@ var gmb_data;
 
 				if ( status == google.maps.DirectionsStatus.OK ) {
 
-					directionsDisplay[index].setOptions( {preserveViewport: true} );
+					//directionsDisplay[index].setOptions( {preserveViewport: true} );
 					directionsDisplay[index].setDirections( response );
 
 					var route = response.routes[0];

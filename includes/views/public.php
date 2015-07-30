@@ -14,4 +14,6 @@
 
 	<div id="google-maps-builder-<?php echo $atts['id']; ?>" class="google-maps-builder" <?php echo ! empty( $atts['id'] ) ? ' data-map-id="' . $atts['id'] . '"' : '">Error: NO MAP ID'; ?> style="width:<?php echo $visual_info['width'] . $visual_info['map_width_unit']; ?>; height:<?php echo $visual_info['height']; ?>px"></div>
 
+	<div id="directions-panel-<?php echo $atts['id']; ?>" class="gmb-directions-panel"></div>
+
 </div>

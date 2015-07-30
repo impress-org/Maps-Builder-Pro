@@ -244,10 +244,9 @@ class Google_Maps_Builder_Admin {
 			'title'        => __( 'Add Directions', $this->plugin_slug ),
 			'object_types' => array( 'google_maps' ), // post type
 			'context'      => 'normal', //  'normal', 'advanced', or 'side'
-			'priority'     => 'low', //  'high', 'core', 'default' or 'low'
+			'priority'     => 'core', //  'high', 'core', 'default' or 'low'
 			'show_names'   => true, // Show field names on the left
 		) );
-
 		$group_field_id = $directions_box->add_field( array(
 			'id'          => $prefix . 'directions_group',
 			'type'        => 'group',
@@ -284,6 +283,20 @@ class Google_Maps_Builder_Admin {
 				'sortable'      => true, // beta
 			),
 		) );
+
+		$directions_box->add_field(
+			array(
+				'name'    => __( 'Directions Display', $this->plugin_slug ),
+				'desc'    => __( 'How would you like to display the text directions.', $this->plugin_slug ),
+				'id'      => $prefix . 'text_directions',
+				'type'    => 'select',
+				'options' => array(
+					'none'    => __( 'No text directions', 'cmb' ),
+					'overlay' => __( 'Display in overlay panel', 'cmb' ),
+					'below'   => __( 'Display below map', 'cmb' ),
+				),
+			)
+		);
 
 		// SEARCH OPTIONS
 		$search_options = cmb2_get_metabox( array(

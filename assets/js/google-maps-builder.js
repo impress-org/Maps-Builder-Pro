@@ -10,6 +10,7 @@ var gmb_data;
 	var map;
 	var places_service;
 	var place;
+	var directionsDisplay = [];
 	var search_markers = [];
 
 	/*
@@ -100,6 +101,7 @@ var gmb_data;
 		set_map_options( map, map_data );
 		set_map_theme( map, map_data );
 		set_map_markers( map, map_data, info_window );
+		set_map_directions( map, map_data );
 
 		//Display places?
 		if ( map_data.places_api.show_places === 'yes' ) {
@@ -478,5 +480,73 @@ var gmb_data;
 
 	}
 
+
+	/**
+	 * Set Map Directions
+	 *
+	 * @param map
+	 * @param map_data
+	 */
+	function set_map_directions( map, map_data ) {
+
+		//Setup destinations
+		$( map_data.destination_markers ).each( function ( index, value ) {
+
+			console.log( map_data );
+
+			var directionsService = new google.maps.DirectionsService();
+			var directionsDisplay = new google.maps.DirectionsRenderer();
+			directionsDisplay.setMap( map );
+			if ( map_data.text_directions !== 'none' ) {
+				$( '#directions-panel-' + map_data.id ).addClass( 'panel-' + map_data.text_directions );
+				directionsDisplay.setPanel( $( '#directions-panel-' + map_data.id ).get( 0 ) );
+
+			}
+
+
+			//Next loop through the groups within
+			var repeatable_row = $( this ).find( '.cmb-repeat-row' );
+			var start_lat = value.point[0].latitude;
+			var start_lng = value.point[0].longitude;
+
+			var end_lat = value.point[value.point.length - 1].latitude;
+			var end_lng = value.point[value.point.length - 1].longitude;
+
+			var travel_mode = (value.travel_mode.length > 0) ? value.travel_mode : 'DRIVING';
+			var waypts = [];
+
+			repeatable_row.not( ':first' ).not( ':last' ).each( function ( index, value ) {
+
+				var waypoint_lat = $( this ).find( '.gmb-directions-latitude' ).val();
+				var waypoint_lng = $( this ).find( '.gmb-directions-longitude' ).val();
+
+				waypts.push( {
+					location: waypoint_lat + ',' + waypoint_lng,
+					stopover: true
+				} );
+
+			} );
+
+			var request = {
+				origin           : start_lat + ',' + start_lng,
+				destination      : end_lat + ',' + end_lng,
+				waypoints        : waypts,
+				optimizeWaypoints: true,
+				travelMode       : google.maps.TravelMode[travel_mode]
+			};
+
+			directionsService.route( request, function ( response, status ) {
+
+				if ( status == google.maps.DirectionsStatus.OK ) {
+
+					//directionsDisplay[index].setOptions( {preserveViewport: true} );
+					directionsDisplay.setDirections( response );
+
+				}
+			} );
+		} );
+
+
+	}
 
 }( jQuery ));

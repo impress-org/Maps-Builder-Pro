@@ -125,9 +125,9 @@ gulp.task( 'watch', function () {
 	} );
 
 	//Add watching on Frontend SCSS-files
-	//gulp.watch( 'assets/scss/frontend/*.scss', function () {
-	//	gulp.start( 'frontend_styles' );
-	//} );
+	gulp.watch( 'assets/scss/frontend/*.scss', function () {
+		gulp.start( 'frontend_styles' );
+	} );
 
 	//Add watching on JS files
 	gulp.watch( source_paths.scripts, ['scripts'] );
