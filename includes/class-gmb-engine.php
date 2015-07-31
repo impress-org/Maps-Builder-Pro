@@ -155,6 +155,7 @@ class Google_Maps_Builder_Engine {
 				'map_markers'         => $map_marker_array,
 				'destination_markers' => $destination_markers,
 				'text_directions'     => $text_directions,
+				'layers'              => ! empty( $all_meta['gmb_layers'][0] ) ? maybe_unserialize($all_meta['gmb_layers'][0]) : '',
 				'places_api'          => array(
 					'show_places'   => ! empty( $all_meta['gmb_show_places'][0] ) ? $all_meta['gmb_show_places'][0] : 'no',
 					'search_radius' => ! empty( $all_meta['gmb_search_radius'][0] ) ? $all_meta['gmb_search_radius'][0] : '3000',

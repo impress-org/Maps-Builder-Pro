@@ -511,6 +511,19 @@ class Google_Maps_Builder_Admin {
 				)
 			)
 		) );
+		$display_options->add_field( array(
+			'name'              => 'Map Layers',
+			'desc'              => __( 'Layers provide additional information overlayed on the map.', $this->plugin_slug ),
+			'id'                => $prefix . 'layers',
+			'type'              => 'multicheck',
+			'select_all_button' => false,
+			'options'           => apply_filters( 'gmb_map_zoom_levels', array(
+					'traffic' => 'Traffic Layer',
+					'transit' => 'Transit Layer',
+					'bicycle' => 'Bicycle Layer',
+				)
+			)
+		) );
 
 		$display_options->add_field( array(
 			'name'    => 'Map Theme',

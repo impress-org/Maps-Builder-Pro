@@ -102,6 +102,7 @@ var gmb_data;
 		set_map_theme( map, map_data );
 		set_map_markers( map, map_data, info_window );
 		set_map_directions( map, map_data );
+		set_map_layers( map, map_data );
 
 		//Display places?
 		if ( map_data.places_api.show_places === 'yes' ) {
@@ -492,7 +493,10 @@ var gmb_data;
 		//Setup destinations
 		$( map_data.destination_markers ).each( function ( index, value ) {
 
-			console.log( map_data );
+			//If no points skip
+			if ( !map_data.destination_markers[0].point ) {
+				return;
+			}
 
 			var directionsService = new google.maps.DirectionsService();
 			var directionsDisplay = new google.maps.DirectionsRenderer();
@@ -547,6 +551,35 @@ var gmb_data;
 		} );
 
 
+	}
+
+	/**
+	 * Set Map Layers
+	 *
+	 * @param map
+	 * @param map_data
+	 */
+	function set_map_layers( map, map_data ) {
+
+		var trafficLayer = new google.maps.TrafficLayer();
+		var transitLayer = new google.maps.TransitLayer();
+		var bicycleLayer = new google.maps.BicyclingLayer();
+
+		$( map_data.layers ).each( function ( index, value ) {
+
+			switch ( value ) {
+
+				case 'traffic':
+					trafficLayer.setMap( map );
+					break;
+				case 'transit':
+					transitLayer.setMap( map );
+					break;
+				case 'bicycle':
+					bicycleLayer.setMap( map );
+					break;
+			}
+		} );
 	}
 
 }( jQuery ));
