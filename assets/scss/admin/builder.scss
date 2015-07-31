@@ -179,13 +179,6 @@
   display: table-row;
 }
 
-.snazzy-link {
-  font-size: 10px;
-  text-transform: uppercase;
-  font-style: normal;
-  display: inline-block;
-}
-
 .width_unit_label, .width_radio, .map-width, .map-height, .size-label {
   float: left !important;
 }
@@ -253,25 +246,24 @@
   cursor: default;
 
   p {
-    font-size: 12px;
-    margin: 0 0 7px;
-    color: #2C2C2C;
+	font-size: 12px;
+	margin: 0 0 7px;
+	color: #2C2C2C;
   }
   .place-title {
-    border: 1px solid #FFF;
-    font-family: Roboto, Arial, sans-serif;
-    font-size: 16px;
-    line-height: 21px;
-    font-weight: 700;
-    min-height: 21px;
-    white-space: normal;
-    padding-right: 20px;
+	border: 1px solid #FFF;
+	font-family: Roboto, Arial, sans-serif;
+	font-size: 16px;
+	line-height: 21px;
+	font-weight: 700;
+	min-height: 21px;
+	white-space: normal;
+	padding-right: 20px;
   }
   .place-description {
-   white-space: normal;
- }
+	white-space: normal;
+  }
 }
-
 
 .marker-confirm-place {
   margin: 0 8px 4px 0;
@@ -388,6 +380,14 @@ Display Options
 .lat-lng-update-btn {
   float: right;
   margin: 7px 0 0 !important;
+}
+
+.cmb2-id-gmb-theme-json {
+  display: none;
+}
+
+#cmb2-metabox-google_maps_options a.custom-snazzy-toggle {
+  margin-top: 6px;
 }
 
 /*-------------------------------------

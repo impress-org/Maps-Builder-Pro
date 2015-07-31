@@ -479,42 +479,6 @@ class Google_Maps_Builder_Admin {
 				'Terrain'   => __( 'Terrain', $this->plugin_slug )
 			),
 		) );
-
-		$display_options->add_field( array(
-			'name'    => 'Map Theme',
-			'desc'    => sprintf( __( 'Set optional preconfigured styles. <a href="%s" class="snazzy-link new-window"  target="_blank">Snazzy Maps</a>', $this->plugin_slug ), esc_url( 'http://snazzymaps.com' ) ),
-			'id'      => $prefix . 'theme',
-			'type'    => 'select',
-			'default' => 'none',
-			'options' => array(
-				'none' => __( 'None', $this->plugin_slug ),
-				'68'   => __( 'Aqua', $this->plugin_slug ),
-				'73'   => __( 'A Dark World', $this->plugin_slug ),
-				'28'   => __( 'Bluish', $this->plugin_slug ),
-				'80'   => __( 'Cool Grey', $this->plugin_slug ),
-				'77'   => __( 'Clean Cut', $this->plugin_slug ),
-				'36'   => __( 'Flat Green', $this->plugin_slug ),
-				'44'   => __( 'MapBox', $this->plugin_slug ),
-				'83'   => __( 'Muted Blue', $this->plugin_slug ),
-				'22'   => __( 'Old Timey', $this->plugin_slug ),
-				'1'    => __( 'Pale Dawn', $this->plugin_slug ),
-				'19'   => __( 'Paper', $this->plugin_slug ),
-				'37'   => __( 'Lunar Landscape', $this->plugin_slug ),
-				'75'   => __( 'Shade of Green', $this->plugin_slug ),
-				'27'   => __( 'Shift Worker', $this->plugin_slug ),
-				'15'   => __( 'Subtle Grayscale', $this->plugin_slug ),
-				'50'   => __( 'The Endless Atlas', $this->plugin_slug ),
-			)
-		) );
-
-		//		$display_options->add_field( array(
-		//			'name'    => __('Map Theme JSON', $this->plugin_slug),
-		//			'desc'    => 'Contains the map theme JSON',
-		//			'default' => 'none',
-		//			'id'      => $prefix . 'theme_json',
-		//			'type'    => 'textarea_code'
-		//		) );
-
 		$display_options->add_field( array(
 			'name'    => 'Zoom',
 			'desc'    => __( 'Adjust the map zoom (0-21)', $this->plugin_slug ),
@@ -547,6 +511,108 @@ class Google_Maps_Builder_Admin {
 				)
 			)
 		) );
+
+		$display_options->add_field( array(
+			'name'    => 'Map Theme',
+			'desc'    => sprintf( __( 'Set optional preconfigured <a href="%1s" class="snazzy-link new-window"  target="_blank">Snazzy Maps</a> styles above or use your own style.', $this->plugin_slug ), esc_url( 'http://snazzymaps.com' ) ) . '<a href="#" class="button button-small custom-snazzy-toggle">' . __( 'Set a Custom Snazzy Map', $this->plugin_slug ) . '</a>',
+			'id'      => $prefix . 'theme',
+			'type'    => 'select',
+			'default' => 'none',
+			'options' => apply_filters( 'gmb_snazzy_maps', array(
+				'none'   => __( 'None', $this->plugin_slug ),
+				'custom' => __( 'Custom', $this->plugin_slug ),
+				'68'     => __( 'Aqua', $this->plugin_slug ),
+				'73'     => __( 'A Dark World', $this->plugin_slug ),
+				'42'     => __( 'Apple Maps-esque', $this->plugin_slug ),
+				'35'     => __( 'Avocado World', $this->plugin_slug ),
+				'23'     => __( 'Bates Green', $this->plugin_slug ),
+				'43'     => __( 'Bentley', $this->plugin_slug ),
+				'74'     => __( 'Becomeadinosaur', $this->plugin_slug ),
+				'79'     => __( 'Black and White', $this->plugin_slug ),
+				'28'     => __( 'Bluish', $this->plugin_slug ),
+				'11'     => __( 'Blue', $this->plugin_slug ),
+				'60'     => __( 'Blue Gray', $this->plugin_slug ),
+				'61'     => __( 'Blue Essence', $this->plugin_slug ),
+				'25'     => __( 'Blue water', $this->plugin_slug ),
+				'67'     => __( 'Blueprint', $this->plugin_slug ),
+				'66'     => __( 'Blueprint (No Labels)', $this->plugin_slug ),
+				'17'     => __( 'Bright & Bubbly', $this->plugin_slug ),
+				'45'     => __( 'Candy Colours', $this->plugin_slug ),
+				'63'     => __( 'Caribbean Mountain', $this->plugin_slug ),
+				'77'     => __( 'Clean Cut', $this->plugin_slug ),
+				'30'     => __( 'Cobalt', $this->plugin_slug ),
+				'80'     => __( 'Cool Grey', $this->plugin_slug ),
+				'6'      => __( 'Countries', $this->plugin_slug ),
+				'9'      => __( 'Chilled', $this->plugin_slug ),
+				'32'     => __( 'Deep Green', $this->plugin_slug ),
+				'56'     => __( 'Esperanto', $this->plugin_slug ),
+				'36'     => __( 'Flat Green', $this->plugin_slug ),
+				'53'     => __( 'Flat Map', $this->plugin_slug ),
+				'82'     => __( 'Grass is Greener', $this->plugin_slug ),
+				'5'      => __( 'Greyscale', $this->plugin_slug ),
+				'20'     => __( 'Gowalla', $this->plugin_slug ),
+				'48'     => __( 'Hard edges', $this->plugin_slug ),
+				'76'     => __( 'HashtagNineNineNine', $this->plugin_slug ),
+				'21'     => __( 'Hopper', $this->plugin_slug ),
+				'69'     => __( 'Holiday', $this->plugin_slug ),
+				'46'     => __( 'Homage to Toner', $this->plugin_slug ),
+				'24'     => __( 'Hot Pink', $this->plugin_slug ),
+				'41'     => __( 'Hints of Gold', $this->plugin_slug ),
+				'81'     => __( 'Ilustracao', $this->plugin_slug ),
+				'7'      => __( 'Icy Blue', $this->plugin_slug ),
+				'33'     => __( 'Jane Iredale', $this->plugin_slug ),
+				'71'     => __( 'Jazzygreen', $this->plugin_slug ),
+				'65'     => __( 'Just places', $this->plugin_slug ),
+				'59'     => __( 'Light Green', $this->plugin_slug ),
+				'29'     => __( 'Light Monochrome', $this->plugin_slug ),
+				'37'     => __( 'Lunar Landscape', $this->plugin_slug ),
+				'44'     => __( 'MapBox', $this->plugin_slug ),
+				'2'      => __( 'Midnight Commander', $this->plugin_slug ),
+				'57'     => __( 'Military Flat', $this->plugin_slug ),
+				'10'     => __( 'Mixed', $this->plugin_slug ),
+				'83'     => __( 'Muted Blue', $this->plugin_slug ),
+				'47'     => __( 'Nature', $this->plugin_slug ),
+				'34'     => __( 'Neon World', $this->plugin_slug ),
+				'13'     => __( 'Neutral Blue', $this->plugin_slug ),
+				'62'     => __( 'Night vision', $this->plugin_slug ),
+				'64'     => __( 'Old Dry Mud', $this->plugin_slug ),
+				'22'     => __( 'Old Timey', $this->plugin_slug ),
+				'1'      => __( 'Pale Dawn', $this->plugin_slug ),
+				'39'     => __( 'Paper', $this->plugin_slug ),
+				'78'     => __( 'Pink & Blue', $this->plugin_slug ),
+				'3'      => __( 'Red Alert', $this->plugin_slug ),
+				'31'     => __( 'Red Hues', $this->plugin_slug ),
+				'18'     => __( 'Retro', $this->plugin_slug ),
+				'51'     => __( 'Roadtrip At Night', $this->plugin_slug ),
+				'54'     => __( 'RouteXL', $this->plugin_slug ),
+				'75'     => __( 'Shade of Green', $this->plugin_slug ),
+				'38'     => __( 'Shades of Grey', $this->plugin_slug ),
+				'27'     => __( 'Shift Worker', $this->plugin_slug ),
+				'58'     => __( 'Simple Labels', $this->plugin_slug ),
+				'52'     => __( 'Souldisco', $this->plugin_slug ),
+				'12'     => __( 'Snazzy Maps', $this->plugin_slug ),
+				'19'     => __( 'Subtle', $this->plugin_slug ),
+				'49'     => __( 'Subtle Green', $this->plugin_slug ),
+				'15'     => __( 'Subtle Grayscale', $this->plugin_slug ),
+				'55'     => __( 'Subtle Grayscale Map', $this->plugin_slug ),
+				'50'     => __( 'The Endless Atlas', $this->plugin_slug ),
+				'4'      => __( 'Tripitty', $this->plugin_slug ),
+				'72'     => __( 'Transport for London', $this->plugin_slug ),
+				'8'      => __( 'Turquoise Water', $this->plugin_slug ),
+				'16'     => __( 'Unimposed Topography', $this->plugin_slug ),
+				'70'     => __( 'Unsaturated Browns', $this->plugin_slug ),
+				'14'     => __( 'Vintage', $this->plugin_slug ),
+				'26'     => __( 'Vintage Blue', $this->plugin_slug ),
+				'40'     => __( 'Vitamin C', $this->plugin_slug ),
+			) )
+		) );
+		$display_options->add_field( array(
+			'name' => __( 'Custom Map Theme JSON', $this->plugin_slug ),
+			'desc' => __( 'Paste the Snazzy Map JSON code into the field above to set the theme.', $this->plugin_slug ),
+			'id'   => $prefix . 'theme_json',
+			'type' => 'textarea_code'
+		) );
+
 
 		// CONTROL OPTIONS
 		$control_options = cmb2_get_metabox( array(
@@ -718,7 +784,7 @@ class Google_Maps_Builder_Admin {
 	}
 
 	/**
-	 *  Custom Google Geocoder field
+	 * Custom Google Geocoder field
 	 * @since  1.0.0
 	 * @return array
 	 */
@@ -733,9 +799,6 @@ class Google_Maps_Builder_Admin {
 		echo '<div class="autocomplete-wrap"><input type="text" name="' . $field->args( 'id' ) . '[geocode]" id="' . $field->args( 'id' ) . '" value="" class="search-autocomplete" /><p class="autocomplete-description">' .
 		     sprintf( __( 'Enter the name of a place or an address above to create a map marker or %s', $this->plugin_slug ), '<a href="#" class="drop-marker button button-small">Drop a Marker</a>' ) .
 		     '</p></div>';
-
-		//'desc'    => sprintf( __( 'Set optional preconfigured styles. <a href="%s" class="snazzy-link new-window"  target="_blank">Snazzy Maps</a>', $this->plugin_slug ), esc_url( 'http://snazzymaps.com' ) ),
-
 
 		//Markers Modal
 		include( 'views/markers.php' );

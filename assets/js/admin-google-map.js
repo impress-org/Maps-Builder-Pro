@@ -329,12 +329,9 @@ var gmb_data;
 			map.setCenter( initial_location );
 		}
 
-
 		//Set various map view options
 		set_map_type( false );
-		if ( $( '#gmb_theme' ).val() !== 'none' ) {
-			set_map_theme( false );
-		}
+		set_map_theme( false );
 		set_street_view();
 		set_pan_control();
 		set_draggable();
@@ -342,7 +339,6 @@ var gmb_data;
 		set_mouse_wheel_scroll();
 		set_map_type_control();
 		set_map_zoom_control();
-
 
 		//Setup Autocomplete field if undefined
 		if ( typeof(autocomplete) == 'undefined' ) {
@@ -1544,7 +1540,6 @@ var gmb_data;
 	function set_map_type( reset ) {
 		if ( reset === true ) {
 			$( '#gmb_theme' ).val( 'none' );
-			$( '#gmb_theme_json' ).val( 'none' );
 		}
 
 		var map_type = $( '#gmb_type' ).val().toUpperCase();
@@ -1558,43 +1553,84 @@ var gmb_data;
 	 * Sets the Map Theme
 	 *
 	 * Uses Snazzy Maps JSON arrow to set the colors for the map
-	 *
 	 */
 	function set_map_theme( reset ) {
+
+		var preset_theme = $( '#gmb_theme' );
+		var map_theme_input_val = parseInt( preset_theme.val() );
+		var custom_theme_json = $( '#gmb_theme_json' );
+
 		if ( reset === true ) {
 			$( '#gmb_type' ).val( 'RoadMap' );
-			$( '#gmb_theme_json' ).val( 'none' );
 			$( '.cmb2-id-gmb-theme-json' ).hide();
 		}
-		//AJAX to get JSON data for Snazzy
-		$.getJSON( gmb_data.snazzy, function ( data ) {
 
-			var map_theme_input_val = parseInt( $( '#gmb_theme' ).val() );
-
-			if ( $( '#gmb_theme' ).val() === 'none' ) {
-				set_map_type();
-				$( '.cmb2-id-gmb-theme-json' ).hide();
-			} else {
-				$( '.cmb2-id-gmb-theme-json' ).show();
-			}
-
-			$.each( data, function ( index ) {
-
-				if ( data[index].id === map_theme_input_val ) {
-					map_theme_input_val = eval( data[index].json );
-					$( '#gmb_theme_json' ).val( data[index].json );
-				}
-
-			} );
-
-			map.setOptions( {
-				mapTypeId: google.maps.MapTypeId.ROADMAP,
-				styles   : map_theme_input_val
-			} );
+		$( '.custom-snazzy-toggle' ).on( 'click', function () {
+			preset_theme.val( 'custom' );
+			$( '.cmb2-id-gmb-theme-json' ).show();
+			custom_theme_json.focus();
+			set_custom_snazzy_map();
 		} );
 
+		//On Custom Map value change
+		custom_theme_json.on( 'change', function () {
+			set_custom_snazzy_map();
+		} );
+
+		//Snazzy maps set to none
+		if ( preset_theme.val() === 'none' ) {
+			set_map_type();
+			$( '.cmb2-id-gmb-theme-json' ).hide();
+		}
+		//Custom snazzy map
+		else if ( preset_theme.val() === 'custom' ) {
+			$( '.cmb2-id-gmb-theme-json' ).show();
+			custom_theme_json.focus();
+			set_custom_snazzy_map();
+		}
+		//Preconfigured snazzy map
+		else {
+
+			//AJAX to get JSON data for Snazzy
+			$.getJSON( gmb_data.snazzy, function ( data ) {
+
+				$.each( data, function ( index ) {
+
+					if ( data[index].id === map_theme_input_val ) {
+						map_theme_input_val = eval( data[index].json );
+					}
+
+				} );
+
+				map.setOptions( {
+					mapTypeId: google.maps.MapTypeId.ROADMAP,
+					styles   : map_theme_input_val
+				} );
+
+			} );
+
+		}
 	}
 
+	/**
+	 *
+	 */
+	function set_custom_snazzy_map() {
+
+		var custom_theme_json = $( '#gmb_theme_json' );
+
+		try {
+			var custom_theme_json_val = $.parseJSON( custom_theme_json.val() );
+			map.setOptions( {
+				mapTypeId: google.maps.MapTypeId.ROADMAP,
+				styles   : eval( custom_theme_json_val )
+			} );
+		}
+		catch ( err ) {
+			alert( 'Invalid JSON' );
+			custom_theme_json.val( '' ).focus();
+		}
+	}
 
 	/**
 	 * JS for Marker Icon Modal
