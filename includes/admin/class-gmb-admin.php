@@ -140,7 +140,7 @@ class Google_Maps_Builder_Admin {
 		// MARKER WITH AUTOCOMPLETE
 		$meta_boxes = cmb2_get_metabox( array(
 			'id'           => 'google_maps_metabox',
-			'title'        => __( 'Add Marker', $this->plugin_slug ),
+			'title'        => __( 'Add Markers', $this->plugin_slug ),
 			'object_types' => array( 'google_maps' ),
 			'context'      => 'normal',
 			'priority'     => 'high',
