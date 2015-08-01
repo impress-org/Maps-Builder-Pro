@@ -12,15 +12,6 @@
  CMB2 Interface
 --------------------------------------------*/
 
-/* Google Maps Marker Search */
-#cmb2-metabox-google_maps_metabox .cmb2-id-gmb-geocoder {
-  padding-bottom: 0;
-  td {
-	padding-bottom: 3px;
-  }
-
-}
-
 .cmb2-metabox-description {
   display: block;
   margin-top: 5px;
@@ -40,12 +31,53 @@
   }
 }
 
-#google-map-wrap {
-  position: relative;
+//Hide/Show some borders
+#cmb2-metabox-google_maps_search_options .cmb2-id-gmb-show-places {
+  border-bottom: none;
+  margin-bottom: 0;
 }
 
-.autocomplete-wrap {
-  background: url('../img/powered-by-google-on-white.png') no-repeat right 8px rgba(0, 0, 0, 0);
+#post-body-content #cmb2-metabox-google_maps_search_options .cmb2-id-gmb-search-radius {
+  border-top: 1px solid #e9e9e9;
+}
+
+/*-------------------------------------
+Autocomplete Metabox
+---------------------------------------*/
+#cmb2-metabox-google_maps_markers {
+  .search-autocomplete {
+	width: 78%;
+	margin-right: 10px;
+  }
+  .autocomplete-wrap {
+	p {
+	  font-style: italic;
+	  margin: 5px 0;
+	  color: #aaaaaa;
+	}
+  }
+
+  a.drop-marker {
+	font-style: normal;
+  }
+}
+
+/*-------------------------------------
+Map Markers
+---------------------------------------*/
+#google_maps_markers {
+
+  #cmb2-metabox-google_maps_markers {
+	.cmb-repeatable-grouping {
+	  padding-top: 0;
+	  border-bottom: 1px solid #e9e9e9 !important;
+	}
+  }
+
+  .cmb-add-row {
+	display: none;
+  }
+
 }
 
 #poststuff .postbox-container {
@@ -56,23 +88,19 @@
   .cmb-repeat-group-wrap .cmb-row:not(:last-of-type) {
 	margin-bottom: 10px;
   }
+
+  h2.cmb-group-name {
+	font-size: 14px;
+  }
 }
 
 #gmb_markers_group_repeat.cmb-remove-field-row {
   margin-bottom: 15px;
 }
 
-#cmb2-metabox-google_maps_markers {
-  .cmb-repeatable-grouping {
-	padding-top: 0;
-	border-bottom: 1px solid #e9e9e9 !important;
-	.cmb-remove-field-row {
-	  padding-bottom: 12px !important;
-	}
-  }
-}
-
-//Tables
+/*-------------------------------------
+Sidebar
+---------------------------------------*/
 #poststuff .inner-sidebar, #poststuff #side-sortables {
 
   .inside {
@@ -89,6 +117,10 @@
 	margin: 0;
 	padding: 0;
 	margin-bottom: 6px;
+
+	&:not(:last-of-type) {
+	  border-bottom: 0;
+	}
 
 	&:last-child {
 	  margin-bottom: 0;
@@ -115,8 +147,14 @@
 	}
   }
 
-  //Sidebar repeaters
-  .cmb-repeatable-group {
+  /*-------------------------------------
+  Sidebar Repeater
+  ---------------------------------------*/
+  h2.cmb-group-name {
+	padding: 6px 0 10px 0;
+	border-bottom: 1px solid #e9e9e9;
+  }
+  #gmb_markers_group_repeat {
 	.cmb-group-title {
 	  margin: 0;
 	  padding: 6px 8px 6px 30px;

@@ -138,52 +138,33 @@ class Google_Maps_Builder_Admin {
 		$default_options = $this->get_default_map_options();
 
 		// MARKER WITH AUTOCOMPLETE
-		$meta_boxes = cmb2_get_metabox( array(
-			'id'           => 'google_maps_metabox',
-			'title'        => __( 'Add Markers', $this->plugin_slug ),
-			'object_types' => array( 'google_maps' ),
-			'context'      => 'normal',
-			'priority'     => 'high',
-			'show_names'   => true,
-		) );
-
-		$meta_boxes->add_field( array(
-			'name' => 'Create Marker',
-			'id'   => $prefix . 'geocoder',
-			'type' => 'google_geocoder'
-		) );
-
-		// PREVIEW
-		$preview_box = cmb2_get_metabox( array(
-			'id'           => 'google_maps_preview_metabox',
-			'title'        => __( 'Google Map Preview', $this->plugin_slug ),
-			'object_types' => array( 'google_maps' ), // post type
-			'context'      => 'normal', //  'normal', 'advanced', or 'side'
-			'priority'     => 'high', //  'high', 'core', 'default' or 'low'
-			'show_names'   => false, // Show field names on the left
-		) );
-
-		$preview_box->add_field( array(
-			'name'    => __( 'Map Preview', $this->plugin_slug ),
-			'id'      => $prefix . 'preview',
-			'type'    => 'google_maps_preview',
-			'default' => '',
-		) );
-
+		//		$meta_boxes = cmb2_get_metabox( array(
+		//			'id'           => 'google_maps_metabox',
+		//			'title'        => __( 'Add Marker', $this->plugin_slug ),
+		//			'object_types' => array( 'google_maps' ),
+		//			'context'      => 'normal',
+		//			'priority'     => 'high',
+		//			'show_names'   => true,
+		//		) );
 		// MARKERS
 		$marker_box = cmb2_get_metabox( array(
 			'id'           => 'google_maps_markers',
 			'title'        => __( 'Map Markers', $this->plugin_slug ),
 			'object_types' => array( 'google_maps' ), // post type
 			'context'      => 'normal', //  'normal', 'advanced', or 'side'
-			'priority'     => 'low', //  'high', 'core', 'default' or 'low'
+			'priority'     => 'high', //  'high', 'core', 'default' or 'low'
 			'show_names'   => true, // Show field names on the left
 		) );
-
+		$marker_box->add_field( array(
+			'name' => 'Create Marker',
+			'id'   => $prefix . 'geocoder',
+			'type' => 'google_geocoder'
+		) );
 		$group_field_id = $marker_box->add_field( array(
+			'name'        => __( 'Existing Markers', $this->plugin_slug ),
 			'id'          => $prefix . 'markers_group',
 			'type'        => 'group',
-			'description' => __( 'Map marker data is contained within the repeatable fields below. You may add or update marker data here in bulk.', $this->plugin_slug ) . '<a href="#" class="button button-small toggle-repeater-groups">' . __( 'Toggle Marker Groups', $this->plugin_slug ) . '</a>',
+			'description' => __( 'Map marker data is contained within the repeatable fields below. You may add or update marker data here or directly on the map.', $this->plugin_slug ) . '<a href="#" class="button button-small toggle-repeater-groups">' . __( 'Toggle Marker Groups', $this->plugin_slug ) . '</a>',
 			'options'     => array(
 				'group_title'   => __( 'Marker: {#}', 'cmb' ),
 				'add_button'    => __( 'Add Another Marker', $this->plugin_slug ),

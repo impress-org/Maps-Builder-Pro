@@ -1,4 +1,4 @@
-# WordPress Maps Builder
+# Maps Builder - Google Maps WordPress Plugin 
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/WordImpress/google-maps-builder/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/WordImpress/google-maps-builder/?branch=master) [![License](https://img.shields.io/badge/license-GPL--2.0%2B-green.svg)](https://github.com/WordImpress/Give/blob/master/license.txt)
 
@@ -16,7 +16,7 @@ Maps Builder isn't just another Google Maps plugin. It's built from the ground u
 * **Intuitive UI** that seamlessly integrates with WordPress' - no eye sores or outdated interfaces here
 * **Small Footprint** - GMB does not create any new database tables, not even one
 * **Optimized** - All scripts and styles are optimized and packaged with Grunt
-* **No notices or warnings** We developed this plugins in debug mode. This results in high quality plugins with no errors, warnings or notices.
+* **Supported and Developed** We developed this plugin with high quality code, that's tested and supported. Find a bug or have an issue? Let us know. We'll fix it.
 
 ## Marker Creation
 
