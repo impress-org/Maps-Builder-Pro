@@ -1386,8 +1386,7 @@ var gmb_data;
 
 		//Places Metabox
 		if ( show_places.prop( 'checked' ) ) {
-			$( '.cmb2-id-gmb-search-radius' ).toggle();
-			$( '.cmb2-id-gmb-places-search-multicheckbox' ).toggle();
+			$( '.cmb2-id-gmb-search-radius, .cmb2-id-gmb-places-search-multicheckbox, .cmb2-id-gmb-places-search' ).toggle();
 		}
 
 		//Nothing checked yet so select 'No' by default
@@ -1402,10 +1401,10 @@ var gmb_data;
 
 			if ( $( this ).val() === 'no' ) {
 				clear_search_markers();
-				$( '.cmb2-id-gmb-search-radius, .cmb2-id-gmb-places-search-multicheckbox' ).hide();
+				$( '.cmb2-id-gmb-search-radius, .cmb2-id-gmb-places-search-multicheckbox, .cmb2-id-gmb-places-search' ).hide();
 			} else {
 				perform_places_search();
-				$( '.cmb2-id-gmb-search-radius, .cmb2-id-gmb-places-search-multicheckbox' ).show();
+				$( '.cmb2-id-gmb-search-radius, .cmb2-id-gmb-places-search-multicheckbox, .cmb2-id-gmb-places-search' ).show();
 			}
 
 		} );
@@ -1713,8 +1712,6 @@ var gmb_data;
 
 
 	}
-
-
 
 
 	/**

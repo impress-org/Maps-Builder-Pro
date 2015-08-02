@@ -11,6 +11,7 @@ var gmb_data;
 var trafficLayer = new google.maps.TrafficLayer();
 var transitLayer = new google.maps.TransitLayer();
 var bicycleLayer = new google.maps.BicyclingLayer();
+var placeSearchAutocomplete;
 
 (function ( $ ) {
 
@@ -27,9 +28,18 @@ var bicycleLayer = new google.maps.BicyclingLayer();
 		} );
 
 		//Loop through layers
-		$('.cmb2-id-gmb-layers input:checkbox' ).each(function(){
+		$( '.cmb2-id-gmb-layers input:checkbox' ).each( function () {
 			set_map_layers( $( this ) );
-		});
+		} );
+
+		//Places Search
+		var places_search_control = $( '.cmb2-id-gmb-places-search input' );
+		places_search_control.on( 'change', function () {
+			toggle_map_places_search_field( $( this ) );
+		} );
+
+
+		toggle_map_places_search_field( places_search_control );
 
 	} );
 
@@ -53,8 +63,6 @@ var bicycleLayer = new google.maps.BicyclingLayer();
 		switch ( this_val ) {
 
 			case 'traffic':
-
-
 				if ( !checked ) {
 					trafficLayer.setMap( null );
 				} else {
@@ -62,8 +70,6 @@ var bicycleLayer = new google.maps.BicyclingLayer();
 				}
 				break;
 			case 'transit':
-
-
 				if ( !checked ) {
 					transitLayer.setMap( null );
 				} else {
@@ -72,7 +78,6 @@ var bicycleLayer = new google.maps.BicyclingLayer();
 				break;
 
 			case 'bicycle':
-
 
 				if ( !checked ) {
 					bicycleLayer.setMap( null );
@@ -84,4 +89,109 @@ var bicycleLayer = new google.maps.BicyclingLayer();
 		}
 
 	}
+
+	/**
+	 * Toggle Places Search Field
+	 * @descrition: Adds and removes the places search field from the map preview
+	 * @param input
+	 */
+	function toggle_map_places_search_field( input ) {
+
+		//Setup search or Toggle show/hide?
+		if ( typeof placeSearchAutocomplete === 'undefined' && input.prop( 'checked' ) === true ) {
+			set_map_places_search_field(); //hasn't been setup yet, so set it up
+			$( '#places-search' ).show();
+		} else if ( input.prop( 'checked' ) === true && typeof placeSearchAutocomplete === 'object' ) {
+			$( '#places-search' ).show();
+		} else {
+			$( '#places-search' ).hide();
+		}
+
+	}
+
+	/**
+	 * Set up Places Search Field
+	 *
+	 * @description Creates the Google Map custom control with autocomplete enabled
+	 *
+	 */
+	function set_map_places_search_field() {
+		var input = /** @type {HTMLInputElement} */(
+			document.getElementById( 'pac-input' ));
+
+		var types = document.getElementById( 'type-selector' );
+		map.controls[google.maps.ControlPosition.TOP_CENTER].push( document.getElementById( 'places-search' ) );
+
+		placeSearchAutocomplete = new google.maps.places.Autocomplete( input );
+		placeSearchAutocomplete.bindTo( 'bounds', map );
+
+		var infowindow = new google.maps.InfoWindow();
+		var marker = new google.maps.Marker( {
+			map        : map,
+			anchorPoint: new google.maps.Point( 0, -29 )
+		} );
+
+		google.maps.event.addListener( placeSearchAutocomplete, 'place_changed', function () {
+			infowindow.close();
+			marker.setVisible( false );
+			var place = placeSearchAutocomplete.getPlace();
+			if ( !place.geometry ) {
+				window.alert( "Autocomplete's returned place contains no geometry" );
+				return;
+			}
+
+			// If the place has a geometry, then present it on a map.
+			if ( place.geometry.viewport ) {
+				map.fitBounds( place.geometry.viewport );
+			} else {
+				map.setCenter( place.geometry.location );
+				map.setZoom( 17 );  // Why 17? Because it looks good.
+			}
+			marker.setIcon( /** @type {google.maps.Icon} */({
+				url       : place.icon,
+				size      : new google.maps.Size( 71, 71 ),
+				origin    : new google.maps.Point( 0, 0 ),
+				anchor    : new google.maps.Point( 17, 34 ),
+				scaledSize: new google.maps.Size( 35, 35 )
+			}) );
+			marker.setPosition( place.geometry.location );
+			marker.setVisible( true );
+
+			var address = '';
+			if ( place.address_components ) {
+				address = [
+					(place.address_components[0] && place.address_components[0].short_name || ''),
+					(place.address_components[1] && place.address_components[1].short_name || ''),
+					(place.address_components[2] && place.address_components[2].short_name || '')
+				].join( ' ' );
+			}
+
+			infowindow.setContent( '<div><strong>' + place.name + '</strong><br>' + address );
+			infowindow.open( map, marker );
+		} );
+
+		// Sets a listener on a radio button to change the filter type on Places
+		// Autocomplete.
+		function setupClickListener( id, types ) {
+			var radioButton = document.getElementById( id );
+			google.maps.event.addDomListener( radioButton, 'click', function () {
+				placeSearchAutocomplete.setTypes( types );
+			} );
+		}
+
+		setupClickListener( 'changetype-all', [] );
+		setupClickListener( 'changetype-address', ['address'] );
+		setupClickListener( 'changetype-establishment', ['establishment'] );
+		setupClickListener( 'changetype-geocode', ['geocode'] );
+
+		//Tame the enter key to not save the widget while using the autocomplete input
+		google.maps.event.addDomListener( input, 'keydown', function ( e ) {
+			if ( e.keyCode == 13 ) {
+				e.preventDefault();
+			}
+		} );
+
+	}
+
+
 }( jQuery ));

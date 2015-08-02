@@ -103,6 +103,7 @@ var gmb_data;
 		set_map_markers( map, map_data, info_window );
 		set_map_directions( map, map_data );
 		set_map_layers( map, map_data );
+		set_map_places_search( map, map_data );
 
 		//Display places?
 		if ( map_data.places_api.show_places === 'yes' ) {
@@ -566,9 +567,7 @@ var gmb_data;
 		var bicycleLayer = new google.maps.BicyclingLayer();
 
 		$( map_data.layers ).each( function ( index, value ) {
-
 			switch ( value ) {
-
 				case 'traffic':
 					trafficLayer.setMap( map );
 					break;
@@ -580,6 +579,91 @@ var gmb_data;
 					break;
 			}
 		} );
+	}
+
+	/**
+	 * Set Places Search
+	 *
+	 * @description Adds a places search box that users search for place, addresses, estiblishments, etc.
+	 * @param map
+	 * @param map_data
+	 */
+	function set_map_places_search( map, map_data ) {
+
+		//sanity check
+		if ( map_data.places_search[0] !== 'yes' ) {
+			return false;
+		}
+
+		var placeSearchWrap = $( '#google-maps-builder-' + map_data.id ).siblings( '.places-search-wrap' );
+
+		var placeSearchInput = /** @type {HTMLInputElement} */(
+			placeSearchWrap.find( '#pac-input' ).get( 0 ));
+		var placeTypes = $( '#google-maps-builder-' + map_data.id ).siblings( '.places-search-wrap' ).find( '#type-selector' ).get( 0 );
+
+		map.controls[google.maps.ControlPosition.TOP_CENTER].push( placeSearchWrap.get( 0 ) );
+
+		var placeSearchAutocomplete = new google.maps.places.Autocomplete( placeSearchInput );
+		placeSearchAutocomplete.bindTo( 'bounds', map );
+
+		var infowindow = new google.maps.InfoWindow();
+		var marker = new google.maps.Marker( {
+			map        : map,
+			anchorPoint: new google.maps.Point( 0, -29 )
+		} );
+
+		google.maps.event.addListener( placeSearchAutocomplete, 'place_changed', function () {
+			infowindow.close();
+			marker.setVisible( false );
+			var place = placeSearchAutocomplete.getPlace();
+			console.log(place);
+			if ( !place.geometry ) {
+				window.alert( "Autocomplete's returned place contains no geometry" );
+				return;
+			}
+
+			// If the place has a geometry, then present it on a map.
+			if ( place.geometry.viewport ) {
+				map.fitBounds( place.geometry.viewport );
+			} else {
+				map.setCenter( place.geometry.location );
+				map.setZoom( 17 );  // Why 17? Because it looks good.
+			}
+			marker.setIcon( /** @type {google.maps.Icon} */({
+				url       : place.icon,
+				size      : new google.maps.Size( 71, 71 ),
+				origin    : new google.maps.Point( 0, 0 ),
+				anchor    : new google.maps.Point( 17, 34 ),
+				scaledSize: new google.maps.Size( 35, 35 )
+			}) );
+			marker.setPosition( place.geometry.location );
+			marker.setVisible( true );
+
+			var info_window_content;
+			if ( place.name ) {
+				info_window_content = '<p class="place-title">' + place.name + '</p>';
+			}
+			info_window_content += set_place_content_in_info_window( place );
+			info_window_content = set_info_window_wrapper( info_window_content ); //wraps the content in div and returns
+			infowindow.setContent( info_window_content ); //set marker content
+			infowindow.open( map, marker );
+
+		} );
+
+		// Sets a listener on a radio button to change the filter type on Places
+		// Autocomplete.
+		function setupClickListener( id, placeTypes ) {
+			var radioButton = document.getElementById( id );
+			google.maps.event.addDomListener( radioButton, 'click', function () {
+				placeSearchAutocomplete.setTypes( placeTypes );
+			} );
+		}
+
+		setupClickListener( 'changetype-all', [] );
+		setupClickListener( 'changetype-address', ['address'] );
+		setupClickListener( 'changetype-establishment', ['establishment'] );
+		setupClickListener( 'changetype-geocode', ['geocode'] );
+
 	}
 
 }( jQuery ));

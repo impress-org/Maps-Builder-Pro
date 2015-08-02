@@ -16,4 +16,10 @@
 
 	<div id="directions-panel-<?php echo $atts['id']; ?>" class="gmb-directions-panel"></div>
 
+	<?php
+	if(isset($localized_data[$post->ID]['places_search'][0]) && $localized_data[$post->ID]['places_search'][0] === 'yes') {
+		include $this->get_google_maps_template( 'places-search.php' );
+	}
+	?>
+
 </div>

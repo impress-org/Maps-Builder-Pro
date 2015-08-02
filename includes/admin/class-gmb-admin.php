@@ -137,15 +137,22 @@ class Google_Maps_Builder_Admin {
 		$prefix          = 'gmb_';
 		$default_options = $this->get_default_map_options();
 
-		// MARKER WITH AUTOCOMPLETE
-		//		$meta_boxes = cmb2_get_metabox( array(
-		//			'id'           => 'google_maps_metabox',
-		//			'title'        => __( 'Add Marker', $this->plugin_slug ),
-		//			'object_types' => array( 'google_maps' ),
-		//			'context'      => 'normal',
-		//			'priority'     => 'high',
-		//			'show_names'   => true,
-		//		) );
+		// MAP PREVIEW
+		$preview_box = cmb2_get_metabox( array(
+			'id'           => 'google_maps_preview_metabox',
+			'title'        => __( 'Google Map Preview', $this->plugin_slug ),
+			'object_types' => array( 'google_maps' ), // post type
+			'context'      => 'normal', //  'normal', 'advanced', or 'side'
+			'priority'     => 'high', //  'high', 'core', 'default' or 'low'
+			'show_names'   => false, // Show field names on the left
+		) );
+		$preview_box->add_field( array(
+			'name'    => __( 'Map Preview', $this->plugin_slug ),
+			'id'      => $prefix . 'preview',
+			'type'    => 'google_maps_preview',
+			'default' => '',
+		) );
+
 		// MARKERS
 		$marker_box = cmb2_get_metabox( array(
 			'id'           => 'google_maps_markers',
@@ -301,16 +308,29 @@ class Google_Maps_Builder_Admin {
 				),
 			)
 		);
+		$search_options->add_field(
+			array(
+				'name'              => __( 'Places Search', $this->plugin_slug ),
+				'desc'              => __( 'Adds a search box to a map, using the Google Place Autocomplete feature. The search box will return a pick list containing a mix of places and predicted search terms.', $this->plugin_slug ),
+				'id'                => $prefix . 'places_search',
+				'type'              => 'multicheck',
+				'options'           => array(
+					'yes' => 'Yes, Enable Places Search'
+				),
+				'select_all_button' => false,
+			)
+		);
 
 		$search_options->add_field(
 			array(
 				'name'    => __( 'Search Radius', $this->plugin_slug ),
-				'desc'    => __( 'Defines the distance (in meters) within which to return Place results. The maximum allowed radius is 50,000 meters.', $this->plugin_slug ),
-				'default' => '1000',
+				'desc'    => __( 'Defines the distance (in meters) within which to return Place markers. The maximum allowed radius is 50,000 meters.', $this->plugin_slug ),
+				'default' => '3000',
 				'id'      => $prefix . 'search_radius',
 				'type'    => 'text_small'
 			)
 		);
+
 
 		$search_options->add_field(
 			array(
@@ -817,6 +837,10 @@ class Google_Maps_Builder_Admin {
 		$output = '<div class="places-loading wpgp-loading">Loading Places</div><div id="google-map-wrap">';
 		$output .= '<div id="map" style="height:' . $map_height . 'px; width:' . $map_width . $map_width_val . '"></div>';
 		$output .= '</div>';
+
+		//Places search
+		include Google_Maps_Builder()->engine->get_google_maps_template('places-search.php');
+
 		$output .= '<div class="warning-message wpgp-message"></div>';
 
 		echo $output;
