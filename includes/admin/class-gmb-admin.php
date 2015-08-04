@@ -216,6 +216,11 @@ class Google_Maps_Builder_Admin {
 			'type' => 'text',
 		) );
 		$marker_box->add_group_field( $group_field_id, array(
+			'name' => __( 'Marker Image', $this->plugin_slug ),
+			'id'   => 'marker_img',
+			'type' => 'text',
+		) );
+		$marker_box->add_group_field( $group_field_id, array(
 			'name' => __( 'Marker Data', $this->plugin_slug ),
 			'id'   => 'marker',
 			'type' => 'textarea_code',

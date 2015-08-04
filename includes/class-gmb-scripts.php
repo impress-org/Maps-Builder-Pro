@@ -390,10 +390,10 @@ class Google_Maps_Builder_Scripts {
 			wp_register_script( $this->plugin_slug . '-admin-settings', $js_dir . 'admin-settings' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
 			wp_enqueue_script( $this->plugin_slug . '-admin-settings' );
 
-			wp_register_script( $this->plugin_slug . '-admin-map-directions', GMB_PLUGIN_URL . 'assets/js/admin-maps-directions' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
+			wp_register_script( $this->plugin_slug . '-admin-map-directions', $js_dir . 'admin-maps-directions' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
 			wp_enqueue_script( $this->plugin_slug . '-admin-map-directions' );
 
-			wp_register_script( $this->plugin_slug . '-admin-map-controls', GMB_PLUGIN_URL . 'assets/js/admin-maps-controls' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
+			wp_register_script( $this->plugin_slug . '-admin-map-controls', $js_dir . 'admin-maps-controls' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
 			wp_enqueue_script( $this->plugin_slug . '-admin-map-controls' );
 
 
