@@ -1,8 +1,40 @@
 /*-------------------------------------
 Marker Icon Modal
 ---------------------------------------*/
+#poststuff .marker-description-wrap {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #DDD;
+  padding-bottom: 20px;
+  h3 {
+	font-size: 22px;
+	padding: 0;
+	margin: 0 0 15px;
+  }
+  p {
+	font-size: 16px;
+	font-style: italic;
+	color: #aaa;
+	margin-bottom: 0;
+  }
+}
+
+/*-------------------------------------
+Marker Types
+---------------------------------------*/
+#poststuff .marker-row {
+  h3 {
+	margin: 0 0 20px;
+	font-size: 18px;
+	padding: 0;
+  }
+}
+
+/*-------------------------------------
+Marker Icon Rows
+---------------------------------------*/
 .marker-icon-row {
   margin-bottom: 10px;
+
 }
 
 .marker-icon-row, .save-marker-icon {
@@ -30,8 +62,17 @@ Marker Icon Modal
   top: 8px;
 }
 
-.marker-icon-row .icon:hover, .marker-row .marker-item:hover, .marker-item-selected, .maps-icon:hover {
+.marker-icon-row .icon, .marker-row .marker-item, .maps-icon {
   cursor: pointer;
+  border: 1px solid #FFF;
+  &:hover {
+	border: 1px solid #f4efd8;
+	background: #FFFAE2;
+  }
+}
+
+.marker-icon-row .marker-item-selected, .marker-item.marker-item-selected {
+  border: 1px solid #f4efd8;
   background: #FFFAE2;
 }
 
@@ -99,9 +140,9 @@ Marker Icon Modal
   margin-top: 0;
 }
 
-//------------------------------------------
-//Map Icons
-//------------------------------------------
+/*-------------------------------------
+Map Icons
+---------------------------------------*/
 .map-icons-list {
   margin: 0 0 10px;
   li {
@@ -110,7 +151,7 @@ Marker Icon Modal
 	a {
 	  padding: 4px;
 	  display: block;
-	  outline: none;
+	  box-shadow: none;
 	}
   }
 }

@@ -7,7 +7,7 @@
  */
 
 var gmb_data;
-
+var gmb_upload_marker;
 var trafficLayer = new google.maps.TrafficLayer();
 var transitLayer = new google.maps.TransitLayer();
 var bicycleLayer = new google.maps.BicyclingLayer();
@@ -38,8 +38,65 @@ var placeSearchAutocomplete;
 			toggle_map_places_search_field( $( this ) );
 		} );
 
-
 		toggle_map_places_search_field( places_search_control );
+
+		//Custom marker modal uploader
+		gmb_upload_marker = {
+
+			// Call this from the upload button to initiate the upload frame.
+			uploader: function () {
+
+				//@TODO: i18n
+				var frame = wp.media( {
+					title   : 'Set an Custom Marker Icon',
+					multiple: false,
+					library : {type: 'image'},
+					button  : {text: 'Set Marker'}
+				} );
+
+				// Handle results from media manager.
+				frame.on( 'close', function () {
+					var attachments = frame.state().get( 'selection' ).toJSON();
+					gmb_upload_marker.render( attachments[0] );
+				} );
+
+				frame.open();
+				return false;
+			},
+
+			// Output Image preview
+			render: function ( attachment ) {
+
+				$( '.gmb-image-preview' ).prepend( gmb_upload_marker.imgHTML( attachment ) );
+				$( '.gmb-image-preview' ).html( gmb_upload_marker.imgHTML( attachment ) );
+				$( '.gmb-image-preview' ).show();
+				$( '.save-marker-icon' ).slideDown(); //slide down save button
+				console.log(attachment);
+				$( '.save-marker-button' ).data( 'marker-image', attachment.url ); //slide down save button
+
+			},
+
+			// Render html for the image.
+			imgHTML    : function ( attachment ) {
+				var img_html = '<img src="' + attachment.url + '" ';
+				img_html += 'width="' + attachment.width + '" ';
+				img_html += 'height="' + attachment.height + '" ';
+				if ( attachment.alt != '' ) {
+					img_html += 'alt="' + attachment.alt + '" ';
+				}
+				img_html += '/>';
+				return img_html;
+			},
+			// User wants to remove the avatar
+			removeImage: function ( widget_id_string ) {
+				$( "#" + widget_id_string + 'attachment_id' ).val( '' );
+				$( "#" + widget_id_string + 'imageurl' ).val( '' );
+				$( "#" + widget_id_string + 'preview img' ).remove();
+				$( "#" + widget_id_string + 'preview a' ).hide();
+			}
+
+		};
+
 
 	} );
 

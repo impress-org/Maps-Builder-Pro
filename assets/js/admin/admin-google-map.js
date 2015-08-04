@@ -662,6 +662,7 @@ var gmb_data;
 			var marker_icon = $( this ).data( 'marker' );
 			var marker_icon_color = $( this ).data( 'marker-color' );
 			var label_color = $( this ).data( 'label-color' );
+			var marker_icon_data;
 
 			//Inline style for marker to set
 			var marker_label_inline_style = 'color:' + label_color + '; ';
@@ -683,8 +684,8 @@ var gmb_data;
 				marker_label_data = ''; //no label here (img marker)
 			}
 			//Old school maps icons
-			else if ( marker_icon == 'mapicons' ) {
-				var marker_icon_data = $( this ).data( 'marker-image' );
+			else if ( marker_icon == 'mapicons' || marker_icon == 'upload' ) {
+				marker_icon_data = $( this ).data( 'marker-image' );
 				marker_label_data = ''; //no label here (img marker)
 				$( '#gmb_markers_group_' + index + '_marker_img' ).val( marker_icon_data ); //set marker image field
 				$( '#gmb_markers_group_' + index + '_marker', '#gmb_markers_group_' + index + '_label' ).val( '' ); //clear other marker data
@@ -1662,28 +1663,17 @@ var gmb_data;
 		$( '.marker-item' ).on( 'click', function () {
 
 			var marker_data = $( this ).data( 'marker' );
+			var marker_toggle = $( this ).data( 'toggle' );
 
 			$( '.marker-item' ).removeClass( 'marker-item-selected' );
 			$( this ).addClass( 'marker-item-selected' );
 			marker_modal_save_btn.attr( 'data-marker', marker_data ); //Set marker data attribute on save bt
 
-			//default marker
-			if ( marker_data == 'default' ) {
-				//Slide up all panels
-				marker_containers.slideUp();
-				marker_modal_save_container.slideDown(); //show save
-			}
-			//mapicons - Old school icon set
-			else if ( marker_data == 'mapicons' ) {
-				marker_containers.hide();
-				$( '.map-icons-row' ).slideDown();
+			//Slide up all panels
+			marker_containers.hide();
 
-			}
-			//custom SVG markers
-			else if ( marker_data == 'MAP_PIN' || marker_data == 'SQUARE_PIN' ) {
-				marker_containers.hide();
-				$( '.map-svg-icons' ).slideDown();
-			}
+			//Slide down specific div
+			$( '.' + marker_toggle ).slideDown();
 
 		} );
 

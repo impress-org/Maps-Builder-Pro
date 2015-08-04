@@ -12,42 +12,44 @@
 	<div class="inner-modal">
 		<button type="button" class="gmb-modal-close">&times;</button>
 		<div class="marker-description-wrap clear">
+
 			<h3><?php _e( 'Customize Map Marker', $this->plugin_slug ); ?></h3>
 
 			<p><?php _e( 'Customize your Google Maps markers by selecting a marker graphic and icon. Integration made possible from the excellent Maps Icon library.', $this->plugin_slug ); ?></p>
 		</div>
 
 		<div class="marker-row clear">
+
 			<h3><?php _e( 'Step 1: Select a Marker Type', $this->plugin_slug ); ?></h3>
 
-			<div class="marker-item" data-marker="MAP_PIN">
+			<div class="marker-item" data-marker="MAP_PIN" data-toggle="map-svg-icons">
 				<div class="marker-svg">
 					<svg version="1.0" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 100 165" enable-background="new 0 0 100 165" xml:space="preserve"><path fill="#428BCA" d="M50,0C22.382,0,0,21.966,0,49.054C0,76.151,50,165,50,165s50-88.849,50-115.946C100,21.966,77.605,0,50,0z"></path>
 				</svg>
 				</div>
 				<div class="marker-description"><?php _e( 'Map Pin', $this->plugin_slug ); ?></div>
 			</div>
-			<div class="marker-item" data-marker="SQUARE_PIN">
+			<div class="marker-item" data-marker="SQUARE_PIN" data-toggle="map-svg-icons">
 				<div class="marker-svg">
 					<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 100 120" enable-background="new 0 0 100 120" xml:space="preserve"><polygon fill="#428BCA" points="100,0 0,0 0,100 36.768,100 50.199,119.876 63.63,100 100,100 "></polygon></svg>
 				</div>
 				<div class="marker-description"><?php _e( 'Square Pin', $this->plugin_slug ); ?></div>
 			</div>
-			<div class="marker-item" data-marker="default">
+			<div class="marker-item" data-marker="default" data-toggle="default">
 				<div class="marker-default">
 					<img src="<?php echo apply_filters( 'gmb_default_marker', GMB_PLUGIN_URL . 'assets/img/default-marker.png' ); ?>" class="default-marker" />
 				</div>
 				<div class="marker-description"><?php _e( 'Default', $this->plugin_slug ); ?></div>
 			</div>
-			<div class="marker-item" data-marker="mapicons">
+			<div class="marker-item" data-marker="mapicons" data-toggle="map-icons-row">
 				<div class="marker-map-icons">
 					<img src="<?php echo apply_filters( 'gmb_default_marker', GMB_PLUGIN_URL . 'assets/img/logo-mapicons.png' ); ?>" class="default-marker" />
 				</div>
 				<div class="marker-description"><?php _e( 'Map Icons', $this->plugin_slug ); ?></div>
 			</div>
-			<div class="marker-item" data-marker="upload">
-				<div class="marker-svg">
-					<img src="<?php echo apply_filters( 'gmb_default_marker', GMB_PLUGIN_URL . 'assets/img/logo-mapicons.png' ); ?>" class="default-marker" />
+			<div class="marker-item" data-marker="upload" data-toggle="marker-upload">
+				<div class="marker-upload">
+					<span class="dashicons dashicons-upload"></span>
 				</div>
 				<div class="marker-description"><?php _e( 'Upload Marker', $this->plugin_slug ); ?></div>
 			</div>
@@ -768,6 +770,16 @@
 					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/maps-icons-collection/zoom.png' ?>" alt=""></a>
 				</li>
 			</ul>
+		</div>
+		<!--/.map-icons-row-->
+
+		<div class="marker-icon-row marker-upload">
+			<div class="cmb-td">
+				<div class="gmb-image-preview" id="">
+				</div>
+				<input class="gmb-upload-button button" onclick="gmb_upload_marker.uploader(); return false;" type="button" value="Upload or Select a Marker Image">
+
+			</div>
 		</div>
 
 		<div class="save-marker-icon clear gmb-hidden">

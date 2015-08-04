@@ -216,9 +216,13 @@ class Google_Maps_Builder_Admin {
 			'type' => 'text',
 		) );
 		$marker_box->add_group_field( $group_field_id, array(
-			'name' => __( 'Marker Image', $this->plugin_slug ),
-			'id'   => 'marker_img',
-			'type' => 'text',
+			'name'    => __( 'Marker Image', $this->plugin_slug ),
+			'id'      => 'marker_img',
+			'type'    => 'file',
+			'options' => array(
+				'url'                  => false,
+				'add_upload_file_text' => __( 'Add Marker Image', $this->plugin_slug )
+			),
 		) );
 		$marker_box->add_group_field( $group_field_id, array(
 			'name' => __( 'Marker Data', $this->plugin_slug ),
@@ -844,7 +848,7 @@ class Google_Maps_Builder_Admin {
 		$output .= '</div>';
 
 		//Places search
-		include Google_Maps_Builder()->engine->get_google_maps_template('places-search.php');
+		include Google_Maps_Builder()->engine->get_google_maps_template( 'places-search.php' );
 
 		$output .= '<div class="warning-message wpgp-message"></div>';
 

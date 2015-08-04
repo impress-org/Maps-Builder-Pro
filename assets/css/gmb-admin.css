@@ -1548,10 +1548,6 @@ Modal within Modal
     padding: 20px;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.45);
     position: relative; }
-    .magnific-builder #poststuff .white-popup .inner-modal h3 {
-      margin: 0 0 15px;
-      font-size: 16px;
-      padding: 0; }
   .magnific-builder #poststuff .white-popup .save-marker-icon {
     position: relative;
     border: none;
@@ -2465,6 +2461,31 @@ Toggle Tips
 /*-------------------------------------
 Marker Icon Modal
 ---------------------------------------*/
+#poststuff .marker-description-wrap {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #DDD;
+  padding-bottom: 20px; }
+  #poststuff .marker-description-wrap h3 {
+    font-size: 22px;
+    padding: 0;
+    margin: 0 0 15px; }
+  #poststuff .marker-description-wrap p {
+    font-size: 16px;
+    font-style: italic;
+    color: #aaa;
+    margin-bottom: 0; }
+
+/*-------------------------------------
+Marker Types
+---------------------------------------*/
+#poststuff .marker-row h3 {
+  margin: 0 0 20px;
+  font-size: 18px;
+  padding: 0; }
+
+/*-------------------------------------
+Marker Icon Rows
+---------------------------------------*/
 .marker-icon-row {
   margin-bottom: 10px; }
 
@@ -2489,8 +2510,15 @@ Marker Icon Modal
   position: relative;
   top: 8px; }
 
-.marker-icon-row .icon:hover, .marker-row .marker-item:hover, .marker-item-selected, .maps-icon:hover {
+.marker-icon-row .icon, .marker-row .marker-item, .maps-icon {
   cursor: pointer;
+  border: 1px solid #FFF; }
+  .marker-icon-row .icon:hover, .marker-row .marker-item:hover, .maps-icon:hover {
+    border: 1px solid #f4efd8;
+    background: #FFFAE2; }
+
+.marker-icon-row .marker-item-selected, .marker-item.marker-item-selected {
+  border: 1px solid #f4efd8;
   background: #FFFAE2; }
 
 .marker-label {
@@ -2542,6 +2570,9 @@ Marker Icon Modal
 .marker-description-wrap h3 {
   margin-top: 0; }
 
+/*-------------------------------------
+Map Icons
+---------------------------------------*/
 .map-icons-list {
   margin: 0 0 10px; }
   .map-icons-list li {
@@ -2550,7 +2581,7 @@ Marker Icon Modal
     .map-icons-list li a {
       padding: 4px;
       display: block;
-      outline: none; }
+      box-shadow: none; }
 
 /* Save button */
 .save-marker-icon {
