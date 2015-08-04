@@ -1,10 +1,10 @@
 <?php
 /**
- * Google Maps Builder
+ * Maps Builder - Pro
  *
- * Plugin Name:       Google Maps Builder
+ * Plugin Name:       Maps Builder - Pro
  * Plugin URI:        http://wordimpress.com/
- * Description:       Create stylish and powerful Google Maps quickly and easily.
+ * Description:       Create stylish and powerful Google Maps quickly and easily. Thank you for upgrading to the pro edition!
  * Version:           2.0
  * Author:            WordImpress
  * Author URI:        http://wordimpress.com/
@@ -19,7 +19,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-
 /*----------------------------------------------------------------------------*
  * Public-Facing Functionality
  *----------------------------------------------------------------------------*/
@@ -29,7 +28,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 //add_action( 'plugins_loaded', array( 'Google_Maps_Builder', 'get_instance' ) );
 //add_action( 'plugins_loaded', array( 'Google_Maps_Builder_Engine', 'get_instance' ) );
-
 
 if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
  * Main Give Class
