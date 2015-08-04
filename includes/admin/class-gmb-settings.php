@@ -1,5 +1,4 @@
 <?php
-
 /**
  * CMB Theme Options
  * @version 0.1.0
@@ -153,7 +152,7 @@ class Google_Maps_Builder_Settings {
 			),
 		);
 
-		return self::$plugin_options;
+		return apply_filters( 'gmb_general_options_fields', self::$plugin_options );
 
 	}
 
@@ -205,7 +204,7 @@ class Google_Maps_Builder_Settings {
 			),
 		);
 
-		return self::$plugin_options;
+		return apply_filters('gmb_map_options_fields', self::$plugin_options);
 
 	}
 

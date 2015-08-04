@@ -261,8 +261,8 @@ class Google_Maps_Builder_Scripts {
 	 * Print Activation Message
 	 */
 	function welcome_pointer_print_scripts() {
-		$pointer_content = '<h3>' . __( 'Welcome to the Google Maps Builder', $this->plugin_slug ) . '</h3>';
-		$pointer_content .= '<p>' . __( 'Thank you for using Google Maps Builder for WordPress. To stay up to date on the latest plugin updates, enhancements and news please sign up for our mailing list.', $this->plugin_slug ) . '</p>';
+		$pointer_content = '<h3>' . __( 'Welcome to the Maps Builder', $this->plugin_slug ) . '</h3>';
+		$pointer_content .= '<p>' . __( 'Thank you for using Maps Builder for WordPress. To stay up to date on the latest plugin updates, enhancements, and news please sign up for our mailing list.', $this->plugin_slug ) . '</p>';
 		$pointer_content .= '<div id="mc_embed_signup" style="padding: 0 15px;"><form action="http://wordimpress.us3.list-manage2.com/subscribe/post?u=3ccb75d68bda4381e2f45794c&amp;id=83609e2883" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate><div class="mc-field-group" style="margin: 0 0 10px;"><input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" style="margin-right:5px;width:230px;" placeholder="my.email@wordpress.com"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div><div id="mce-responses" class="clear"><div class="response" id="mce-error-response" style="display:none"></div><div class="response" id="mce-success-response" style="display:none"></div></div><div style="position: absolute; left: -5000px;"><input type="text" name="b_3ccb75d68bda4381e2f45794c_83609e2883" value=""></div></form></div>';
 		?>
 
@@ -363,7 +363,7 @@ class Google_Maps_Builder_Scripts {
 			wp_register_script( $this->plugin_slug . '-admin-magnific-popup', $js_plugins . 'gmb-magnific' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
 			wp_enqueue_script( $this->plugin_slug . '-admin-magnific-popup' );
 
-			wp_register_script( $this->plugin_slug . '-admin-gmaps', 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places', array( 'jquery' ) );
+			wp_register_script( $this->plugin_slug . '-admin-gmaps', 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places,drawing', array( 'jquery' ) );
 			wp_enqueue_script( $this->plugin_slug . '-admin-gmaps' );
 
 			wp_register_script( $this->plugin_slug . '-map-icons', GMB_PLUGIN_URL . 'includes/libraries/map-icons/js/map-icons.js', array( 'jquery' ) );
@@ -389,6 +389,13 @@ class Google_Maps_Builder_Scripts {
 			//Settings
 			wp_register_script( $this->plugin_slug . '-admin-settings', $js_dir . 'admin-settings' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
 			wp_enqueue_script( $this->plugin_slug . '-admin-settings' );
+
+			wp_register_script( $this->plugin_slug . '-admin-map-directions', $js_dir . 'admin-maps-directions' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
+			wp_enqueue_script( $this->plugin_slug . '-admin-map-directions' );
+
+			wp_register_script( $this->plugin_slug . '-admin-map-controls', $js_dir . 'admin-maps-controls' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
+			wp_enqueue_script( $this->plugin_slug . '-admin-map-controls' );
+
 
 			$api_key   = gmb_get_option( 'gmb_api_key' );
 			$geolocate = gmb_get_option( 'gmb_lat_lng' );

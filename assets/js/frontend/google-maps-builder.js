@@ -10,6 +10,7 @@ var gmb_data;
 	var map;
 	var places_service;
 	var place;
+	var directionsDisplay = [];
 	var search_markers = [];
 
 	/*
@@ -100,6 +101,9 @@ var gmb_data;
 		set_map_options( map, map_data );
 		set_map_theme( map, map_data );
 		set_map_markers( map, map_data, info_window );
+		set_map_directions( map, map_data );
+		set_map_layers( map, map_data );
+		set_map_places_search( map, map_data );
 
 		//Display places?
 		if ( map_data.places_api.show_places === 'yes' ) {
@@ -237,18 +241,20 @@ var gmb_data;
 		//Loop through repeatable field of markers
 		$( map_markers ).each( function ( index, marker_data ) {
 
+			var marker_label = '';
+
 			//check for custom marker and label data
 			var marker_icon = map_data.map_params.default_marker; //Default marker icon here
-			if ( typeof marker_data.marker !== 'undefined' && marker_data.marker.length > 0 ) {
-				marker_icon = eval( "(" + marker_data.marker + ")" );
-			}
 
-			//marker label
-			var marker_label = '';
-			if ( typeof marker_data.label !== 'undefined' && marker_data.label.length > 0 ) {
+			if ( marker_data.marker_img ) {
+				marker_icon = marker_data.marker_img;
+			}
+			//SVG Icon
+			else if ( (typeof marker_data.marker !== 'undefined' && marker_data.marker.length > 0) && (typeof marker_data.label !== 'undefined' && marker_data.label.length > 0) ) {
+				marker_icon = eval( "(" + marker_data.marker + ")" );
 				marker_label = marker_data.label
 			}
-
+			console.log(marker_label);
 			//Marker for map
 			var location_marker = new Marker( {
 				map         : map,
@@ -257,12 +263,8 @@ var gmb_data;
 				custom_label: marker_label
 			} );
 
-			var marker_lat = marker_data.lat;
-			var marker_lng = marker_data.lng;
-
-			location_marker.setPosition( new google.maps.LatLng( marker_lat, marker_lng ) );
+			location_marker.setPosition( new google.maps.LatLng( marker_data.lat, marker_data.lng ) );
 			location_marker.setVisible( true );
-
 
 			google.maps.event.addListener( location_marker, 'click', function () {
 				info_window.close();
@@ -478,5 +480,188 @@ var gmb_data;
 
 	}
 
+
+	/**
+	 * Set Map Directions
+	 *
+	 * @param map
+	 * @param map_data
+	 */
+	function set_map_directions( map, map_data ) {
+
+		//Setup destinations
+		$( map_data.destination_markers ).each( function ( index, value ) {
+
+			//If no points skip
+			if ( !map_data.destination_markers[0].point || typeof value.point === 'undefined' ) {
+				return false;
+			}
+
+			var directionsService = new google.maps.DirectionsService();
+			var directionsDisplay = new google.maps.DirectionsRenderer();
+			directionsDisplay.setMap( map );
+			if ( map_data.text_directions !== 'none' ) {
+				$( '#directions-panel-' + map_data.id ).addClass( 'panel-' + map_data.text_directions );
+				directionsDisplay.setPanel( $( '#directions-panel-' + map_data.id ).get( 0 ) );
+
+			}
+
+
+			//Next loop through the groups within
+			var repeatable_row = $( this ).find( '.cmb-repeat-row' );
+			var start_lat = value.point[0].latitude;
+			var start_lng = value.point[0].longitude;
+
+			var end_lat = value.point[value.point.length - 1].latitude;
+			var end_lng = value.point[value.point.length - 1].longitude;
+
+			var travel_mode = (value.travel_mode.length > 0) ? value.travel_mode : 'DRIVING';
+			var waypts = [];
+
+			repeatable_row.not( ':first' ).not( ':last' ).each( function ( index, value ) {
+
+				var waypoint_lat = $( this ).find( '.gmb-directions-latitude' ).val();
+				var waypoint_lng = $( this ).find( '.gmb-directions-longitude' ).val();
+
+				waypts.push( {
+					location: waypoint_lat + ',' + waypoint_lng,
+					stopover: true
+				} );
+
+			} );
+
+			var request = {
+				origin           : start_lat + ',' + start_lng,
+				destination      : end_lat + ',' + end_lng,
+				waypoints        : waypts,
+				optimizeWaypoints: true,
+				travelMode       : google.maps.TravelMode[travel_mode]
+			};
+
+			directionsService.route( request, function ( response, status ) {
+
+				if ( status == google.maps.DirectionsStatus.OK ) {
+
+					//directionsDisplay[index].setOptions( {preserveViewport: true} );
+					directionsDisplay.setDirections( response );
+
+				}
+			} );
+		} );
+
+
+	}
+
+	/**
+	 * Set Map Layers
+	 *
+	 * @param map
+	 * @param map_data
+	 */
+	function set_map_layers( map, map_data ) {
+
+		var trafficLayer = new google.maps.TrafficLayer();
+		var transitLayer = new google.maps.TransitLayer();
+		var bicycleLayer = new google.maps.BicyclingLayer();
+
+		$( map_data.layers ).each( function ( index, value ) {
+			switch ( value ) {
+				case 'traffic':
+					trafficLayer.setMap( map );
+					break;
+				case 'transit':
+					transitLayer.setMap( map );
+					break;
+				case 'bicycle':
+					bicycleLayer.setMap( map );
+					break;
+			}
+		} );
+	}
+
+	/**
+	 * Set Places Search
+	 *
+	 * @description Adds a places search box that users search for place, addresses, estiblishments, etc.
+	 * @param map
+	 * @param map_data
+	 */
+	function set_map_places_search( map, map_data ) {
+
+		//sanity check
+		if ( map_data.places_search[0] !== 'yes' ) {
+			return false;
+		}
+
+		var placeSearchWrap = $( '#google-maps-builder-' + map_data.id ).siblings( '.places-search-wrap' );
+
+		var placeSearchInput = /** @type {HTMLInputElement} */(
+			placeSearchWrap.find( '#pac-input' ).get( 0 ));
+		var placeTypes = $( '#google-maps-builder-' + map_data.id ).siblings( '.places-search-wrap' ).find( '#type-selector' ).get( 0 );
+
+		map.controls[google.maps.ControlPosition.TOP_CENTER].push( placeSearchWrap.get( 0 ) );
+
+		var placeSearchAutocomplete = new google.maps.places.Autocomplete( placeSearchInput );
+		placeSearchAutocomplete.bindTo( 'bounds', map );
+
+		var infowindow = new google.maps.InfoWindow();
+		var marker = new google.maps.Marker( {
+			map        : map,
+			anchorPoint: new google.maps.Point( 0, -29 )
+		} );
+
+		google.maps.event.addListener( placeSearchAutocomplete, 'place_changed', function () {
+			infowindow.close();
+			marker.setVisible( false );
+			var place = placeSearchAutocomplete.getPlace();
+			console.log( place );
+			if ( !place.geometry ) {
+				window.alert( "Autocomplete's returned place contains no geometry" );
+				return;
+			}
+
+			// If the place has a geometry, then present it on a map.
+			if ( place.geometry.viewport ) {
+				map.fitBounds( place.geometry.viewport );
+			} else {
+				map.setCenter( place.geometry.location );
+				map.setZoom( 17 );  // Why 17? Because it looks good.
+			}
+			marker.setIcon( /** @type {google.maps.Icon} */({
+				url       : place.icon,
+				size      : new google.maps.Size( 71, 71 ),
+				origin    : new google.maps.Point( 0, 0 ),
+				anchor    : new google.maps.Point( 17, 34 ),
+				scaledSize: new google.maps.Size( 35, 35 )
+			}) );
+			marker.setPosition( place.geometry.location );
+			marker.setVisible( true );
+
+			var info_window_content;
+			if ( place.name ) {
+				info_window_content = '<p class="place-title">' + place.name + '</p>';
+			}
+			info_window_content += set_place_content_in_info_window( place );
+			info_window_content = set_info_window_wrapper( info_window_content ); //wraps the content in div and returns
+			infowindow.setContent( info_window_content ); //set marker content
+			infowindow.open( map, marker );
+
+		} );
+
+		// Sets a listener on a radio button to change the filter type on Places
+		// Autocomplete.
+		function setupClickListener( id, placeTypes ) {
+			var radioButton = document.getElementById( id );
+			google.maps.event.addDomListener( radioButton, 'click', function () {
+				placeSearchAutocomplete.setTypes( placeTypes );
+			} );
+		}
+
+		setupClickListener( 'changetype-all', [] );
+		setupClickListener( 'changetype-address', ['address'] );
+		setupClickListener( 'changetype-establishment', ['establishment'] );
+		setupClickListener( 'changetype-geocode', ['geocode'] );
+
+	}
 
 }( jQuery ));
