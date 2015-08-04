@@ -254,8 +254,7 @@ var gmb_data;
 				marker_icon = eval( "(" + marker_data.marker + ")" );
 				marker_label = marker_data.label
 			}
-
-
+			console.log(marker_label);
 			//Marker for map
 			var location_marker = new Marker( {
 				map         : map,
@@ -264,12 +263,8 @@ var gmb_data;
 				custom_label: marker_label
 			} );
 
-			var marker_lat = marker_data.lat;
-			var marker_lng = marker_data.lng;
-
-			location_marker.setPosition( new google.maps.LatLng( marker_lat, marker_lng ) );
+			location_marker.setPosition( new google.maps.LatLng( marker_data.lat, marker_data.lng ) );
 			location_marker.setVisible( true );
-
 
 			google.maps.event.addListener( location_marker, 'click', function () {
 				info_window.close();
@@ -501,8 +496,6 @@ var gmb_data;
 			if ( !map_data.destination_markers[0].point || typeof value.point === 'undefined' ) {
 				return false;
 			}
-			console.log( value.point[0] );
-			console.log( map_data.destination_markers );
 
 			var directionsService = new google.maps.DirectionsService();
 			var directionsDisplay = new google.maps.DirectionsRenderer();

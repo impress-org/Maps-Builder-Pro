@@ -234,6 +234,20 @@ class Google_Maps_Builder_Admin {
 			'id'   => 'label',
 			'type' => 'textarea_code',
 		) );
+		$marker_box->add_group_field( $group_field_id, array(
+				'name'              => __( 'Marker Infowindow', $this->plugin_slug ),
+				'desc'              => __( 'Would you like this marker\'s infowindow open by default?', $this->plugin_slug ),
+				'id'                => $prefix . 'marker_infowindow_action',
+				'type'              => 'select',
+				'default'           => 'closed',
+				'options'           => array(
+					'closed' => __( 'Closed by default', $this->plugin_slug ),
+					'opened' => __( 'Opened by default', $this->plugin_slug )
+				),
+				'select_all_button' => false,
+			)
+		);
+
 
 		// Directions
 		$directions_box = cmb2_get_metabox( array(

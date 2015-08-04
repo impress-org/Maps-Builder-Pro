@@ -234,6 +234,9 @@
   .place-description {
 	white-space: normal;
   }
+  a {
+	box-shadow:none;
+  }
 }
 
 .marker-confirm-place {
@@ -508,7 +511,7 @@ Temporary Info Window
 .infowindow-toolbar {
   display: block;
   margin: 0;
-  padding: 8px 0 5px;
+  padding: 8px 0 0;
 }
 
 .add-marker {
