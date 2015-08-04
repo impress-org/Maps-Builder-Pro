@@ -241,17 +241,20 @@ var gmb_data;
 		//Loop through repeatable field of markers
 		$( map_markers ).each( function ( index, marker_data ) {
 
+			var marker_label = '';
+
 			//check for custom marker and label data
 			var marker_icon = map_data.map_params.default_marker; //Default marker icon here
-			if ( typeof marker_data.marker !== 'undefined' && marker_data.marker.length > 0 ) {
-				marker_icon = eval( "(" + marker_data.marker + ")" );
-			}
 
-			//marker label
-			var marker_label = '';
-			if ( typeof marker_data.label !== 'undefined' && marker_data.label.length > 0 ) {
+			if ( marker_data.marker_img ) {
+				marker_icon = marker_data.marker_img;
+			}
+			//SVG Icon
+			else if ( (typeof marker_data.marker !== 'undefined' && marker_data.marker.length > 0) && (typeof marker_data.label !== 'undefined' && marker_data.label.length > 0) ) {
+				marker_icon = eval( "(" + marker_data.marker + ")" );
 				marker_label = marker_data.label
 			}
+
 
 			//Marker for map
 			var location_marker = new Marker( {
@@ -495,9 +498,11 @@ var gmb_data;
 		$( map_data.destination_markers ).each( function ( index, value ) {
 
 			//If no points skip
-			if ( !map_data.destination_markers[0].point ) {
-				return;
+			if ( !map_data.destination_markers[0].point || typeof value.point === 'undefined' ) {
+				return false;
 			}
+			console.log( value.point[0] );
+			console.log( map_data.destination_markers );
 
 			var directionsService = new google.maps.DirectionsService();
 			var directionsDisplay = new google.maps.DirectionsRenderer();
@@ -616,7 +621,7 @@ var gmb_data;
 			infowindow.close();
 			marker.setVisible( false );
 			var place = placeSearchAutocomplete.getPlace();
-			console.log(place);
+			console.log( place );
 			if ( !place.geometry ) {
 				window.alert( "Autocomplete's returned place contains no geometry" );
 				return;

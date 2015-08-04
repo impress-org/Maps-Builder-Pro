@@ -260,7 +260,7 @@ var gmb_data;
 		var index = get_marker_index();
 
 		//add data to fields
-		$( '#gmb_markers_group_' + index + '_title' ).val( 'Point ' + index );
+		$( '#gmb_markers_group_' + index + '_title' ).val( 'Point ' + parseInt( index + 1 ) ); //increment index to match visual ID (actually 0)
 		$( '#gmb_markers_group_' + index + '_lat' ).val( lat );
 		$( '#gmb_markers_group_' + index + '_lng' ).val( lng );
 
@@ -654,7 +654,6 @@ var gmb_data;
 			$( '.save-marker-button' ).attr( 'data-marker-index', $( this ).data( 'index' ) ); //Set the index for this marker
 		} );
 
-
 		//Marker Modal Update Icon
 		var save_icon_listener = google.maps.event.addDomListener( $( '.save-marker-button' )[0], 'click', function ( e ) {
 			e.preventDefault();
@@ -972,23 +971,29 @@ var gmb_data;
 	/**
 	 * Marker Index
 	 *
-	 * Helper function that returns the appropriate index for the repeatable group
-	 *
+	 * @description Helper function that returns the appropriate index for the repeatable group
+	 * @returns {Number}
 	 */
 	function get_marker_index() {
+
+		var marker_repeatable = $( '#gmb_markers_group_repeat' );
+		var marker_repeatable_group = marker_repeatable.find( ' div.cmb-repeatable-grouping' );
+		var marker_add_row_btn = marker_repeatable.find( '.cmb-add-group-row.button' );
+
 		//Create a new marker repeatable meta group
-		var index = parseInt( $( '#gmb_markers_group_repeat div.cmb-repeatable-grouping' ).last().attr( 'data-iterator' ) );
-		var existing_vals = $( 'div[data-iterator="0"] ' ).find( 'input,textarea' ).val();
+		var index = parseInt( marker_repeatable_group.last().attr( 'data-iterator' ) );
+		var existing_vals = marker_repeatable_group.first().find( 'input,textarea' ).val();
 
 		//Ensure appropriate index is used for marker
 		if ( existing_vals && index === 0 ) {
-			$( '.cmb-add-group-row.button' ).trigger( 'click' );
+			marker_add_row_btn.trigger( 'click' );
 			index = 1;
 		} else if ( index !== 0 ) {
-			$( '.cmb-add-group-row.button' ).trigger( 'click' );
+			marker_add_row_btn.trigger( 'click' );
 			//recount rows
-			index = parseInt( $( '#gmb_markers_group_repeat div.cmb-repeatable-grouping' ).last().attr( 'data-iterator' ) );
+			index = parseInt( marker_repeatable.find( ' div.cmb-repeatable-grouping' ).last().attr( 'data-iterator' ) );
 		}
+
 		return index;
 	}
 

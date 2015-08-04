@@ -71,7 +71,6 @@ var placeSearchAutocomplete;
 				$( '.gmb-image-preview' ).html( gmb_upload_marker.imgHTML( attachment ) );
 				$( '.gmb-image-preview' ).show();
 				$( '.save-marker-icon' ).slideDown(); //slide down save button
-				console.log(attachment);
 				$( '.save-marker-button' ).data( 'marker-image', attachment.url ); //slide down save button
 
 			},

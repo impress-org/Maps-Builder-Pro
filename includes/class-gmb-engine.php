@@ -150,7 +150,6 @@ class Google_Maps_Builder_Engine {
 				'map_theme'           => array(
 					'map_type'       => ! empty( $all_meta['gmb_type'][0] ) ? $all_meta['gmb_type'][0] : 'RoadMap',
 					'map_theme_json' => ! empty( $all_meta['gmb_theme_json'][0] ) ? $all_meta['gmb_theme_json'][0] : 'none',
-
 				),
 				'map_markers'         => $map_marker_array,
 				'destination_markers' => $destination_markers,
