@@ -201,11 +201,11 @@ class Google_Maps_Builder_Admin {
 			'type' => 'text',
 		) );
 		//@TODO: Coming soon!
-//		$marker_box->add_group_field( $group_field_id, array(
-//			'name' => __( 'Hide Place Details', $this->plugin_slug ),
-//			'id'   => 'hide_details',
-//			'type' => 'checkbox',
-//		) );
+		//		$marker_box->add_group_field( $group_field_id, array(
+		//			'name' => __( 'Hide Place Details', $this->plugin_slug ),
+		//			'id'   => 'hide_details',
+		//			'type' => 'checkbox',
+		//		) );
 		$marker_box->add_group_field( $group_field_id, array(
 			'name' => __( 'Marker Latitude', $this->plugin_slug ),
 			'id'   => 'lat',
@@ -860,8 +860,12 @@ class Google_Maps_Builder_Admin {
 		$output = '<div class="places-loading wpgp-loading">Loading Places</div>';
 		$output .= '<div id="google-map-wrap">';
 		$output .= '<div id="map" style="height:' . $map_height . 'px; width:' . $map_width . $map_width_val . '"></div>';
-		$output .= '<div id="map-toolbar"><input type="text" name="post_title" size="30" value="' . get_the_title() . '" id="title" spellcheck="true" autocomplete="off" placeholder="' . __( 'Enter map title', $this->plugin_slug ) . '"><button class="drop-marker button"><span class="dashicons dashicons-location"></span>' . __( 'Drop a Marker', $this->plugin_slug ) . '</button></div>';
+
+		//Toolbar
+		$output .= '<div id="map-toolbar"><button class="drop-marker button"><span class="dashicons dashicons-location"></span>' . __( 'Drop a Marker', $this->plugin_slug ) . '</button><button class="drop-marker button"><span class="dashicons dashicons-location"></span>' . __( 'Jump to Location', $this->plugin_slug ) . '</button></div>';
 		$output .= '</div>';
+
+		$output .= '<div class="white-modal"><input type="text" name="post_title" size="30" value="' . get_the_title() . '" id="title" spellcheck="true" autocomplete="off" placeholder="' . __( 'Enter map title', $this->plugin_slug ) . '"></div>';
 
 		//Places search
 		ob_start();

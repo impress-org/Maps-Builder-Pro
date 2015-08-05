@@ -693,6 +693,7 @@ var gmb_data;
 				$( '#gmb_markers_group_' + index + '_marker_img' ).val( '' ); //set marker image field
 			}
 
+
 			//remove current marker
 			marker.setMap( null );
 
@@ -703,6 +704,7 @@ var gmb_data;
 				icon        : marker_icon_data,
 				custom_label: marker_label_data
 			};
+
 
 			//Update Icon
 			marker = new Marker( marker_args );
