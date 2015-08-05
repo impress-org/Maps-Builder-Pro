@@ -835,7 +835,7 @@ class Google_Maps_Builder_Admin {
 		);
 
 		echo '<div class="autocomplete-wrap"><input type="text" name="' . $field->args( 'id' ) . '[geocode]" id="' . $field->args( 'id' ) . '" value="" class="search-autocomplete" /><p class="autocomplete-description">' .
-		     sprintf( __( 'Enter the name of a place or an address above to create a map marker or %s', $this->plugin_slug ), '<a href="#" class="drop-marker button button-small">Drop a Marker</a>' ) .
+		     sprintf( __( 'Enter the name of a place or an address above to create a map marker or %1$sDrop a Marker%2$s', $this->plugin_slug ), '<a href="#" class="drop-marker button button-small"><span class="dashicons dashicons-location"></span>', '</a>' ) .
 		     '</p></div>';
 
 		//Markers Modal
@@ -862,10 +862,13 @@ class Google_Maps_Builder_Admin {
 		$output .= '<div id="map" style="height:' . $map_height . 'px; width:' . $map_width . $map_width_val . '"></div>';
 
 		//Toolbar
-		$output .= '<div id="map-toolbar"><button class="drop-marker button"><span class="dashicons dashicons-location"></span>' . __( 'Drop a Marker', $this->plugin_slug ) . '</button><button class="drop-marker button"><span class="dashicons dashicons-location"></span>' . __( 'Jump to Location', $this->plugin_slug ) . '</button></div>';
+		$output .= '<div id="map-toolbar"><button class="drop-marker button"><span class="dashicons dashicons-location"></span>' . __( 'Drop a Marker', $this->plugin_slug ) . '</button><button class="goto-location button gmb-magnific-inline" data-target="map-autocomplete-wrap"><span class="dashicons dashicons-admin-site"></span>' . __( 'Goto Location', $this->plugin_slug ) . '</button><button class="edit-title button gmb-magnific-inline" data-target="map-title-wrap"><span class="dashicons dashicons-edit"></span>' . __( 'Edit Map Title', $this->plugin_slug ) . '</button></div>';
 		$output .= '</div>';
 
-		$output .= '<div class="white-modal"><input type="text" name="post_title" size="30" value="' . get_the_title() . '" id="title" spellcheck="true" autocomplete="off" placeholder="' . __( 'Enter map title', $this->plugin_slug ) . '"></div>';
+		$output .= '<div class="white-popup mfp-hide map-title-wrap"><div class="inner-modal">
+				<button type="button" class="gmb-modal-close">&times;</button><input type="text" name="post_title" size="30" value="' . get_the_title() . '" id="title" spellcheck="true" autocomplete="off" placeholder="' . __( 'Enter map title', $this->plugin_slug ) . '"></div></div>';
+		$output .= '<div class="white-popup mfp-hide map-autocomplete-wrap">	<div class="inner-modal">
+				<button type="button" class="gmb-modal-close">&times;</button><input type="text" name="" size="30" id="map-location-autocomplete"></div></div>';
 
 		//Places search
 		ob_start();

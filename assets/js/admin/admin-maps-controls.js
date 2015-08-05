@@ -39,6 +39,53 @@ var placeSearchAutocomplete;
 		} );
 
 		toggle_map_places_search_field( places_search_control );
+		
+		//Initialize Magnific/Modal Functionality Too
+		$( 'body' ).on( 'click', '.gmb-magnific-inline', function ( e ) {
+			e.preventDefault();
+			var target = '.' + $( this ).data( 'target' ); //target element class name
+
+			//Modal in modal?
+			//We can't have a magnific inside magnific so CSS3 modal it is
+			if ( $.magnificPopup.instance.isOpen === true ) {
+				console.log( target );
+				//Open CSS modal
+				$( target ).before( '<div class="modal-placeholder"></div>' ) // Save a DOM "bookmark"
+					.removeClass( 'mfp-hide' ) //ensure it's visible
+					.appendTo( '.magnific-builder #poststuff' ); // Move the element to container
+
+				//Add close functionality
+				$( target ).on( 'click', function ( e ) {
+					//only on overlay
+					if ( $( e.target ).hasClass( 'white-popup' ) ) {
+						// Move back out of container
+						$( this )
+							.addClass( 'mfp-hide' ) //ensure it's hidden
+							.appendTo( '.modal-placeholder' )  // Move it back to it's proper location
+							.unwrap(); // Remove the placeholder
+					}
+				} );
+				//Close button
+				$( '.gmb-modal-close' ).on( 'click', function () {
+					$( target )
+						.addClass( 'mfp-hide' ) //ensure it's hidden
+						.appendTo( '.modal-placeholder' )  // Move it back to it's proper location
+						.unwrap(); // Remove the placeholder
+				} );
+
+
+			}
+			//Normal modal open
+			else {
+				$.magnificPopup.open( {
+					items   : {
+						src : $( target ),
+						type: 'inline'
+					},
+					midClick: true
+				} );
+			}
+		} );
 
 		//Custom marker modal uploader
 		gmb_upload_marker = {

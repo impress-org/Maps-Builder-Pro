@@ -8,7 +8,7 @@
  */
 ?>
 
-<div id="marker-icon-modal" class="white-popup">
+<div class="white-popup marker-icon-modal mfp-hide">
 	<div class="inner-modal">
 		<button type="button" class="gmb-modal-close">&times;</button>
 		<div class="marker-description-wrap clear">

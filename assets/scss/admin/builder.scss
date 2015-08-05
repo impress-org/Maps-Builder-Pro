@@ -29,7 +29,7 @@
   -webkit-box-sizing: border-box;
 }
 
-.cmb2-id-gmb-theme-json, #marker-icon-modal, .gmb-hidden {
+.cmb2-id-gmb-theme-json, .gmb-hidden {
   display: none;
 }
 
@@ -65,7 +65,7 @@
   padding-right: 16px;
 }
 
-.mfp-content #marker-icon-modal {
+.mfp-content .marker-icon-modal {
   display: block;
 }
 
@@ -402,6 +402,9 @@ Save Info Window Toolbar
 	.google-btn {
 	  width: 75px;
 	}
+	.marker-edit-link {
+	  opacity: 0.75;
+	}
   }
 }
 
@@ -415,29 +418,30 @@ a.marker-edit-link {
   float: right;
 }
 
-#save-toolbar > li .marker-edit-link {
-  opacity: 0.75;
+#infobubble-content {
+  .edit-place-title {
+	width: 290px;
+	margin: 0 0 10px;
+  }
+
+  .edit-place-description {
+	display: block;
+	font-size: 12px;
+	width: 100%;
+	min-height: 100px;
+  }
 }
 
-#infobubble-content .edit-place-title {
-  width: 290px;
-  margin: 0 0 10px;
-}
-
-#infobubble-content .edit-place-description {
-  display: block;
-  font-size: 12px;
-  width: 100%;
-  min-height: 100px;
-}
-
+/*-------------------------------------
+Map Edit Quick Toolbar
+---------------------------------------*/
 #map-toolbar {
   position: absolute;
   left: 50%;
   bottom: 0;
   transform: translateX(-50%);
   background: #FFF;
-  padding: 3px;
+  padding: 3px 1px;
   border-top: 1px solid #DDD;
   border-left: 1px solid #DDD;
   border-right: 1px solid #DDD;
@@ -446,13 +450,23 @@ a.marker-edit-link {
 	padding: 3px;
   }
 
-  .drop-marker {
-	margin-left: 5px;
+  .drop-marker .dashicons {
+	margin: 6px 0px 0 0;
+
+  }
+
+  button {
+	margin: 0 2px;
 	.dashicons {
-	  margin: 6px 0px 0 0;
 	  font-size: 16px;
+	  margin-left:-2px;
+	  margin-top:5px;
+	}
+	&.edit-title {
+	  display: none; //only show in modal
 	}
   }
+
 
 }
 

@@ -1419,7 +1419,7 @@ Magnific Builder
     bottom: 15px;
     left: auto; }
 
-.magnific-builder #titlediv, .magnific-builder #submitdiv, .magnific-builder #google_maps_preview_metabox .handlediv, .magnific-builder #google_maps_preview_metabox .ui-sortable-handle, .magnific-builder #post-body-content, .magnific-builder #marker-icon-modal {
+.magnific-builder #titlediv, .magnific-builder #submitdiv, .magnific-builder #google_maps_preview_metabox .handlediv, .magnific-builder #google_maps_preview_metabox .ui-sortable-handle, .magnific-builder #post-body-content, .magnific-builder .marker-icon-modal {
   display: none; }
 
 .magnific-builder #google_maps_preview_metabox {
@@ -1475,8 +1475,6 @@ Magnific Builder
     margin-top: 10px;
     display: block;
     width: 120px; }
-  .magnific-builder#post #postbox-container-1 .white-popup {
-    display: none; }
   .magnific-builder#post #postbox-container-1 .places-change-message .button {
     margin-bottom: 10px;
     float: left; }
@@ -1495,6 +1493,8 @@ Magnific Builder
   width: 140px;
   text-align: center;
   margin: 10px 0 0; }
+.magnific-builder#post button.edit-title {
+  display: inline-block; }
 
 /* No Dragging */
 .magnific-builder .postbox .hndle {
@@ -1587,7 +1587,7 @@ button.gmb-modal-close {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box; }
 
-.cmb2-id-gmb-theme-json, #marker-icon-modal, .gmb-hidden {
+.cmb2-id-gmb-theme-json, .gmb-hidden {
   display: none; }
 
 .marker-info-wrapper {
@@ -1613,7 +1613,7 @@ button.gmb-modal-close {
   background: url('../img/new-window-icon.png') no-repeat right 3px transparent;
   padding-right: 16px; }
 
-.mfp-content #marker-icon-modal {
+.mfp-content .marker-icon-modal {
   display: block; }
 
 /*Shortcode Input */
@@ -1878,6 +1878,8 @@ Save Info Window Toolbar
       margin: 0 5px 0 0; }
     #save-toolbar > li .google-btn {
       width: 75px; }
+    #save-toolbar > li .marker-edit-link {
+      opacity: 0.75; }
 
 a.marker-edit-link {
   background: url('../img/marker-btn.png') no-repeat 0 0 transparent;
@@ -1888,36 +1890,40 @@ a.marker-edit-link {
   display: block;
   float: right; }
 
-#save-toolbar > li .marker-edit-link {
-  opacity: 0.75; }
-
 #infobubble-content .edit-place-title {
   width: 290px;
   margin: 0 0 10px; }
-
 #infobubble-content .edit-place-description {
   display: block;
   font-size: 12px;
   width: 100%;
   min-height: 100px; }
 
+/*-------------------------------------
+Map Edit Quick Toolbar
+---------------------------------------*/
 #map-toolbar {
   position: absolute;
   left: 50%;
   bottom: 0;
   transform: translateX(-50%);
   background: #FFF;
-  padding: 3px;
+  padding: 3px 1px;
   border-top: 1px solid #DDD;
   border-left: 1px solid #DDD;
   border-right: 1px solid #DDD; }
   #map-toolbar #title {
     padding: 3px; }
-  #map-toolbar .drop-marker {
-    margin-left: 5px; }
-    #map-toolbar .drop-marker .dashicons {
-      margin: 6px 0px 0 0;
-      font-size: 16px; }
+  #map-toolbar .drop-marker .dashicons {
+    margin: 6px 0px 0 0; }
+  #map-toolbar button {
+    margin: 0 2px; }
+    #map-toolbar button .dashicons {
+      font-size: 16px;
+      margin-left: -2px;
+      margin-top: 5px; }
+    #map-toolbar button.edit-title {
+      display: none; }
 
 /*-------------------------------------
 Google Style Buttons
@@ -2483,15 +2489,15 @@ Toggle Tips
 /*-------------------------------------
 Marker Icon Modal
 ---------------------------------------*/
-#poststuff .marker-description-wrap {
+#poststuff .marker-description-wrap, .marker-description-wrap {
   margin-bottom: 20px;
   border-bottom: 1px solid #DDD;
   padding-bottom: 20px; }
-  #poststuff .marker-description-wrap h3 {
+  #poststuff .marker-description-wrap h3, .marker-description-wrap h3 {
     font-size: 22px;
     padding: 0;
     margin: 0 0 15px; }
-  #poststuff .marker-description-wrap p {
+  #poststuff .marker-description-wrap p, .marker-description-wrap p {
     font-size: 16px;
     font-style: italic;
     color: #aaa;
@@ -2570,7 +2576,7 @@ Colors
 .marker-icon-color-wrap {
   margin-bottom: 20px; }
 
-#marker-icon-modal .color-desc {
+.marker-icon-modal .color-desc {
   display: block;
   clear: both;
   font-size: 12px;

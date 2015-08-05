@@ -49,7 +49,6 @@ var gmb_data;
 			}
 		} );
 
-
 		//Radius Fields
 		var current_radius;
 
@@ -607,7 +606,7 @@ var gmb_data;
 			'<li class="info-window-save"><div class="google-btn-blue google-btn google-save-btn" data-tooltip="Save changes" data-index="' + index + '">Save</div></li>' +
 			'<li class="info-window-cancel"><div class="google-btn-default google-btn google-cancel-btn" data-tooltip="Cancel edit" data-index="' + index + '">Cancel</div></li>' +
 			'</ul>' +
-			'<span class="marker-edit-link-wrap" data-index="' + index + '"><a href="#marker-icon-modal" data-tooltip="Change icon"  data-mfp-src="#marker-icon-modal" class="marker-edit-link gmb-magnific-marker gmb-magnific-inline"></a></span>' +
+			'<span class="marker-edit-link-wrap" data-index="' + index + '"><a href="#" data-target="marker-icon-modal" data-tooltip="Change icon" data-mfp-src="#marker-icon-modal" class="marker-edit-link gmb-magnific-marker gmb-magnific-inline"></a></span>' +
 			'</div>';
 
 		info_window_content = set_info_window_wrapper( info_window_content );
@@ -1656,7 +1655,7 @@ var gmb_data;
 	function set_map_marker_icon() {
 
 		var marker_containers = $( '.marker-icon-row' );
-		var marker_modal = $( '#marker-icon-modal' );
+		var marker_modal = $( '.marker-icon-modal' );
 		var marker_modal_save_container = marker_modal.find( '.save-marker-icon' );
 		var marker_modal_save_btn = marker_modal.find( '.save-marker-button' );
 
@@ -1760,48 +1759,6 @@ var gmb_data;
 				effect: function () {
 					$( this ).fadeIn( 200 );
 				}
-			}
-		} );
-		//Initialize Magnific Too
-		$( '.gmb-magnific-inline' ).on( 'click', function () {
-			//Modal in modal?
-			if ( $.magnificPopup.instance.isOpen === true ) {
-
-				//We can't have a magnific inside magnific so CSS3 modal it is
-				var target = $( this ).attr( 'href' );
-
-				//Open CSS modal
-				$( target ).before( '<div class="modal-placeholder"></div>' ) // Save a DOM "bookmark"
-					.removeClass( 'mfp-hide' ) //ensure it's visible
-					.appendTo( '.magnific-builder #poststuff' ); // Move the element to container
-
-				//Add close functionality
-				$( '.magnific-builder .white-popup' ).on( 'click', function ( e ) {
-					if ( e.target.className === 'white-popup' ) {
-						// Move back out of container
-						$( this )
-							.appendTo( '.modal-placeholder' )  // Move it back to it's proper location
-							.unwrap(); // Remove the placeholder
-					}
-				} );
-				//Close button
-				$( '.magnific-builder .button-primary, .gmb-modal-close' ).on( 'click', function () {
-					$( this ).parents( '.white-popup' )
-						.appendTo( '.modal-placeholder' )  // Move it back to it's proper location
-						.unwrap(); // Remove the placeholder
-				} );
-
-
-			}
-			//Normal modal open
-			else {
-				$.magnificPopup.open( {
-					items   : {
-						src : $( '#marker-icon-modal' ),
-						type: 'inline'
-					},
-					midClick: true
-				} );
 			}
 		} );
 

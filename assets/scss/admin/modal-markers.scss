@@ -1,7 +1,7 @@
 /*-------------------------------------
 Marker Icon Modal
 ---------------------------------------*/
-#poststuff .marker-description-wrap {
+#poststuff .marker-description-wrap, .marker-description-wrap {
   margin-bottom: 20px;
   border-bottom: 1px solid #DDD;
   padding-bottom: 20px;
@@ -110,7 +110,7 @@ Colors
   margin-bottom: 20px;
 }
 
-#marker-icon-modal .color-desc {
+.marker-icon-modal .color-desc {
   display: block;
   clear: both;
   font-size: 12px;

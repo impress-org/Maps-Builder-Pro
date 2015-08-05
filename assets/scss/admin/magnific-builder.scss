@@ -36,7 +36,7 @@ Magnific Builder
 }
 
 //Display none things
-.magnific-builder #titlediv, .magnific-builder #submitdiv, .magnific-builder #google_maps_preview_metabox .handlediv, .magnific-builder #google_maps_preview_metabox .ui-sortable-handle, .magnific-builder #post-body-content, .magnific-builder #marker-icon-modal {
+.magnific-builder #titlediv, .magnific-builder #submitdiv, .magnific-builder #google_maps_preview_metabox .handlediv, .magnific-builder #google_maps_preview_metabox .ui-sortable-handle, .magnific-builder #post-body-content, .magnific-builder .marker-icon-modal {
   display: none;
 }
 
@@ -117,10 +117,6 @@ Magnific Builder
 	  width: 120px;
 	}
 
-	.white-popup {
-	  display: none;
-	}
-
 	.places-change-message .button {
 	  margin-bottom: 10px;
 	  float: left;
@@ -150,8 +146,10 @@ Magnific Builder
 	text-align: center;
 	margin: 10px 0 0;
   }
-
-}
+  button.edit-title {
+	display: inline-block;
+  }
+ }
 
 /* No Dragging */
 .magnific-builder .postbox .hndle {
