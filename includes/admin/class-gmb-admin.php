@@ -862,22 +862,9 @@ class Google_Maps_Builder_Admin {
 		$output .= '</div>';
 
 		//Places search
-		$output .= '<div id="places-search" class="places-search-wrap">
-		<input id="pac-input" class="controls" type="text"
-		    placeholder="' . __( 'Enter a location', $this->plugin_slug ) . '">
-		<div id="type-selector" class="controls">
-		  <input type="radio" name="type" id="changetype-all" checked="checked">
-		  <label for="changetype-all">' . __( 'All', $this->plugin_slug ) . '</label>
-
-		  <input type="radio" name="type" id="changetype-establishment">
-		  <label for="changetype-establishment">' . __( 'Establishments', $this->plugin_slug ) . '</label>
-
-		  <input type="radio" name="type" id="changetype-address">
-		  <label for="changetype-address">' . __( 'Addresses', $this->plugin_slug ) . '</label>
-
-		  <input type="radio" name="type" id="changetype-geocode">
-		  <label for="changetype-geocode">' . __( 'Geocodes', $this->plugin_slug ) . '</label>
-		</div> </div>';
+		ob_start();
+		include Google_Maps_Builder()->engine->get_google_maps_template( 'places-search.php' );
+		$output .= ob_get_clean();
 
 		$output .= '<div class="warning-message wpgp-message"></div>';
 
