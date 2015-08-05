@@ -309,7 +309,6 @@ var gmb_data;
 		window.map = map;
 		places_service = new google.maps.places.PlacesService( map );
 
-		console.log(gmb_data);
 		//Handle Map Geolocation
 		if ( navigator.geolocation && gmb_data.geolocate_setting === 'yes' && longitude == '' && latitude == '' && location.protocol === 'https:' ) {
 

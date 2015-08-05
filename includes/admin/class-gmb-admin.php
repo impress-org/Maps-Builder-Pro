@@ -852,17 +852,32 @@ class Google_Maps_Builder_Admin {
 		$wh_value        = get_post_meta( $post->ID, 'gmb_width_height', true );
 		$default_options = $this->get_default_map_options();
 
-
 		$map_height    = isset( $wh_value['height'] ) ? $wh_value['height'] : $default_options['height'];
 		$map_width     = isset( $wh_value['width'] ) ? $wh_value['width'] : $default_options['width'];
 		$map_width_val = isset( $wh_value['map_width_unit'] ) ? $wh_value['map_width_unit'] : $default_options['width_unit'];
 
-		$output = '<div class="places-loading wpgp-loading">Loading Places</div><div id="google-map-wrap">';
+		$output = '<div class="places-loading wpgp-loading">Loading Places</div>';
+		$output .= '<div id="google-map-wrap">';
 		$output .= '<div id="map" style="height:' . $map_height . 'px; width:' . $map_width . $map_width_val . '"></div>';
 		$output .= '</div>';
 
 		//Places search
-		include Google_Maps_Builder()->engine->get_google_maps_template( 'places-search.php' );
+		$output .= '<div id="places-search" class="places-search-wrap">
+		<input id="pac-input" class="controls" type="text"
+		    placeholder="' . __( 'Enter a location', $this->plugin_slug ) . '">
+		<div id="type-selector" class="controls">
+		  <input type="radio" name="type" id="changetype-all" checked="checked">
+		  <label for="changetype-all">' . __( 'All', $this->plugin_slug ) . '</label>
+
+		  <input type="radio" name="type" id="changetype-establishment">
+		  <label for="changetype-establishment">' . __( 'Establishments', $this->plugin_slug ) . '</label>
+
+		  <input type="radio" name="type" id="changetype-address">
+		  <label for="changetype-address">' . __( 'Addresses', $this->plugin_slug ) . '</label>
+
+		  <input type="radio" name="type" id="changetype-geocode">
+		  <label for="changetype-geocode">' . __( 'Geocodes', $this->plugin_slug ) . '</label>
+		</div> </div>';
 
 		$output .= '<div class="warning-message wpgp-message"></div>';
 

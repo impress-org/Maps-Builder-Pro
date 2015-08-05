@@ -9,7 +9,8 @@
  */
 
 //Places search
-$output .= '<div id="places-search" class="places-search-wrap"><input id="pac-input" class="controls" type="text"
+$output .= '<div id="places-search" class="places-search-wrap">
+<input id="pac-input" class="controls" type="text"
     placeholder="' . __( 'Enter a location', $this->plugin_slug ) . '">
 <div id="type-selector" class="controls">
   <input type="radio" name="type" id="changetype-all" checked="checked">
