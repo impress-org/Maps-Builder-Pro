@@ -19,9 +19,9 @@ Marker Icon Modal
 }
 
 /*-------------------------------------
-Marker Types
+Marker Section Headings
 ---------------------------------------*/
-#poststuff .marker-row {
+#poststuff .marker-row, #poststuff .marker-icon-row {
   h3 {
 	margin: 0 0 20px;
 	font-size: 18px;
@@ -35,19 +35,36 @@ Marker Icon Rows
 .marker-icon-row {
   margin-bottom: 10px;
 
+  h3 {
+	padding: 0;
+	font-size: 18px;
+  }
 }
 
 .marker-icon-row, .save-marker-icon {
   display: none;
 }
 
-.marker-icon-row .icon, .marker-row .marker-item {
+.marker-row .marker-item, .marker-icon-row .icon {
   width: 31%;
   float: left;
   font-size: 14px;
   margin-bottom: 10px;
   padding: 4px;
   border-radius: 5px;
+  text-align: center;
+}
+
+.marker-icon-row .icon {
+  text-align: left;
+  margin-right:1%;
+
+  span {
+	font-size: 32px;
+	margin-right: 8px;
+	position: relative;
+	top: 8px;
+  }
 }
 
 .icon-inner {
@@ -55,13 +72,7 @@ Marker Icon Rows
   top: -8px;
 }
 
-.marker-icon-row .icon span {
-  font-size: 32px;
-  margin-right: 8px;
-  position: relative;
-  top: 8px;
-}
-
+//Consistent hover effects
 .marker-icon-row .icon, .marker-row .marker-item, .maps-icon {
   cursor: pointer;
   border: 1px solid #FFF;
@@ -76,23 +87,11 @@ Marker Icon Rows
   background: #FFFAE2;
 }
 
-.marker-label {
-  z-index: 99;
-  position: absolute;
-  display: block;
-  margin-top: -50px;
-  margin-left: -25px;
-  width: 50px;
-  height: 50px;
-  font-size: 28px;
-  text-align: center;
-  color: #FFFFFF;
-  white-space: nowrap;
-  line-height: 1;
-}
+/*-------------------------------------
+Colors
+---------------------------------------*/
 
-/* Color */
-.marker-row {
+.marker-icon-color-wrap {
   margin-bottom: 20px;
 }
 
@@ -114,29 +113,53 @@ Marker Icon Rows
   font-style: italic;
 }
 
-/* Pins */
+/*-------------------------------------
+Marker Upload
+---------------------------------------*/
+.gmb-marker-image-wrap {
 
-.marker-row .marker-item {
-  float: left;
-  width: 31%;
-
-  .marker-svg {
+  .gmb-image-preview {
 	float: left;
-	margin-right: 12px;
-	height: 50px;
-	.default-marker {
-	  margin: 8px 0 0 10px;
-	}
-
-  }
-
-  .marker-description {
-	line-height: 50px;
+	margin: 0 20px 0 0;
   }
 
 }
 
-.marker-description-wrap h3 {
+/* Pins */
+
+.marker-row {
+  margin-bottom: 25px;
+  .marker-item {
+	float: left;
+	width: 31%;
+	text-align: center;
+	padding: 10px;
+	height: 100px;
+
+	.marker-preview {
+	  margin: 0 0 10px;
+	  min-height: 40px;
+
+	  .dashicons-upload {
+		height: 40px;
+		width: 40px;
+		font-size: 40px;
+	  }
+
+	  .default-marker {
+		padding-top: 8px;
+	  }
+
+	}
+
+	.marker-description {
+
+	}
+
+  }
+}
+
+.marker-description-wrap h3, .marker-icon-row h3 {
   margin-top: 0;
 }
 

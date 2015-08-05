@@ -1474,8 +1474,7 @@ Magnific Builder
   .magnific-builder#post #postbox-container-1 a.drop-marker {
     margin-top: 10px;
     display: block;
-    width: 100px;
-    text-align: center; }
+    width: 120px; }
   .magnific-builder#post #postbox-container-1 .white-popup {
     display: none; }
   .magnific-builder#post #postbox-container-1 .places-change-message .button {
@@ -1772,7 +1771,7 @@ button.gmb-modal-close {
   overflow: hidden !important; }
 
 #infobubble-content.loading {
-  background: url('../img/loading.gif') no-repeat center center #FFF; }
+  background: url('../img/loading-large.gif') no-repeat center center #FFF; }
 
 #google-map-wrap div#infobubble-content > div {
   white-space: normal; }
@@ -1902,6 +1901,24 @@ a.marker-edit-link {
   width: 100%;
   min-height: 100px; }
 
+#map-toolbar {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  background: #FFF;
+  padding: 3px;
+  border-top: 1px solid #DDD;
+  border-left: 1px solid #DDD;
+  border-right: 1px solid #DDD; }
+  #map-toolbar #title {
+    padding: 3px; }
+  #map-toolbar .drop-marker {
+    margin-left: 5px; }
+    #map-toolbar .drop-marker .dashicons {
+      margin: 6px 0px 0 0;
+      font-size: 16px; }
+
 /*-------------------------------------
 Google Style Buttons
 ---------------------------------------*/
@@ -2020,6 +2037,9 @@ Autocomplete Metabox
   color: #aaaaaa; }
 #cmb2-metabox-google_maps_markers a.drop-marker {
   font-style: normal; }
+  #cmb2-metabox-google_maps_markers a.drop-marker .dashicons {
+    font-size: 14px;
+    margin: 4px 0 0; }
 
 /*-------------------------------------
 Map Markers
@@ -2478,9 +2498,9 @@ Marker Icon Modal
     margin-bottom: 0; }
 
 /*-------------------------------------
-Marker Types
+Marker Section Headings
 ---------------------------------------*/
-#poststuff .marker-row h3 {
+#poststuff .marker-row h3, #poststuff .marker-icon-row h3 {
   margin: 0 0 20px;
   font-size: 18px;
   padding: 0; }
@@ -2490,27 +2510,34 @@ Marker Icon Rows
 ---------------------------------------*/
 .marker-icon-row {
   margin-bottom: 10px; }
+  .marker-icon-row h3 {
+    padding: 0;
+    font-size: 18px; }
 
 .marker-icon-row, .save-marker-icon {
   display: none; }
 
-.marker-icon-row .icon, .marker-row .marker-item {
+.marker-row .marker-item, .marker-icon-row .icon {
   width: 31%;
   float: left;
   font-size: 14px;
   margin-bottom: 10px;
   padding: 4px;
-  border-radius: 5px; }
+  border-radius: 5px;
+  text-align: center; }
+
+.marker-icon-row .icon {
+  text-align: left;
+  margin-right: 1%; }
+  .marker-icon-row .icon span {
+    font-size: 32px;
+    margin-right: 8px;
+    position: relative;
+    top: 8px; }
 
 .icon-inner {
   position: relative;
   top: -8px; }
-
-.marker-icon-row .icon span {
-  font-size: 32px;
-  margin-right: 8px;
-  position: relative;
-  top: 8px; }
 
 .marker-icon-row .icon, .marker-row .marker-item, .maps-icon {
   cursor: pointer;
@@ -2523,22 +2550,10 @@ Marker Icon Rows
   border: 1px solid #f4efd8;
   background: #FFFAE2; }
 
-.marker-label {
-  z-index: 99;
-  position: absolute;
-  display: block;
-  margin-top: -50px;
-  margin-left: -25px;
-  width: 50px;
-  height: 50px;
-  font-size: 28px;
-  text-align: center;
-  color: #FFFFFF;
-  white-space: nowrap;
-  line-height: 1; }
-
-/* Color */
-.marker-row {
+/*-------------------------------------
+Colors
+---------------------------------------*/
+.marker-icon-color-wrap {
   margin-bottom: 20px; }
 
 #marker-icon-modal .color-desc {
@@ -2556,20 +2571,33 @@ Marker Icon Rows
   padding-top: 3px;
   font-style: italic; }
 
-/* Pins */
-.marker-row .marker-item {
+/*-------------------------------------
+Marker Upload
+---------------------------------------*/
+.gmb-marker-image-wrap .gmb-image-preview {
   float: left;
-  width: 31%; }
-  .marker-row .marker-item .marker-svg {
-    float: left;
-    margin-right: 12px;
-    height: 50px; }
-    .marker-row .marker-item .marker-svg .default-marker {
-      margin: 8px 0 0 10px; }
-  .marker-row .marker-item .marker-description {
-    line-height: 50px; }
+  margin: 0 20px 0 0; }
 
-.marker-description-wrap h3 {
+/* Pins */
+.marker-row {
+  margin-bottom: 25px; }
+  .marker-row .marker-item {
+    float: left;
+    width: 31%;
+    text-align: center;
+    padding: 10px;
+    height: 100px; }
+    .marker-row .marker-item .marker-preview {
+      margin: 0 0 10px;
+      min-height: 40px; }
+      .marker-row .marker-item .marker-preview .dashicons-upload {
+        height: 40px;
+        width: 40px;
+        font-size: 40px; }
+      .marker-row .marker-item .marker-preview .default-marker {
+        padding-top: 8px; }
+
+.marker-description-wrap h3, .marker-icon-row h3 {
   margin-top: 0; }
 
 /*-------------------------------------

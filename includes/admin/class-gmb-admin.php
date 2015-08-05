@@ -200,11 +200,12 @@ class Google_Maps_Builder_Admin {
 			'id'   => 'place_id',
 			'type' => 'text',
 		) );
-		$marker_box->add_group_field( $group_field_id, array(
-			'name' => __( 'Hide Place Details', $this->plugin_slug ),
-			'id'   => 'hide_details',
-			'type' => 'checkbox',
-		) );
+		//@TODO: Coming soon!
+//		$marker_box->add_group_field( $group_field_id, array(
+//			'name' => __( 'Hide Place Details', $this->plugin_slug ),
+//			'id'   => 'hide_details',
+//			'type' => 'checkbox',
+//		) );
 		$marker_box->add_group_field( $group_field_id, array(
 			'name' => __( 'Marker Latitude', $this->plugin_slug ),
 			'id'   => 'lat',
@@ -236,8 +237,8 @@ class Google_Maps_Builder_Admin {
 		) );
 		$marker_box->add_group_field( $group_field_id, array(
 				'name'              => __( 'Marker Infowindow', $this->plugin_slug ),
-				'desc'              => __( 'Would you like this marker\'s infowindow open by default?', $this->plugin_slug ),
-				'id'                => $prefix . 'marker_infowindow_action',
+				'desc'              => __( 'Would you like this marker\'s infowindow open by default on the map?', $this->plugin_slug ),
+				'id'                => 'infowindow_open',
 				'type'              => 'select',
 				'default'           => 'closed',
 				'options'           => array(
@@ -859,13 +860,13 @@ class Google_Maps_Builder_Admin {
 		$output = '<div class="places-loading wpgp-loading">Loading Places</div>';
 		$output .= '<div id="google-map-wrap">';
 		$output .= '<div id="map" style="height:' . $map_height . 'px; width:' . $map_width . $map_width_val . '"></div>';
+		$output .= '<div id="map-toolbar"><input type="text" name="post_title" size="30" value="' . get_the_title() . '" id="title" spellcheck="true" autocomplete="off" placeholder="' . __( 'Enter map title', $this->plugin_slug ) . '"><button class="drop-marker button"><span class="dashicons dashicons-location"></span>' . __( 'Drop a Marker', $this->plugin_slug ) . '</button></div>';
 		$output .= '</div>';
 
 		//Places search
 		ob_start();
 		include Google_Maps_Builder()->engine->get_google_maps_template( 'places-search.php' );
 		$output .= ob_get_clean();
-
 		$output .= '<div class="warning-message wpgp-message"></div>';
 
 		echo $output;

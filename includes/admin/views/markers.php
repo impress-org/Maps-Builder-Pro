@@ -15,7 +15,7 @@
 
 			<h3><?php _e( 'Customize Map Marker', $this->plugin_slug ); ?></h3>
 
-			<p><?php _e( 'Customize your Google Maps markers by selecting a marker graphic and icon. Integration made possible from the excellent Maps Icon library.', $this->plugin_slug ); ?></p>
+			<p><?php _e( 'Customize your Google Maps markers by choosing from the options below. Integrations are made possible from the leading maps icons libraries. Plus, you can upload your own!', $this->plugin_slug ); ?></p>
 		</div>
 
 		<div class="marker-row clear">
@@ -23,32 +23,32 @@
 			<h3><?php _e( 'Step 1: Select a Marker Type', $this->plugin_slug ); ?></h3>
 
 			<div class="marker-item" data-marker="MAP_PIN" data-toggle="map-svg-icons">
-				<div class="marker-svg">
+				<div class="marker-svg marker-preview">
 					<svg version="1.0" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 100 165" enable-background="new 0 0 100 165" xml:space="preserve"><path fill="#428BCA" d="M50,0C22.382,0,0,21.966,0,49.054C0,76.151,50,165,50,165s50-88.849,50-115.946C100,21.966,77.605,0,50,0z"></path>
 				</svg>
 				</div>
 				<div class="marker-description"><?php _e( 'Map Pin', $this->plugin_slug ); ?></div>
 			</div>
 			<div class="marker-item" data-marker="SQUARE_PIN" data-toggle="map-svg-icons">
-				<div class="marker-svg">
+				<div class="marker-svg marker-preview">
 					<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 100 120" enable-background="new 0 0 100 120" xml:space="preserve"><polygon fill="#428BCA" points="100,0 0,0 0,100 36.768,100 50.199,119.876 63.63,100 100,100 "></polygon></svg>
 				</div>
 				<div class="marker-description"><?php _e( 'Square Pin', $this->plugin_slug ); ?></div>
 			</div>
-			<div class="marker-item" data-marker="default" data-toggle="default">
-				<div class="marker-default">
+			<div class="marker-item" data-marker="default" data-toggle="default-icons-row">
+				<div class="marker-default marker-preview">
 					<img src="<?php echo apply_filters( 'gmb_default_marker', GMB_PLUGIN_URL . 'assets/img/default-marker.png' ); ?>" class="default-marker" />
 				</div>
-				<div class="marker-description"><?php _e( 'Default', $this->plugin_slug ); ?></div>
+				<div class="marker-description"><?php _e( 'Default Icons', $this->plugin_slug ); ?></div>
 			</div>
 			<div class="marker-item" data-marker="mapicons" data-toggle="map-icons-row">
-				<div class="marker-map-icons">
+				<div class="marker-map-icons marker-preview">
 					<img src="<?php echo apply_filters( 'gmb_default_marker', GMB_PLUGIN_URL . 'assets/img/logo-mapicons.png' ); ?>" class="default-marker" />
 				</div>
 				<div class="marker-description"><?php _e( 'Map Icons', $this->plugin_slug ); ?></div>
 			</div>
 			<div class="marker-item" data-marker="upload" data-toggle="marker-upload">
-				<div class="marker-upload">
+				<div class="marker-upload marker-preview">
 					<span class="dashicons dashicons-upload"></span>
 				</div>
 				<div class="marker-description"><?php _e( 'Upload Marker', $this->plugin_slug ); ?></div>
@@ -235,7 +235,842 @@
 		</div>
 		<!--/.marker-icon-row -->
 
+		<div class="marker-icon-row default-icons-row gmb-hidden clear">
+
+			<h3><?php _e( 'Step 2: Select a Marker Icon', $this->plugin_slug ); ?></h3>
+
+			<ul class="map-icons-list">
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue-blank.png' ?>" alt=""></a>
+				</li><li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue-dot.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue_MarkerA.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue_MarkerB.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue_MarkerC.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue_MarkerD.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue_MarkerE.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue_MarkerF.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue_MarkerG.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue_MarkerH.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue_MarkerI.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue_MarkerJ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue_MarkerK.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue_MarkerL.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue_MarkerM.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue_MarkerN.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue_MarkerO.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue_MarkerP.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue_MarkerQ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue_MarkerR.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue_MarkerS.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue_MarkerT.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue_MarkerU.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue_MarkerV.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue_MarkerW.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue_MarkerX.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue_MarkerY.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/blue_MarkerZ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown-blank.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown-dot.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown_MarkerA.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown_MarkerB.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown_MarkerC.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown_MarkerD.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown_MarkerE.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown_MarkerF.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown_MarkerG.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown_MarkerH.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown_MarkerI.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown_MarkerJ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown_MarkerK.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown_MarkerL.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown_MarkerM.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown_MarkerN.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown_MarkerO.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown_MarkerP.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown_MarkerQ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown_MarkerR.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown_MarkerS.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown_MarkerT.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown_MarkerU.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown_MarkerV.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown_MarkerW.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown_MarkerX.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown_MarkerY.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/brown_MarkerZ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen-blank.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen-dot.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen_MarkerA.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen_MarkerB.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen_MarkerC.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen_MarkerD.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen_MarkerE.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen_MarkerF.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen_MarkerG.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen_MarkerH.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen_MarkerI.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen_MarkerJ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen_MarkerK.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen_MarkerL.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen_MarkerM.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen_MarkerN.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen_MarkerO.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen_MarkerP.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen_MarkerQ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen_MarkerR.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen_MarkerS.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen_MarkerT.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen_MarkerU.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen_MarkerV.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen_MarkerW.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen_MarkerX.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen_MarkerY.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/darkgreen_MarkerZ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green-blank.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green-dot.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green_MarkerA.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green_MarkerB.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green_MarkerC.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green_MarkerD.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green_MarkerE.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green_MarkerF.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green_MarkerG.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green_MarkerH.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green_MarkerI.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green_MarkerJ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green_MarkerK.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green_MarkerL.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green_MarkerM.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green_MarkerN.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green_MarkerO.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green_MarkerP.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green_MarkerQ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green_MarkerR.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green_MarkerS.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green_MarkerT.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green_MarkerU.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green_MarkerV.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green_MarkerW.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green_MarkerX.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/green_MarkerY.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange-blank.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange-dot.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange_markerA.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange_markerB.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange_markerC.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange_markerD.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange_markerE.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange_markerF.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange_markerG.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange_markerH.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange_markerI.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange_markerJ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange_markerK.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange_markerL.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange_markerM.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange_markerN.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange_markerO.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange_markerP.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange_markerQ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange_markerR.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange_markerS.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange_markerT.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange_markerU.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange_markerV.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange_markerW.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange_markerX.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange_markerY.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/orange_markerZ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue-blank.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue-dot.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue_MarkerA.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue_MarkerB.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue_MarkerC.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue_MarkerD.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue_MarkerE.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue_MarkerF.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue_MarkerG.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue_MarkerH.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue_MarkerI.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue_MarkerJ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue_MarkerK.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue_MarkerL.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue_MarkerM.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue_MarkerN.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue_MarkerO.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue_MarkerP.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue_MarkerQ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue_MarkerR.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue_MarkerS.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue_MarkerT.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue_MarkerU.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue_MarkerV.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue_MarkerW.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue_MarkerX.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue_MarkerY.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/paleblue_MarkerZ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/pink-blank.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/pink-dot.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/pink_MarkerA.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/pink_MarkerB.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/pink_MarkerC.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/pink_MarkerD.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/pink_MarkerE.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/pink_MarkerF.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/pink_MarkerG.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/pink_MarkerH.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/pink_MarkerI.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/pink_MarkerJ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/pink_MarkerK.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/pink_MarkerL.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/pink_MarkerM.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/pink_MarkerN.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/pink_MarkerO.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/pink_MarkerP.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/pink_MarkerQ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/pink_MarkerR.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/pink_MarkerS.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/pink_MarkerT.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/pink_MarkerU.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/pink_MarkerV.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple-blank.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple-dot.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple_MarkerA.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple_MarkerB.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple_MarkerC.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple_MarkerD.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple_MarkerE.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple_MarkerF.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple_MarkerG.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple_MarkerH.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple_MarkerI.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple_MarkerJ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple_MarkerK.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple_MarkerL.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple_MarkerM.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple_MarkerN.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple_MarkerO.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple_MarkerP.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple_MarkerQ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple_MarkerR.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple_MarkerS.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple_MarkerT.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple_MarkerU.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple_MarkerV.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple_MarkerW.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple_MarkerX.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple_MarkerY.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/purple_MarkerZ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red-blank.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red-dot.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red_MarkerA.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red_MarkerB.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red_MarkerC.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red_MarkerD.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red_MarkerE.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red_MarkerF.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red_MarkerG.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red_MarkerH.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red_MarkerI.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red_MarkerJ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red_MarkerK.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red_MarkerL.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red_MarkerM.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red_MarkerN.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red_MarkerO.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red_MarkerP.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red_MarkerQ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red_MarkerR.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red_MarkerS.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red_MarkerT.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red_MarkerU.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red_MarkerV.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red_MarkerW.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red_MarkerX.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red_MarkerY.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/red_MarkerZ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow-blank.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow-dot.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow_MarkerA.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow_MarkerB.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow_MarkerC.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow_MarkerD.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow_MarkerE.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow_MarkerF.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow_MarkerG.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow_MarkerH.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow_MarkerI.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow_MarkerJ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow_MarkerK.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow_MarkerL.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow_MarkerM.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow_MarkerN.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow_MarkerO.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow_MarkerP.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow_MarkerQ.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow_MarkerR.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow_MarkerS.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow_MarkerT.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow_MarkerU.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow_MarkerV.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow_MarkerW.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow_MarkerX.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow_MarkerY.png' ?>" alt=""></a>
+				</li>
+				<li>
+					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/default-icons/yellow_MarkerZ.png' ?>" alt=""></a>
+				</li>
+			</ul>
+		</div>
+		<!--/.map-icons-row-->
 		<div class="marker-icon-row map-icons-row gmb-hidden clear">
+
+			<h3><?php _e( 'Step 2: Select a Marker Icon', $this->plugin_slug ); ?></h3>
+
 			<ul class="map-icons-list">
 				<li>
 					<a href="#" class="maps-icon"><img src="<?php echo GMB_PLUGIN_URL . 'assets/img/maps-icons-collection/accessdenied.png' ?>" alt=""></a>
@@ -773,13 +1608,15 @@
 		</div>
 		<!--/.map-icons-row-->
 
-		<div class="marker-icon-row marker-upload">
-			<div class="cmb-td">
-				<div class="gmb-image-preview" id="">
-				</div>
-				<input class="gmb-upload-button button" onclick="gmb_upload_marker.uploader(); return false;" type="button" value="Upload or Select a Marker Image">
+		<div class="marker-icon-row marker-upload clear">
+			<h3><?php _e( 'Step 2: Upload or Select a Marker Icon', $this->plugin_slug ); ?></h3>
 
+			<div class="gmb-marker-image-wrap clear">
+				<div class="gmb-image-preview"></div>
+				<input class="gmb-upload-button button" onclick="gmb_upload_marker.uploader(); return false;" type="button" value="Upload or Select a Marker Image">
 			</div>
+
+
 		</div>
 
 		<div class="save-marker-icon clear gmb-hidden">

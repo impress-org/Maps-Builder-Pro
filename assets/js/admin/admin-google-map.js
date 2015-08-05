@@ -38,7 +38,7 @@ var gmb_data;
 		$( '.drop-marker' ).on( 'click', function ( e ) {
 			e.preventDefault();
 			if ( $( this ).hasClass( 'active' ) ) {
-				$( this ).text( 'Drop a Marker' ).removeClass( 'active' );
+				$( this ).html( gmb_data.i18n.btn_drop_marker ).removeClass( 'active' );
 				map.setOptions( {draggableCursor: null} ); //reset cursor
 			} else {
 				$( this ).text( 'Click on the Map' ).addClass( 'active' );
@@ -243,7 +243,7 @@ var gmb_data;
 			drop_location_marker.setVisible( false );
 		}
 
-		$( '.drop-marker' ).removeClass( 'active' ).text( 'Drop a Marker' ); //reset drop button
+		$( '.drop-marker' ).removeClass( 'active' ).html( gmb_data.i18n.btn_drop_marker ); //reset drop button
 		map.setOptions( {draggableCursor: null} ); //reset cursor
 		google.maps.event.removeListener( event ); //remove map click event
 
@@ -676,15 +676,7 @@ var gmb_data;
 			var marker_label_data = '<i class="' + $( this ).data( 'label' ) + '" style="' + marker_label_inline_style + '"></i>';
 
 			//Determine which type of marker to place
-
-			if ( marker_icon == 'default' ) {
-				//default icon
-				marker_icon_data = gmb_data.default_marker;
-				$( '#gmb_markers_group_' + index + '_marker' ).val( '' );
-				marker_label_data = ''; //no label here (img marker)
-			}
-			//Old school maps icons
-			else if ( marker_icon == 'mapicons' || marker_icon == 'upload' ) {
+			if ( marker_icon == 'mapicons' || marker_icon == 'upload' || marker_icon == 'default' ) {
 				marker_icon_data = $( this ).data( 'marker-image' );
 				marker_label_data = ''; //no label here (img marker)
 				$( '#gmb_markers_group_' + index + '_marker_img' ).val( marker_icon_data ); //set marker image field
@@ -803,7 +795,7 @@ var gmb_data;
 		clear_main_markers();
 
 		//Loop through repeatable field of markers
-		$( "#gmb_markers_group_repeat .cmb-repeatable-grouping" ).each( function ( index ) {
+		$( "#gmb_markers_group_repeat" ).find( '.cmb-repeatable-grouping' ).each( function ( index ) {
 
 			var marker_icon = gmb_data.default_marker;
 			var marker_label = '';
@@ -834,6 +826,7 @@ var gmb_data;
 			location_marker.setPosition( new google.maps.LatLng( marker_lat, marker_lng ) );
 			location_marker.setVisible( true );
 
+			//Set click action for marker to open infowindow
 			google.maps.event.addListener( location_marker, 'click', function () {
 				get_info_window_content( index, location_marker );
 			} );

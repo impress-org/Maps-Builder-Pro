@@ -245,7 +245,9 @@ var gmb_data;
 
 			//check for custom marker and label data
 			var marker_icon = map_data.map_params.default_marker; //Default marker icon here
+			console.log( marker_data );
 
+			//Marker Image Icon
 			if ( marker_data.marker_img ) {
 				marker_icon = marker_data.marker_img;
 			}
@@ -254,7 +256,7 @@ var gmb_data;
 				marker_icon = eval( "(" + marker_data.marker + ")" );
 				marker_label = marker_data.label
 			}
-			console.log(marker_label);
+
 			//Marker for map
 			var location_marker = new Marker( {
 				map         : map,
@@ -272,6 +274,15 @@ var gmb_data;
 				set_info_window_content( marker_data, info_window );
 				info_window.open( map, location_marker );
 			} );
+
+			//Opened by default?
+			if ( typeof marker_data.infowindow_open !== 'undefined' && marker_data.infowindow_open == 'opened' ) {
+				var info_window_opened = new google.maps.InfoWindow( {
+									maxWidth: 315
+								} );
+				set_info_window_content( marker_data, info_window_opened );
+				info_window_opened.open( map, location_marker );
+			}
 
 		} ); //end $.each()
 
