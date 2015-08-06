@@ -477,8 +477,12 @@ img.mfp-img {
 .white-popup {
   position: relative;
   background: #FFF;
-  padding: 20px 20px 50px;
+  padding: 20px;
   width: auto;
   max-width: 600px;
   margin: 20px auto;
+}
+
+.white-popup.marker-icon-modal {
+  padding-bottom:50px;
 }

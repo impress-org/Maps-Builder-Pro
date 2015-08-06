@@ -703,8 +703,7 @@ var gmb_data;
 				icon        : marker_icon_data,
 				custom_label: marker_label_data
 			};
-
-
+			
 			//Update Icon
 			marker = new Marker( marker_args );
 
@@ -723,6 +722,8 @@ var gmb_data;
 			$( this ).removeData( 'label-color' ); //Remove data
 			if ( $( '.magnific-builder' ).length === 0 ) {
 				$.magnificPopup.close(); // Close popup that is currently opened (shorthand)
+			} else {
+				$( '.gmb-modal-close' ).trigger( 'click' );
 			}
 			google.maps.event.removeListener( save_icon_listener ); //remove this event listener
 			google.maps.event.removeListener( edit_marker_icon_button_click ); //remove this event listener

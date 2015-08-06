@@ -7,6 +7,7 @@
  * @copyright:   Copyright (c) 2015, WordImpress
  * @license:     http://opensource.org/licenses/gpl-2.0.php GNU Public License
 */
+/* Mixin */
 /* Magnific Popup CSS */
 .mfp-bg {
   top: 0;
@@ -404,10 +405,13 @@ img.mfp-img {
 .white-popup {
   position: relative;
   background: #FFF;
-  padding: 20px 20px 50px;
+  padding: 20px;
   width: auto;
   max-width: 600px;
   margin: 20px auto; }
+
+.white-popup.marker-icon-modal {
+  padding-bottom: 50px; }
 
 * {
   -webkit-box-sizing: border-box;
@@ -1529,6 +1533,7 @@ Modal within Modal
   position: absolute;
   max-width: none;
   margin: 0;
+  padding: 0;
   width: 100%;
   height: 100%;
   top: 0;
@@ -1539,14 +1544,21 @@ Modal within Modal
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   transition: all 0.3s;
-  overflow-y: auto; }
-  .magnific-builder #poststuff .white-popup .inner-modal {
-    max-width: 600px;
-    margin: 0 auto;
-    background: #FFF;
-    padding: 20px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.45);
-    position: relative; }
+  overflow-y: auto;
+  display: table; }
+  .magnific-builder #poststuff .white-popup .inner-modal-wrap {
+    display: table-cell;
+    vertical-align: middle; }
+    .magnific-builder #poststuff .white-popup .inner-modal-wrap .inner-modal-container {
+      overflow-y: auto;
+      max-height: 100%; }
+    .magnific-builder #poststuff .white-popup .inner-modal-wrap .inner-modal {
+      max-width: 600px;
+      margin: 30px auto;
+      background: #FFF;
+      padding: 20px;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.45);
+      position: relative; }
   .magnific-builder #poststuff .white-popup .save-marker-icon {
     position: relative;
     border: none;
@@ -1924,6 +1936,28 @@ Map Edit Quick Toolbar
       margin-top: 5px; }
     #map-toolbar button.edit-title {
       display: none; }
+
+/*-------------------------------------
+Modal styles
+---------------------------------------*/
+.map-autocomplete-wrap label, .map-title-wrap label {
+  font-weight: bold;
+  font-size: 14px;
+  margin: 0 0 10px;
+  display: block; }
+.map-autocomplete-wrap input, .map-title-wrap input {
+  width: 100%; }
+
+.map-autocomplete-wrap label {
+  position: relative; }
+  .map-autocomplete-wrap label:after {
+    content: ' ';
+    position: absolute;
+    bottom: 0;
+    left: 120px;
+    background: url('../img/powered-by-google-on-white.png') no-repeat 0 0 transparent;
+    width: 104px;
+    height: 16px; }
 
 /*-------------------------------------
 Google Style Buttons
@@ -2606,7 +2640,8 @@ Marker Upload
     width: 31%;
     text-align: center;
     padding: 10px;
-    height: 100px; }
+    height: 100px;
+    margin: 0 1% 1% 0; }
     .marker-row .marker-item .marker-preview {
       margin: 0 0 10px;
       min-height: 40px; }
