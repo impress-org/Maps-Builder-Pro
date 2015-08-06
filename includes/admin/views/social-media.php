@@ -33,13 +33,16 @@
 			</script>
 		</div>
 		<!--/.google-plus -->
+
+		<div class="wordimpress-logo">
+			<a href="http://wordimpress.com" title="<?php _e( 'Visit the Developers site of Google Maps Builder', $this->plugin_slug ); ?>" target="_blank" class="logo-link"></a>
+		</div>
+
 	</div>
 	<!-- /.social-items-wrap -->
 
-	<div class="wordimpress-logo">
-		<a href="http://wordimpress.com" title="<?php _e( 'Visit the Developers site of Google Maps Builder', $this->plugin_slug ); ?>" target="_blank" class="logo-link"></a>
-	</div>
 
-	<a href="#" class="hide-welcome" title="<?php _e( 'Hide the Google Maps Builder Welcome Message', $this->plugin_slug ); ?>"><?php _e( 'Hide Welcome', $this->plugin_slug ); ?><span></span></a>
+	<a href="#" class="hide-welcome" title="<?php _e( 'Hide the Google Maps Builder Welcome Message', $this->plugin_slug ); ?>"><?php _e( 'Hide Welcome', $this->plugin_slug ); ?>
+		<span></span></a>
 
 </div>

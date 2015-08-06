@@ -21,7 +21,7 @@ Marker Icon Modal
 /*-------------------------------------
 Marker Section Headings
 ---------------------------------------*/
-#poststuff .marker-row, #poststuff .marker-icon-row {
+#poststuff .marker-row, #poststuff .marker-icon-row, .marker-icon-row h3 {
   h3 {
 	margin: 0 0 20px;
 	font-size: 18px;
@@ -34,11 +34,6 @@ Marker Icon Rows
 ---------------------------------------*/
 .marker-icon-row {
   margin-bottom: 10px;
-
-  h3 {
-	padding: 0;
-	font-size: 18px;
-  }
 }
 
 .marker-icon-row, .save-marker-icon {
@@ -121,13 +116,6 @@ Colors
   float: left;
 }
 
-#TB_ajaxContent p.color-desc {
-  float: left;
-  margin: 0 0 0 10px;
-  padding-top: 3px;
-  font-style: italic;
-}
-
 /*-------------------------------------
 Marker Upload
 ---------------------------------------*/
@@ -140,8 +128,10 @@ Marker Upload
 
 }
 
-/* Pins */
 
+/*-------------------------------------
+Marker Selections
+---------------------------------------*/
 .marker-row {
   margin-bottom: 25px;
   .marker-item {
@@ -167,11 +157,6 @@ Marker Upload
 	  }
 
 	}
-
-	.marker-description {
-
-	}
-
   }
 }
 

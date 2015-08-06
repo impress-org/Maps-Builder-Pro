@@ -371,30 +371,27 @@ class Google_Maps_Builder_Scripts {
 			wp_register_script( $this->plugin_slug . '-admin-qtip', $js_plugins . 'jquery.qtip' . $suffix . '.js', array( 'jquery' ), GMB_VERSION, true );
 			wp_enqueue_script( $this->plugin_slug . '-admin-qtip' );
 
-			//Map controls
+			//Map base
 			wp_register_script( $this->plugin_slug . '-admin-map-builder', $js_dir . 'admin-google-map' . $suffix . '.js', array(
 				'jquery',
 				'wp-color-picker'
 			), GMB_VERSION );
 			wp_enqueue_script( $this->plugin_slug . '-admin-map-builder' );
 
-			//Modal builder
+			//Modal magnific
 			wp_register_script( $this->plugin_slug . '-admin-magnific-builder', $js_dir . 'admin-maps-magnific' . $suffix . '.js', array(
 				'jquery',
 				'wp-color-picker'
 			), GMB_VERSION );
 			wp_enqueue_script( $this->plugin_slug . '-admin-magnific-builder' );
 
-			//Settings
-			wp_register_script( $this->plugin_slug . '-admin-settings', $js_dir . 'admin-settings' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
-			wp_enqueue_script( $this->plugin_slug . '-admin-settings' );
-
+			//Directions
 			wp_register_script( $this->plugin_slug . '-admin-map-directions', $js_dir . 'admin-maps-directions' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
 			wp_enqueue_script( $this->plugin_slug . '-admin-map-directions' );
 
+			//Map Controls
 			wp_register_script( $this->plugin_slug . '-admin-map-controls', $js_dir . 'admin-maps-controls' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
 			wp_enqueue_script( $this->plugin_slug . '-admin-map-controls' );
-
 
 			$api_key   = gmb_get_option( 'gmb_api_key' );
 			$geolocate = gmb_get_option( 'gmb_lat_lng' );
@@ -419,6 +416,17 @@ class Google_Maps_Builder_Scripts {
 			wp_localize_script( $this->plugin_slug . '-admin-map-builder', 'gmb_data', $maps_data );
 
 		}
+
+
+		//Setting Scripts
+		if ( $hook == 'google_maps_page_gmb_settings' ) {
+
+			//Settings
+			wp_register_script( $this->plugin_slug . '-admin-settings', $js_dir . 'admin-settings' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
+			wp_enqueue_script( $this->plugin_slug . '-admin-settings' );
+
+		}
+
 
 		wp_enqueue_style( 'dashicons' );
 

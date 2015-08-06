@@ -245,7 +245,6 @@ var gmb_data;
 
 			//check for custom marker and label data
 			var marker_icon = map_data.map_params.default_marker; //Default marker icon here
-			console.log( marker_data );
 
 			//Marker Image Icon
 			if ( marker_data.marker_img ) {

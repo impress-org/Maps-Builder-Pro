@@ -703,7 +703,7 @@ var gmb_data;
 				icon        : marker_icon_data,
 				custom_label: marker_label_data
 			};
-			
+
 			//Update Icon
 			marker = new Marker( marker_args );
 
@@ -714,7 +714,7 @@ var gmb_data;
 
 			//Clean up modal and close
 			$( '.icon, .marker-item' ).removeClass( 'marker-item-selected' ); //reset modal
-			$( '.marker-icon-row, .save-marker-icon, .marker-icon-color-wrap, .marker-label-color-wrap' ).hide(); //reset modal
+			$( '.marker-icon-row, .save-marker-icon' ).hide(); //reset modal
 			$( this ).removeData( 'marker' ); //Remove data
 			$( this ).removeData( 'marker-color' ); //Remove data
 			$( this ).removeData( 'marker-img' ); //Remove data

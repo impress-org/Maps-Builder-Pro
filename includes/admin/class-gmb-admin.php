@@ -217,10 +217,10 @@ class Google_Maps_Builder_Admin {
 			'type' => 'text',
 		) );
 		$marker_box->add_group_field( $group_field_id, array(
-			'name'    => __( 'Marker Image', $this->plugin_slug ),
-			'id'      => 'marker_img',
-			'type'    => 'file',
-			'options' => array(
+			'name'      => __( 'Marker Image', $this->plugin_slug ),
+			'id'        => 'marker_img',
+			'type'      => 'file',
+			'options'   => array(
 				'url'                  => false,
 				'add_upload_file_text' => __( 'Add Marker Image', $this->plugin_slug )
 			),
@@ -857,13 +857,12 @@ class Google_Maps_Builder_Admin {
 		$map_width     = isset( $wh_value['width'] ) ? $wh_value['width'] : $default_options['width'];
 		$map_width_val = isset( $wh_value['map_width_unit'] ) ? $wh_value['map_width_unit'] : $default_options['width_unit'];
 
-		$output = '<div class="places-loading wpgp-loading">Loading Places</div>';
+		$output = '<div class="places-loading wpgp-loading">' . __( 'Loading Places', $this->plugin_slug ) . '</div>';
 		$output .= '<div id="google-map-wrap">';
 		$output .= '<div id="map" style="height:' . $map_height . 'px; width:' . $map_width . $map_width_val . '"></div>';
 
 		//Toolbar
-		$output .= '<div id="map-toolbar"><button class="drop-marker button"><span class="dashicons dashicons-location"></span>' . __( 'Drop a Marker', $this->plugin_slug ) . '</button><button class="goto-location button gmb-magnific-inline" data-target="map-autocomplete-wrap"><span class="dashicons dashicons-admin-site"></span>' . __( 'Goto Location', $this->plugin_slug ) . '</button><button class="edit-title button gmb-magnific-inline" data-target="map-title-wrap"><span class="dashicons dashicons-edit"></span>' . __( 'Edit Map Title', $this->plugin_slug ) . '</button></div>';
-		$output .= '</div>';
+		$output .= '<div id="map-toolbar"><button class="drop-marker button"><span class="dashicons dashicons-location"></span>' . __( 'Drop a Marker', $this->plugin_slug ) . '</button><button class="goto-location button gmb-magnific-inline" data-target="map-autocomplete-wrap"><span class="dashicons dashicons-admin-site"></span>' . __( 'Goto Location', $this->plugin_slug ) . '</button><button class="edit-title button gmb-magnific-inline" data-target="map-title-wrap"><span class="dashicons dashicons-edit"></span>' . __( 'Edit Map Title', $this->plugin_slug ) . '</button></div></div>';
 
 		$output .= '<div class="white-popup mfp-hide map-title-wrap">
 					<div class="inner-modal-wrap">

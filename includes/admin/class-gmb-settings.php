@@ -80,7 +80,7 @@ class Google_Maps_Builder_Settings {
 	public function hide_welcome_callback() {
 		global $current_user;
 		$user_id = $current_user->ID;
-		add_user_meta( $user_id, 'gmb_hide_welcome', 'true', true );
+		add_user_meta( $user_id, 'gmb_hide_pro_welcome', 'true', true );
 		wp_die(); // ajax call must die to avoid trailing 0 in your response
 	}
 
