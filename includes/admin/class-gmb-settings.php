@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CMB Theme Options
  * @version 0.1.0
@@ -37,12 +38,25 @@ class Google_Maps_Builder_Settings {
 
 		// Load admin style sheet and JavaScript.
 		add_action( 'wp_ajax_hide_welcome', array( $this, 'hide_welcome_callback' ) );
-		add_action( 'cmb2_render_lat_lng_default', array( $this, 'cmb2_render_lat_lng_default' ), 10, 2 );
 
 		//Add links/information to plugin row meta
 		add_filter( 'plugin_row_meta', array( $this, 'add_plugin_meta_links' ), 10, 2 );
 		add_filter( 'plugin_action_links', array( $this, 'add_plugin_page_links' ), 10, 2 );
 
+		//Custom CMB2 Settings Fields
+		add_action( 'cmb2_render_license_key', array( $this, 'gmb_license_key_callback' ), 10, 5 );
+		add_action( 'cmb2_render_lat_lng_default', array( $this, 'cmb2_render_lat_lng_default' ), 10, 2 );
+		add_action( 'plugins_loaded', array( $this, 'gmb_core_licensing' ) );
+		add_filter( 'cmb2_get_metabox_form_format', array( $this, 'gmb_modify_cmb2_form_output' ), 10, 3 );
+
+	}
+
+
+	/**
+	 * Core Licensing
+	 */
+	function gmb_core_licensing() {
+		$core_license = new GMB_License( __FILE__, 'Maps Builder Pro', '2.0', 'WordImpress', 'maps_builder_license_key' );
 	}
 
 	/**
@@ -204,9 +218,38 @@ class Google_Maps_Builder_Settings {
 			),
 		);
 
-		return apply_filters('gmb_map_options_fields', self::$plugin_options);
+		return apply_filters( 'gmb_map_options_fields', self::$plugin_options );
 
 	}
+
+
+	/**
+	 * License Fields
+	 * Defines the plugin option metabox and field configuration
+	 * @since  1.0.0
+	 * @return array
+	 */
+	public function license_fields() {
+
+		// Only need to initiate the array once per page-load
+		if ( ! empty( self::$plugin_options ) ) {
+			return self::$plugin_options;
+		}
+
+		$prefix = 'gmb_';
+
+		self::$plugin_options = array(
+			'id'         => 'plugin_options',
+			'give_title' => __( 'Give Licenses', 'give' ),
+			'show_on'    => array( 'key' => 'options-page', 'value' => array( self::$key, ), ),
+			'fields'     => apply_filters( 'gmb_settings_licenses', array()
+			)
+		);
+
+		return apply_filters( 'gmb_general_options_fields', self::$plugin_options );
+
+	}
+
 
 	/**
 	 * CMB Lat Lng
@@ -293,6 +336,70 @@ class Google_Maps_Builder_Settings {
 
 		return $meta;
 	}
+
+	/**
+	 * License Key Callback
+	 *
+	 * @description Registers the license field callback for EDD's Software Licensing
+	 * @since       1.0
+	 *
+	 * @param array $field_object , $escaped_value, $object_id, $object_type, $field_type_object Arguments passed by CMB2
+	 *
+	 * @return void
+	 */
+	function gmb_license_key_callback( $field_object, $escaped_value, $object_id, $object_type, $field_type_object ) {
+
+		$id                = $field_type_object->field->args['id'];
+		$field_description = $field_type_object->field->args['desc'];
+		$license_status    = get_option( $field_type_object->field->args['options']['is_valid_license_option'] );
+		$field_classes     = 'regular-text gmb-license-field';
+
+		if ( $license_status === 'valid' ) {
+			$field_classes .= ' gmb-license-active';
+		}
+
+		$html = $field_type_object->input(
+			array(
+				'class' => $field_classes,
+				'type'  => 'text'
+			) );
+
+		if ( $license_status === 'valid' ) {
+			$html .= '<input type="submit" class="button-secondary gmb-license-deactivate" name="' . $id . '_deactivate" value="' . __( 'Deactivate License', 'give' ) . '"/>';
+		}
+
+		$html .= '<label for="give_settings[' . $id . ']"> ' . $field_description . '</label>';
+
+		wp_nonce_field( $id . '-nonce', $id . '-nonce' );
+
+		echo $html;
+	}
+
+	/**
+	 * Modify CMB2 Default Form Output
+	 *
+	 * @param string @args
+	 *
+	 * @since 2.0
+	 *
+	 * @param $form_format
+	 * @param $object_id
+	 * @param $cmb
+	 *
+	 * @return string
+	 */
+	function gmb_modify_cmb2_form_output( $form_format, $object_id, $cmb ) {
+
+		//only modify the give settings form
+		if ( 'gmb_settings' == $object_id && 'plugin_options' == $cmb->cmb_id ) {
+
+			return '<form class="cmb-form" method="post" id="%1$s" enctype="multipart/form-data" encoding="multipart/form-data"><input type="hidden" name="object_id" value="%2$s">%3$s<div class="gmb-submit-wrap"><input type="submit" name="submit-cmb" value="' . __( 'Save Settings', 'give' ) . '" class="button-primary"></div></form>';
+		}
+
+		return $form_format;
+
+	}
+
 
 }
 
