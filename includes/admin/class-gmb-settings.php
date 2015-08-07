@@ -76,7 +76,7 @@ class Google_Maps_Builder_Settings {
 
 		$this->options_page = add_submenu_page(
 			'edit.php?post_type=google_maps',
-			__( 'Google Maps Builder Settings', $this->plugin_slug ),
+			__( 'Maps Builder Settings', $this->plugin_slug ),
 			__( 'Settings', $this->plugin_slug ),
 			'manage_options',
 			self::$key,

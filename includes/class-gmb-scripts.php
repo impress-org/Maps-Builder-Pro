@@ -325,7 +325,7 @@ class Google_Maps_Builder_Scripts {
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
 		//Only enqueue scripts for CPT on post type screen
-		if ( ( $hook == 'post-new.php' || $hook == 'post.php' ) && 'google_maps' === $post->post_type || $hook == 'google_maps_page_gmb_settings' ) {
+		if ( ( $hook == 'post-new.php' || $hook == 'post.php' ) && 'google_maps' === $post->post_type || $hook == 'google_maps_page_gmb_settings' || $hook == 'google_maps_page_gmb_import_export' ) {
 
 			wp_register_style( $this->plugin_slug . '-admin-styles', GMB_PLUGIN_URL . 'assets/css/gmb-admin' . $suffix . '.css', array(), GMB_VERSION );
 			wp_enqueue_style( $this->plugin_slug . '-admin-styles' );
@@ -424,6 +424,15 @@ class Google_Maps_Builder_Scripts {
 			//Settings
 			wp_register_script( $this->plugin_slug . '-admin-settings', $js_dir . 'admin-settings' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
 			wp_enqueue_script( $this->plugin_slug . '-admin-settings' );
+
+		}
+
+		//Import/Export Scripts
+		if ( $hook == 'google_maps_page_gmb_import_export' ) {
+
+			//Settings
+			wp_register_script( $this->plugin_slug . '-admin-import-export', $js_dir . 'admin-import-export' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
+			wp_enqueue_script( $this->plugin_slug . '-admin-import-export' );
 
 		}
 

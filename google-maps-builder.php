@@ -102,6 +102,14 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 		public $meta;
 
 		/**
+		 * GMB HTML elements
+		 *
+		 * @var object
+		 * @since 2.0
+		 */
+		public $html;
+
+		/**
 		 * Main Google_Maps_Builder Instance
 		 *
 		 * Insures that only one instance of Google_Maps_Builder exists in memory at any one
@@ -129,6 +137,7 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 				self::$instance->scripts  = new Google_Maps_Builder_Scripts();
 				self::$instance->settings = new Google_Maps_Builder_Settings();
 				self::$instance->engine   = new Google_Maps_Builder_Engine();
+				self::$instance->html     = new Google_Maps_Builder_HTML_Elements();
 
 				//Init CPT (after CMB2 -> hence the 10000 priority)
 				add_action( 'init', array( self::$instance, 'setup_post_type' ), 10000 );
@@ -220,6 +229,7 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-widget.php';
 			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-engine.php';
 			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-license-handler.php';
+			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-html-elements.php';
 			require_once GMB_PLUGIN_PATH . 'includes/admin/class-gmb-settings.php';
 
 			if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
@@ -229,9 +239,11 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 				require_once GMB_PLUGIN_PATH . 'includes/admin/upgrades/upgrades.php';
 
 				//Admin
+				require_once GMB_PLUGIN_PATH . 'includes/admin/admin-actions.php';
 				require_once GMB_PLUGIN_PATH . 'includes/admin/class-gmb-admin.php';
 				require_once GMB_PLUGIN_PATH . 'includes/admin/cmb2-field-directions.php';
 				require_once GMB_PLUGIN_PATH . 'includes/admin/class-gmb-shortcode-generator.php';
+				require_once GMB_PLUGIN_PATH . 'includes/admin/import-export/class-gmb-import-export.php';
 
 			}
 
