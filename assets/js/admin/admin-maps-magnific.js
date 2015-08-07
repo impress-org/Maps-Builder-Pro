@@ -14,7 +14,7 @@ var gmb_data;
 		var poststuff = $( 'form#post' ),
 			postboxes = $( '.postbox' ).not( '.cmb-row, .cmb-repeatable-grouping' ),
 			map = $( '#map' ),
-			submit_btn = '<input name="save" type="submit" class="button button-primary button-large magnific-submit" id="publish" value="Update Map">',
+			submit_btn = '<input type="submit" class="button button-primary button-large magnific-submit" id="publish" value=" ' + gmb_data.i18n.update_map + '">',
 			placeholder_id,
 			placeholder_gid = 0,
 			viewport = $( window ).height() - 40;
@@ -160,9 +160,9 @@ var gmb_data;
 			$( '#postbox-container-1' ).outerHeight( viewport );
 		}
 
-		//Submit button works
+		//Submit button
 		$( 'body' ).on( 'click', '.magnific-submit', function ( e ) {
-			$( 'form#post' ).submit();
+			$( '#publish' ).trigger('click');
 		} );
 
 	} );

@@ -40,7 +40,11 @@ var placeSearchAutocomplete;
 
 		toggle_map_places_search_field( places_search_control );
 
+		//Autocomplete
 		set_map_goto_location_autocomplete();
+
+		//Edit Title
+		set_map_edit_title();
 
 		//Initialize Magnific/Modal Functionality Too
 		$( 'body' ).on( 'click', '.gmb-magnific-inline', function ( e ) {
@@ -62,12 +66,12 @@ var placeSearchAutocomplete;
 					//only on overlay
 					if ( $( e.target ).hasClass( 'inner-modal-wrap' ) || $( e.target ).hasClass( 'inner-modal-container' ) ) {
 						// Move back out of container
-						close_modal_within_modal(target);
+						close_modal_within_modal( target );
 					}
 				} );
 				//Close button
 				$( '.gmb-modal-close' ).on( 'click', function () {
-					close_modal_within_modal(target);
+					close_modal_within_modal( target );
 				} );
 
 			}
@@ -345,6 +349,16 @@ var placeSearchAutocomplete;
 			.addClass( 'mfp-hide' ) //ensure it's hidden
 			.appendTo( '.modal-placeholder' )  // Move it back to it's proper location
 			.unwrap(); // Remove the placeholder
+	}
+
+	/**
+	 * Edit Title within Modal
+	 */
+	function set_map_edit_title() {
+
+		$( '#modal_title' ).on( 'blur', function () {
+			$( 'input#title' ).val( $( this ).val() );
+		} );
 	}
 
 

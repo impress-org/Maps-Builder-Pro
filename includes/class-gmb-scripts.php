@@ -395,6 +395,7 @@ class Google_Maps_Builder_Scripts {
 
 			$api_key   = gmb_get_option( 'gmb_api_key' );
 			$geolocate = gmb_get_option( 'gmb_lat_lng' );
+			$post_status = get_post_status( $post->ID );
 
 			$maps_data = array(
 				'api_key'           => $api_key,
@@ -406,8 +407,9 @@ class Google_Maps_Builder_Scripts {
 				'ajax_loader'       => set_url_scheme( apply_filters( 'gmb_ajax_preloader_img', GMB_PLUGIN_URL . 'assets/images/spinner.gif' ), 'relative' ),
 				'snazzy'            => GMB_PLUGIN_URL . 'assets/js/admin/snazzy.json',
 				'modal_default'     => gmb_get_option( 'gmb_open_builder' ),
+				'post_status'      => $post_status,
 				'i18n'              => array(
-					'update_map'               => __( 'Update Map', $this->plugin_slug ),
+					'update_map'               => $post_status == 'publish' ? __( 'Update Map', $this->plugin_slug ) : __( 'Publish Map', $this->plugin_slug ),
 					'places_selection_changed' => __( 'Place selections have changed.', $this->plugin_slug ),
 					'multiple_places'          => __( 'Hmm, it looks like there are multiple places in this area. Please confirm which place you would like this marker to display:', $this->plugin_slug ),
 					'btn_drop_marker'          => '<span class="dashicons dashicons-location"></span>' . __( 'Drop a Marker', $this->plugin_slug )
@@ -417,11 +419,9 @@ class Google_Maps_Builder_Scripts {
 
 		}
 
-
 		//Setting Scripts
 		if ( $hook == 'google_maps_page_gmb_settings' ) {
 
-			//Settings
 			wp_register_script( $this->plugin_slug . '-admin-settings', $js_dir . 'admin-settings' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
 			wp_enqueue_script( $this->plugin_slug . '-admin-settings' );
 
@@ -430,7 +430,6 @@ class Google_Maps_Builder_Scripts {
 		//Import/Export Scripts
 		if ( $hook == 'google_maps_page_gmb_import_export' ) {
 
-			//Settings
 			wp_register_script( $this->plugin_slug . '-admin-import-export', $js_dir . 'admin-import-export' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
 			wp_enqueue_script( $this->plugin_slug . '-admin-import-export' );
 
