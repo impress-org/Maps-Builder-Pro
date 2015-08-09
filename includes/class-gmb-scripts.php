@@ -33,6 +33,7 @@ class Google_Maps_Builder_Scripts {
 	public function __construct() {
 
 		$this->plugin_slug = Google_Maps_Builder()->get_plugin_slug();
+		$this->plugin_settings = get_option( 'gmb_settings' );
 
 		//Frontend
 		add_action( 'wp_enqueue_scripts', array( $this, 'load_frontend_scripts' ), 11 );
@@ -70,7 +71,7 @@ class Google_Maps_Builder_Scripts {
 	 *
 	 * Enqueues the required scripts to display maps on the frontend only.
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 * @global $give_options
 	 * @global $post
 	 * @return void
@@ -93,7 +94,7 @@ class Google_Maps_Builder_Scripts {
 	/**
 	 * Register and enqueue public-facing style sheet.
 	 *
-	 * @since    1.0.0
+	 * @since    2.0
 	 */
 	function enqueue_frontend_styles() {
 
@@ -116,7 +117,18 @@ class Google_Maps_Builder_Scripts {
 	 */
 	function register_gmap_scripts() {
 
-		wp_register_script( 'google-maps-builder-gmaps', 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places', array( 'jquery' ) );
+		$google_maps_api_url_args = array(
+			'sensor'    => 'false',
+			'libraries' => 'places'
+		);
+		//Google Maps API key present?
+		if ( ! empty( $this->plugin_settings['gmb_maps_api_key'] ) ) {
+			$google_maps_api_url_args['key'] = $this->plugin_settings['gmb_maps_api_key'];
+		}
+
+		$google_maps_api_url = add_query_arg( $google_maps_api_url_args, 'https://maps.googleapis.com/maps/api/js?v=3.exp' );
+
+		wp_register_script( 'google-maps-builder-gmaps', $google_maps_api_url, array( 'jquery' ) );
 
 	}
 
@@ -156,7 +168,7 @@ class Google_Maps_Builder_Scripts {
 
 				if ( strpos( $registered_script->src, 'places' ) == false ) {
 
-					$registered_script->src = $registered_script->src . '&libraries=places';
+					$registered_script->src = $registered_script->src . '&libraries=places,drawing';
 
 				}
 
@@ -261,8 +273,8 @@ class Google_Maps_Builder_Scripts {
 	 * Print Activation Message
 	 */
 	function welcome_pointer_print_scripts() {
-		$pointer_content = '<h3>' . __( 'Welcome to the Maps Builder', $this->plugin_slug ) . '</h3>';
-		$pointer_content .= '<p>' . __( 'Thank you for using Maps Builder for WordPress. To stay up to date on the latest plugin updates, enhancements, and news please sign up for our mailing list.', $this->plugin_slug ) . '</p>';
+		$pointer_content = '<h3>' . __( 'Welcome to Maps Builder Pro', $this->plugin_slug ) . '</h3>';
+		$pointer_content .= '<p>' . __( 'Thank you for upgrading to Maps Builder Pro for WordPress. To stay up to date on the latest plugin updates, enhancements, and news please sign up for our mailing list.', $this->plugin_slug ) . '</p>';
 		$pointer_content .= '<div id="mc_embed_signup" style="padding: 0 15px;"><form action="http://wordimpress.us3.list-manage2.com/subscribe/post?u=3ccb75d68bda4381e2f45794c&amp;id=83609e2883" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate><div class="mc-field-group" style="margin: 0 0 10px;"><input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" style="margin-right:5px;width:230px;" placeholder="my.email@wordpress.com"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div><div id="mce-responses" class="clear"><div class="response" id="mce-error-response" style="display:none"></div><div class="response" id="mce-success-response" style="display:none"></div></div><div style="position: absolute; left: -5000px;"><input type="text" name="b_3ccb75d68bda4381e2f45794c_83609e2883" value=""></div></form></div>';
 		?>
 
@@ -312,7 +324,7 @@ class Google_Maps_Builder_Scripts {
 	 * Register and enqueue admin-specific style sheet.
 	 *
 	 * Return early if no settings page is registered.
-	 * @since     1.0.0
+	 * @since     2.0
 	 *
 	 * @param $hook
 	 *
@@ -340,7 +352,7 @@ class Google_Maps_Builder_Scripts {
 	/**
 	 * Register and enqueue admin-specific JavaScript.
 	 *
-	 * @since     1.0.0
+	 * @since    2.0
 	 *
 	 * @param $hook
 	 *
@@ -353,6 +365,18 @@ class Google_Maps_Builder_Scripts {
 		$js_dir     = GMB_PLUGIN_URL . 'assets/js/admin/';
 		$js_plugins = GMB_PLUGIN_URL . 'assets/js/plugins/';
 
+		//Builder Google Maps API URL
+		$google_maps_api_key      = gmb_get_option( 'gmb_maps_api_key' );
+		$google_maps_api_url_args = array(
+			'sensor'    => 'false',
+			'libraries' => 'places,drawing'
+		);
+		//Google Maps API key present?
+		if ( ! empty( $google_maps_api_key ) ) {
+			$google_maps_api_url_args['key'] = $google_maps_api_key;
+		}
+		$google_maps_api_url = add_query_arg( $google_maps_api_url_args, 'https://maps.googleapis.com/maps/api/js?v=3.exp' );
+
 
 		//Only enqueue scripts for CPT on post type screen
 		if ( ( $hook == 'post-new.php' || $hook == 'post.php' ) && 'google_maps' === $post->post_type ) {
@@ -362,7 +386,7 @@ class Google_Maps_Builder_Scripts {
 			wp_register_script( $this->plugin_slug . '-admin-magnific-popup', $js_plugins . 'gmb-magnific' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
 			wp_enqueue_script( $this->plugin_slug . '-admin-magnific-popup' );
 
-			wp_register_script( $this->plugin_slug . '-admin-gmaps', 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places,drawing', array( 'jquery' ) );
+			wp_register_script( $this->plugin_slug . '-admin-gmaps', $google_maps_api_url, array( 'jquery' ) );
 			wp_enqueue_script( $this->plugin_slug . '-admin-gmaps' );
 
 			wp_register_script( $this->plugin_slug . '-map-icons', GMB_PLUGIN_URL . 'includes/libraries/map-icons/js/map-icons.js', array( 'jquery' ) );
@@ -393,8 +417,8 @@ class Google_Maps_Builder_Scripts {
 			wp_register_script( $this->plugin_slug . '-admin-map-controls', $js_dir . 'admin-maps-controls' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
 			wp_enqueue_script( $this->plugin_slug . '-admin-map-controls' );
 
-			$api_key   = gmb_get_option( 'gmb_api_key' );
-			$geolocate = gmb_get_option( 'gmb_lat_lng' );
+			$api_key     = gmb_get_option( 'gmb_maps_api_key' );
+			$geolocate   = gmb_get_option( 'gmb_lat_lng' );
 			$post_status = get_post_status( $post->ID );
 
 			$maps_data = array(
@@ -407,7 +431,7 @@ class Google_Maps_Builder_Scripts {
 				'ajax_loader'       => set_url_scheme( apply_filters( 'gmb_ajax_preloader_img', GMB_PLUGIN_URL . 'assets/images/spinner.gif' ), 'relative' ),
 				'snazzy'            => GMB_PLUGIN_URL . 'assets/js/admin/snazzy.json',
 				'modal_default'     => gmb_get_option( 'gmb_open_builder' ),
-				'post_status'      => $post_status,
+				'post_status'       => $post_status,
 				'i18n'              => array(
 					'update_map'               => $post_status == 'publish' ? __( 'Update Map', $this->plugin_slug ) : __( 'Publish Map', $this->plugin_slug ),
 					'places_selection_changed' => __( 'Place selections have changed.', $this->plugin_slug ),

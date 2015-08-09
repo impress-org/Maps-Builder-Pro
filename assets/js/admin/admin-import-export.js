@@ -14,13 +14,12 @@
 		//Import Markers
 		$( '#gmb_maps' ).on( 'change', function () {
 			var map_value = $( this ).val();
-			var csv_upload = $( '.csv-upload' );
+			var next_hidden = $( this ).parent().next( '.gmb-hidden' );
 			if ( map_value !== '0' ) {
-				csv_upload.show();
+				next_hidden.show();
 			} else {
-				csv_upload.hide();
+				next_hidden.hide();
 			}
-
 		} );
 
 

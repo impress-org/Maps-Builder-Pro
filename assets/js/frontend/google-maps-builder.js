@@ -77,8 +77,8 @@ var gmb_data;
 		} );
 		var map_id = $( map_canvas ).data( 'map-id' );
 		var map_data = gmb_data[map_id];
-		var latitude = ((map_data.map_params.latitude) ? map_data.map_params.latitude : '32.713240');
-		var longitude = ((map_data.map_params.longitude) ? map_data.map_params.longitude : '-117.159443');
+		var latitude = (map_data.map_params.latitude) ? map_data.map_params.latitude : '32.713240';
+		var longitude = (map_data.map_params.longitude) ? map_data.map_params.longitude : '-117.159443';
 		var map_options = {
 			center: new google.maps.LatLng( latitude, longitude ),
 			zoom  : parseInt( map_data.map_params.zoom ),
@@ -277,8 +277,8 @@ var gmb_data;
 			//Opened by default?
 			if ( typeof marker_data.infowindow_open !== 'undefined' && marker_data.infowindow_open == 'opened' ) {
 				var info_window_opened = new google.maps.InfoWindow( {
-									maxWidth: 315
-								} );
+					maxWidth: 315
+				} );
 				set_info_window_content( marker_data, info_window_opened );
 				info_window_opened.open( map, location_marker );
 			}

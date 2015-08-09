@@ -69,7 +69,6 @@ class Google_Maps_Builder_Admin {
 
 		//Add metaboxes and fields to CPT
 		add_action( 'cmb2_init', array( $this, 'cpt2_metaboxes_fields' ) );
-
 	}
 
 	/**
@@ -217,10 +216,10 @@ class Google_Maps_Builder_Admin {
 			'type' => 'text',
 		) );
 		$marker_box->add_group_field( $group_field_id, array(
-			'name'      => __( 'Marker Image', $this->plugin_slug ),
-			'id'        => 'marker_img',
-			'type'      => 'file',
-			'options'   => array(
+			'name'    => __( 'Marker Image', $this->plugin_slug ),
+			'id'      => 'marker_img',
+			'type'    => 'file',
+			'options' => array(
 				'url'                  => false,
 				'add_upload_file_text' => __( 'Add Marker Image', $this->plugin_slug )
 			),

@@ -230,6 +230,7 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-engine.php';
 			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-license-handler.php';
 			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-html-elements.php';
+			require_once GMB_PLUGIN_PATH . 'includes/misc-functions.php';
 			require_once GMB_PLUGIN_PATH . 'includes/admin/class-gmb-settings.php';
 
 			if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {

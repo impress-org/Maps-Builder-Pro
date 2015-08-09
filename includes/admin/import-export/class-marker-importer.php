@@ -23,7 +23,7 @@ class GMB_CSV_Marker_Importer {
 	 * Run action and filter hooks
 	 *
 	 * @since       2.0
-	 * @access      private
+	 * @access      public
 	 */
 	public function __construct() {
 

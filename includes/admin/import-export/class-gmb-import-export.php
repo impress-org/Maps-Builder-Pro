@@ -55,6 +55,7 @@ class GMB_CSV_Manager {
 		}
 		require_once GMB_PLUGIN_PATH . 'includes/admin/import-export/functions.php';
 		require_once GMB_PLUGIN_PATH . 'includes/admin/import-export/class-marker-importer.php';
+		require_once GMB_PLUGIN_PATH . 'includes/admin/import-export/class-marker-exporter.php';
 		//			require_once GMB_CSV_MANAGER_DIR . 'includes/class.product-importer.php';
 		//			require_once GMB_CSV_MANAGER_DIR . 'includes/class.payment-history-exporter.php';
 		//			require_once GMB_CSV_MANAGER_DIR . 'includes/class.payment-history-importer.php';
@@ -97,7 +98,7 @@ class GMB_CSV_Manager {
 			?>
 			<h2 class="nav-tab-wrapper">
 				<a href="?post_type=google_maps&page=<?php echo self::$key; ?>" class="nav-tab <?php echo $active_tab == 'import' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Import', $this->plugin_slug ); ?></a>
-				<a href="?post_type=google_maps&page=<?php echo self::$key; ?>&tab=export" class="nav-tab <?php echo $active_tab == 'general_settings' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Export', $this->plugin_slug ); ?></a>
+				<a href="?post_type=google_maps&page=<?php echo self::$key; ?>&tab=export" class="nav-tab <?php echo $active_tab == 'export' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Export', $this->plugin_slug ); ?></a>
 			</h2>
 
 			<?php
@@ -109,7 +110,6 @@ class GMB_CSV_Manager {
 					do_action('gmb_import_page');
 					break;
 				case 'export':
-					echo "export";
 					do_action('gmb_export_page');
 					break;
 			}

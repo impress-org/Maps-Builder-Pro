@@ -37,7 +37,7 @@
 	margin: 0 0 10px;
 	select, .field-label {
 	  width: 48%;
-		margin: 0 1%;
+	  margin: 0 1%;
 	  display: inline-block;
 	}
 
@@ -70,4 +70,8 @@ Marker Import Metabox
 	border-bottom: 1px solid #000000;
   }
 
+}
+
+.marker-export-submit {
+  margin: 15px 0 0;
 }

@@ -2243,6 +2243,10 @@ a.wp-color-result {
   border-style: solid;
   font-size: 13px;
   line-height: 2.1em; }
+.google_maps_page_gmb_settings .cmb-th {
+  width: 20%; }
+.google_maps_page_gmb_settings .cmb-td {
+  width: 80%; }
 
 /*---------------------------
 Welcome Header
@@ -2439,6 +2443,10 @@ General Options Tab
   border-style: solid;
   font-size: 13px;
   line-height: 2.1em; }
+.google_maps_page_gmb_settings .cmb-th {
+  width: 20%; }
+.google_maps_page_gmb_settings .cmb-td {
+  width: 80%; }
 
 /*---------------------------
 Welcome Header
@@ -2835,6 +2843,9 @@ Marker Import Metabox
     display: inline-block;
     padding: 3px 0;
     border-bottom: 1px solid #000000; }
+
+.marker-export-submit {
+  margin: 15px 0 0; }
 
 
 /*# sourceMappingURL=gmb-admin.css.map */

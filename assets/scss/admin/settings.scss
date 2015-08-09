@@ -8,8 +8,6 @@
  * @license:     http://opensource.org/licenses/gpl-2.0.php GNU Public License
 */
 
-
-
 .google_maps_page_gmb_settings {
 
   .wrap {
@@ -31,20 +29,27 @@
   }
 
   .gmb-submit-wrap {
-      clear: both;
-      background: #f5f5f5;
-      border-color: #dfdfdf;
-      overflow: auto;
-      margin: 20px 0 8px;
-      padding: 12px;
-      border-width: 1px;
-      border-style: solid;
-      font-size: 13px;
-      line-height: 2.1em;
+	clear: both;
+	background: #f5f5f5;
+	border-color: #dfdfdf;
+	overflow: auto;
+	margin: 20px 0 8px;
+	padding: 12px;
+	border-width: 1px;
+	border-style: solid;
+	font-size: 13px;
+	line-height: 2.1em;
+  }
+
+  .cmb-th {
+	width: 20%;
+  }
+
+  .cmb-td {
+	width: 80%;
   }
 
 }
-
 
 /*---------------------------
 Welcome Header
@@ -111,10 +116,10 @@ Social Media
   }
 
   .fb-item-wrap {
-	width:100px;
+	width: 100px;
   }
   .twitter-item-wrap {
-	width:145px;
+	width: 145px;
   }
   .google-plus {
 	margin-left: 20px;
@@ -245,7 +250,6 @@ General Options Tab
 #gmb_menu_position {
   width: 40px;
 }
-
 
 /* License
 -------------------------------------------------------------- */

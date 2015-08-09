@@ -160,7 +160,10 @@ class Google_Maps_Builder_Widget extends WP_Widget {
 			'id' => $instance['id'],
 		);
 
-		echo Google_Maps_Builder()->engine->google_maps_shortcode( $atts );
+		//Ensure a map has been set
+		if ( $instance['id'] !== 'current' ) {
+			echo Google_Maps_Builder()->engine->google_maps_shortcode( $atts );
+		}
 
 		echo $args['after_widget'];
 
