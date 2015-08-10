@@ -176,31 +176,9 @@
   float: left !important;
 }
 
-#width_wrap {
-  margin: 0 0 10px;
-}
-
-#size_labels_wrap {
-  margin: 8px 0 0 10px;
-  padding: 0;
-  float: left;
-}
-
-#width_unit_percent {
-  margin: 0 3px 0 0;
-}
-
-#width_unit_px {
-  margin: 0 3px 0 8px;
-}
-
 .inner-sidebar table.cmb_metabox label.size-label, #side-sortables table.cmb_metabox label.size-label, label.size-label {
   font-weight: normal;
   font-style: italic;
-}
-
-.map-width, .map-height {
-  width: 55px !important
 }
 
 /*------------------------------------------

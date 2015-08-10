@@ -272,7 +272,7 @@ class Google_Maps_Builder_Settings {
 		//Geolocate
 		$output = '<div id="geolocate-wrap" class="clear">';
 		$output .= '<label class="geocode-label size-label">' . __( 'Geolocate Position', $this->plugin_slug ) . ':</label>';
-		$output .= '<div id="size_labels_wrap" class="geolocate-radio-wrap">';
+		$output .= '<div class="geolocate-radio-wrap size-labels-wrap">';
 		$output .= '<label class="yes-label label-left"><input id="geolocate_map_yes" type="radio" name="' . $field->args['id'] . '[geolocate_map]" class="geolocate_map_radio radio-left" value="yes" ' . ( $meta['geolocate_map'] === 'yes' ? 'checked="checked"' : '' ) . '>' . __( 'Yes', $this->plugin_slug ) . '</label>';
 
 		$output .= '<label class="no-label label-left"><input id="geolocate_map_no" type="radio" name="' . $field->args['id'] . '[geolocate_map]" class="geolocate_map_radio radio-left" value="no" ' . ( $meta['geolocate_map'] === 'no' ? 'checked="checked"' : '' ) . ' >' . __( 'No', $this->plugin_slug ) . '</label>';
@@ -286,8 +286,9 @@ class Google_Maps_Builder_Settings {
 								<input type="text" class="regular-text longitude" name="' . $field->args['id'] . '[longitude]" id="' . $field->args['id'] . '-longitude" value="' . ( $meta['longitude'] ? $meta['longitude'] : $field->args['lng_std'] ) . '" />
 								</div>';
 		$output .= '<p class="small-desc">' . sprintf( __( 'For quick lat/lng lookup use <a href="%s" class="new-window"  target="_blank">this service</a>', $this->plugin_slug ), esc_url( 'http://www.latlong.net/' ) ) . '</p>';
-		$output .= '</div><!-- /.search-coordinates-wrap -->
-			</div>';
+		$output .= '</div><!-- /.search-coordinates-wrap -->';
+		$output .= '</div>'; //end #geolocate-wrap
+		$output .= '<p class="cmb2-metabox-description">' . __( 'When creating a new map the plugin will use your current longitude and latitude for the base location. If you see a blank space instead of the map, this is probably because you have denied permission for location sharing. You may also specify a default longitude and latitude by turning off this option.', $this->plugin_slug ) . '</p>';
 
 
 		echo $output;

@@ -106,9 +106,10 @@ class Google_Maps_Builder_Admin {
 		$width_height = gmb_get_option( 'gmb_width_height' );
 
 		$defaults = array(
-			'width'      => ( isset( $width_height['width'] ) ) ? $width_height['width'] : '100',
-			'width_unit' => ( isset( $width_height['map_width_unit'] ) ) ? $width_height['map_width_unit'] : '%',
-			'height'     => ( isset( $width_height['height'] ) ) ? $width_height['height'] : '600'
+			'width'       => ( isset( $width_height['width'] ) ) ? $width_height['width'] : '100',
+			'width_unit'  => ( isset( $width_height['map_width_unit'] ) ) ? $width_height['map_width_unit'] : '%',
+			'height'      => ( isset( $width_height['height'] ) ) ? $width_height['height'] : '600',
+			'height_unit' => ( isset( $width_height['map_height_unit'] ) ) ? $width_height['map_height_unit'] : 'px'
 		);
 
 		return $defaults;
@@ -117,7 +118,7 @@ class Google_Maps_Builder_Admin {
 
 	/**
 	 * Register our setting to WP
-	 * @since  1.0.0
+	 * @since  1.0
 	 */
 	public function settings_init() {
 		register_setting( $this->plugin_slug, $this->plugin_slug );
@@ -768,27 +769,37 @@ class Google_Maps_Builder_Admin {
 		$default_options = $this->get_default_map_options();
 		$meta            = wp_parse_args(
 			$meta, array(
-				'width'          => $default_options['width'],
-				'height'         => $default_options['height'],
-				'map_width_unit' => $default_options['width_unit'],
+				'width'           => $default_options['width'],
+				'map_width_unit'  => $default_options['width_unit'],
+				'height'          => $default_options['height'],
+				'map_height_unit' => $default_options['height_unit'],
 			)
 		);
 
 		$output = '<div id="width_height_wrap" class="clear">';
+
 		//width
 		$output .= '<div id="width_wrap" class="clear">';
-		$output .= '<label class="width-label size-label">Width:</label><input type="text" class="regular-text map-width" name="' . $field->args( 'id' ) . '[width]" id="' . $field->args( 'id' ) . '-width" value="' . ( $meta['width'] ? $meta['width'] : $field->args( 'width_std' ) ) . '" />';
-		$output .= '<div id="size_labels_wrap">';
+		$output .= '<label class="width-label size-label">' . __( 'Width', $this->plugin_slug ) . ':</label><input type="text" class="regular-text map-width" name="' . $field->args( 'id' ) . '[width]" id="' . $field->args( 'id' ) . '-width" value="' . ( $meta['width'] ? $meta['width'] : $field->args( 'width_std' ) ) . '" />';
+		$output .= '<div class="size-labels-wrap">';
 		$output .= '<input id="width_unit_percent" type="radio" name="' . $field->args( 'id' ) . '[map_width_unit]" class="width_radio" value="%" ' . ( $meta['map_width_unit'] === '%' || $field->args( 'width_unit_std' ) === '%' ? 'checked="checked"' : '' ) . '><label class="width_unit_label">%</label>';
 		$output .= '<input id="width_unit_px" type="radio" name="' . $field->args( 'id' ) . '[map_width_unit]" class="width_radio" value="px" ' . ( $meta['map_width_unit'] === 'px' ? 'checked="checked"' : '' ) . ' ><label class="width_unit_label">px</label>';
 		$output .= '</div>';
 		$output .= '</div>';
 
 		//height
-		$output .= '<div id="height_wrap" class="clear">';
-		$output .= '<label for="' . $field->args( 'id' ) . '[height]" class="height-label size-label">Height:</label><input type="text" class="regular-text map-height" name="' . $field->args( 'id' ) . '[height]" id="' . $field->args( 'id' ) . '-height" value="' . ( $meta['height'] ? $meta['height'] : $field->args( 'height_std' ) ) . '" />';
+		$output .= '<div id="height_wrap" class="clear clearfix">';
+		$output .= '<label for="' . $field->args( 'id' ) . '[height]" class="height-label size-label">' . __( 'Height', $this->plugin_slug ) . ':</label><input type="text" class="regular-text map-height" name="' . $field->args( 'id' ) . '[height]" id="' . $field->args( 'id' ) . '-height" value="' . ( $meta['height'] ? $meta['height'] : $field->args( 'height_std' ) ) . '" />';
+
+		$output .= '<div class="size-labels-wrap">';
+		$output .= '<input id="height_unit_percent" type="radio" name="' . $field->args( 'id' ) . '[map_height_unit]" class="height_radio" value="%" ' . ( $meta['map_height_unit'] === '%' || $field->args( 'height_unit_std' ) === '%' ? 'checked="checked"' : '' ) . '><label class="height_unit_label">%</label>';
+		$output .= '<input id="height_unit_px" type="radio" name="' . $field->args( 'id' ) . '[map_height_unit]" class="height_radio" value="px" ' . ( $meta['map_height_unit'] === 'px' ? 'checked="checked"' : '' ) . ' ><label class="height_unit_label">px</label>';
 		$output .= '</div>';
 		$output .= '</div>';
+
+		$output .= '<p class="cmb2-metabox-description">' . __( 'Configure the default map width and height.', $this->plugin_slug ) . '</p>';
+
+		$output .= '</div>'; //end #width_height_wrap
 
 
 		echo $output;
@@ -864,13 +875,10 @@ class Google_Maps_Builder_Admin {
 		$wh_value        = get_post_meta( $post->ID, 'gmb_width_height', true );
 		$default_options = $this->get_default_map_options();
 
-		$map_height    = isset( $wh_value['height'] ) ? $wh_value['height'] : $default_options['height'];
-		$map_width     = isset( $wh_value['width'] ) ? $wh_value['width'] : $default_options['width'];
-		$map_width_val = isset( $wh_value['map_width_unit'] ) ? $wh_value['map_width_unit'] : $default_options['width_unit'];
 
 		$output = '<div class="places-loading wpgp-loading">' . __( 'Loading Places', $this->plugin_slug ) . '</div>';
 		$output .= '<div id="google-map-wrap">';
-		$output .= '<div id="map" style="height:' . $map_height . 'px; width:' . $map_width . $map_width_val . '"></div>';
+		$output .= '<div id="map" style="height:600px; width:100%;"></div>';
 
 		//Toolbar
 		$output .= '<div id="map-toolbar"><button class="drop-marker button"><span class="dashicons dashicons-location"></span>' . __( 'Drop a Marker', $this->plugin_slug ) . '</button><button class="goto-location button gmb-magnific-inline" data-target="map-autocomplete-wrap"><span class="dashicons dashicons-admin-site"></span>' . __( 'Goto Location', $this->plugin_slug ) . '</button><button class="edit-title button gmb-magnific-inline" data-target="map-title-wrap"><span class="dashicons dashicons-edit"></span>' . __( 'Edit Map Title', $this->plugin_slug ) . '</button></div></div>';
