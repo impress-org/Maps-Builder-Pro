@@ -251,8 +251,9 @@ General Options Tab
   width: 40px;
 }
 
+/*---------------------------
 /* License
--------------------------------------------------------------- */
+--------------------------- */
 .cmb2-wrap {
   .gmb-license-deactivate {
 	margin: 1px 0 0 10px;
@@ -276,4 +277,15 @@ General Options Tab
 	background-size: 16px;
   }
 
+}
+
+
+
+/*---------------------------
+System Settings Tab
+-----------------------------*/
+
+#system-info-textarea {
+  width: 100%;
+  height: 600px;
 }

@@ -2395,8 +2395,9 @@ General Options Tab
 #gmb_menu_position {
   width: 40px; }
 
+/*---------------------------
 /* License
--------------------------------------------------------------- */
+--------------------------- */
 .cmb2-wrap .gmb-license-deactivate {
   margin: 1px 0 0 10px;
   height: 30px; }
@@ -2413,6 +2414,13 @@ General Options Tab
   background-position: 98.5% center;
   outline: none;
   background-size: 16px; }
+
+/*---------------------------
+System Settings Tab
+-----------------------------*/
+#system-info-textarea {
+  width: 100%;
+  height: 600px; }
 
 /*!
  * Maps Builder Admin Settings Pages SCSS/CSS
@@ -2595,8 +2603,9 @@ General Options Tab
 #gmb_menu_position {
   width: 40px; }
 
+/*---------------------------
 /* License
--------------------------------------------------------------- */
+--------------------------- */
 .cmb2-wrap .gmb-license-deactivate {
   margin: 1px 0 0 10px;
   height: 30px; }
@@ -2613,6 +2622,13 @@ General Options Tab
   background-position: 98.5% center;
   outline: none;
   background-size: 16px; }
+
+/*---------------------------
+System Settings Tab
+-----------------------------*/
+#system-info-textarea {
+  width: 100%;
+  height: 600px; }
 
 /*!
  * Maps Builder Widget

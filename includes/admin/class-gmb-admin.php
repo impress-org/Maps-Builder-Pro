@@ -162,10 +162,22 @@ class Google_Maps_Builder_Admin {
 			'show_names'   => true, // Show field names on the left
 		) );
 		$marker_box->add_field( array(
-			'name' => 'Create Marker',
+			'name' => __( 'Create Marker', $this->plugin_slug ),
 			'id'   => $prefix . 'geocoder',
 			'type' => 'google_geocoder'
 		) );
+		$marker_box->add_field(
+			array(
+				'name'              => __( 'Animate in Markers', $this->plugin_slug ),
+				'desc'              => __( 'If you\'re adding a number of markers, you may want to drop them on the map  consecutively rather than all at once.', $this->plugin_slug ),
+				'id'                => $prefix . 'marker_animate',
+				'type'              => 'multicheck',
+				'options'           => array(
+					'yes' => 'Yes, Enable'
+				),
+				'select_all_button' => false,
+			)
+		);
 		$group_field_id = $marker_box->add_field( array(
 			'name'        => __( 'Existing Markers', $this->plugin_slug ),
 			'id'          => $prefix . 'markers_group',

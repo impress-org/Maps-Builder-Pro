@@ -56,7 +56,7 @@ class GMB_CSV_Marker_Importer {
 		ob_start();
 
 		echo '<div class="postbox import-export-metabox" id="gmb-marker-import">';
-		echo '<h3 class="hndle ui-sortable-handle">' . __( 'Import Markers from CSV', 'google-maps-builder' ) . '</h3>';
+		echo '<h3 class="hndle ui-sortable-handle">' . __( 'Import Map Markers from CSV', 'google-maps-builder' ) . '</h3>';
 		echo '<div class="inside">';
 
 		echo '<p class="intro">' . sprintf( __( 'Import map markers to your site from a .csv file. Please use the %1$sexample marker import csv%2$s as reference.', 'google-maps-builder' ), '<a href="' . GMB_PLUGIN_URL . 'includes/admin/import-export/samples/markers.csv' . '">', '</a>' ) . '</p>';
