@@ -21,6 +21,11 @@ div[id^='google-maps-builder'] {
 	overflow: visible !important;
   }
 
+  iframe.gm-save-widget {
+	margin: 0;
+	padding: 0;
+  }
+
 }
 
 /* This fixes issues some themes have with embedded Google Maps (like Twenty Twelve) */

@@ -802,49 +802,68 @@ var gmb_data;
 		$( "#gmb_markers_group_repeat" ).find( '.cmb-repeatable-grouping' ).each( function ( index ) {
 
 			//Timeout pending on animation choice
-			setTimeout( function () {
+			//setTimeout( function () {
 
-				var marker_icon = gmb_data.default_marker;
-				var marker_label = '';
+			var marker_icon = gmb_data.default_marker;
+			var marker_label = '';
 
-				//check for custom marker and label data
-				var custom_marker_icon = $( '#gmb_markers_group_' + index + '_marker' ).val();
-				var custom_marker_img = $( '#gmb_markers_group_' + index + '_marker_img' ).val();
+			//check for custom marker and label data
+			var custom_marker_icon = $( '#gmb_markers_group_' + index + '_marker' ).val();
+			var custom_marker_img = $( '#gmb_markers_group_' + index + '_marker_img' ).val();
 
-				if ( custom_marker_img ) {
-					marker_icon = custom_marker_img;
-				} else if ( custom_marker_icon.length > 0 && custom_marker_icon.length > 0 ) {
-					var custom_label = $( '#gmb_markers_group_' + index + '_label' ).val();
-					marker_icon = eval( "(" + custom_marker_icon + ")" );
-					marker_label = custom_label;
-				}
+			if ( custom_marker_img ) {
+				marker_icon = custom_marker_img;
+			} else if ( custom_marker_icon.length > 0 && custom_marker_icon.length > 0 ) {
+				var custom_label = $( '#gmb_markers_group_' + index + '_label' ).val();
+				marker_icon = eval( "(" + custom_marker_icon + ")" );
+				marker_label = custom_label;
+			}
 
-				var marker_lat = $( '#gmb_markers_group_' + index + '_lat' ).val();
-				var marker_lng = $( '#gmb_markers_group_' + index + '_lng' ).val();
+			var marker_lat = parseFloat( $( '#gmb_markers_group_' + index + '_lat' ).val() );
+			var marker_lng = parseFloat( $( '#gmb_markers_group_' + index + '_lng' ).val() );
+			var place_id = $( '#gmb_markers_group_' + index + '_place_id' ).val();
+			var position = new google.maps.LatLng( marker_lat, marker_lng );
 
-				var position = new google.maps.LatLng(marker_lat,marker_lng);
+			//Default marker args
+			var marker_args = {
+				position    : position,
+				map         : map,
+				zIndex      : index,
+				icon        : marker_icon,
+				custom_label: marker_label
+			};
 
-				//Marker for map
-				var location_marker = new Marker( {
-					position         : position,
-					map         : map,
-					zIndex      : 9,
-					icon        : marker_icon,
-					custom_label: marker_label
-				} );
+			//Is sign in enabled? And, do we have a place ID for this marker location?
+			if ( place_id && gmb_data.signed_in_option === 'enabled' ) {
 
+				//Remove unnecessary array params
+				delete marker_args.position;
 
-				//location_marker.setPosition( new google.maps.LatLng( marker_lat, marker_lng ) );
-				//location_marker.setVisible( true );
+				//Add Proper Params
+				marker_args.place = {
+					location: {lat: marker_lat, lng: marker_lng},
+					placeId : place_id
+				};
+				marker_args.attribution = {
+					source: gmb_data.site_name,
+					webUrl: gmb_data.site_url
+				};
 
-				//Set click action for marker to open infowindow
-				google.maps.event.addListener( location_marker, 'click', function () {
-					get_info_window_content( index, location_marker );
-				} );
+			}
 
-				time += 500;
+			//Marker for map
+			var location_marker = new Marker( marker_args );
 
-			}, time ); //marker drop in timeout
+			location_marker.setVisible( true );
+
+			//Set click action for marker to open infowindow
+			google.maps.event.addListener( location_marker, 'click', function () {
+				get_info_window_content( index, location_marker );
+			} );
+
+			time += 500;
+
+			//}, time ); //marker drop in timeout
 
 		} ); //end $.each()
 

@@ -116,7 +116,7 @@ class Google_Maps_Builder_Engine {
 		$destination_markers = array();
 		$destination_markers = isset( $all_meta['gmb_directions_group'][0] ) ? maybe_unserialize( $all_meta['gmb_directions_group'][0] ) : '';
 		$text_directions     = isset( $all_meta['gmb_text_directions'][0] ) ? maybe_unserialize( $all_meta['gmb_text_directions'][0] ) : 'none';
-
+		$signed_in_option    = gmb_get_option( 'gmb_signed_in' );
 		if ( is_array( $markers_repeatable ) ) {
 			foreach ( $markers_repeatable as $marker ) {
 				array_push( $map_marker_array, $marker );
@@ -151,6 +151,9 @@ class Google_Maps_Builder_Engine {
 					'map_type'       => ! empty( $all_meta['gmb_type'][0] ) ? $all_meta['gmb_type'][0] : 'RoadMap',
 					'map_theme_json' => ! empty( $all_meta['gmb_theme_json'][0] ) ? $all_meta['gmb_theme_json'][0] : 'none',
 				),
+				'signed_in_option'    => $signed_in_option,
+				'site_name'           => get_bloginfo( 'name' ),
+				'site_url'            => get_bloginfo( 'url' ),
 				'map_markers'         => $map_marker_array,
 				'destination_markers' => $destination_markers,
 				'text_directions'     => $text_directions,

@@ -79,9 +79,9 @@ function gmb_test_ajax_works() {
 	}
 
 	$params = array(
-		'sslverify'  => false,
-		'timeout'    => 30,
-		'body'       => array(
+		'sslverify' => false,
+		'timeout'   => 30,
+		'body'      => array(
 			'action' => 'gmb_test_ajax'
 		)
 	);
@@ -95,19 +95,19 @@ function gmb_test_ajax_works() {
 
 	} else {
 
-		if( empty( $ajax['response'] ) ) {
+		if ( empty( $ajax['response'] ) ) {
 			$works = false;
 		}
 
-		if( empty( $ajax['response']['code'] ) || 200 !== (int) $ajax['response']['code'] ) {
+		if ( empty( $ajax['response']['code'] ) || 200 !== (int) $ajax['response']['code'] ) {
 			$works = false;
 		}
 
-		if( empty( $ajax['response']['message'] ) || 'OK' !== $ajax['response']['message'] ) {
+		if ( empty( $ajax['response']['message'] ) || 'OK' !== $ajax['response']['message'] ) {
 			$works = false;
 		}
 
-		if( ! isset( $ajax['body'] ) || 0 !== (int) $ajax['body'] ) {
+		if ( ! isset( $ajax['body'] ) || 0 !== (int) $ajax['body'] ) {
 			$works = false;
 		}
 
@@ -119,8 +119,6 @@ function gmb_test_ajax_works() {
 
 	return $works;
 }
-
-
 
 
 /**
@@ -211,4 +209,116 @@ function gmb_get_host() {
 	}
 
 	return $host;
+}
+
+
+/**
+ * Map Languages
+ *
+ * @return array
+ */
+function gmb_get_map_languages() {
+
+	$lanugages = apply_filters( 'gmb_map_languages', array(
+		''      => __( 'User Default', Google_Maps_Builder()->get_plugin_slug() ),
+		'af'    => __( 'Afrikaans', Google_Maps_Builder()->get_plugin_slug() ),
+		'sq'    => __( 'Albanian', Google_Maps_Builder()->get_plugin_slug() ),
+		'eu'    => __( 'Basque', Google_Maps_Builder()->get_plugin_slug() ),
+		'be'    => __( 'Belarusian', Google_Maps_Builder()->get_plugin_slug() ),
+		'bg'    => __( 'Bulgarian', Google_Maps_Builder()->get_plugin_slug() ),
+		'ca'    => __( 'Catalan', Google_Maps_Builder()->get_plugin_slug() ),
+		'zh-cn' => __( 'Chinese (Simplified)', Google_Maps_Builder()->get_plugin_slug() ),
+		'zh-tw' => __( 'Chinese (Traditional)', Google_Maps_Builder()->get_plugin_slug() ),
+		'hr'    => __( 'Croatian', Google_Maps_Builder()->get_plugin_slug() ),
+		'cs'    => __( 'Czech', Google_Maps_Builder()->get_plugin_slug() ),
+		'da'    => __( 'Danish', Google_Maps_Builder()->get_plugin_slug() ),
+		'nl'    => __( 'Dutch', Google_Maps_Builder()->get_plugin_slug() ),
+		'nl-be' => __( 'Dutch (Belgium)', Google_Maps_Builder()->get_plugin_slug() ),
+		'nl-nl' => __( 'Dutch (Netherlands)', Google_Maps_Builder()->get_plugin_slug() ),
+		'en'    => __( 'English', Google_Maps_Builder()->get_plugin_slug() ),
+		'en-au' => __( 'English (Australia)', Google_Maps_Builder()->get_plugin_slug() ),
+		'en-bz' => __( 'English (Belize)', Google_Maps_Builder()->get_plugin_slug() ),
+		'en-ca' => __( 'English (Canada)', Google_Maps_Builder()->get_plugin_slug() ),
+		'en-ie' => __( 'English (Ireland)', Google_Maps_Builder()->get_plugin_slug() ),
+		'en-jm' => __( 'English (Jamaica)', Google_Maps_Builder()->get_plugin_slug() ),
+		'en-nz' => __( 'English (New Zealand)', Google_Maps_Builder()->get_plugin_slug() ),
+		'en-ph' => __( 'English (Phillipines)', Google_Maps_Builder()->get_plugin_slug() ),
+		'en-za' => __( 'English (South Africa)', Google_Maps_Builder()->get_plugin_slug() ),
+		'en-tt' => __( 'English (Trinidad)', Google_Maps_Builder()->get_plugin_slug() ),
+		'en-gb' => __( 'English (United Kingdom)', Google_Maps_Builder()->get_plugin_slug() ),
+		'en-us' => __( 'English (United States)', Google_Maps_Builder()->get_plugin_slug() ),
+		'en-zw' => __( 'English (Zimbabwe)', Google_Maps_Builder()->get_plugin_slug() ),
+		'et'    => __( 'Estonian', Google_Maps_Builder()->get_plugin_slug() ),
+		'fo'    => __( 'Faeroese', Google_Maps_Builder()->get_plugin_slug() ),
+		'fi'    => __( 'Finnish', Google_Maps_Builder()->get_plugin_slug() ),
+		'fr'    => __( 'French', Google_Maps_Builder()->get_plugin_slug() ),
+		'fr-be' => __( 'French (Belgium)', Google_Maps_Builder()->get_plugin_slug() ),
+		'fr-ca' => __( 'French (Canada)', Google_Maps_Builder()->get_plugin_slug() ),
+		'fr-fr' => __( 'French (France)', Google_Maps_Builder()->get_plugin_slug() ),
+		'fr-lu' => __( 'French (Luxembourg)', Google_Maps_Builder()->get_plugin_slug() ),
+		'fr-mc' => __( 'French (Monaco)', Google_Maps_Builder()->get_plugin_slug() ),
+		'fr-ch' => __( 'French (Switzerland)', Google_Maps_Builder()->get_plugin_slug() ),
+		'gl'    => __( 'Galician', Google_Maps_Builder()->get_plugin_slug() ),
+		'gd'    => __( 'Gaelic', Google_Maps_Builder()->get_plugin_slug() ),
+		'de'    => __( 'German', Google_Maps_Builder()->get_plugin_slug() ),
+		'de-at' => __( 'German (Austria)', Google_Maps_Builder()->get_plugin_slug() ),
+		'de-de' => __( 'German (Germany)', Google_Maps_Builder()->get_plugin_slug() ),
+		'de-li' => __( 'German (Liechtenstein)', Google_Maps_Builder()->get_plugin_slug() ),
+		'de-lu' => __( 'German (Luxembourg)', Google_Maps_Builder()->get_plugin_slug() ),
+		'de-ch' => __( 'German (Switzerland)', Google_Maps_Builder()->get_plugin_slug() ),
+		'el'    => __( 'Greek', Google_Maps_Builder()->get_plugin_slug() ),
+		'haw'   => __( 'Hawaiian', Google_Maps_Builder()->get_plugin_slug() ),
+		'hu'    => __( 'Hungarian', Google_Maps_Builder()->get_plugin_slug() ),
+		'is'    => __( 'Icelandic', Google_Maps_Builder()->get_plugin_slug() ),
+		'in'    => __( 'Indonesian', Google_Maps_Builder()->get_plugin_slug() ),
+		'ga'    => __( 'Irish', Google_Maps_Builder()->get_plugin_slug() ),
+		'it'    => __( 'Italian', Google_Maps_Builder()->get_plugin_slug() ),
+		'it-it' => __( 'Italian (Italy)', Google_Maps_Builder()->get_plugin_slug() ),
+		'it-ch' => __( 'Italian (Switzerland)', Google_Maps_Builder()->get_plugin_slug() ),
+		'ja'    => __( 'Japanese', Google_Maps_Builder()->get_plugin_slug() ),
+		'ko'    => __( 'Korean', Google_Maps_Builder()->get_plugin_slug() ),
+		'mk'    => __( 'Macedonian', Google_Maps_Builder()->get_plugin_slug() ),
+		'no'    => __( 'Norwegian', Google_Maps_Builder()->get_plugin_slug() ),
+		'pl'    => __( 'Polish', Google_Maps_Builder()->get_plugin_slug() ),
+		'pt'    => __( 'Portuguese', Google_Maps_Builder()->get_plugin_slug() ),
+		'pt-br' => __( 'Portuguese (Brazil)', Google_Maps_Builder()->get_plugin_slug() ),
+		'pt-pt' => __( 'Portuguese (Portugal)', Google_Maps_Builder()->get_plugin_slug() ),
+		'ro'    => __( 'Romanian', Google_Maps_Builder()->get_plugin_slug() ),
+		'ro-mo' => __( 'Romanian (Moldova)', Google_Maps_Builder()->get_plugin_slug() ),
+		'ro-ro' => __( 'Romanian (Romania)', Google_Maps_Builder()->get_plugin_slug() ),
+		'ru'    => __( 'Russian', Google_Maps_Builder()->get_plugin_slug() ),
+		'ru-mo' => __( 'Russian (Moldova)', Google_Maps_Builder()->get_plugin_slug() ),
+		'ru-ru' => __( 'Russian (Russia)', Google_Maps_Builder()->get_plugin_slug() ),
+		'sr'    => __( 'Serbian', Google_Maps_Builder()->get_plugin_slug() ),
+		'sk'    => __( 'Slovak', Google_Maps_Builder()->get_plugin_slug() ),
+		'sl'    => __( 'Slovenian', Google_Maps_Builder()->get_plugin_slug() ),
+		'es'    => __( 'Spanish', Google_Maps_Builder()->get_plugin_slug() ),
+		'es-ar' => __( 'Spanish (Argentina)', Google_Maps_Builder()->get_plugin_slug() ),
+		'es-bo' => __( 'Spanish (Bolivia)', Google_Maps_Builder()->get_plugin_slug() ),
+		'es-cl' => __( 'Spanish (Chile)', Google_Maps_Builder()->get_plugin_slug() ),
+		'es-co' => __( 'Spanish (Colombia)', Google_Maps_Builder()->get_plugin_slug() ),
+		'es-cr' => __( 'Spanish (Costa Rica)', Google_Maps_Builder()->get_plugin_slug() ),
+		'es-do' => __( 'Spanish (Dominican Republic)', Google_Maps_Builder()->get_plugin_slug() ),
+		'es-ec' => __( 'Spanish (Ecuador)', Google_Maps_Builder()->get_plugin_slug() ),
+		'es-sv' => __( 'Spanish (El Salvador)', Google_Maps_Builder()->get_plugin_slug() ),
+		'es-gt' => __( 'Spanish (Guatemala)', Google_Maps_Builder()->get_plugin_slug() ),
+		'es-hn' => __( 'Spanish (Honduras)', Google_Maps_Builder()->get_plugin_slug() ),
+		'es-mx' => __( 'Spanish (Mexico)', Google_Maps_Builder()->get_plugin_slug() ),
+		'es-ni' => __( 'Spanish (Nicaragua)', Google_Maps_Builder()->get_plugin_slug() ),
+		'es-pa' => __( 'Spanish (Panama)', Google_Maps_Builder()->get_plugin_slug() ),
+		'es-py' => __( 'Spanish (Paraguay)', Google_Maps_Builder()->get_plugin_slug() ),
+		'es-pe' => __( 'Spanish (Peru)', Google_Maps_Builder()->get_plugin_slug() ),
+		'es-pr' => __( 'Spanish (Puerto Rico)', Google_Maps_Builder()->get_plugin_slug() ),
+		'es-es' => __( 'Spanish (Spain)', Google_Maps_Builder()->get_plugin_slug() ),
+		'es-uy' => __( 'Spanish (Uruguay)', Google_Maps_Builder()->get_plugin_slug() ),
+		'es-ve' => __( 'Spanish (Venezuela)', Google_Maps_Builder()->get_plugin_slug() ),
+		'sv'    => __( 'Swedish', Google_Maps_Builder()->get_plugin_slug() ),
+		'sv-fi' => __( 'Swedish (Finland)', Google_Maps_Builder()->get_plugin_slug() ),
+		'sv-se' => __( 'Swedish (Sweden)', Google_Maps_Builder()->get_plugin_slug() ),
+		'tr'    => __( 'Turkish', Google_Maps_Builder()->get_plugin_slug() ),
+		'uk'    => __( 'Ukranian', Google_Maps_Builder()->get_plugin_slug() ),
+	) );
+
+	return $lanugages;
+
 }

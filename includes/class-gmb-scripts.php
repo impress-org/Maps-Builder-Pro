@@ -32,7 +32,7 @@ class Google_Maps_Builder_Scripts {
 	 */
 	public function __construct() {
 
-		$this->plugin_slug = Google_Maps_Builder()->get_plugin_slug();
+		$this->plugin_slug     = Google_Maps_Builder()->get_plugin_slug();
 		$this->plugin_settings = get_option( 'gmb_settings' );
 
 		//Frontend
@@ -45,7 +45,6 @@ class Google_Maps_Builder_Scripts {
 		add_action( 'wp_footer', array( $this, 'print_gmap_footer' ), 100 );
 
 		add_action( 'wp_head', array( $this, 'check_for_multiple_google_maps_api_calls' ) );
-
 
 		//Admin
 		add_action( 'admin_init', array( $this, 'multiple_maps_enqueued_warning_ignore' ) );
@@ -122,6 +121,14 @@ class Google_Maps_Builder_Scripts {
 		//Google Maps API key present?
 		if ( ! empty( $this->plugin_settings['gmb_maps_api_key'] ) ) {
 			$google_maps_api_url_args['key'] = $this->plugin_settings['gmb_maps_api_key'];
+		}
+		//Preferred Language?
+		if ( ! empty( $this->plugin_settings['gmb_language'] ) ) {
+			$google_maps_api_url_args['language'] = $this->plugin_settings['gmb_language'];
+		}
+		//Signed In?
+		if ( ! empty( $this->plugin_settings['gmb_signed_in'] ) && $this->plugin_settings['gmb_signed_in'] == 'enabled' ) {
+			$google_maps_api_url_args['signed_in'] = true;
 		}
 
 		$google_maps_api_url = add_query_arg( $google_maps_api_url_args, 'https://maps.googleapis.com/maps/api/js?v=3.exp' );
@@ -300,7 +307,10 @@ class Google_Maps_Builder_Scripts {
 		$js_plugins = GMB_PLUGIN_URL . 'assets/js/plugins/';
 
 		//Builder Google Maps API URL
-		$google_maps_api_key      = gmb_get_option( 'gmb_maps_api_key' );
+		$google_maps_api_key = gmb_get_option( 'gmb_maps_api_key' );
+		$gmb_language        = gmb_get_option( 'gmb_language' );
+		$signed_in_option    = gmb_get_option( 'gmb_signed_in' );
+
 		$google_maps_api_url_args = array(
 			'sensor'    => 'false',
 			'libraries' => 'places,drawing'
@@ -309,6 +319,15 @@ class Google_Maps_Builder_Scripts {
 		if ( ! empty( $google_maps_api_key ) ) {
 			$google_maps_api_url_args['key'] = $google_maps_api_key;
 		}
+		//Preferred Language?
+		if ( ! empty( $google_maps_api_key ) ) {
+			$google_maps_api_url_args['language'] = $gmb_language;
+		}
+		//Signed In?
+		if ( ! empty( $signed_in_option ) && $signed_in_option == 'enabled' ) {
+			$google_maps_api_url_args['signed_in'] = true;
+		}
+
 		$google_maps_api_url = add_query_arg( $google_maps_api_url_args, 'https://maps.googleapis.com/maps/api/js?v=3.exp' );
 
 
@@ -366,6 +385,9 @@ class Google_Maps_Builder_Scripts {
 				'snazzy'            => GMB_PLUGIN_URL . 'assets/js/admin/snazzy.json',
 				'modal_default'     => gmb_get_option( 'gmb_open_builder' ),
 				'post_status'       => $post_status,
+				'signed_in_option'  => $signed_in_option,
+				'site_name'         => get_bloginfo( 'name' ),
+				'site_url'          => get_bloginfo( 'url' ),
 				'i18n'              => array(
 					'update_map'               => $post_status == 'publish' ? __( 'Update Map', $this->plugin_slug ) : __( 'Publish Map', $this->plugin_slug ),
 					'places_selection_changed' => __( 'Place selections have changed.', $this->plugin_slug ),

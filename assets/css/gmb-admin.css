@@ -1703,7 +1703,7 @@ button.gmb-modal-close {
 /*------------------------------------------
  General Styles
 --------------------------------------------*/
-.cmb2-id-gmb-search-radius, .cmb2-id-gmb-places-search-multicheckbox, .cmb2-id-gmb-places-search {
+.cmb2-id-gmb-search-radius, .cmb2-id-gmb-places-search-multicheckbox, .cmb2-id-gmb-places-search, .places-search-wrap {
   display: none; }
 
 #google_maps_details_options tr {

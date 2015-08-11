@@ -214,6 +214,23 @@ class Google_Maps_Builder_Settings {
 					'lat_std' => '32.7153292',
 					'lng_std' => '-117.15725509',
 					'desc'    => '',
+				),
+				array(
+					'name'    => __( 'Signed-in Maps', $this->plugin_slug ),
+					'id'      => $prefix . 'signed_in',
+					'type'    => 'select',
+					'options' => array(
+						'disabled' => 'Disabled',
+						'enabled'  => 'Enabled'
+					),
+					'desc'    => __( 'When you enable sign-in with Google Maps, the maps on your site will be tailored to your users. Users who are signed-in to their Google account will be able to save places for later viewing on the web or mobile devices. Places saved from the map will be attributed to your site. Notice: When sign-in is enabled, the default position and appearance of several controls will change.', $this->plugin_slug ),
+				),
+				array(
+					'name'    => __( 'Map Language', $this->plugin_slug ),
+					'id'      => $prefix . 'language',
+					'type'    => 'select',
+					'options' => gmb_get_map_languages(),
+					'desc'    => __( 'The Google Maps API uses the user\'s browser preferred language setting when displaying textual information such as the names for controls, copyright notices, driving directions and labels on maps. In most cases, this is preferable; you usually do not wish to override the user\'s preferred language setting. However, if you wish to change the Maps API to ignore the browser\'s language setting and force it to display information in a particular language, you can configure that here.', $this->plugin_slug ),
 				)
 			),
 		);
