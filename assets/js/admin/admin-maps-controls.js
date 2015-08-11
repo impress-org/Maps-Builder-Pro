@@ -46,6 +46,20 @@ var placeSearchAutocomplete;
 		//Edit Title
 		set_map_edit_title();
 
+		//Set lng and lat when map dragging
+		google.maps.event.addListener( map, 'drag', function () {
+			set_toolbar_lat_lng();
+		} );
+		//Set lng and lat when map dragging
+		google.maps.event.addListener( map, 'dragend', function () {
+			set_toolbar_lat_lng();
+		} );
+
+		//Set lng and lat when map dragging
+		google.maps.event.addListener( map, 'zoom_changed', function () {
+			set_toolbar_lat_lng();
+		} );
+
 		//Initialize Magnific/Modal Functionality Too
 		$( 'body' ).on( 'click', '.gmb-magnific-inline', function ( e ) {
 
@@ -60,6 +74,18 @@ var placeSearchAutocomplete;
 				$( target ).before( '<div class="modal-placeholder"></div>' ) // Save a DOM "bookmark"
 					.removeClass( 'mfp-hide' ) //ensure it's visible
 					.appendTo( '.magnific-builder #poststuff' ); // Move the element to container
+
+				//Check if wrapped properly
+				var inner_wrap = $( target ).find( '.inner-modal-wrap' );
+				var inner_wrap_container = $( target ).find( '.inner-modal-container' );
+
+				//Not wrapped, wrap it
+				if ( inner_wrap.length == 0 && inner_wrap_container.length == 0 ) {
+
+					$( target ).addClass( 'white-popup' ).wrapInner( '<div class="inner-modal-wrap"><div class="inner-modal-container"><div class="inner-modal clearfix"></div></div></div>' );
+					$( '<button type="button" class="gmb-modal-close">&times;</button>' ).prependTo( $( target ).find( '.inner-modal' ) );
+
+				}
 
 				//Add close functionality to outside overlay
 				$( target ).on( 'click', function ( e ) {
@@ -78,11 +104,16 @@ var placeSearchAutocomplete;
 			//Normal modal open
 			else {
 				$.magnificPopup.open( {
-					items   : {
+					callbacks: {
+						beforeOpen: function () {
+							$( target ).addClass( 'white-popup' );
+						}
+					},
+					items    : {
 						src : $( target ),
 						type: 'inline'
 					},
-					midClick: true
+					midClick : true
 				} );
 			}
 		} );
@@ -356,9 +387,40 @@ var placeSearchAutocomplete;
 	 */
 	function set_map_edit_title() {
 
+		//When edit title button is clicked insert title into feax input
+		$( '.edit-title' ).on( 'click', function () {
+			$( '#modal_title' ).val( $( 'input#title' ).val() );
+		} );
+
+		//when feax title input is changed update default title field
 		$( '#modal_title' ).on( 'blur', function () {
 			$( 'input#title' ).val( $( this ).val() );
 		} );
+
+	}
+
+
+	/**
+	 * Update Toolbar Lat/Lng
+	 */
+	function set_toolbar_lat_lng() {
+
+		var lat_lng_sidebar_btn = $( '.lat-lng-update-btn' );
+		var lat_lng_toolbar_btn = $( '.update-lat-lng' );
+
+		var map_center = map.getCenter();
+		$( '.live-latitude' ).text( map_center.lat() );
+		$( '.live-longitude' ).text( map_center.lng() );
+		lat_lng_toolbar_btn.attr( 'data-lat', map_center.lat() );
+		$( '.lat-lng-change-message' ).slideDown();
+
+		lat_lng_toolbar_btn.attr( 'data-lng', map_center.lng() );
+		lat_lng_sidebar_btn.attr( 'data-lat', map_center.lat() );
+		lat_lng_sidebar_btn.attr( 'data-lng', map_center.lng() );
+
+		lat_lng_sidebar_btn.removeAttr( 'disabled' );
+		lat_lng_toolbar_btn.removeAttr( 'disabled' );
+
 	}
 
 

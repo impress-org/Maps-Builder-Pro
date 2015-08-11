@@ -38,7 +38,7 @@ var gmb_data;
 				$( this ).html( gmb_data.i18n.btn_drop_marker ).removeClass( 'active' );
 				map.setOptions( {draggableCursor: null} ); //reset cursor
 			} else {
-				$( this ).text( 'Click on the Map' ).addClass( 'active' );
+				$( this ).text( gmb_data.i18n.btn_drop_marker_click ).addClass( 'active' );
 				map.setOptions( {draggableCursor: 'crosshair'} );
 				var dropped_marker_event = google.maps.event.addListener( map, 'click', function ( event ) {
 					drop_marker( event.latLng, dropped_marker_event );
@@ -91,8 +91,9 @@ var gmb_data;
 		} );
 
 		//Update lat lng message
-		$( '.lat-lng-update-btn' ).on( 'click', function ( e ) {
+		$( '.lat-lng-update-btn, .update-lat-lng' ).on( 'click', function ( e ) {
 			e.preventDefault();
+			$( this ).attr( 'disabled', 'disabled' );
 			$( '.lat-lng-change-message' ).slideUp();
 			$( '#gmb_lat_lng-latitude' ).val( $( this ).attr( 'data-lat' ) );
 			$( '#gmb_lat_lng-longitude' ).val( $( this ).attr( 'data-lng' ) );
@@ -189,7 +190,7 @@ var gmb_data;
 		//Add Repeater toggle button
 		$( '.toggle-repeater-groups' ).on( 'click', function ( e ) {
 			e.preventDefault();
-			$( '#gmb_markers_group_repeat .cmb-repeatable-grouping' ).toggleClass( 'closed' );
+			$( '#gmb_markers_group_repeat' ).find( '.cmb-repeatable-grouping' ).toggleClass( 'closed' );
 		} );
 
 		//Window resize
@@ -373,6 +374,10 @@ var gmb_data;
 				if ( typeof tentative_location_marker !== 'undefined' ) {
 					tentative_location_marker.setVisible( false );
 				}
+
+				//Close a modal if applicable
+				$( '.cmb2-id-gmb-geocoder' ).find( '.gmb-modal-close' ).trigger( 'click' );
+				$( '.cmb2-id-gmb-geocoder' ).find( '.mfp-close' ).trigger( 'click' );
 
 				//get place information
 				place = autocomplete.getPlace();

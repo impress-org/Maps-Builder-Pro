@@ -8,10 +8,17 @@
 }
 
 @mixin modal-label {
-
-  font-weight:bold;
-  font-size:14px;
+  font-weight: bold;
+  font-size: 14px;
   margin: 0 0 10px;
   display: block;
+  position: relative;
+}
 
+@mixin clearfix {
+  &:after {
+	content: "";
+	display: table;
+	clear: both;
+  }
 }

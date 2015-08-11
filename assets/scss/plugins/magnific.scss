@@ -481,6 +481,7 @@ img.mfp-img {
   width: auto;
   max-width: 600px;
   margin: 20px auto;
+  @include clearfix;
 }
 
 .white-popup.marker-icon-modal {

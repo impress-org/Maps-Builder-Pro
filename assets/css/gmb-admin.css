@@ -409,6 +409,10 @@ img.mfp-img {
   width: auto;
   max-width: 600px;
   margin: 20px auto; }
+  .white-popup:after {
+    content: "";
+    display: table;
+    clear: both; }
 
 .white-popup.marker-icon-modal {
   padding-bottom: 50px; }
@@ -1403,6 +1407,16 @@ x:-o-prefocus, .qtip .qtip-tip {
  * @copyright   Copyright (c) 2015, WordImpress
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
 */
+.magnific-builder #titlediv, .magnific-builder #submitdiv, .magnific-builder #google_maps_preview_metabox .handlediv, .magnific-builder #google_maps_preview_metabox .ui-sortable-handle, .magnific-builder #post-body-content, .magnific-builder .marker-icon-modal {
+  display: none; }
+
+.magnific-builder #google_maps_preview_metabox {
+  border: none; }
+
+.magnific-builder #google_maps_preview_metabox .inside {
+  margin: 0;
+  padding: 0; }
+
 /*-------------------------------------
 Magnific Builder
 ---------------------------------------*/
@@ -1413,6 +1427,8 @@ Magnific Builder
   background: #EEE;
   width: auto;
   overflow: hidden; }
+  .magnific-builder#post #google-map-wrap {
+    border: none; }
   .magnific-builder#post #poststuff {
     padding-top: 0; }
   .magnific-builder#post #cmb2-metabox-google_maps_preview_metabox > div {
@@ -1422,16 +1438,8 @@ Magnific Builder
     right: -175px;
     bottom: 15px;
     left: auto; }
-
-.magnific-builder #titlediv, .magnific-builder #submitdiv, .magnific-builder #google_maps_preview_metabox .handlediv, .magnific-builder #google_maps_preview_metabox .ui-sortable-handle, .magnific-builder #post-body-content, .magnific-builder .marker-icon-modal {
-  display: none; }
-
-.magnific-builder #google_maps_preview_metabox {
-  border: none; }
-
-.magnific-builder #google_maps_preview_metabox .inside {
-  margin: 0;
-  padding: 0; }
+  .magnific-builder#post #map-toolbar {
+    min-width: 678px; }
 
 /* Magnific Builder Sidebar */
 .magnific-builder#post #postbox-container-1 {
@@ -1580,7 +1588,8 @@ button.gmb-modal-close {
  * Google Places Map CPT Styles
  */
 #google-map-wrap {
-  position: relative; }
+  position: relative;
+  border: 1px solid #DDD; }
 
 .clear:before, .clear:after {
   content: " ";
@@ -1703,10 +1712,7 @@ button.gmb-modal-close {
 /*------------------------------------------
  General Styles
 --------------------------------------------*/
-.cmb2-id-gmb-search-radius, .cmb2-id-gmb-places-search-multicheckbox, .cmb2-id-gmb-places-search, .places-search-wrap {
-  display: none; }
-
-#google_maps_details_options tr {
+.cmb2-id-gmb-search-radius, .cmb2-id-gmb-places-search-multicheckbox, .cmb2-id-gmb-places-search, .places-search-wrap, #google_maps_details_options tr {
   display: none; }
 
 #google_maps_details_options tr.cmb2-id-gmb-show-poi {
@@ -1901,25 +1907,68 @@ Map Edit Quick Toolbar
 #map-toolbar {
   position: absolute;
   left: 50%;
-  bottom: 0;
+  bottom: -1px;
   transform: translateX(-50%);
   background: #FFF;
-  padding: 3px 1px;
+  padding: 3px 1px 0;
   border-top: 1px solid #DDD;
   border-left: 1px solid #DDD;
-  border-right: 1px solid #DDD; }
+  border-right: 1px solid #DDD;
+  min-width: 575px; }
   #map-toolbar #title {
     padding: 3px; }
   #map-toolbar .drop-marker .dashicons {
-    margin: 6px 0px 0 0; }
+    margin: 5px 0 0; }
   #map-toolbar button {
     margin: 0 2px; }
     #map-toolbar button .dashicons {
-      font-size: 16px;
-      margin-left: -2px;
-      margin-top: 5px; }
+      font-size: 12px;
+      width: 12px;
+      margin: 5px 2px 0 -2px; }
     #map-toolbar button.edit-title {
       display: none; }
+  #map-toolbar .live-lat-lng-wrap {
+    border: 1px solid #DDD;
+    padding: 0;
+    margin: 0 2px;
+    display: inline-block;
+    width: 250px;
+    background-color: #FAFAFA;
+    height: 24px;
+    overflow: hidden;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08); }
+    #map-toolbar .live-lat-lng-wrap .live-latitude-wrap, #map-toolbar .live-lat-lng-wrap .live-longitude-wrap {
+      float: left;
+      margin-left: 6px; }
+      #map-toolbar .live-lat-lng-wrap .live-latitude-wrap span, #map-toolbar .live-lat-lng-wrap .live-longitude-wrap span {
+        line-height: 22px;
+        float: left; }
+    #map-toolbar .live-lat-lng-wrap .live-longitude, #map-toolbar .live-lat-lng-wrap .live-latitude {
+      font-size: 11px;
+      margin: 0;
+      padding: 0;
+      width: 60px;
+      white-space: nowrap;
+      overflow: hidden; }
+    #map-toolbar .live-lat-lng-wrap .live-longitude-label, #map-toolbar .live-lat-lng-wrap .live-latitude-label {
+      font-size: 10px;
+      color: #AAA;
+      font-style: italic;
+      display: block;
+      padding: 0 2px 0 0; }
+    #map-toolbar .live-lat-lng-wrap button {
+      float: left;
+      margin: -2px 0 -2px -2px;
+      border-radius: 0;
+      height: 26px;
+      box-shadow: none; }
+      #map-toolbar .live-lat-lng-wrap button:hover {
+        box-shadow: none;
+        border-color: #cccccc; }
+
+@media (max-width: 900px) {
+  #map-toolbar {
+    display: none; } }
 
 /*-------------------------------------
 Modal styles
@@ -1928,7 +1977,8 @@ Modal styles
   font-weight: bold;
   font-size: 14px;
   margin: 0 0 10px;
-  display: block; }
+  display: block;
+  position: relative; }
 .map-autocomplete-wrap input, .map-title-wrap input {
   width: 100%; }
 
@@ -2063,7 +2113,8 @@ Autocomplete Metabox
   font-style: normal; }
   #cmb2-metabox-google_maps_markers a.drop-marker .dashicons {
     font-size: 14px;
-    margin: 4px 0 0; }
+    margin: 4px 0 0;
+    width: 16px; }
 
 /*-------------------------------------
 Map Markers
@@ -2096,7 +2147,7 @@ Sidebar
     margin-top: 0;
     padding-top: 12px; }
   #poststuff .inner-sidebar p.cmb2-metabox-description, #poststuff #side-sortables p.cmb2-metabox-description {
-    padding: 0;
+    padding: 5px 0;
     font-weight: normal; }
   #poststuff .inner-sidebar .cmb-row, #poststuff #side-sortables .cmb-row {
     margin: 0;
@@ -2196,6 +2247,22 @@ p.cmb2-metabox-description {
 
 a.wp-color-result {
   height: 24px; }
+
+/*-------------------------------------
+CMB2 within Magnific
+---------------------------------------*/
+div.white-popup .cmb-th {
+  width: 100%;
+  padding: 0; }
+  div.white-popup .cmb-th label {
+    font-weight: bold;
+    font-size: 14px;
+    margin: 0 0 10px;
+    display: block;
+    position: relative; }
+div.white-popup .cmb-td {
+  width: 100%;
+  padding: 15px 0; }
 
 /*!
  * Maps Builder Admin Settings Pages SCSS/CSS
@@ -2794,6 +2861,27 @@ Map Icons
   position: relative;
   top: 35px;
   color: #7dbee8; }
+
+/*-------------------------------------
+Modal: Create a Marker
+---------------------------------------*/
+.cmb2-id-gmb-geocoder.white-popup p.autocomplete-description {
+  display: none; }
+.cmb2-id-gmb-geocoder.white-popup label {
+  margin: 0;
+  padding: 0; }
+  .cmb2-id-gmb-geocoder.white-popup label:after {
+    content: ' ';
+    position: absolute;
+    bottom: 0;
+    left: 105px;
+    background: url('../img/powered-by-google-on-white.png') no-repeat 0 0 transparent;
+    width: 104px;
+    height: 16px; }
+.cmb2-id-gmb-geocoder.white-popup .cmb-td {
+  padding: 0; }
+  .cmb2-id-gmb-geocoder.white-popup .cmb-td input {
+    width: 100%; }
 
 /**
  * Import/Export SCSS
