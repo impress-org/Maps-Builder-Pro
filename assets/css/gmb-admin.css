@@ -2839,6 +2839,9 @@ Map Icons
       display: block;
       box-shadow: none; }
 
+.templatic-icons-row .map-icons-list li a {
+  padding: 5px; }
+
 /* Save button */
 .save-marker-icon {
   background: #F1F1F1;

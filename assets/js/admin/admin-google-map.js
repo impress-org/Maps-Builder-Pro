@@ -886,7 +886,7 @@ var gmb_data;
 		} ); //end $.each()
 
 		//Cluster?
-		if(cluster_markers === true) {
+		if ( cluster_markers === true ) {
 			var markerCluster = new MarkerClusterer( map, markers );
 		}
 
@@ -1739,7 +1739,7 @@ var gmb_data;
 			marker_containers.hide();
 
 			//Slide down specific div
-			$( '.' + marker_toggle ).slideDown();
+			$( '.' + marker_toggle ).show();
 
 		} );
 
@@ -1755,7 +1755,7 @@ var gmb_data;
 		$( '.icon' ).on( 'click', function () {
 			$( '.icon' ).removeClass( 'marker-item-selected' );
 			$( this ).addClass( 'marker-item-selected' );
-			$( '.save-marker-icon, .marker-label-color-wrap' ).slideDown(); //slide down save button
+			$( '.save-marker-icon, .marker-label-color-wrap' ).show(); //slide down save button
 			marker_modal_save_btn.attr( 'data-label', $( this ).find( 'span' ).attr( 'class' ) ); //Set marker data attribute on save btn
 		} );
 
