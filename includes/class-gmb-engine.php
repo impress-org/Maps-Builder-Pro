@@ -112,6 +112,9 @@ class Google_Maps_Builder_Engine {
 		$map_marker_array   = array();
 		$markers_repeatable = isset( $all_meta['gmb_markers_group'][0] ) ? maybe_unserialize( $all_meta['gmb_markers_group'][0] ) : '';
 
+		//Cluster
+		$cluster_option = isset( $all_meta['gmb_marker_cluster'][0] ) ? maybe_unserialize( $all_meta['gmb_marker_cluster'][0] ) : '';
+
 		//Put destination into an array for JS usage
 		$destination_markers = array();
 		$destination_markers = isset( $all_meta['gmb_directions_group'][0] ) ? maybe_unserialize( $all_meta['gmb_directions_group'][0] ) : '';
@@ -152,6 +155,7 @@ class Google_Maps_Builder_Engine {
 					'map_theme_json' => ! empty( $all_meta['gmb_theme_json'][0] ) ? $all_meta['gmb_theme_json'][0] : 'none',
 				),
 				'signed_in_option'    => $signed_in_option,
+				'marker_cluster'      => $cluster_option[0],
 				'site_name'           => get_bloginfo( 'name' ),
 				'site_url'            => get_bloginfo( 'url' ),
 				'map_markers'         => $map_marker_array,

@@ -82,6 +82,7 @@ class Google_Maps_Builder_Scripts {
 		// Use minified libraries if SCRIPT_DEBUG is turned off
 		wp_register_script( $this->plugin_slug . '-plugin-script', $js_dir . 'google-maps-builder' . $suffix . '.js', array( 'jquery' ), GMB_VERSION, true );
 		wp_register_script( 'google-maps-builder-maps-icons', GMB_PLUGIN_URL . 'includes/libraries/map-icons/js/map-icons.js', array( 'jquery' ), GMB_VERSION, true );
+		wp_register_script( 'google-maps-builder-clusterer', $js_plugins . 'markerclusterer' . $suffix . '.js', array( 'jquery' ), GMB_VERSION, true );
 		wp_localize_script( $this->plugin_slug . '-plugin-script', 'gmb_data', array() );
 
 
@@ -144,6 +145,7 @@ class Google_Maps_Builder_Scripts {
 		if ( $this->load_maps_api ) {
 			wp_print_scripts( 'google-maps-builder-gmaps' );
 		}
+		wp_print_scripts( 'google-maps-builder-clusterer' );
 		wp_print_scripts( 'google-maps-builder-plugin-script' );
 		wp_print_scripts( 'google-maps-builder-maps-icons' );
 	}
@@ -370,6 +372,10 @@ class Google_Maps_Builder_Scripts {
 			wp_register_script( $this->plugin_slug . '-admin-map-controls', $js_dir . 'admin-maps-controls' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
 			wp_enqueue_script( $this->plugin_slug . '-admin-map-controls' );
 
+			//Marker Clustering
+			wp_register_script( $this->plugin_slug . '-admin-map-marker-clustering', $js_plugins . 'markerclusterer' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
+			wp_enqueue_script( $this->plugin_slug . '-admin-map-marker-clustering' );
+
 			$api_key     = gmb_get_option( 'gmb_maps_api_key' );
 			$geolocate   = gmb_get_option( 'gmb_lat_lng' );
 			$post_status = get_post_status( $post->ID );
@@ -395,7 +401,7 @@ class Google_Maps_Builder_Scripts {
 					'multiple_places'          => __( 'Hmm, it looks like there are multiple places in this area. Please confirm which place you would like this marker to display:', $this->plugin_slug ),
 					'btn_drop_marker'          => '<span class="dashicons dashicons-location"></span>' . __( 'Drop a Marker', $this->plugin_slug ),
 					'btn_drop_marker_click'    => __( 'Click on the Map', $this->plugin_slug ),
-					'visit_website'           => __( 'Visit Website', $this->plugin_slug ),
+					'visit_website'            => __( 'Visit Website', $this->plugin_slug ),
 					'get_directions'           => __( 'Get Directions', $this->plugin_slug )
 				),
 			);

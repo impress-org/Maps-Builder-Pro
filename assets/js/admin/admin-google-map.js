@@ -812,6 +812,8 @@ var gmb_data;
 
 		clear_main_markers();
 		var time = 500;
+		var markers = [];
+		var cluster_markers = $( '#gmb_marker_cluster1' ).prop( 'checked' );
 
 		//Loop through repeatable field of markers
 		$( "#gmb_markers_group_repeat" ).find( '.cmb-repeatable-grouping' ).each( function ( index ) {
@@ -868,6 +870,7 @@ var gmb_data;
 
 			//Marker for map
 			var location_marker = new Marker( marker_args );
+			markers.push( location_marker );
 
 			location_marker.setVisible( true );
 
@@ -882,12 +885,17 @@ var gmb_data;
 
 		} ); //end $.each()
 
+		//Cluster?
+		if(cluster_markers === true) {
+			var markerCluster = new MarkerClusterer( map, markers );
+		}
+
 	}
 
 
 	function get_info_window_saved_data( index ) {
 
-		var info_window_data = new Object();
+		var info_window_data = {};
 
 		info_window_data.title = $( '#gmb_markers_group_' + index + '_title' ).val();
 		info_window_data.desc = $( '#gmb_markers_group_' + index + '_description' ).val();

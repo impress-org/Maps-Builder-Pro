@@ -237,6 +237,7 @@ var gmb_data;
 	function set_map_markers( map, map_data, info_window ) {
 
 		var map_markers = map_data.map_markers;
+		var markers = [];
 
 		//Loop through repeatable field of markers
 		$( map_markers ).each( function ( index, marker_data ) {
@@ -284,12 +285,10 @@ var gmb_data;
 
 			}
 
-			console.log( marker_data.place_id );
-			console.log( map_data.signed_in );
-			console.log( marker_args );
 
 			//Marker for map
 			var location_marker = new Marker( marker_args );
+			markers.push( location_marker );
 
 			location_marker.setVisible( true );
 
@@ -310,6 +309,12 @@ var gmb_data;
 			}
 
 		} ); //end $.each()
+
+		console.log( map_data.marker_cluster );
+		//Cluster?
+		if ( map_data.marker_cluster === 'yes' ) {
+			var markerCluster = new MarkerClusterer( map, markers );
+		}
 
 
 	}
