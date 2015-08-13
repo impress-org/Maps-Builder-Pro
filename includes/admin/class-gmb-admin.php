@@ -319,7 +319,6 @@ class Google_Maps_Builder_Admin {
 				'sortable'      => true, // beta
 			),
 		) );
-
 		$directions_box->add_field(
 			array(
 				'name'    => __( 'Directions Display', $this->plugin_slug ),

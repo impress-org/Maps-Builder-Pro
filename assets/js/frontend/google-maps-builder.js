@@ -529,6 +529,7 @@ var gmb_data;
 	 * @param map_data
 	 */
 	function set_map_directions( map, map_data ) {
+		console.log(map_data.destination_markers);
 
 		//Setup destinations
 		$( map_data.destination_markers ).each( function ( index, value ) {
@@ -541,39 +542,62 @@ var gmb_data;
 			var directionsService = new google.maps.DirectionsService();
 			var directionsDisplay = new google.maps.DirectionsRenderer();
 			directionsDisplay.setMap( map );
+
 			if ( map_data.text_directions !== 'none' ) {
 				$( '#directions-panel-' + map_data.id ).addClass( 'panel-' + map_data.text_directions );
 				directionsDisplay.setPanel( $( '#directions-panel-' + map_data.id ).get( 0 ) );
-
 			}
-
-
-			//Next loop through the groups within
 			var repeatable_row = $( this ).find( '.cmb-repeat-row' );
+
+
+			//Origin (We first use address, if no address use lat/lng)
 			var start_lat = value.point[0].latitude;
 			var start_lng = value.point[0].longitude;
+			var start_address = value.point[0].address;
+			var origin;
+			if ( start_address ) {
+				origin = start_address;
+			} else {
+				origin = start_lat + ',' + start_lng;
+			}
 
+			//Destination
 			var end_lat = value.point[value.point.length - 1].latitude;
 			var end_lng = value.point[value.point.length - 1].longitude;
+			var end_address = value.point[value.point.length - 1].address;
+			var destination;
+			if ( end_address ) {
+				destination = end_address;
+			} else {
+				destination = end_lat + ',' + end_lng;
+			}
 
 			var travel_mode = (value.travel_mode.length > 0) ? value.travel_mode : 'DRIVING';
 			var waypts = [];
 
-			repeatable_row.not( ':first' ).not( ':last' ).each( function ( index, value ) {
+			$(map_data.destination_markers).not( ':first' ).not( ':last' ).each( function ( index, value ) {
 
+				//Waypoint location (between origin/destination)
 				var waypoint_lat = $( this ).find( '.gmb-directions-latitude' ).val();
 				var waypoint_lng = $( this ).find( '.gmb-directions-longitude' ).val();
-
+				var waypoint_address = $( this ).find( '.gmb-directions-address' ).val();
+				var waypoint_location;
+				if ( waypoint_address ) {
+					waypoint_location = waypoint_address;
+				} else {
+					waypoint_location = waypoint_lat + ',' + waypoint_lng;
+				}
+				console.log(waypoint_location);
 				waypts.push( {
-					location: waypoint_lat + ',' + waypoint_lng,
+					location: waypoint_location,
 					stopover: true
 				} );
 
 			} );
 
 			var request = {
-				origin           : start_lat + ',' + start_lng,
-				destination      : end_lat + ',' + end_lng,
+				origin           : origin,
+				destination      : destination,
 				waypoints        : waypts,
 				optimizeWaypoints: true,
 				travelMode       : google.maps.TravelMode[travel_mode]

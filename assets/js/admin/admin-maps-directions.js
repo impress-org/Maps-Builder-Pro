@@ -13,11 +13,13 @@ var gmb_data;
 	"use strict";
 
 	var directionsDisplay = [];
+	var directionsService = new google.maps.DirectionsService();
 	var dirs_autocomplete,
 		destination,
 		destination_lat_field,
 		destination_lng_field,
 		destination_place_id,
+		destination_address,
 		destination_count,
 		destination_location_marker;
 
@@ -81,24 +83,22 @@ var gmb_data;
 			//get place information
 			destination = dirs_autocomplete.getPlace();
 
-			//Set appropriate field vars
+			//Set appropriate field object vars
 			destination_lat_field = $( element ).parents( '.gmb-destination-fieldset' ).find( '.gmb-directions-latitude' );
 			destination_lng_field = $( element ).parents( '.gmb-destination-fieldset' ).find( '.gmb-directions-longitude' );
 			destination_place_id = $( element ).parents( '.gmb-destination-fieldset' ).find( '.gmb-directions-place_id' );
+			destination_address = $( element ).parents( '.gmb-destination-fieldset' ).find( '.gmb-directions-address' );
 
-			//set lat lng input values
+			//set values
 			destination_lat_field.val( destination.geometry.location.lat() );
 			destination_lng_field.val( destination.geometry.location.lng() );
 			destination_place_id.val( destination.place_id );
+			destination_address.val( destination.formatted_address );
 
 			if ( !destination.geometry ) {
 				alert( 'Error: Place not found!' );
 				return;
 			}
-
-			//Add new row
-
-			//$( element ).parents( '.cmb-type-destination' ).find( '.cmb-add-row-button' ).trigger( 'click' );
 
 			calc_routes();
 
@@ -120,36 +120,63 @@ var gmb_data;
 				directionsDisplay[index].setMap( null );
 			}
 
-			var directionsService = new google.maps.DirectionsService();
+			//Setup
 			directionsDisplay[index] = new google.maps.DirectionsRenderer();
 			directionsDisplay[index].setMap( window.map );
-
-
-			//Next loop through the groups within
 			var repeatable_row = $( this ).find( '.cmb-repeat-row' );
+
+			//Get origin
 			var start_lat = repeatable_row.first().find( '.gmb-directions-latitude[data-iterator="0"]' ).val();
 			var start_lng = repeatable_row.first().find( '.gmb-directions-longitude[data-iterator="0"]' ).val();
+			var start_address = repeatable_row.first().find( '.gmb-directions-address[data-iterator="0"]' ).val();
+			var origin;
+			if ( start_address ) {
+				origin = start_address;
+			} else {
+				origin = start_lat + ',' + start_lng;
+			}
 
+			//Get Destination
 			var end_lat = repeatable_row.last().find( '.gmb-directions-latitude' ).val();
 			var end_lng = repeatable_row.last().find( '.gmb-directions-longitude' ).val();
+			var end_address = repeatable_row.last().find( '.gmb-directions-address' ).val();
+			var final_destination;
+			if ( start_address ) {
+				final_destination = end_address;
+			} else {
+				final_destination = end_lat + ',' + end_lng;
+			}
+
+
 			var travel_mode = $( this ).find( '.gmb-travel-mode' ).val();
 			var waypts = [];
 
+			//Next Loop through interior destionations (not first or last) to get waypoints
 			repeatable_row.not( ':first' ).not( ':last' ).each( function ( index, value ) {
 
+				var waypoint_address = $( this ).find( '.gmb-directions-address' ).val();
 				var waypoint_lat = $( this ).find( '.gmb-directions-latitude' ).val();
 				var waypoint_lng = $( this ).find( '.gmb-directions-longitude' ).val();
+				var waypoint_location;
+
+				if ( waypoint_address ) {
+					waypoint_location = waypoint_address;
+				} else {
+					waypoint_location = waypoint_lat + ',' + waypoint_lng;
+				}
 
 				waypts.push( {
-					location: waypoint_lat + ',' + waypoint_lng,
+					location: waypoint_location,
 					stopover: true
 				} );
 
 			} );
 
+
+			//Directions Request
 			var request = {
-				origin           : start_lat + ',' + start_lng,
-				destination      : end_lat + ',' + end_lng,
+				origin           : origin,
+				destination      : final_destination,
 				waypoints        : waypts,
 				optimizeWaypoints: true,
 				travelMode       : google.maps.TravelMode[travel_mode]
@@ -162,17 +189,7 @@ var gmb_data;
 					//directionsDisplay[index].setOptions( {preserveViewport: true} );
 					directionsDisplay[index].setDirections( response );
 
-					var route = response.routes[0];
-					//var summaryPanel = document.getElementById( 'directions_panel' );
-					//summaryPanel.innerHTML = '';
-					//// For each route, display summary information.
-					//for ( var i = 0; i < route.legs.length; i++ ) {
-					//	var routeSegment = i + 1;
-					//	summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment + '</b><br>';
-					//	summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-					//	summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-					//	summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-					//}
+
 				}
 			} );
 

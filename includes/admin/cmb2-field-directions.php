@@ -23,7 +23,8 @@ function gmb_cmb2_render_destination_field_callback( $field, $value, $object_id,
 		'destination' => '',
 		'latitude'    => '',
 		'longitude'   => '',
-		'place_id'    => ''
+		'place_id'    => '',
+		'address'     => ''
 	) );
 
 	?>
@@ -38,22 +39,22 @@ function gmb_cmb2_render_destination_field_callback( $field, $value, $object_id,
 		</div>
 		<div class="destination-longitude">
 			<?php echo $field_type_object->input( array(
-				'class'    => 'gmb-directions-longitude',
-				'name'     => $field_type_object->_name( '[longitude]' ),
-				'id'       => $field_type_object->_id( '_longitude' ),
-				'value'    => $value['longitude'],
-				'readonly' => 'readonly',
-				'placeholder' => __('Longitude', Google_Maps_Builder()->get_plugin_slug()),
+				'class'       => 'gmb-directions-longitude',
+				'name'        => $field_type_object->_name( '[longitude]' ),
+				'id'          => $field_type_object->_id( '_longitude' ),
+				'value'       => $value['longitude'],
+				'readonly'    => 'readonly',
+				'placeholder' => __( 'Longitude', Google_Maps_Builder()->get_plugin_slug() ),
 			) ); ?>
 		</div>
 		<div class="destination-latitude">
 			<?php echo $field_type_object->input( array(
-				'class'    => 'gmb-directions-latitude',
-				'name'     => $field_type_object->_name( '[latitude]' ),
-				'id'       => $field_type_object->_id( '_latitude' ),
-				'value'    => $value['latitude'],
-				'readonly' => 'readonly',
-				'placeholder' => __('Latitude', Google_Maps_Builder()->get_plugin_slug()),
+				'class'       => 'gmb-directions-latitude',
+				'name'        => $field_type_object->_name( '[latitude]' ),
+				'id'          => $field_type_object->_id( '_latitude' ),
+				'value'       => $value['latitude'],
+				'readonly'    => 'readonly',
+				'placeholder' => __( 'Latitude', Google_Maps_Builder()->get_plugin_slug() ),
 			) ); ?>
 		</div>
 		<div class="destination-place-id">
@@ -63,6 +64,17 @@ function gmb_cmb2_render_destination_field_callback( $field, $value, $object_id,
 				'id'       => $field_type_object->_id( '_place_id' ),
 				'value'    => $value['place_id'],
 				'readonly' => 'readonly',
+			) ); ?>
+		</div>
+		<div class="destination-address">
+			<?php echo $field_type_object->input( array(
+				'class'       => 'gmb-directions-address',
+				'name'        => $field_type_object->_name( '[address]' ),
+				'id'          => $field_type_object->_id( '_address' ),
+				'value'       => $value['address'],
+				'type'        => 'text',
+				'readonly'    => 'readonly',
+				'placeholder' => __( 'No Address Set', Google_Maps_Builder()->get_plugin_slug() ),
 			) ); ?>
 		</div>
 	</div>
@@ -78,7 +90,6 @@ add_filter( 'cmb2_render_destination', 'gmb_cmb2_render_destination_field_callba
  * The following snippets are required for allowing the address field
  * to work as a repeatable field, or in a repeatable group
  */
-
 function cmb2_sanitize_destination_field( $check, $meta_value, $object_id, $field_args, $sanitize_object ) {
 
 	// if not repeatable, bail out.

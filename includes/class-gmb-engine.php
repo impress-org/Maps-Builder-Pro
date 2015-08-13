@@ -155,7 +155,7 @@ class Google_Maps_Builder_Engine {
 					'map_theme_json' => ! empty( $all_meta['gmb_theme_json'][0] ) ? $all_meta['gmb_theme_json'][0] : 'none',
 				),
 				'signed_in_option'    => $signed_in_option,
-				'marker_cluster'      => $cluster_option[0],
+				'marker_cluster'      => isset( $cluster_option[0] ) ? $cluster_option[0] : '',
 				'site_name'           => get_bloginfo( 'name' ),
 				'site_url'            => get_bloginfo( 'url' ),
 				'map_markers'         => $map_marker_array,
