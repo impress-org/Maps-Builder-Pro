@@ -8,12 +8,10 @@
  * @link      http://wordimpress.com
  * @copyright 2015 WordImpress, Devin Walker
  */
-
 $map_width = isset( $visual_info['width'] ) ? $visual_info['width'] : '100';
 $map_width .= isset( $visual_info['map_width_unit'] ) ? $visual_info['map_width_unit'] : '%';
 $map_height = isset( $visual_info['height'] ) ? $visual_info['height'] : '500';
 $map_height .= isset( $visual_info['map_height_unit'] ) ? $visual_info['map_height_unit'] : 'px';
-
 ?>
 
 <div class="google-maps-builder-wrap">
