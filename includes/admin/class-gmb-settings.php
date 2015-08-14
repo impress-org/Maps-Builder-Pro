@@ -163,6 +163,12 @@ class Google_Maps_Builder_Settings {
 						'false' => __( 'No', 'cmb' ),
 					),
 				),
+				array(
+					'name' => __( 'Mashup Metabox', $this->plugin_slug ),
+					'id'   => $prefix . 'mashup_metabox',
+					'desc' => __( 'Select which post types you would like to display the mashup metabox.', $this->plugin_slug ),
+					'type' => 'multicheck_posttype',
+				),
 			),
 		);
 

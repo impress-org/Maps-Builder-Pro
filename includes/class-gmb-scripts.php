@@ -157,7 +157,7 @@ class Google_Maps_Builder_Scripts {
 	 * @since      : 1.0.3
 	 * @return bool $multiple_google_maps_api
 	 */
-	function check_for_multiple_google_maps_api_calls() {
+	public function check_for_multiple_google_maps_api_calls() {
 
 		global $wp_scripts;
 
@@ -167,10 +167,11 @@ class Google_Maps_Builder_Scripts {
 
 		//loop through registered scripts
 		foreach ( $wp_scripts->registered as $registered_script ) {
+
 			//find any that have the google script as the source, ensure it's not enqueud by this plugin
 			if (
 				strpos( $registered_script->src, 'maps.googleapis.com/maps/api/js' ) !== false &&
-				strpos( $registered_script->handle, 'google-maps-builder' ) === false
+				strpos( $registered_script->handle, $this->plugin_slug ) === false
 			) {
 
 				if ( strpos( $registered_script->src, 'places' ) == false ) {
@@ -184,15 +185,20 @@ class Google_Maps_Builder_Scripts {
 				//ensure we can detect scripts on the frontend from backend; we'll use an option to do this
 				if ( ! is_admin() ) {
 					update_option( 'gmb_google_maps_conflict', true );
+				} else {
+					//Admin conflict detected
+					update_option( 'gmb_google_maps_admin_conflict', true );
 				}
 
 			}
 
 		}
 
-		//Ensure that if user resolved conflict on frontend we remove the option flag
+		//Ensure that if user resolved conflict we remove the option flag
 		if ( $this->load_maps_api === false && ! is_admin() ) {
 			update_option( 'gmb_google_maps_conflict', false );
+		} elseif ( $this->load_maps_api === false && is_admin() ) {
+			update_option( 'gmb_google_maps_admin_conflict', false );
 		}
 
 	}
@@ -263,7 +269,6 @@ class Google_Maps_Builder_Scripts {
 	}
 
 	/**
-	 *
 	 * Register and enqueue admin-specific style sheet.
 	 *
 	 * Return early if no settings page is registered.
@@ -272,7 +277,6 @@ class Google_Maps_Builder_Scripts {
 	 * @param $hook
 	 *
 	 * @return    null
-	 *
 	 */
 	function enqueue_admin_styles( $hook ) {
 
@@ -401,6 +405,8 @@ class Google_Maps_Builder_Scripts {
 					'multiple_places'          => __( 'Hmm, it looks like there are multiple places in this area. Please confirm which place you would like this marker to display:', $this->plugin_slug ),
 					'btn_drop_marker'          => '<span class="dashicons dashicons-location"></span>' . __( 'Drop a Marker', $this->plugin_slug ),
 					'btn_drop_marker_click'    => __( 'Click on the Map', $this->plugin_slug ),
+					'btn_edit_marker'          => __( 'Edit Marker', $this->plugin_slug ),
+					'btn_delete_marker'        => __( 'Delete Marker', $this->plugin_slug ),
 					'visit_website'            => __( 'Visit Website', $this->plugin_slug ),
 					'get_directions'           => __( 'Get Directions', $this->plugin_slug )
 				),

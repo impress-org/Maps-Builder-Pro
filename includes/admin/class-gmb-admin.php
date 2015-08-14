@@ -6,40 +6,12 @@
  * The admin is considered the single post view where you build maps
  *
  * @package   Google_Maps_Builder_Admin
- * @author    Devin Walker <devin@wordimpress.com>
+ * @author    WordImpress
  * @license   GPL-2.0+
  * @link      http://wordimpress.com
- * @copyright 2015 WordImpress, Devin Walker
+ * @copyright 2015 WordImpress
  */
 class Google_Maps_Builder_Admin {
-
-	/**
-	 * Instance of this class.
-	 *
-	 * @since    1.0.0
-	 *
-	 * @var      object
-	 */
-	protected static $instance = null;
-
-
-	/**
-	 * Array of metaboxes/fields
-	 *
-	 * @since    1.0.0
-	 *
-	 * @var array
-	 */
-	protected static $plugin_options = array();
-
-	/**
-	 * Array of metaboxes/fields
-	 *
-	 * @since    1.0.0
-	 *
-	 * @var array
-	 */
-	protected static $default_map_options;
 
 
 	/**
@@ -130,8 +102,6 @@ class Google_Maps_Builder_Admin {
 	 * @since  1.0.0
 	 * @return array
 	 */
-
-
 	public function cpt2_metaboxes_fields() {
 
 		$prefix          = 'gmb_';
@@ -224,12 +194,11 @@ class Google_Maps_Builder_Admin {
 			'id'   => 'place_id',
 			'type' => 'text',
 		) );
-		//@TODO: Coming soon!
-		//		$marker_box->add_group_field( $group_field_id, array(
-		//			'name' => __( 'Hide Place Details', $this->plugin_slug ),
-		//			'id'   => 'hide_details',
-		//			'type' => 'checkbox',
-		//		) );
+		$marker_box->add_group_field( $group_field_id, array(
+			'name' => __( 'Hide Place Details', $this->plugin_slug ),
+			'id'   => 'hide_details',
+			'type' => 'checkbox',
+		) );
 		$marker_box->add_group_field( $group_field_id, array(
 			'name' => __( 'Marker Latitude', $this->plugin_slug ),
 			'id'   => 'lat',
@@ -857,6 +826,10 @@ class Google_Maps_Builder_Admin {
 	/**
 	 * Custom Google Geocoder field
 	 * @since  1.0.0
+	 *
+	 * @param $field
+	 * @param $meta
+	 *
 	 * @return array
 	 */
 	function cmb2_render_google_geocoder( $field, $meta ) {
