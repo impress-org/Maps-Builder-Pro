@@ -147,7 +147,6 @@ var gmb_data;
 				final_destination = end_lat + ',' + end_lng;
 			}
 
-
 			var travel_mode = $( this ).find( '.gmb-travel-mode' ).val();
 			var waypts = [];
 
@@ -186,9 +185,8 @@ var gmb_data;
 
 				if ( status == google.maps.DirectionsStatus.OK ) {
 
-					//directionsDisplay[index].setOptions( {preserveViewport: true} );
-					directionsDisplay[index].setDirections( response );
-
+					directionsDisplay[index].setOptions( {preserveViewport: true} ); //ensure users set lat/lng doesn't get all messed u
+					directionsDisplay[index].setDirections( response ); //Set dem directions
 
 				}
 			} );

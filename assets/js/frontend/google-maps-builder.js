@@ -310,7 +310,6 @@ var gmb_data;
 
 		} ); //end $.each()
 
-		console.log( map_data.marker_cluster );
 		//Cluster?
 		if ( map_data.marker_cluster === 'yes' ) {
 			var markerCluster = new MarkerClusterer( map, markers );
@@ -529,31 +528,29 @@ var gmb_data;
 	 * @param map_data
 	 */
 	function set_map_directions( map, map_data ) {
-		console.log(map_data.destination_markers);
 
 		//Setup destinations
-		$( map_data.destination_markers ).each( function ( index, value ) {
-
-			//If no points skip
-			if ( !map_data.destination_markers[0].point || typeof value.point === 'undefined' ) {
-				return false;
-			}
+		$( map_data.destination_markers ).each( function ( index, markers ) {
 
 			var directionsService = new google.maps.DirectionsService();
 			var directionsDisplay = new google.maps.DirectionsRenderer();
+			var directionsPanel = $( '#directions-panel-' + map_data.id ).find( '.gmb-directions-panel-inner' );
+
+			//If no points skip
+			if ( typeof markers.point === 'undefined' || typeof markers.point[0] === 'undefined' ) {
+				return false;
+			}
+
 			directionsDisplay.setMap( map );
 
 			if ( map_data.text_directions !== 'none' ) {
-				$( '#directions-panel-' + map_data.id ).addClass( 'panel-' + map_data.text_directions );
-				directionsDisplay.setPanel( $( '#directions-panel-' + map_data.id ).get( 0 ) );
+				directionsDisplay.setPanel( $( directionsPanel ).get( 0 ) );
 			}
-			var repeatable_row = $( this ).find( '.cmb-repeat-row' );
-
 
 			//Origin (We first use address, if no address use lat/lng)
-			var start_lat = value.point[0].latitude;
-			var start_lng = value.point[0].longitude;
-			var start_address = value.point[0].address;
+			var start_lat = markers.point[0].latitude;
+			var start_lng = markers.point[0].longitude;
+			var start_address = markers.point[0].address;
 			var origin;
 			if ( start_address ) {
 				origin = start_address;
@@ -562,9 +559,9 @@ var gmb_data;
 			}
 
 			//Destination
-			var end_lat = value.point[value.point.length - 1].latitude;
-			var end_lng = value.point[value.point.length - 1].longitude;
-			var end_address = value.point[value.point.length - 1].address;
+			var end_lat = markers.point[markers.point.length - 1].latitude;
+			var end_lng = markers.point[markers.point.length - 1].longitude;
+			var end_address = markers.point[markers.point.length - 1].address;
 			var destination;
 			if ( end_address ) {
 				destination = end_address;
@@ -572,22 +569,23 @@ var gmb_data;
 				destination = end_lat + ',' + end_lng;
 			}
 
-			var travel_mode = (value.travel_mode.length > 0) ? value.travel_mode : 'DRIVING';
+			var travel_mode = (markers.travel_mode.length > 0) ? markers.travel_mode : 'DRIVING';
 			var waypts = [];
 
-			$(map_data.destination_markers).not( ':first' ).not( ':last' ).each( function ( index, value ) {
+			//Loop through interior elements (skipping first/last array items b/c they are origin/destinations)
+			$( markers.point.slice( 1, -1 ) ).each( function ( index, waypoint ) {
 
 				//Waypoint location (between origin/destination)
-				var waypoint_lat = $( this ).find( '.gmb-directions-latitude' ).val();
-				var waypoint_lng = $( this ).find( '.gmb-directions-longitude' ).val();
-				var waypoint_address = $( this ).find( '.gmb-directions-address' ).val();
+				var waypoint_lat = waypoint.latitude;
+				var waypoint_lng = waypoint.longitude;
+				var waypoint_address = waypoint.address;
 				var waypoint_location;
+
 				if ( waypoint_address ) {
 					waypoint_location = waypoint_address;
 				} else {
 					waypoint_location = waypoint_lat + ',' + waypoint_lng;
 				}
-				console.log(waypoint_location);
 				waypts.push( {
 					location: waypoint_location,
 					stopover: true
@@ -607,13 +605,30 @@ var gmb_data;
 
 				if ( status == google.maps.DirectionsStatus.OK ) {
 
-					//directionsDisplay[index].setOptions( {preserveViewport: true} );
+					directionsDisplay.setOptions( {preserveViewport: true} ); //ensure users set lat/lng doesn't get all messed up
 					directionsDisplay.setDirections( response );
 
 				}
 			} );
-		} );
 
+		} ); //end foreach
+
+
+		//Set directions toggle field
+		$( '.gmb-directions-toggle' ).on( 'click', function ( e ) {
+			e.preventDefault();
+			var dir_panel = $( this ).parent( '.gmb-directions-panel' );
+			if ( dir_panel.hasClass( 'toggled' ) ) {
+				dir_panel.removeClass('toggled' ).animate( {
+					right: '-50%'
+				} );
+			} else {
+				dir_panel.addClass('toggled' ).animate( {
+					right: '0%'
+				} );
+			}
+
+		} );
 
 	}
 
