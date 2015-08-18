@@ -180,7 +180,7 @@ class Google_Maps_Builder_Admin {
 		) );
 		$marker_box->add_group_field( $group_field_id, array(
 			'name'        => __( 'Marker Description', $this->plugin_slug ),
-			'description' => 'Write a short description for this marker',
+			'description' => __('Write a short description for this marker', $this->plugin_slug ),
 			'id'          => 'description',
 			'type'        => 'textarea_small',
 		) );

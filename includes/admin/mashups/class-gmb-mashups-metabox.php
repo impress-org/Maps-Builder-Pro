@@ -3,7 +3,7 @@
 /**
  * Google Maps Mashups
  *
- * Adds mashup functionality to Maps Builder Pro
+ * Adds mashup metaboxes to user selected post types with Maps Builder Pro
  *
  * @package   Google_Maps_Builder_Admin
  * @author    WordImpress
@@ -149,7 +149,6 @@ class Google_Maps_Builder_Mashups_Metabox {
 				'geocode' => '',
 			)
 		);
-
 
 		$output = '<div class="autocomplete-wrap">';
 		$output .= '<input type="text" name="' . $field->args( 'id' ) . '[geocode]" id="' . $field->args( 'id' ) . '" value="" class="search-autocomplete" />';

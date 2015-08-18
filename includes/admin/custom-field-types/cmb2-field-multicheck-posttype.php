@@ -8,9 +8,9 @@
  * @since      : 2.0
  */
 //render multicheck-posttype
-add_action( 'cmb2_render_multicheck_posttype', 'ds_cmb_render_multicheck_posttype', 10, 5 );
+add_action( 'cmb2_render_multicheck_posttype', 'gmb_cmb_render_multicheck_posttype', 10, 5 );
 
-function ds_cmb_render_multicheck_posttype( $field, $escaped_value, $object_id, $object_type, $field_type_object ) {
+function gmb_cmb_render_multicheck_posttype( $field, $escaped_value, $object_id, $object_type, $field_type_object ) {
 	$cpts = get_post_types();
 	unset( $cpts['nav_menu_item'] );
 	unset( $cpts['revision'] );

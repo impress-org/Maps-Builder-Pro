@@ -26,7 +26,6 @@ function gmb_cmb2_render_destination_field_callback( $field, $value, $object_id,
 		'place_id'    => '',
 		'address'     => ''
 	) );
-
 	?>
 	<div class="gmb-destination-fieldset clear">
 		<div class="destination-autocomplete">
