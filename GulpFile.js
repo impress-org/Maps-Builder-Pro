@@ -35,7 +35,7 @@ var old_source_paths = {
 var source_paths = {
 	admin_styles    : ['./assets/scss/**/gmb-admin.scss'],
 	plugin_styles    : ['./assets/scss/**/*.scss'],
-	frontend_styles : ['./assets/scss/frontend/maps-builder.scss'],
+	frontend_styles : ['./assets/scss/**/maps-builder.scss'],
 	scripts         : ['./assets/js/**/*.js', '!./assets/js/**/*.min.js'],
 	frontend_scripts: [
 		'./assets/js/plugins/give-magnific.min.js',
@@ -97,7 +97,7 @@ gulp.task( 'frontend_styles', function () {
 gulp.task( 'scripts', function () {
 	return gulp.src( source_paths.scripts )
 		.pipe( uglify( {
-			preserveComments: 'all'
+			preserveComments: 'false'
 		} ) )
 		.pipe( rename( {suffix: ".min"} ) )
 		.pipe( gulp.dest( 'assets/js' ) )

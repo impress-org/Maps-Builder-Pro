@@ -88,20 +88,28 @@ class Google_Maps_Builder_Mashups_Metabox {
 
 	/**
 	 * Enqueue Mashup Scripts
+	 *
+	 * @param $hook
+	 *
+	 * @return false
 	 */
-	public function enqueue_mashup_scripts() {
+	public function enqueue_mashup_scripts( $hook ) {
 
 		if ( $this->is_mashup_metabox_enabled() == false ) {
 			return false;
 		}
+		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		Google_Maps_Builder()->scripts->check_for_multiple_google_maps_api_calls();
+		//Only enqueue on post edit screens
+		if ( $hook === 'post.php' ) {
+			Google_Maps_Builder()->scripts->check_for_multiple_google_maps_api_calls();
 
-		wp_register_script( $this->plugin_slug . '-admin-mashups-scripts', GMB_PLUGIN_URL . 'assets/js/admin/admin-maps-mashup-metabox.js', array(
-			'jquery',
-			$this->plugin_slug . '-gmaps'
-		) );
-		wp_enqueue_script( $this->plugin_slug . '-admin-mashups-scripts' );
+			wp_register_script( $this->plugin_slug . '-admin-mashups-scripts', GMB_PLUGIN_URL . 'assets/js/admin/admin-maps-mashup-metabox' . $suffix . '.js', array(
+				'jquery',
+				$this->plugin_slug . '-gmaps'
+			) );
+			wp_enqueue_script( $this->plugin_slug . '-admin-mashups-scripts' );
+		}
 
 
 	}

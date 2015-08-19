@@ -1274,8 +1274,6 @@ var gmb_data;
 	 */
 	function toggle_marker_animation() {
 		clear_main_markers();
-
-
 	}
 
 

@@ -2936,5 +2936,16 @@ Marker Import Metabox
 .marker-export-submit {
   margin: 15px 0 0; }
 
+/**
+ * Mashups
+ *
+ * @package     Give
+ * @subpackage  SCSS/Admin
+ * @copyright   Copyright (c) 2015, WordImpress
+ * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+*/
+#side-sortables .gmb-mashup-loading .cmb-th, #poststuff .gmb-mashup-loading .cmb-th {
+  display: none; }
+
 
 /*# sourceMappingURL=gmb-admin.css.map */

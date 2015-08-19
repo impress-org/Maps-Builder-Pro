@@ -26,12 +26,13 @@ class Google_Maps_Builder_Mashups_Builder {
 
 		add_action( 'cmb2_render_select_taxonomies', array( $this, 'gmb_cmb_render_select_taxonomies' ), 10, 5 );
 		add_action( 'cmb2_render_select_terms', array( $this, 'gmb_cmb_render_select_terms' ), 10, 5 );
+		add_action( 'cmb2_render_mashups_load_panel', array( $this, 'gmb_cmb_render_mashups_load_panel' ), 10, 5 );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_mashup_builder_scripts' ) );
 		add_action( 'wp_ajax_get_post_types_taxonomies', array( $this, 'get_post_types_taxonomies_callback' ) );
 		add_action( 'wp_ajax_get_taxonomy_terms', array( $this, 'get_taxonomy_terms_callback' ) );
+		add_action( 'wp_ajax_get_mashup_markers', array( $this, 'get_mashup_markers_callback' ) );
 	}
-
 
 	/**
 	 * Enqueue Mashup Builder Scripts
@@ -69,7 +70,8 @@ class Google_Maps_Builder_Mashups_Builder {
 
 		$mashup_metabox = cmb2_get_metabox( array(
 			'id'           => 'google_maps_mashup_builder',
-			'title'        => __( 'Map Markers from Posts (Mashups)', $this->plugin_slug ),
+			'title'        => __( 'Mashups', $this->plugin_slug ),
+			'description'  => __( 'Aggregate map markers from post types of your choosing.', $this->plugin_slug ),
 			'object_types' => array( 'google_maps' ), // post type
 			'context'      => 'normal', //  'normal', 'advanced', or 'side'
 			'priority'     => 'default', //  'high', 'core', 'default' or 'low'
@@ -108,7 +110,12 @@ class Google_Maps_Builder_Mashups_Builder {
 			'description' => __( 'Select the taxonomies (if any) that you would like to filter by.', $this->plugin_slug ),
 			'type'        => 'select_terms',
 		) );
-
+		$mashup_metabox->add_group_field( $group_field_id, array(
+			'name'        => __( 'Load Mashup', $this->plugin_slug ),
+			'id'          => 'load_panel',
+			'row_classes' => 'gmb-mashup-loading',
+			'type'        => 'mashups_load_panel',
+		) );
 
 	}
 
@@ -172,17 +179,15 @@ class Google_Maps_Builder_Mashups_Builder {
 	public function gmb_cmb_render_select_terms( $field, $value, $object_id, $object_type, $field_type_object ) {
 
 		$group_data_array = maybe_unserialize( get_post_meta( $object_id, 'gmb_mashup_group', true ) );
-		$post_type        = $group_data_array[ $field->group->index ]['post_type'];
-		$taxonomy         = $group_data_array[ $field->group->index ]['taxonomy'];
+		$post_type        = isset( $group_data_array[ $field->group->index ]['post_type'] ) ? $group_data_array[ $field->group->index ]['post_type'] : 'post';
+		$taxonomy         = isset( $group_data_array[ $field->group->index ]['taxonomy'] ) ? $group_data_array[ $field->group->index ]['taxonomy'] : 'category';
 		$output           = '';
 
 		//Get Terms
 		$args['taxonomy'] = isset( $taxonomy ) ? $taxonomy : '';
 		$args             = wp_parse_args( $args, array( 'taxonomy' => 'category' ) );
 		$taxonomy         = $args['taxonomy'];
-
-		$terms = (array) get_terms( $taxonomy, $args );
-
+		$terms            = (array) get_terms( $taxonomy, $args );
 
 		//First check to see if mashups post type field has been set
 		if ( ! empty( $post_type ) && ! empty( $terms ) ) {
@@ -289,10 +294,70 @@ class Google_Maps_Builder_Mashups_Builder {
 
 	}
 
+	/**
+	 * AJAX Taxonomies Callback
+	 */
+	function get_mashup_markers_callback() {
+
+		//Set Vars
+		$repeater_index = isset( $_POST['index'] ) ? $_POST['index'] : '';
+		$taxonomy       = isset( $_POST['taxonomy'] ) ? $_POST['taxonomy'] : '';
+		$terms          = isset( $_POST['terms'] ) ? $_POST['terms'] : '';
+		$post_type      = isset( $_POST['post_type'] ) ? $_POST['post_type'] : '';
+		$response       = '';
+
+		$args = array(
+			'post_type'      => $post_type,
+			'posts_per_page' => - 1
+		);
+
+		//Handle taxonomy & terms filter
+		if ( ! empty( $taxonomy ) ) {
+
+			//Build $args taxonomy params
+			$args['tax_query'] = array(
+				array(
+					'taxonomy' => $taxonomy,
+					'field'    => 'term_id',
+					'terms'    => $terms,
+					'operator' => 'IN',
+				)
+			);
+
+		}
+
+		// The Query
+		$wp_query = new WP_Query( $args );
+
+		// The Loop
+		if ( $wp_query->have_posts() ) : while ( $wp_query->have_posts() ) :
+
+			$wp_query->the_post();
+			$post_id                            = get_the_ID();
+			$response[ $post_id ]['all_custom'] = get_post_custom( $post_id );
+
+		endwhile; endif;
+
+		if ( is_array( $response ) ) {
+
+			echo json_encode( $response );
+
+		} else {
+
+			$response['error'] = __( 'Error' );
+
+			echo $response;
+
+		}
+
+		wp_die();
+
+
+	}
+
 
 	/**
 	 * Get Terms Checklist
-	 *
 	 *
 	 * @param $terms array - a list of terms to loop through
 	 * @param $index int - the index of this repeater group
@@ -308,7 +373,7 @@ class Google_Maps_Builder_Mashups_Builder {
 			foreach ( $terms as $term ) {
 
 				$output .= '<li>
-							<input type="checkbox" class="cmb2-option" name="gmb_mashup_group[' . $index . '][terms][]" id="gmb_mashup_group_' . $index . '_terms' . $i . '" value="' . $term->term_id . '" ' . ( is_array( $value ) && in_array( $term->term_id, $value ) ? 'checked="checked"' : '' ) . '>
+							<input type="checkbox" class="cmb2-option" name="gmb_mashup_group[' . $index . '][terms][]" id="gmb_mashup_group_' . $index . '_terms' . $i . '" value="' . $term->term_id . '" ' . ( is_array( $value ) && in_array( $term->term_id, $value ) ? 'checked="checked"' : '' ) . ' data-iterator="' . $index . '">
 							<label for="gmb_mashup_group_' . $index . '_terms' . $i . '">' . $term->name . '</label>
 							</li>';
 
@@ -317,6 +382,29 @@ class Google_Maps_Builder_Mashups_Builder {
 		} //end foreach
 
 		return $output;
+
+	}
+
+
+	/**
+	 * Render Loading Panel
+	 *
+	 * @param $field
+	 * @param $value
+	 * @param $object_id
+	 * @param $object_type
+	 * @param $field_type_object
+	 */
+	public function gmb_cmb_render_mashups_load_panel( $field, $value, $object_id, $object_type, $field_type_object ) {
+
+		//Output our hidden field so we have
+		echo $field_type_object->input( array(
+			'id'   => 'mashup_configured',
+			'type' => 'hidden',
+		) );
+		echo '<button class="gmb-load-mashup button button-primary">' . __( 'Load Markers', $this->plugin_slug ) . '</button>';
+
+		echo '<div class="markers-loaded"><p>' . __( 'This markers are set for this mashup group.', $this->plugin_slug ) . '</p></div>';
 
 	}
 
