@@ -585,7 +585,8 @@ var gmb_data;
 	/**
 	 * info_bubble Content for Place Details
 	 *
-	 * This marker contains more information about the place
+	 * This marker contains more information about the place.
+	 * @TODO: AJAXify & Clean up
 	 */
 	function get_editable_info_window( index, marker ) {
 
@@ -705,7 +706,6 @@ var gmb_data;
 				marker_icon_data = eval( '(' + marker_icon_data + ')' );
 				$( '#gmb_markers_group_' + index + '_marker_img' ).val( '' ); //set marker image field
 			}
-
 
 			//remove current marker
 			marker.setMap( null );
@@ -1768,7 +1768,6 @@ var gmb_data;
 		$( '.color-picker' ).wpColorPicker( color_picker_options );
 
 	}
-
 
 	/**
 	 * Set Marker Edit Icons

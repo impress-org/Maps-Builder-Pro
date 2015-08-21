@@ -65,6 +65,7 @@ var placeSearchAutocomplete;
 
 			e.preventDefault();
 			var target = '.' + $( this ).data( 'target' ); //target element class name
+			var autofocus = $( this ).data( 'auto-focus' ); //autofocus option
 
 			//Modal in modal?
 			//We can't have a magnific inside magnific so CSS3 modal it is
@@ -99,7 +100,10 @@ var placeSearchAutocomplete;
 				$( '.gmb-modal-close' ).on( 'click', function () {
 					close_modal_within_modal( target );
 				} );
-
+				//Autofocus
+				if ( autofocus == true ) {
+					$( target ).find( 'input[type="text"]' ).focus();
+				}
 			}
 			//Normal modal open
 			else {
@@ -389,7 +393,7 @@ var placeSearchAutocomplete;
 
 		//When edit title button is clicked insert title into feax input
 		$( '.edit-title' ).on( 'click', function () {
-			$( '#modal_title' ).val( $( 'input#title' ).val() );
+			$( '#modal_title' ).val( $( 'input#title' ).val() ).focus();
 		} );
 
 		//when feax title input is changed update default title field

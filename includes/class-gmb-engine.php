@@ -112,6 +112,10 @@ class Google_Maps_Builder_Engine {
 		$map_marker_array   = array();
 		$markers_repeatable = isset( $all_meta['gmb_markers_group'][0] ) ? maybe_unserialize( $all_meta['gmb_markers_group'][0] ) : '';
 
+		//Put mashup markers into an array for JS usage
+		$mashup_marker_array = array();
+		$mashup_marker_array = isset( $all_meta['gmb_mashup_group'][0] ) ? maybe_unserialize( $all_meta['gmb_mashup_group'][0] ) : '';
+
 		//Cluster
 		$cluster_option = isset( $all_meta['gmb_marker_cluster'][0] ) ? maybe_unserialize( $all_meta['gmb_marker_cluster'][0] ) : '';
 
@@ -132,6 +136,7 @@ class Google_Maps_Builder_Engine {
 		$localized_data = apply_filters( 'gmb_localized_data', array(
 			$post->ID => array(
 				'id'                  => $atts['id'],
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
 				'map_params'          => array(
 					'title'          => $post->post_title,
 					'width'          => $visual_info['width'],
@@ -158,6 +163,7 @@ class Google_Maps_Builder_Engine {
 				'marker_cluster'      => isset( $cluster_option[0] ) ? $cluster_option[0] : '',
 				'site_name'           => get_bloginfo( 'name' ),
 				'site_url'            => get_bloginfo( 'url' ),
+				'mashup_markers'      => $mashup_marker_array,
 				'map_markers'         => $map_marker_array,
 				'destination_markers' => $destination_markers,
 				'text_directions'     => $text_directions,

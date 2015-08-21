@@ -71,6 +71,10 @@ div[id^='google-maps-builder'] img {
     padding-right: 20px; }
   #infobubble-content .place-description {
     white-space: normal; }
+  #infobubble-content img {
+    max-width: 100%; }
+  #infobubble-content .place-thumb {
+    margin: 5px 0 10px; }
 
 /* Place Details */
 #infobubble-content .marker-info-wrapper {

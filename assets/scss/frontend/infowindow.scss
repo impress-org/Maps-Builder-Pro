@@ -43,6 +43,14 @@
   .place-description {
    white-space: normal;
  }
+  img {
+	max-width: 100%;
+  }
+
+  .place-thumb {
+	margin: 5px 0 10px;
+  }
+
 }
 /* Place Details */
 #infobubble-content .marker-info-wrapper {

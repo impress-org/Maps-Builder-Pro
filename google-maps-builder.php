@@ -232,6 +232,7 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-html-elements.php';
 			require_once GMB_PLUGIN_PATH . 'includes/misc-functions.php';
 			require_once GMB_PLUGIN_PATH . 'includes/admin/class-gmb-settings.php';
+			require_once GMB_PLUGIN_PATH . 'includes/admin/mashups/class-gmb-mashups-builder.php';
 
 			if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 
@@ -247,7 +248,6 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 				require_once GMB_PLUGIN_PATH . 'includes/admin/class-gmb-admin.php';
 				require_once GMB_PLUGIN_PATH . 'includes/admin/class-gmb-shortcode-generator.php';
 				require_once GMB_PLUGIN_PATH . 'includes/admin/mashups/class-gmb-mashups-metabox.php';
-				require_once GMB_PLUGIN_PATH . 'includes/admin/mashups/class-gmb-mashups-builder.php';
 				require_once GMB_PLUGIN_PATH . 'includes/admin/import-export/class-gmb-import-export.php';
 				require_once GMB_PLUGIN_PATH . 'includes/admin/system-info.php';
 

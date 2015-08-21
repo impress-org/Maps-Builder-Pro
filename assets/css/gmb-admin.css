@@ -2079,6 +2079,11 @@ Temporary Info Window
 /*------------------------------------------
  CMB2 Interface
 --------------------------------------------*/
+.cmb-field-list:after {
+  content: "";
+  display: table;
+  clear: both; }
+
 .cmb2-metabox-description {
   display: block;
   margin-top: 5px;
@@ -2944,8 +2949,53 @@ Marker Import Metabox
  * @copyright   Copyright (c) 2015, WordImpress
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
 */
-#side-sortables .gmb-mashup-loading .cmb-th, #poststuff .gmb-mashup-loading .cmb-th {
+#gmb_mashup_group_repeat .cmb-group-name {
   display: none; }
+
+#side-sortables #gmb_mashup_group_repeat .cmb-repeat-group-field .cmb-td {
+  padding-bottom: 0; }
+
+#side-sortables .gmb-mashup-loading, #poststuff .gmb-mashup-loading {
+  float: left;
+  border: none; }
+  #side-sortables .gmb-mashup-loading .cmb-th, #poststuff .gmb-mashup-loading .cmb-th {
+    display: none; }
+
+#gmb_mashup_group_repeat .cmb-remove-field-row {
+  float: right; }
+
+#gmb_mashup_group_repeat .mashup-load-status-wrap {
+  padding: 10px 0 15px; }
+  #gmb_mashup_group_repeat .mashup-load-status-wrap > div.mashup-load-status {
+    padding: 2px 4px;
+    background: #fffff8;
+    border: 1px solid #EEE;
+    height: 300px;
+    overflow-y: scroll; }
+    #gmb_mashup_group_repeat .mashup-load-status-wrap > div.mashup-load-status ol {
+      padding: 0 0 0 18px;
+      margin: 0; }
+    #gmb_mashup_group_repeat .mashup-load-status-wrap > div.mashup-load-status li.gmb-error {
+      color: red; }
+    #gmb_mashup_group_repeat .mashup-load-status-wrap > div.mashup-load-status li.gmb-loaded {
+      color: green; }
+
+#side-sortables #gmb_mashup_group_repeat .mashup-load-status-wrap > div.mashup-load-status {
+  width: 230px;
+  height: 150px; }
+  #side-sortables #gmb_mashup_group_repeat .mashup-load-status-wrap > div.mashup-load-status li {
+    font-size: 11px; }
+#side-sortables #gmb_mashup_group_repeat .cmb-remove-field-row {
+  margin-top: -35px; }
+
+.gmb-mashups-loading {
+  display: none;
+  margin: 4px 0 0 6px; }
+
+div.place-thumb {
+  margin: 0 0 10px; }
+  div.place-thumb img {
+    max-width: 100%; }
 
 
 /*# sourceMappingURL=gmb-admin.css.map */

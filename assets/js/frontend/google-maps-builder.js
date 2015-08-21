@@ -10,6 +10,7 @@ var gmb_data;
 	var map;
 	var places_service;
 	var place;
+	var info_window;
 	var directionsDisplay = [];
 	var search_markers = [];
 
@@ -72,7 +73,7 @@ var gmb_data;
 	 */
 	function initialize_map( map_canvas ) {
 		//info_window - Contains the place's information and content
-		var info_window = new google.maps.InfoWindow( {
+		info_window = new google.maps.InfoWindow( {
 			maxWidth: 315
 		} );
 		var map_id = $( map_canvas ).data( 'map-id' );
@@ -101,6 +102,7 @@ var gmb_data;
 		set_map_options( map, map_data );
 		set_map_theme( map, map_data );
 		set_map_markers( map, map_data, info_window );
+		set_mashup_markers( map, map_data );
 		set_map_directions( map, map_data );
 		set_map_layers( map, map_data );
 		set_map_places_search( map, map_data );
@@ -257,7 +259,6 @@ var gmb_data;
 				marker_label = marker_data.label
 			}
 
-
 			//Default marker args
 			var marker_args = {
 				position    : new google.maps.LatLng( marker_data.lat, marker_data.lng ),
@@ -284,7 +285,6 @@ var gmb_data;
 				};
 
 			}
-
 
 			//Marker for map
 			var location_marker = new Marker( marker_args );
@@ -340,7 +340,7 @@ var gmb_data;
 		}
 
 		//Does this marker have a place_id
-		if ( marker_data.place_id && marker_data.hide_details !== 'on') {
+		if ( marker_data.place_id && marker_data.hide_details !== 'on' ) {
 
 			var request = {
 				key    : gmb_data.api_key,
@@ -520,6 +520,120 @@ var gmb_data;
 
 	}
 
+	/**
+	 * Create Mashup Marker
+	 *
+	 * Loops through data and creates mashup markers
+	 * @param map
+	 * @param map_data
+	 */
+	function set_mashup_markers( map, map_data ) {
+
+		if ( typeof map_data.mashup_markers === 'undefined' || !map_data.mashup_markers ) {
+			return false;
+		}
+
+		$( map_data.mashup_markers ).each( function ( index, mashup_value ) {
+
+			//Setup our vars
+			var post_type = typeof mashup_value.post_type !== 'undefined' ? mashup_value.post_type : '';
+			var taxonomy = typeof mashup_value.taxonomy !== 'undefined' ? mashup_value.taxonomy : '';
+			var lat_field = typeof mashup_value.latitude !== 'undefined' ? mashup_value.latitude : '';
+			var lng_field = typeof mashup_value.longitude !== 'undefined' ? mashup_value.longitude : '';
+			var terms = typeof mashup_value.terms !== 'undefined' ? mashup_value.terms : '';
+
+			var data = {
+				action   : 'get_mashup_markers',
+				post_type: post_type,
+				taxonomy : taxonomy,
+				terms    : terms,
+				index    : index,
+				lat_field: lat_field,
+				lng_field: lng_field
+			};
+
+			jQuery.post( map_data.ajax_url, data, function ( response ) {
+
+				//Loop through marker data
+				$.each( response, function ( index, marker_data ) {
+					set_mashup_marker( map, data.index, marker_data, mashup_value, map_data );
+				} );
+
+
+			}, 'json' );
+
+		} );
+
+
+	}
+
+
+	/**
+	 * Set Mashup Marker
+	 *
+	 * @param mashup_index
+	 * @param marker_data
+	 * @param mashup_value
+	 */
+	function set_mashup_marker( map, mashup_index, marker_data, mashup_value, map_data ) {
+
+		var title = (typeof marker_data.title !== 'undefined' ? marker_data.title : '');
+		var address = (typeof marker_data.address !== 'undefined' ? marker_data.address : '');
+		var lat = (typeof marker_data.latitude !== 'undefined' ? marker_data.latitude : '');
+		var lng = (typeof marker_data.longitude !== 'undefined' ? marker_data.longitude : '');
+		var marker_position = new google.maps.LatLng( lat, lng );
+
+		var marker_icon = map_data.map_params.default_marker;
+		var marker_label = '';
+
+		//check for custom marker and label data
+		var custom_marker_icon = (typeof mashup_value.marker !== 'undefined' ? mashup_value.marker : '');
+		var custom_marker_img = (typeof mashup_value.marker_img !== 'undefined' ? mashup_value.marker_img : '');
+
+		if ( custom_marker_img ) {
+			marker_icon = custom_marker_img;
+		} else if ( custom_marker_icon.length > 0 && custom_marker_icon.length > 0 ) {
+			var custom_label = (typeof mashup_value.label !== 'undefined' ? mashup_value.label : '');
+			marker_icon = eval( "(" + custom_marker_icon + ")" );
+			marker_label = custom_label;
+		}
+
+		// make and place map maker.
+		var marker = new Marker( {
+			map         : map,
+			position    : marker_position,
+			marker_data : marker_data,
+			icon        : marker_icon,
+			custom_label: marker_label
+		} );
+
+		//Set click action for marker to open infowindow
+		google.maps.event.addListener( marker, 'click', function () {
+			get_mashup_infowindow_content( marker, map_data);
+		} );
+
+	}
+
+
+	function get_mashup_infowindow_content( marker, map_data) {
+
+		info_window.setContent( '<div id="infobubble-content" class="loading"></div>' );
+
+		info_window.open( map, marker );
+
+		var data = {
+			action      : 'get_mashup_marker_infowindow',
+			marker_data : marker.marker_data,
+			featured_img: marker.featured_img
+		};
+
+		jQuery.post( map_data.ajax_url, data, function ( response ) {
+
+			info_window.setContent( response.infowindow );
+
+		}, 'json' );
+	}
+
 
 	/**
 	 * Set Map Directions
@@ -619,11 +733,11 @@ var gmb_data;
 			e.preventDefault();
 			var dir_panel = $( this ).parent( '.gmb-directions-panel' );
 			if ( dir_panel.hasClass( 'toggled' ) ) {
-				dir_panel.removeClass('toggled' ).animate( {
+				dir_panel.removeClass( 'toggled' ).animate( {
 					right: '-50%'
 				} );
 			} else {
-				dir_panel.addClass('toggled' ).animate( {
+				dir_panel.addClass( 'toggled' ).animate( {
 					right: '0%'
 				} );
 			}

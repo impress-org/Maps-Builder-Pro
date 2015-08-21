@@ -11,6 +11,9 @@
 /*------------------------------------------
  CMB2 Interface
 --------------------------------------------*/
+.cmb-field-list {
+  @include clearfix;
+}
 
 .cmb2-metabox-description {
   display: block;
@@ -301,8 +304,6 @@ p.cmb2-metabox-description {
 a.wp-color-result {
   height: 24px;
 }
-
-
 
 /*-------------------------------------
 CMB2 within Magnific
