@@ -942,7 +942,7 @@ var gmb_data;
 				if ( status == google.maps.places.PlacesServiceStatus.OK ) {
 
 					info_window_content += add_place_content_to_info_window( place );
-					info_window_content += set_marker_edit_icons(index);
+					info_window_content += set_marker_edit_icons( index );
 					add_edit_events( info_window_content, marker );
 
 				}
@@ -950,7 +950,7 @@ var gmb_data;
 			} ); //end getPlaces
 
 		} else {
-			info_window_content += set_marker_edit_icons(index);
+			info_window_content += set_marker_edit_icons( index );
 			add_edit_events( info_window_content, marker );
 		}
 	}
@@ -1621,7 +1621,8 @@ var gmb_data;
 			$( '.cmb2-id-gmb-theme-json' ).hide();
 		}
 
-		$( '.custom-snazzy-toggle' ).on( 'click', function () {
+		$( '.custom-snazzy-toggle' ).on( 'click', function ( e ) {
+			e.preventDefault();
 			preset_theme.val( 'custom' );
 			$( '.cmb2-id-gmb-theme-json' ).show();
 			custom_theme_json.focus();
@@ -1776,10 +1777,10 @@ var gmb_data;
 	 * @param marker_index This markers index
 	 * @returns {string}
 	 */
-	function set_marker_edit_icons(marker_index) {
+	function set_marker_edit_icons( marker_index ) {
 		return '<div class="infowindow-toolbar"><ul id="edit-toolbar">' +
-			'<li class="edit-info" data-index="' + marker_index + '" data-tooltip="'+ gmb_data.i18n.btn_edit_marker +'"></li>' +
-			'<li class="trash-marker" data-index="' + marker_index + '" data-tooltip="'+ gmb_data.i18n.btn_delete_marker +'"></li>' +
+			'<li class="edit-info" data-index="' + marker_index + '" data-tooltip="' + gmb_data.i18n.btn_edit_marker + '"></li>' +
+			'<li class="trash-marker" data-index="' + marker_index + '" data-tooltip="' + gmb_data.i18n.btn_delete_marker + '"></li>' +
 			'</ul>' +
 			'</div>';
 	}

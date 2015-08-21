@@ -266,6 +266,7 @@ class Google_Maps_Builder_Admin {
 			)
 		);
 		$group_field_id = $directions_box->add_field( array(
+			'name'    => __( 'Direction Groups', $this->plugin_slug ),
 			'id'          => $prefix . 'directions_group',
 			'type'        => 'group',
 			'description' => __( 'Add sets of directions below.', $this->plugin_slug ),

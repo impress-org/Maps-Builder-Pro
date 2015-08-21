@@ -178,6 +178,15 @@
   font-style: italic;
 }
 
+#poststuff h2.cmb-group-name, #side-sortables h2.cmb-group-name {
+  @include modal-label;
+
+  + .cmb2-metabox-description {
+	padding-top: 0 !important;
+  }
+
+}
+
 /*------------------------------------------
  Place Markers
 --------------------------------------------*/
@@ -217,18 +226,13 @@
 .marker-confirm-place {
   margin: 0 8px 4px 0;
   display: inline-block;
-}
-
-.marker-confirm-place:hover {
-  cursor: pointer;
+  &:hover {
+	cursor: pointer;
+  }
 }
 
 /* Hacky fix to prevent scrollbars */
-#google_maps_preview_metabox .gm-style-iw, #google_maps_preview_metabox .gm-style-iw > div {
-  overflow: visible !important;
-}
-
-#google_maps_preview_metabox .gm-style-iw > div > div {
+#google_maps_preview_metabox .gm-style-iw, #google_maps_preview_metabox .gm-style-iw > div, #google_maps_preview_metabox .gm-style-iw > div > div {
   overflow: visible !important;
 }
 
@@ -318,33 +322,30 @@ Display Options
   float: left;
   margin: 0 0 10px;
   clear: none;
+
+  > span, > input {
+	float: left;
+  }
+  > span {
+    margin: 8px 5px 0 0;
+    width: 80px;
+    font-style: italic;
+  }
 }
 
 .lng-wrap {
   margin-bottom: 0;
 }
 
-.lat-lng-wrap > span, .lat-lng-wrap > input {
-  float: left;
-}
-
-.lat-lng-wrap > span {
-  margin: 8px 5px 0 0;
-  width: 80px;
-  font-style: italic;
-}
-
 /* Mini message */
-
 .lat-lng-change-message {
   float: left;
   clear: both;
   margin: 10px 0 0;
   width: 100%;
-}
-
-.lat-lng-change-message > p {
-  float: left;
+  > p {
+    float: left;
+  }
 }
 
 .lat-lng-update-btn {
@@ -434,7 +435,7 @@ Map Edit Quick Toolbar
 	margin: 0 2px;
 	.dashicons {
 	  font-size: 12px;
-	  width:12px;
+	  width: 12px;
 	  margin: 5px 2px 0 -2px;
 	}
 	&.edit-title {
@@ -460,7 +461,7 @@ Map Edit Quick Toolbar
 
 	  span {
 		line-height: 22px;
- 		float: left;
+		float: left;
 	  }
 	}
 

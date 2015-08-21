@@ -110,24 +110,37 @@ Magnific Builder
 	  right: 10px;
 	  display: block;
 	}
+	/*-------------------------------------
+	Google Places
+	---------------------------------------*/
+	#google_maps_search_options {
 
-	.cmb2-id-gmb-places-search-multicheckbox {
-	  ul li {
-		width: 50%;
-		position: relative;
-		.cmb2-option {
-		  position: absolute;
-		  top: 0;
-		  left: 0;
-		}
-		label {
-		  padding-left: 25px;
-		  display: block;
-		  padding-right: 3px;
+	  .cmb2-id-gmb-places-search {
+		margin-top: 15px;
+		border-top: none;
+	  }
+
+	  .cmb2-id-gmb-places-search-multicheckbox {
+		ul li {
+		  width: 50%;
+		  position: relative;
+		  .cmb2-option {
+			position: absolute;
+			top: 0;
+			left: 0;
+		  }
+		  label {
+			padding-left: 25px;
+			display: block;
+			padding-right: 3px;
+		  }
 		}
 	  }
-	}
+	} //#google_maps_search_options
 
+	/*-------------------------------------
+	Map Markers
+	---------------------------------------*/
 	a.drop-marker {
 	  margin-top: 10px;
 	  display: block;
