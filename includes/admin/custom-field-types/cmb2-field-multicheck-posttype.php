@@ -17,6 +17,7 @@ function gmb_cmb_render_multicheck_posttype( $field, $escaped_value, $object_id,
 	unset( $cpts['edd_log'] );
 	unset( $cpts['edd_discount'] );
 	unset( $cpts['deprecated_log'] );
+	unset( $cpts['google_maps'] );
 	$options = '';
 	$i       = 1;
 	$values  = (array) $escaped_value;

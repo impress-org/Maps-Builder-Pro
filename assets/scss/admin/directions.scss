@@ -3,3 +3,12 @@
 	//display: none;
   }
 }
+
+/*-------------------------------------
+Outside builder modal (main post content)
+------------------------------------------*/
+#post-body #cmb2-metabox-google_maps_directions {
+  > .cmb-row {
+	padding: 0;
+  }
+}

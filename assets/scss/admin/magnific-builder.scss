@@ -88,6 +88,20 @@ Magnific Builder
 	  height: 100%;
 	  min-height: 100%;
 	  position: relative;
+
+	  //Blue sections
+	  .ui-sortable-handle {
+		background: $blue;
+		color: #FFF;
+
+		&:hover {
+		  background: darken($blue, 10%);
+		}
+	  }
+	  .handlediv {
+		color: #FFF;
+	  }
+
 	}
 
 	.magnific-submit {
@@ -95,12 +109,6 @@ Magnific Builder
 	  bottom: 10px;
 	  right: 10px;
 	  display: block;
-	}
-
-	.cmb2-metabox-description {
-	  font-size: 13px;
-	  padding: 5px 0;
-	  line-height: 18px;
 	}
 
 	.cmb2-id-gmb-places-search-multicheckbox {
