@@ -212,6 +212,7 @@ class Google_Maps_Builder_Admin {
 		$marker_box->add_group_field( $group_field_id, array(
 			'name'    => __( 'Marker Image', $this->plugin_slug ),
 			'id'      => 'marker_img',
+			'row_classes' => 'gmb-hidden',
 			'type'    => 'file',
 			'options' => array(
 				'url'                  => false,
@@ -220,11 +221,13 @@ class Google_Maps_Builder_Admin {
 		) );
 		$marker_box->add_group_field( $group_field_id, array(
 			'name' => __( 'Marker Data', $this->plugin_slug ),
+			'row_classes' => 'gmb-hidden',
 			'id'   => 'marker',
 			'type' => 'textarea_code',
 		) );
 		$marker_box->add_group_field( $group_field_id, array(
 			'name' => __( 'Marker Label Data', $this->plugin_slug ),
+			'row_classes' => 'gmb-hidden',
 			'id'   => 'label',
 			'type' => 'textarea_code',
 		) );
