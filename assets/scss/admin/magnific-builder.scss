@@ -136,7 +136,8 @@ Magnific Builder
 		  }
 		}
 	  }
-	} //#google_maps_search_options
+	}
+	//#google_maps_search_options
 
 	/*-------------------------------------
 	Map Markers
@@ -145,6 +146,7 @@ Magnific Builder
 	  margin-top: 10px;
 	  display: block;
 	  width: 120px;
+	  text-align: center;
 	}
 
 	.places-change-message .button {

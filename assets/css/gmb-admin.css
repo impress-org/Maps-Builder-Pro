@@ -1499,7 +1499,8 @@ Magnific Builder
   .magnific-builder#post #postbox-container-1 a.drop-marker {
     margin-top: 10px;
     display: block;
-    width: 120px; }
+    width: 120px;
+    text-align: center; }
   .magnific-builder#post #postbox-container-1 .places-change-message .button {
     margin-bottom: 10px;
     float: left; }

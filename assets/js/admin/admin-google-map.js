@@ -624,6 +624,7 @@ var gmb_data;
 			'<span class="marker-edit-link-wrap" data-index="' + index + '"><a href="#" data-target="marker-icon-modal" data-tooltip="Change icon" data-mfp-src="#marker-icon-modal" class="marker-edit-link gmb-magnific-marker gmb-magnific-inline"></a></span>' +
 			'</div>';
 
+		//Set info_window content
 		info_window_content = set_info_window_wrapper( info_window_content );
 		info_bubble.setContent( info_window_content );
 		initialize_tooltips(); //refresh tooltips
@@ -648,6 +649,15 @@ var gmb_data;
 
 		} );
 
+		//Remove row button/icon also removes icon (CMB2 buttons)
+		$( '#gmb_markers_group_' + index + '_title' ).parents( '.cmb-repeatable-grouping' ).find( '.cmb-remove-group-row' ).each( function () {
+			google.maps.event.addDomListener( $( this )[0], 'click', function () {
+				var index = $( this ).parents( '.cmb-repeatable-grouping' ).data( 'index' );
+				//close info window and remove marker
+				info_bubble.close();
+				marker.setVisible( false );
+			} );
+		} );
 
 		//Close Click
 		google.maps.event.addDomListener( info_bubble, 'closeclick', function () {
@@ -802,7 +812,7 @@ var gmb_data;
 	/**
 	 *  Add Markers
 	 *
-	 * This is the marker that first displays on load for the main location or place
+	 * @description This is the marker that first displays on load for the main location or place
 	 *
 	 * @param map
 	 */
@@ -878,6 +888,16 @@ var gmb_data;
 			} );
 
 			time += 500;
+
+			//Remove row button/icon also removes icon (CMB2 buttons)
+			$( '#gmb_markers_group_' + index + '_title' ).parents( '.cmb-repeatable-grouping' ).find( '.cmb-remove-group-row' ).each( function () {
+				google.maps.event.addDomListener( $( this )[0], 'click', function () {
+					var index = $( this ).parents( '.cmb-repeatable-grouping' ).data( 'index' );
+					//close info window and remove marker
+					info_bubble.close();
+					location_marker.setVisible( false );
+				} );
+			} );
 
 			//}, time ); //marker drop in timeout
 
@@ -978,14 +998,10 @@ var gmb_data;
 		//trash button event
 		google.maps.event.addDomListener( $( '.trash-marker' )[0], 'click', function () {
 			var index = $( this ).data( 'index' );
-
-			//if first item clear out all input values
-			if ( index === 0 ) {
-				$( 'div[data-iterator="' + index + '"] ' ).find( 'input,textarea' ).val( '' );
-			}
-
+			//Clear our input values
+			$( 'div[data-iterator="' + index + '"] ' ).find( 'input,textarea' ).val( '' );
 			//trigger remove row button click for this specific markers row
-			$( 'div[data-iterator="' + index + '"] .remove-group-row' ).trigger( 'click' );
+			$( 'div[data-iterator="' + index + '"]' ).find( '.cmb-remove-group-row' ).trigger( 'click' );
 			//close info window and remove marker
 			info_bubble.close();
 			marker.setVisible( false );
