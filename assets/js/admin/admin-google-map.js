@@ -511,7 +511,6 @@ var gmb_data;
 
 				info_window_content += add_place_content_to_info_window( place );
 
-
 				info_window_content += '<div class="infowindow-toolbar clear"><a href="#" class="add-marker" data-title="' + place.name + '" data-place_id="' + place.place_id + '"  data-lat="' + lat + '" data-lng="' + lng + '">Add to Map</a></div>';
 
 				info_window_content = set_info_window_wrapper( info_window_content ); //wraps the content in div and returns
