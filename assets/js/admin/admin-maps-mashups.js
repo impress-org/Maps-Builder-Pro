@@ -313,6 +313,8 @@ window.GMB_Mashups = (function ( window, document, $, undefined ) {
 		lng = (typeof marker_data.longitude !== 'undefined' ? marker_data.longitude : '');
 		var marker_position = new google.maps.LatLng( lat, lng );
 
+		console.log(marker_data);
+
 		if ( !lat || !lng ) {
 			var error = '<li class="gmb-marker-status gmb-error"><strong>Marker Error:</strong> ' + title + ' - No latitude or longitude values found for this post.</li>';
 			load_log.html( load_log.html() + error );
@@ -346,7 +348,7 @@ window.GMB_Mashups = (function ( window, document, $, undefined ) {
 
 		//Update status
 		if ( marker ) {
-			var status = '<li class="gmb-marker-status gmb-loaded"><strong>Marker Loaded:</strong> ' + title + ' Lat: ' + lat + ' Lng: ' + lng + '</liv>';
+			var status = '<li class="gmb-marker-status gmb-loaded"><strong>Marker Loaded:</strong> ' + title + ' - Lat: ' + lat + ' Lng: ' + lng + '</liv>';
 			load_log.html( load_log.html() + status );
 		}
 

@@ -266,7 +266,7 @@ class Google_Maps_Builder_Mashups_Builder {
 		$terms            = (array) get_terms( $taxonomy, $args );
 
 		//First check to see if mashups post type field has been set
-		if ( ! empty( $post_type ) && ! empty( $terms ) ) {
+		if ( ! empty( $post_type ) && ! empty( $terms ) && ! isset( $terms['errors'] ) ) {
 
 			$output .= '<ul class="cmb2-checkbox-list cmb2-list">';
 
@@ -276,7 +276,7 @@ class Google_Maps_Builder_Mashups_Builder {
 
 
 		} else {
-			$output = '<p class="no-terms">' . __( 'No terms found for this taxonomy', $this->plugin_slug ) . '</p>';
+			$output = '<p class="no-terms" style="margin:0;">' . __( 'No terms found for this taxonomy', $this->plugin_slug ) . '</p>';
 		}
 
 
@@ -412,7 +412,7 @@ class Google_Maps_Builder_Mashups_Builder {
 
 		} else {
 
-			$response['taxonomy_options'] = '<option>' . __( 'No taxonomies found', $this->plugin_slug ) . '</option>';
+			$response['taxonomy_options'] = '<option value="none">' . __( 'No taxonomies found', $this->plugin_slug ) . '</option>';
 			$response['status']           = 'none';
 
 		}
@@ -474,17 +474,16 @@ class Google_Maps_Builder_Mashups_Builder {
 		$taxonomy       = isset( $_POST['taxonomy'] ) ? $_POST['taxonomy'] : '';
 		$terms          = isset( $_POST['terms'] ) ? $_POST['terms'] : '';
 		$post_type      = isset( $_POST['post_type'] ) ? $_POST['post_type'] : '';
-		$lat_field      = isset( $_POST['lat_field'] ) ? $_POST['lat_field'] : '';
-		$lng_field      = isset( $_POST['lng_field'] ) ? $_POST['lng_field'] : '';
+		$lat_field      = isset( $_POST['lat_field'] ) ? $_POST['lat_field'] : '_gmb_lat';
+		$lng_field      = isset( $_POST['lng_field'] ) ? $_POST['lng_field'] : '_gmb_lng';
 		$response       = '';
 
 		$args = array(
 			'post_type'      => $post_type,
 			'posts_per_page' => - 1
 		);
-
 		//Handle taxonomy & terms filter
-		if ( ! empty( $taxonomy ) ) {
+		if ( ! empty( $taxonomy ) && $taxonomy !== 'none' ) {
 
 			//Build $args taxonomy params
 			$args['tax_query'] = array(
@@ -502,10 +501,11 @@ class Google_Maps_Builder_Mashups_Builder {
 		$transient_name = md5( 'gmb_mashup_' . http_build_query( $args ) ); //md5 to keep characters under 40
 		$saved_query    = get_transient( $transient_name );
 
-		if ( $saved_query !== false ) {
-			echo json_encode( maybe_unserialize( $saved_query ) );
-			wp_die();
-		}
+		//@TODO: Is saving a transient necessary for performance?
+		//		if ( $saved_query !== false ) {
+		//			echo json_encode( maybe_unserialize( $saved_query ) );
+		//			wp_die();
+		//		}
 
 		// The Query
 		$wp_query = new WP_Query( $args );
@@ -516,13 +516,16 @@ class Google_Maps_Builder_Mashups_Builder {
 			$wp_query->the_post();
 			$post_id = get_the_ID();
 
+			$response[ $post_id ]['title']     = get_the_title( $post_id );
 			$response[ $post_id ]['id']        = $post_id;
 			$response[ $post_id ]['address']   = get_post_meta( $post_id, '_gmb_address', true ); //Geocoding Coming soon
 			$response[ $post_id ]['latitude']  = get_post_meta( $post_id, $lat_field, true );
 			$response[ $post_id ]['longitude'] = get_post_meta( $post_id, $lng_field, true );
 
 		endwhile; endif;
+		wp_reset_postdata();
 
+		//Set query transient
 		if ( is_array( $response ) ) {
 			set_transient( $transient_name, $response, 24 * HOUR_IN_SECONDS ); //save transient for 24 hours
 			echo json_encode( $response );

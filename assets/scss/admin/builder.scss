@@ -327,9 +327,9 @@ Display Options
 	float: left;
   }
   > span {
-    margin: 8px 5px 0 0;
-    width: 80px;
-    font-style: italic;
+	margin: 8px 5px 0 0;
+	width: 80px;
+	font-style: italic;
   }
 }
 
@@ -344,7 +344,7 @@ Display Options
   margin: 10px 0 0;
   width: 100%;
   > p {
-    float: left;
+	float: left;
   }
 }
 
@@ -512,6 +512,7 @@ Modal styles
 .map-title-wrap {
   label {
 	@include modal-label;
+	margin-bottom: 0;
   }
   input {
 	width: 100%;

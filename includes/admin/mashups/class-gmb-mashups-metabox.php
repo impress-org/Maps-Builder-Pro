@@ -28,6 +28,10 @@ class Google_Maps_Builder_Mashups_Metabox {
 		//Add metaboxes and fields to CPT
 		add_action( 'cmb2_init', array( $this, 'mashup_metabox_fields' ) );
 		add_action( 'cmb2_render_google_mashup_geocoder', array( $this, 'cmb2_render_google_mashup_geocoder' ), 10, 2 );
+		add_filter( 'cmb2_sanitize_google_mashup_geocoder', array(
+			$this,
+			'cmb2_sanitize_google_mashup_geocoder'
+		), 10, 2 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_mashup_scripts' ) );
 
 	}
@@ -53,7 +57,7 @@ class Google_Maps_Builder_Mashups_Metabox {
 			'title'        => __( 'Maps Builder Pro Mashup', $this->plugin_slug ),
 			'object_types' => $this->enabled_post_types, // post type
 			'context'      => 'side', //  'normal', 'advanced', or 'side'
-			'priority'     => 'high', //  'high', 'core', 'default' or 'low'
+			'priority'     => 'core', //  'high', 'core', 'default' or 'low'
 			'show_names'   => true, // Show field names on the left
 		) );
 		$preview_box->add_field( array(
@@ -170,6 +174,24 @@ class Google_Maps_Builder_Mashups_Metabox {
 		$output .= '</div>';
 
 		echo $output;
+
+	}
+
+
+	/**
+	 * Sanitize Mashup Metabox
+	 *
+	 * @description: Clears out meta_key transient if it doesn't contain new metakey
+	 * @since      2.0
+	 */
+	function cmb2_sanitize_google_mashup_geocoder() {
+
+		global $post;
+		$existing_transient = get_transient( $post->post_type . '_meta_keys' );
+
+		if(is_array($existing_transient) && !in_array('_gmb_lat', $existing_transient) || !in_array('_gmb_lng', $existing_transient)) {
+			delete_transient( $post->post_type . '_meta_keys' );
+		}
 
 	}
 
