@@ -52,21 +52,23 @@ class Google_Maps_Builder_Mashups_Metabox {
 			'id'           => 'google_maps_mashup_metabox',
 			'title'        => __( 'Maps Builder Pro Mashup', $this->plugin_slug ),
 			'object_types' => $this->enabled_post_types, // post type
-			'context'      => 'normal', //  'normal', 'advanced', or 'side'
-			'priority'     => 'default', //  'high', 'core', 'default' or 'low'
+			'context'      => 'side', //  'normal', 'advanced', or 'side'
+			'priority'     => 'high', //  'high', 'core', 'default' or 'low'
 			'show_names'   => true, // Show field names on the left
 		) );
 		$preview_box->add_field( array(
 			'name'    => __( 'Add Location', $this->plugin_slug ),
 			'id'      => $prefix . 'mashup_autocomplete',
 			'type'    => 'google_mashup_geocoder',
+			'after'   => '<div class="gmb-toggle-fields-wrap"><a href="#" class="gmb-toggle-fields"><span class="dashicons dashicons-arrow-down"></span>' . __( 'View Location Fields', $this->plugin_slug ) . '</a></div>',
 			'default' => '',
 		) );
 
 		$preview_box->add_field( array(
-			'name' => __( 'Marker Latitude', $this->plugin_slug ),
-			'id'   => $prefix . 'lat',
-			'type' => 'text',
+			'name'       => __( 'Marker Latitude', $this->plugin_slug ),
+			'before_row' => '<div class="gmb-toggle">',
+			'id'         => $prefix . 'lat',
+			'type'       => 'text',
 		) );
 		$preview_box->add_field( array(
 			'name' => __( 'Marker Longitude', $this->plugin_slug ),
@@ -80,9 +82,10 @@ class Google_Maps_Builder_Mashups_Metabox {
 		) );
 
 		$preview_box->add_field( array(
-			'name' => __( 'Marker Place ID', $this->plugin_slug ),
-			'id'   => $prefix . 'place_id',
-			'type' => 'text',
+			'name'      => __( 'Marker Place ID', $this->plugin_slug ),
+			'id'        => $prefix . 'place_id',
+			'type'      => 'text',
+			'after_row' => '</div>',//Closes .gmb-toggle
 		) );
 	}
 
@@ -109,6 +112,9 @@ class Google_Maps_Builder_Mashups_Metabox {
 				$this->plugin_slug . '-gmaps'
 			) );
 			wp_enqueue_script( $this->plugin_slug . '-admin-mashups-scripts' );
+
+			wp_register_style( $this->plugin_slug . '-admin-mashups-style', GMB_PLUGIN_URL . 'assets/css/gmb-mashup-metabox' . $suffix . '.css' );
+			wp_enqueue_style( $this->plugin_slug . '-admin-mashups-style' );
 		}
 
 

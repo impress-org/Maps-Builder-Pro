@@ -1,31 +1,41 @@
 /**
- *  Mashups Metabox
+ *  Admin Mashups Metabox
  *
  *  @description: Adds functionality to the maps builder mashups metabox which appears on various post types as set by the user
  *  @copyright: http://opensource.org/licenses/gpl-2.0.php GNU Public License
  *  @since: 2.0
  */
 
-(function ( $ ) {
 
-	"use strict";
+window.GMB_Mashups_Metabox = (function ( window, document, $, undefined ) {
+	'use strict';
 
-	/**
-	 * Kick it off on Doc Load
-	 */
-	$( document ).ready( function () {
-
-		//Autocomplete
-		set_mashup_autocomplete();
-
-
-	} );
-
+	var app = {};
 
 	/**
-	 * Mashup Autocomplete
+	 * Cache
 	 */
-	function set_mashup_autocomplete() {
+	app.cache = function () {
+
+		app.$body = $( 'body' );
+
+	};
+
+	/**
+	 * Initialize
+	 */
+	app.init = function () {
+		app.cache();
+		app.set_mashup_autocomplete();
+		app.set_toggle_fields();
+	};
+
+
+	/**
+	 * Set Mashup Autcomplete FIeld
+	 * @returns {{}}
+	 */
+	app.set_mashup_autocomplete = function () {
 
 		var input = $( '#_gmb_mashup_autocomplete' ).get( 0 );
 
@@ -39,7 +49,6 @@
 				window.alert( "Autocomplete's returned place contains no geometry" );
 				return false;
 			}
-			console.log(place);
 
 			//Set field vars
 			if ( place.geometry ) {
@@ -63,6 +72,28 @@
 			}
 		} );
 
-	}
+	};
 
-}( jQuery ));
+	/**
+	 * Set Toggle Fields
+	 */
+	app.set_toggle_fields = function () {
+
+		$( '.gmb-toggle-fields' ).on( 'click', function ( e ) {
+
+			e.preventDefault();
+			$( '.gmb-toggle' ).slideToggle();
+			$( this ).find( '.dashicons' ).toggleClass( 'dashicons-arrow-down' );
+			$( this ).find( '.dashicons' ).toggleClass( 'dashicons-arrow-up' );
+
+		} );
+
+	};
+
+	//Get it started
+	$( document ).ready( app.init );
+
+	return app;
+
+
+})( window, document, jQuery );
