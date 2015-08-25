@@ -42,24 +42,33 @@ var gmb_data;
 		$( 'a[data-toggle="tab"]' ).on( 'shown.bs.tab', function ( e ) {
 			var panel = $( e.target ).attr( 'href' );
 			load_hidden_map( panel );
-		} )
+		} );
+		//Beaver Builder Tabs
+		$( '.fl-tabs-label' ).on( 'click', function ( e ) {
+			var panel = $( '.fl-tabs-panel-content.fl-tab-active' ).get( 0 );
+			load_hidden_map( panel );
+		} );
+		//Tabby Tabs:
+		$( '.responsive-tabs__list__item' ).on( 'click', function ( e ) {
+			var panel = $( '.responsive-tabs__panel--active' ).get( 0 );
+			load_hidden_map( panel );
+		} );
 
 	} );
 
 	/**
 	 * Map Init After the fact
 	 *
-	 * Good for tabs / ajax - pass in wrapper div class/id
-	 *
+	 * @description Good for tabs / ajax - pass in wrapper div class/id
+	 * @since 2.0
 	 */
-
 	function load_hidden_map( parent ) {
-		var google_hidden_maps = $( parent + ' .google-maps-builder' );
+		var google_hidden_maps = $( parent ).find( '.google-maps-builder' );
 		if ( !google_hidden_maps.length ) {
 			return;
 		}
-
 		google_hidden_maps.each( function ( index, value ) {
+			//google.maps.event.trigger( map, 'resize' ); //TODO: Ideally we'd resize the map rather than reinitialize for faster performance, but that requires a bit of rewrite in how the plugin works
 			initialize_map( $( google_hidden_maps[index] ) );
 		} );
 	}
