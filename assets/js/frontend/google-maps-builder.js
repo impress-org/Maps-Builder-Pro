@@ -127,6 +127,7 @@ var gmb_data;
 		var map_type = map_data.map_theme.map_type.toUpperCase();
 		var map_theme = map_data.map_theme.map_theme_json;
 
+
 		//Custom (Snazzy) Theme
 		if ( map_type === 'ROADMAP' && map_theme !== 'none' ) {
 

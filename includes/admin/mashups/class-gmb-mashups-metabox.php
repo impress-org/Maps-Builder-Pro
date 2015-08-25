@@ -189,7 +189,11 @@ class Google_Maps_Builder_Mashups_Metabox {
 		global $post;
 		$existing_transient = get_transient( $post->post_type . '_meta_keys' );
 
-		if(is_array($existing_transient) && !in_array('_gmb_lat', $existing_transient) || !in_array('_gmb_lng', $existing_transient)) {
+		if( $existing_transient === false) {
+			return;
+		}
+
+		if ( ! in_array( '_gmb_lat', $existing_transient ) || ! in_array( '_gmb_lng', $existing_transient ) ) {
 			delete_transient( $post->post_type . '_meta_keys' );
 		}
 

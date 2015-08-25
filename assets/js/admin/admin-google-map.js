@@ -1670,6 +1670,7 @@ var gmb_data;
 
 					if ( data[index].id === map_theme_input_val ) {
 						map_theme_input_val = eval( data[index].json );
+						$( '#gmb_theme_json' ).val( data[index].json );
 					}
 
 				} );
