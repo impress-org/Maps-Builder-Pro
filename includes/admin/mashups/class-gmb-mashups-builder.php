@@ -641,7 +641,7 @@ class Google_Maps_Builder_Mashups_Builder {
 			echo '<button class="gmb-load-mashup button button-primary">' . __( 'Load Markers', $this->plugin_slug ) . '</button>';
 		}
 
-		echo '<img src="' . GMB_PLUGIN_URL . 'assets/img/loading.gif" class="gmb-mashups-loading">';
+		echo '<img src="' . GMB_PLUGIN_URL . 'assets/img/loading.GIF" class="gmb-mashups-loading">';
 
 	}
 
