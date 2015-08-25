@@ -12,8 +12,16 @@
   }
 
   .gmb-destination-fieldset {
-	background: url('../img/default-marker.png') no-repeat left center transparent;
 	padding-left: 25px;
+	position: relative;
+
+	.gmb-directions-marker {
+	  position: absolute;
+	  left: -3px;
+	  top: 50%;
+	  height: 40px;
+	  margin-top: -20px;
+	}
   }
 
   //Destinations

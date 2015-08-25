@@ -26,14 +26,40 @@ function gmb_cmb2_render_destination_field_callback( $field, $value, $object_id,
 		'place_id'    => '',
 		'address'     => ''
 	) );
+
+	$letters = array(
+		0  => 'A',
+		1  => 'B',
+		2  => 'C',
+		3  => 'D',
+		4  => 'E',
+		5  => 'F',
+		6  => 'G',
+		7  => 'H',
+		8  => 'I',
+		9  => 'J',
+		10 => 'K',
+		11 => 'L',
+		12 => 'M'
+	);
 	?>
-	<div class="gmb-destination-fieldset clear">
+	<div class="gmb-destination-fieldset clear" data-iterator="<?php echo $field_type_object->iterator; ?>">
+		<?php
+		//Show default pin when setting new directions row
+		if ( empty( $value['destination'] ) ) { ?>
+			<img src="<?php echo GMB_PLUGIN_URL . 'assets/img/spotlight-poi.png' ?>" class="gmb-directions-marker">
+		<?php } //if set show marker with "A", "B", destination points
+		else { ?>
+			<img src="https://mts.googleapis.com/vt/icon/name=icons/spotlight/spotlight-waypoint-b.png&text=<?php echo( isset( $letters[ $field_type_object->iterator ] ) ? $letters[ $field_type_object->iterator ] : '' ); ?>&psize=16&font=fonts/Roboto-Regular.ttf&color=ff333333&ax=44&ay=48&scale=1" class="gmb-directions-marker">
+		<?php } ?>
+
 		<div class="destination-autocomplete">
 			<?php echo $field_type_object->input( array(
-				'class' => 'gmb-directions-autocomplete',
-				'name'  => $field_type_object->_name( '[destination]' ),
-				'id'    => $field_type_object->_id( '_destination' ),
-				'value' => $value['destination'],
+				'class'       => 'gmb-directions-autocomplete',
+				'name'        => $field_type_object->_name( '[destination]' ),
+				'id'          => $field_type_object->_id( '_destination' ),
+				'value'       => $value['destination'],
+				'placeholder' => __( 'Enter a location', Google_Maps_Builder()->get_plugin_slug() )
 			) ); ?>
 		</div>
 		<div class="destination-longitude">

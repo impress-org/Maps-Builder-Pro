@@ -210,26 +210,26 @@ class Google_Maps_Builder_Admin {
 			'type' => 'text',
 		) );
 		$marker_box->add_group_field( $group_field_id, array(
-			'name'    => __( 'Marker Image', $this->plugin_slug ),
-			'id'      => 'marker_img',
+			'name'        => __( 'Marker Image', $this->plugin_slug ),
+			'id'          => 'marker_img',
 			'row_classes' => 'gmb-hidden',
-			'type'    => 'file',
-			'options' => array(
+			'type'        => 'file',
+			'options'     => array(
 				'url'                  => false,
 				'add_upload_file_text' => __( 'Add Marker Image', $this->plugin_slug )
 			),
 		) );
 		$marker_box->add_group_field( $group_field_id, array(
-			'name' => __( 'Marker Data', $this->plugin_slug ),
+			'name'        => __( 'Marker Data', $this->plugin_slug ),
 			'row_classes' => 'gmb-hidden',
-			'id'   => 'marker',
-			'type' => 'textarea_code',
+			'id'          => 'marker',
+			'type'        => 'textarea_code',
 		) );
 		$marker_box->add_group_field( $group_field_id, array(
-			'name' => __( 'Marker Label Data', $this->plugin_slug ),
+			'name'        => __( 'Marker Label Data', $this->plugin_slug ),
 			'row_classes' => 'gmb-hidden',
-			'id'   => 'label',
-			'type' => 'textarea_code',
+			'id'          => 'label',
+			'type'        => 'textarea_code',
 		) );
 		$marker_box->add_group_field( $group_field_id, array(
 				'name'              => __( 'Marker Infowindow', $this->plugin_slug ),
@@ -258,7 +258,7 @@ class Google_Maps_Builder_Admin {
 		$directions_box->add_field(
 			array(
 				'name'    => __( 'Directions Display', $this->plugin_slug ),
-				'desc'    => __( 'How would you like to display the text directions.', $this->plugin_slug ),
+				'desc'    => __( 'How would you like to display the text directions?', $this->plugin_slug ),
 				'id'      => $prefix . 'text_directions',
 				'type'    => 'select',
 				'options' => array(
@@ -269,7 +269,7 @@ class Google_Maps_Builder_Admin {
 			)
 		);
 		$group_field_id = $directions_box->add_field( array(
-			'name'    => __( 'Direction Groups', $this->plugin_slug ),
+			'name'        => __( 'Direction Groups', $this->plugin_slug ),
 			'id'          => $prefix . 'directions_group',
 			'type'        => 'group',
 			'description' => __( 'Add sets of directions below.', $this->plugin_slug ),
@@ -277,7 +277,7 @@ class Google_Maps_Builder_Admin {
 				'group_title'   => __( 'Directions: {#}', 'cmb' ),
 				'add_button'    => __( 'Add Directions', $this->plugin_slug ),
 				'remove_button' => __( 'Remove Directions', $this->plugin_slug ),
-				'sortable'      => true, // beta
+				'sortable'      => false, // beta
 			),
 		) );
 		$directions_box->add_group_field( $group_field_id, array(
@@ -302,7 +302,7 @@ class Google_Maps_Builder_Admin {
 			'options'    => array(
 				'add_row_text'  => __( 'Add Destination', $this->plugin_slug ),
 				'remove_button' => __( 'Remove Destination', $this->plugin_slug ),
-				'sortable'      => true, // beta
+				'sortable'      => false, // beta
 			),
 		) );
 
@@ -886,7 +886,7 @@ class Google_Maps_Builder_Admin {
 		$output .= '<div class="inner-modal-container">';
 		$output .= '<div class="inner-modal">';
 		$output .= '<label for="post_title" class="map-title">' . __( 'Map Title', $this->plugin_slug ) . '</label>';
-		$output .= '<p class="cmb2-metabox-description">'.__('Give your Map a descriptive title', $this->plugin_slug).'</p>';
+		$output .= '<p class="cmb2-metabox-description">' . __( 'Give your Map a descriptive title', $this->plugin_slug ) . '</p>';
 		$output .= '<input type="text" name="model_post_title" size="30" value="' . get_the_title() . '" id="modal_title" spellcheck="true" autocomplete="off" placeholder="' . __( 'Enter map title', $this->plugin_slug ) . '">';
 		$output .= '<button type="button" class="gmb-modal-close">&times;</button>';
 		$output .= '</div>';
@@ -899,7 +899,7 @@ class Google_Maps_Builder_Admin {
 		$output .= '<div class="inner-modal-container">';
 		$output .= '<div class="inner-modal">';
 		$output .= '<label for="map-location-autocomplete" class="map-title">' . __( 'Enter a Location', $this->plugin_slug ) . '</label>';
-		$output .= '<p class="cmb2-metabox-description">'.__('Type your point of interest below and the map will be re-centered over that location', $this->plugin_slug).'</p>';
+		$output .= '<p class="cmb2-metabox-description">' . __( 'Type your point of interest below and the map will be re-centered over that location', $this->plugin_slug ) . '</p>';
 		$output .= '<button type="button" class="gmb-modal-close">&times;</button>';
 		$output .= '<input type="text" name="" size="30" id="map-location-autocomplete">';
 		$output .= '</div>';

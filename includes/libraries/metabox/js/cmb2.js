@@ -49,6 +49,7 @@ window.CMB2 = (function(window, document, $, undefined){
 		cmb.log( 'CMB2 localized data', l10n );
 		var $metabox     = cmb.metabox();
 		var $repeatGroup = $metabox.find('.cmb-repeatable-group');
+
 		/**
 		 * Initialize time/date/color pickers
 		 */
@@ -171,7 +172,8 @@ window.CMB2 = (function(window, document, $, undefined){
 		var $metabox     = cmb.metabox();
 		cmb.formfield    = formfield;
 		var $formfield   = $id( cmb.formfield );
-		var previewSize  = $formfield.data( 'previewsize' );
+		var fieldData    = $formfield.data();
+		var previewSize  = fieldData.previewsize;
 		var formName     = $formfield.attr('name');
 		var uploadStatus = true;
 		var attachment   = true;
@@ -185,10 +187,11 @@ window.CMB2 = (function(window, document, $, undefined){
 		// Create the media frame.
 		cmb.file_frames[ cmb.formfield ] = wp.media({
 			title: $metabox.find('label[for=' + cmb.formfield + ']').text(),
+			library : fieldData.queryargs || {},
 			button: {
-				text: l10n.strings.upload_file
+				text: l10n.strings[ isList ? 'upload_files' : 'upload_file' ]
 			},
-			multiple: isList ? true : false
+			multiple: isList ? 'add' : false
 		});
 
 		cmb.mediaHandlers.list = function( selection, returnIt ) {
@@ -310,6 +313,7 @@ window.CMB2 = (function(window, document, $, undefined){
 
 		var $inputs = $row.find( 'input:not([type="button"]), select, textarea, label' );
 		var $other  = $row.find('[id]').not( 'input:not([type="button"]), select, textarea, label' );
+
 		if ( group ) {
 			// Remove extra ajaxed rows
 			$row.find('.cmb-repeat-table .cmb-repeat-row:not(:first-child)').remove();
@@ -355,6 +359,7 @@ window.CMB2 = (function(window, document, $, undefined){
 				var newName = oldName ? oldName.replace( '['+ prevNum +']', '['+ cmb.idNumber +']' ) : '';
 				oldID       = $newInput.attr( 'id' );
 				newID       = oldID ? oldID.replace( '_'+ prevNum, '_'+ cmb.idNumber ) : '';
+
 				attrs       = {
 					id: newID,
 					name: newName,
@@ -466,19 +471,17 @@ window.CMB2 = (function(window, document, $, undefined){
 		var $this = $(this);
 		var name  = $this.attr( 'name' ); // get current name
 
-		// No name? bail
-		if ( typeof name === 'undefined' ) {
-			return false;
+		// If name is defined
+		if ( typeof name !== 'undefined' ) {
+			var prevNum = parseInt( $this.parents( '.cmb-repeatable-grouping' ).data( 'iterator' ) );
+			var newNum  = prevNum - 1; // Subtract 1 to get new iterator number
+	
+			// Update field name attributes so data is not orphaned when a row is removed and post is saved
+			var $newName = name.replace( '[' + prevNum + ']', '[' + newNum + ']' );
+	
+			// New name with replaced iterator
+			$this.attr( 'name', $newName );
 		}
-
-		var prevNum = parseInt( $this.parents( '.cmb-repeatable-grouping' ).data( 'iterator' ) );
-		var newNum  = prevNum - 1; // Subtract 1 to get new iterator number
-
-		// Update field name attributes so data is not orphaned when a row is removed and post is saved
-		var $newName = name.replace( '[' + prevNum + ']', '[' + newNum + ']' );
-
-		// New name with replaced iterator
-		$this.attr( 'name', $newName );
 
 	};
 
