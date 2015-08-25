@@ -47,7 +47,7 @@ window.GMB_Directions = (function ( window, document, $, undefined ) {
 		app.calc_routes();
 
 		//Setup autocomplete fields on click
-		app.$body.on( 'click', '.gmb-directions-autocomplete', app.gmb_setup_autocomplete );
+		app.$body.on( 'click, focus', '.gmb-directions-autocomplete', app.gmb_setup_autocomplete );
 
 		//Destination row removed
 		app.$body.on( 'cmb2_remove_row', '.cmb-type-destination', function ( event, row ) {
@@ -63,7 +63,7 @@ window.GMB_Directions = (function ( window, document, $, undefined ) {
 			$( destination_fieldset ).attr( 'data-iterator', rows );
 			$( destination_fieldset ).data( 'iterator', rows );
 			//focus on autocomplete field
-			$( event.currentTarget ).find( '.cmb-repeat-row:last .gmb-directions-autocomplete' ).trigger( 'click' );
+			$( event.currentTarget ).find( '.cmb-repeat-row:last .gmb-directions-autocomplete' ).focus();
 		} );
 
 		//Travel mode changed

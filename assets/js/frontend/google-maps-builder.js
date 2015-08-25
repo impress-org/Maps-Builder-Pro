@@ -609,13 +609,13 @@ var gmb_data;
 
 		//Set click action for marker to open infowindow
 		google.maps.event.addListener( marker, 'click', function () {
-			get_mashup_infowindow_content( marker, map_data);
+			get_mashup_infowindow_content( marker, map_data );
 		} );
 
 	}
 
 
-	function get_mashup_infowindow_content( marker, map_data) {
+	function get_mashup_infowindow_content( marker, map_data ) {
 
 		info_window.setContent( '<div id="infobubble-content" class="loading"></div>' );
 
@@ -672,7 +672,7 @@ var gmb_data;
 				origin = start_lat + ',' + start_lng;
 			}
 
-			//Destination
+			// Get the index of the max value, through the built in function inArray
 			var end_lat = markers.point[markers.point.length - 1].latitude;
 			var end_lng = markers.point[markers.point.length - 1].longitude;
 			var end_address = markers.point[markers.point.length - 1].address;
@@ -727,9 +727,8 @@ var gmb_data;
 
 		} ); //end foreach
 
-
-		//Set directions toggle field
-		$( '.gmb-directions-toggle' ).on( 'click', function ( e ) {
+		//Set directions toggle field for this map
+		$( '#directions-panel-' + map_data.id ).find( '.gmb-directions-toggle' ).on( 'click', function ( e ) {
 			e.preventDefault();
 			var dir_panel = $( this ).parent( '.gmb-directions-panel' );
 			if ( dir_panel.hasClass( 'toggled' ) ) {
@@ -745,6 +744,7 @@ var gmb_data;
 		} );
 
 	}
+
 
 	/**
 	 * Set Map Layers

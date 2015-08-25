@@ -113,15 +113,13 @@ class Google_Maps_Builder_Engine {
 		$markers_repeatable = isset( $all_meta['gmb_markers_group'][0] ) ? maybe_unserialize( $all_meta['gmb_markers_group'][0] ) : '';
 
 		//Put mashup markers into an array for JS usage
-		$mashup_marker_array = array();
-		$mashup_marker_array = isset( $all_meta['gmb_mashup_group'][0] ) ? maybe_unserialize( $all_meta['gmb_mashup_group'][0] ) : '';
+		$mashup_marker_array = isset( $all_meta['gmb_mashup_group'][0] ) ? maybe_unserialize( $all_meta['gmb_mashup_group'][0] ) : array();
 
 		//Cluster
 		$cluster_option = isset( $all_meta['gmb_marker_cluster'][0] ) ? maybe_unserialize( $all_meta['gmb_marker_cluster'][0] ) : '';
 
 		//Put destination into an array for JS usage
-		$destination_markers = array();
-		$destination_markers = isset( $all_meta['gmb_directions_group'][0] ) ? maybe_unserialize( $all_meta['gmb_directions_group'][0] ) : '';
+		$destination_markers = isset( $all_meta['gmb_directions_group'][0] ) ? maybe_unserialize( $all_meta['gmb_directions_group'][0] ) : array();
 		$text_directions     = isset( $all_meta['gmb_text_directions'][0] ) ? maybe_unserialize( $all_meta['gmb_text_directions'][0] ) : 'none';
 		$signed_in_option    = gmb_get_option( 'gmb_signed_in' );
 		if ( is_array( $markers_repeatable ) ) {

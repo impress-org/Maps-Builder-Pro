@@ -258,9 +258,10 @@ class Google_Maps_Builder_Admin {
 		$directions_box->add_field(
 			array(
 				'name'    => __( 'Directions Display', $this->plugin_slug ),
-				'desc'    => __( 'How would you like to display the text directions?', $this->plugin_slug ),
+				'desc'    => __( 'How would you like to display the text directions on your website?', $this->plugin_slug ),
 				'id'      => $prefix . 'text_directions',
 				'type'    => 'select',
+				'default' => 'overlay',
 				'options' => array(
 					'none'    => __( 'No text directions', 'cmb' ),
 					'overlay' => __( 'Display in overlay panel', 'cmb' ),
