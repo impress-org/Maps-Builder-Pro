@@ -164,6 +164,8 @@ div[id^="directions-panel"] {
   div[id^="directions-panel"].panel-below {
     display: block;
     margin: 20px 0; }
+    div[id^="directions-panel"].panel-below .gmb-directions-toggle {
+      display: none; }
   div[id^="directions-panel"] table {
     margin: 0;
     border: none; }

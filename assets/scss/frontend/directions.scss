@@ -44,6 +44,9 @@ div[id^="directions-panel"] {
   &.panel-below {
 	display: block;
 	margin: 20px 0;
+	.gmb-directions-toggle {
+	  display: none;
+	}
   }
 
   //General Directions Table
