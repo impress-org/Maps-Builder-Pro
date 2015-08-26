@@ -98,7 +98,7 @@ class Google_Maps_Builder_Mashups_Metabox {
 	 *
 	 * @param $hook
 	 *
-	 * @return false
+	 * @return void
 	 */
 	public function enqueue_mashup_scripts( $hook ) {
 
@@ -117,7 +117,7 @@ class Google_Maps_Builder_Mashups_Metabox {
 			) );
 			wp_enqueue_script( $this->plugin_slug . '-admin-mashups-scripts' );
 
-			wp_register_style( $this->plugin_slug . '-admin-mashups-style', GMB_PLUGIN_URL . 'assets/css/gmb-mashup-metabox' . $suffix . '.css' );
+			wp_register_style( $this->plugin_slug . '-admin-mashups-style', GMB_PLUGIN_URL . 'assets/css/gmb-mashup-metabox.css' );
 			wp_enqueue_style( $this->plugin_slug . '-admin-mashups-style' );
 		}
 
