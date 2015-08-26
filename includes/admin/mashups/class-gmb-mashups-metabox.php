@@ -61,7 +61,6 @@ class Google_Maps_Builder_Mashups_Metabox {
 			'show_names'   => true, // Show field names on the left
 		) );
 		$preview_box->add_field( array(
-			'name'    => __( 'Add Location', $this->plugin_slug ),
 			'id'      => $prefix . 'mashup_autocomplete',
 			'type'    => 'google_mashup_geocoder',
 			'after'   => '<div class="gmb-toggle-fields-wrap"><a href="#" class="gmb-toggle-fields"><span class="dashicons dashicons-arrow-down"></span>' . __( 'View Location Fields', $this->plugin_slug ) . '</a></div>',
@@ -164,13 +163,19 @@ class Google_Maps_Builder_Mashups_Metabox {
 
 		$meta = wp_parse_args(
 			$meta, array(
-				'geocode' => '',
+				'geocode'     => '',
+				'geocode_set' => '',
 			)
 		);
 
-		$output = '<div class="autocomplete-wrap">';
+		$output = '<div class="autocomplete-wrap" ' . ( $meta['geocode_set'] == '1' ? 'style="display:none;"' : '' ) . '>';
+
+		$output .= '<label for="' . $field->args( 'id' ) . '">' . __( 'Add Location', $this->plugin_slug ) . '</label>';
 		$output .= '<input type="text" name="' . $field->args( 'id' ) . '[geocode]" id="' . $field->args( 'id' ) . '" value="" class="search-autocomplete" />';
+		$output .= '<input type="hidden" name="' . $field->args( 'id' ) . '[geocode_set]" id="' . $field->args( 'id' ) . '" value="' . $meta['geocode_set'] . '" class="search-autocomplete-set" />';
 		$output .= '<p class="autocomplete-description"> ' . __( 'Enter the name of a point of interest, address, or establishment above or manually set the fields below.', $this->plugin_slug ) . '</p>';
+		$output .= '</div>';//autocomplete-wrap
+		$output .= '<div class="gmb-autocomplete-notice"><p>' . __( 'Location set for this post', $this->plugin_slug ) . '</p><a href="#" class="gmb-reset-autocomplete button button-small">' . __( 'Reset', $this->plugin_slug ) . '</a>';
 		$output .= '</div>';
 
 		echo $output;
@@ -189,7 +194,7 @@ class Google_Maps_Builder_Mashups_Metabox {
 		global $post;
 		$existing_transient = get_transient( $post->post_type . '_meta_keys' );
 
-		if( $existing_transient === false) {
+		if ( $existing_transient === false ) {
 			return;
 		}
 

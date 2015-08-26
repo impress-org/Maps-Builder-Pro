@@ -26,6 +26,8 @@ window.GMB_Mashups_Metabox = (function ( window, document, $, undefined ) {
 		app.cache();
 		app.set_mashup_autocomplete();
 		app.set_toggle_fields();
+
+		$( '.gmb-reset-autocomplete' ).on( 'click', app.reset_metabox );
 	};
 
 
@@ -60,6 +62,13 @@ window.GMB_Mashups_Metabox = (function ( window, document, $, undefined ) {
 				$( '#_gmb_place_id' ).val( place.place_id );
 			}
 
+			//Set trigger field
+			$( '.search-autocomplete-set' ).val( '1' );
+			//Slide down locations panel
+			$( '.gmb-toggle' ).show();
+			//Hide autocomplete & show reset btn
+			$( '.autocomplete-wrap' ).hide();
+			$( '.gmb-autocomplete-notice' ).show();
 
 		} );
 
@@ -85,6 +94,25 @@ window.GMB_Mashups_Metabox = (function ( window, document, $, undefined ) {
 			$( this ).find( '.dashicons' ).toggleClass( 'dashicons-arrow-up' );
 
 		} );
+
+	};
+
+
+	/**
+	 * Reset Metabox
+	 */
+	app.reset_metabox = function () {
+
+		$( '.autocomplete-wrap' ).show();
+		$( this ).parents( '.gmb-autocomplete-notice' ).hide();
+		$('.search-autocomplete' ).val(' ' ).focus();
+		//Clear fields
+		$( '.search-autocomplete-set' ).val( '' );
+		$( '#_gmb_lat' ).val( '' );
+		$( '#_gmb_lng' ).val( '' );
+		$( '#_gmb_address' ).val( '' );
+		$( '#_gmb_place_id' ).val( '' );
+		return false;
 
 	};
 
