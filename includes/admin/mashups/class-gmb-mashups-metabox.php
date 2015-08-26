@@ -107,7 +107,7 @@ class Google_Maps_Builder_Mashups_Metabox {
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
 		//Only enqueue on post edit screens
-		if ( $hook === 'post.php' ) {
+		if ( $hook === 'post.php' || $hook === 'post-new.php' ) {
 			Google_Maps_Builder()->scripts->check_for_multiple_google_maps_api_calls();
 
 			wp_register_script( $this->plugin_slug . '-admin-mashups-scripts', GMB_PLUGIN_URL . 'assets/js/admin/admin-maps-mashup-metabox' . $suffix . '.js', array(
@@ -175,7 +175,7 @@ class Google_Maps_Builder_Mashups_Metabox {
 		$output .= '<input type="hidden" name="' . $field->args( 'id' ) . '[geocode_set]" id="' . $field->args( 'id' ) . '" value="' . $meta['geocode_set'] . '" class="search-autocomplete-set" />';
 		$output .= '<p class="autocomplete-description"> ' . __( 'Enter the name of a point of interest, address, or establishment above or manually set the fields below.', $this->plugin_slug ) . '</p>';
 		$output .= '</div>';//autocomplete-wrap
-		$output .= '<div class="gmb-autocomplete-notice"><p>' . __( 'Location set for this post', $this->plugin_slug ) . '</p><a href="#" class="gmb-reset-autocomplete button button-small">' . __( 'Reset', $this->plugin_slug ) . '</a>';
+		$output .= '<div class="gmb-autocomplete-notice"' . ( $meta['geocode_set'] !== '1' ? 'style="display:none;"' : '' ) . '><p>' . __( 'Location set for this post', $this->plugin_slug ) . '</p><a href="#" class="gmb-reset-autocomplete button button-small">' . __( 'Reset', $this->plugin_slug ) . '</a>';
 		$output .= '</div>';
 
 		echo $output;
