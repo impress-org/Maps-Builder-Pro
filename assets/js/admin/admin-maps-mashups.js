@@ -313,10 +313,12 @@ window.GMB_Mashups = (function ( window, document, $, undefined ) {
 		lng = (typeof marker_data.longitude !== 'undefined' ? marker_data.longitude : '');
 		var marker_position = new google.maps.LatLng( lat, lng );
 
-		console.log(marker_data);
-
 		if ( !lat || !lng ) {
 			var error = '<li class="gmb-marker-status gmb-error"><strong>Marker Error:</strong> ' + title + ' - No latitude or longitude values found for this post.</li>';
+			load_log.html( load_log.html() + error );
+			return; //this is equivalent of 'continue' for jQuery loop
+		} else if ( typeof lat !== 'string' || typeof lng !== 'string' ) {
+			error = '<li class="gmb-marker-status gmb-error"><strong>Marker Error:</strong> ' + title + ' - Improperly formatted latitude or longitude field data detected.</li>';
 			load_log.html( load_log.html() + error );
 			return; //this is equivalent of 'continue' for jQuery loop
 		}
