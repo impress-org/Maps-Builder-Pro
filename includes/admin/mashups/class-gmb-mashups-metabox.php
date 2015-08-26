@@ -49,6 +49,11 @@ class Google_Maps_Builder_Mashups_Metabox {
 
 		$this->enabled_post_types = gmb_get_option( 'gmb_mashup_metabox' );
 
+		//Sanity check
+		if ( $this->enabled_post_types === false ) {
+			return;
+		}
+
 		$prefix = '_gmb_';
 
 		//Output metabox on appropriate CPTs
