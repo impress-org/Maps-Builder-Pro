@@ -126,9 +126,9 @@ var gmb_data;
 
 
 	/**
-	 * Set Map Options
+	 * Set Map Theme
 	 *
-	 * Sets up map controls and theme
+	 * @description: Sets up map theme
 	 *
 	 */
 	function set_map_theme( map, map_data ) {
@@ -160,14 +160,15 @@ var gmb_data;
 	/**
 	 * Set Map Options
 	 *
-	 * Sets up map controls and theme
+	 * Sets up map controls
 	 *
 	 */
 	function set_map_options( map, map_data ) {
 
 		//Zoom control
-		var zoom_control = map_data.map_controls.zoom_control;
-		if ( zoom_control === 'none' ) {
+		var zoom_control = map_data.map_controls.zoom_control.toLowerCase();
+
+		if ( zoom_control == 'none' ) {
 			map.setOptions( {
 				zoomControl: false
 			} );
@@ -181,7 +182,7 @@ var gmb_data;
 		}
 
 		//Mouse Wheel Zoom
-		var mouse_zoom = map_data.map_controls.wheel_zoom;
+		var mouse_zoom = map_data.map_controls.wheel_zoom.toLowerCase();
 		if ( mouse_zoom === 'none' ) {
 			map.setOptions( {
 				scrollwheel: false
@@ -193,7 +194,7 @@ var gmb_data;
 		}
 
 		//Pan Control
-		var pan = map_data.map_controls.pan_control;
+		var pan = map_data.map_controls.pan_control.toLowerCase();
 		if ( pan === 'none' ) {
 			map.setOptions( {
 				panControl: false
@@ -206,8 +207,8 @@ var gmb_data;
 
 
 		//Street View Control
-		var street_view = map_data.map_controls.street_view.toUpperCase();
-		if ( street_view === 'NONE' ) {
+		var street_view = map_data.map_controls.street_view.toLowerCase();
+		if ( street_view === 'none' ) {
 			map.setOptions( {
 				streetViewControl: false
 			} );
@@ -218,7 +219,7 @@ var gmb_data;
 		}
 
 		//Map Double Click
-		var double_click_zoom = map_data.map_controls.double_click_zoom;
+		var double_click_zoom = map_data.map_controls.double_click_zoom.toLowerCase();
 		if ( double_click_zoom === 'none' ) {
 			map.setOptions( {
 				disableDoubleClickZoom: true
@@ -230,7 +231,7 @@ var gmb_data;
 		}
 
 		//Map Draggable
-		var draggable = map_data.map_controls.draggable;
+		var draggable = map_data.map_controls.draggable.toLowerCase();
 		if ( draggable === 'none' ) {
 			map.setOptions( {
 				draggable: false
