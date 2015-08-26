@@ -148,7 +148,7 @@ var gmb_data;
 		} );
 		//Map Theme
 		$( '#gmb_theme' ).change( function () {
-			set_map_theme( true );
+			set_map_theme();
 		} );
 		//street view
 		$( '#gmb_street_view' ).change( function () {
@@ -342,7 +342,7 @@ var gmb_data;
 
 		//Set various map view options
 		set_map_type( false );
-		set_map_theme( false );
+		set_map_theme();
 		set_street_view();
 		set_pan_control();
 		set_draggable();
@@ -1625,44 +1625,45 @@ var gmb_data;
 	 *
 	 * Uses Snazzy Maps JSON arrow to set the colors for the map
 	 */
-	function set_map_theme( reset ) {
+	function set_map_theme() {
 
 		var preset_theme = $( '#gmb_theme' );
 		var map_theme_input_val = parseInt( preset_theme.val() );
+		var map_type_select_field = $( '#gmb_type' );
+		var custom_theme_json_wrap = $( '.cmb2-id-gmb-theme-json' );
 		var custom_theme_json = $( '#gmb_theme_json' );
 
-		if ( reset === true ) {
-			$( '#gmb_type' ).val( 'RoadMap' );
-			$( '.cmb2-id-gmb-theme-json' ).hide();
-		}
-
+		//"Set a Custom Snazzy Map" button click
 		$( '.custom-snazzy-toggle' ).on( 'click', function ( e ) {
 			e.preventDefault();
 			preset_theme.val( 'custom' );
-			$( '.cmb2-id-gmb-theme-json' ).show();
-			custom_theme_json.focus();
+			custom_theme_json_wrap.show();
+			custom_theme_json.val( '' ).focus();
 			set_custom_snazzy_map();
 		} );
 
-		//On Custom Map value change
+		//On Snazzy Map textfield value change
 		custom_theme_json.on( 'change', function () {
 			set_custom_snazzy_map();
 		} );
 
-		//Snazzy maps set to none
-		if ( preset_theme.val() === 'none' ) {
-			set_map_type();
-			$( '.cmb2-id-gmb-theme-json' ).hide();
+		//Sanity check to see if none|custom
+		if ( preset_theme.val() !== 'none' ) {
+			map_type_select_field.val( 'RoadMap' );
 		}
-		//Custom snazzy map
-		else if ( preset_theme.val() === 'custom' ) {
-			$( '.cmb2-id-gmb-theme-json' ).show();
-			custom_theme_json.focus();
+
+		//Snazzy maps select set to none
+		if ( preset_theme.val() === 'none' ) {
+			custom_theme_json.val( '' ); //clear value from custom JSON field
+		}
+		//Custom snazzy map NOT yet set
+		else if ( preset_theme.val() === 'custom' && custom_theme_json.val() !== '' ) {
+			custom_theme_json_wrap.show();
 			set_custom_snazzy_map();
 		}
 		//Preconfigured snazzy map
 		else {
-
+			custom_theme_json_wrap.hide();
 			//AJAX to get JSON data for Snazzy
 			$.getJSON( gmb_data.snazzy, function ( data ) {
 
@@ -1687,10 +1688,18 @@ var gmb_data;
 
 	/**
 	 * Custom Snazzy Maps
+	 *
+	 * @description Sets a custom snazzy map from JS
+	 * @since 2.0
 	 */
 	function set_custom_snazzy_map() {
 
 		var custom_theme_json = $( '#gmb_theme_json' );
+
+		//Sanity check
+		if ( custom_theme_json.val() === '' ) {
+			return;
+		}
 
 		try {
 			var custom_theme_json_val = $.parseJSON( custom_theme_json.val() );

@@ -1,10 +1,10 @@
 <?php
 /**
- * Maps Builder - Pro
+ * Maps Builder Pro
  *
- * Plugin Name:       Maps Builder - Pro
+ * Plugin Name:       Maps Builder Pro
  * Plugin URI:        http://wordimpress.com/
- * Description:       Create stylish and powerful Google Maps quickly and easily. Thank you for upgrading to the pro edition!
+ * Description:       Create stylish and powerful Google Maps quickly and easily. Thank you for upgrading to the Pro version!
  * Version:           2.0
  * Author:            WordImpress
  * Author URI:        http://wordimpress.com/

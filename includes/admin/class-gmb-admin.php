@@ -540,15 +540,15 @@ class Google_Maps_Builder_Admin {
 			'type'              => 'multicheck',
 			'select_all_button' => false,
 			'options'           => apply_filters( 'gmb_map_zoom_levels', array(
-					'traffic' => 'Traffic Layer',
-					'transit' => 'Transit Layer',
-					'bicycle' => 'Bicycle Layer',
+					'traffic' => __( 'Traffic', $this->plugin_slug ),
+					'transit' => __( 'Transit', $this->plugin_slug ),
+					'bicycle' => __( 'Bicycle', $this->plugin_slug ),
 				)
 			)
 		) );
 
 		$display_options->add_field( array(
-			'name'    => 'Map Theme',
+			'name'    => __( 'Map Theme', $this->plugin_slug ),
 			'desc'    => sprintf( __( 'Set optional preconfigured <a href="%1s" class="snazzy-link new-window"  target="_blank">Snazzy Maps</a> styles above or use your own style.', $this->plugin_slug ), esc_url( 'http://snazzymaps.com' ) ) . '<a href="#" class="button button-small custom-snazzy-toggle">' . __( 'Set a Custom Snazzy Map', $this->plugin_slug ) . '</a>',
 			'id'      => $prefix . 'theme',
 			'type'    => 'select',

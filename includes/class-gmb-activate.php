@@ -321,10 +321,12 @@ class Google_Maps_Builder_Activate {
 	 */
 	public function setup_post_type() {
 
-		$post_slug     = gmb_get_option( 'gmb_custom_slug' );
-		$menu_position = gmb_get_option( 'gmb_menu_position' );
-		$has_archive   = filter_var( gmb_get_option( 'gmb_has_archive' ), FILTER_VALIDATE_BOOLEAN );
-		$labels        = array(
+		$settings      = get_option( 'gmb_settings' );
+		$post_slug     = isset( $settings['gmb_custom_slug'] ) ? $settings['gmb_custom_slug'] : '';
+		$menu_position = isset( $settings['gmb_menu_position'] ) ? $settings['gmb_menu_position'] : '';
+		$has_archive   = isset( $settings['gmb_has_archive'] ) ? filter_var( $settings['gmb_has_archive'], FILTER_VALIDATE_BOOLEAN ) : '';
+
+		$labels = array(
 			'name'               => _x( 'Google Maps', 'post type general name', $this->plugin_slug ),
 			'singular_name'      => _x( 'Map', 'post type singular name', $this->plugin_slug ),
 			'menu_name'          => _x( 'Google Maps', 'admin menu', $this->plugin_slug ),
