@@ -1587,7 +1587,8 @@ var gmb_data;
 	}
 
 	/**
-	 * Sets the Street View Control
+	 * Set Street View
+	 * @description Sets the Street View Control
 	 */
 	function set_street_view() {
 
@@ -1606,11 +1607,13 @@ var gmb_data;
 	/**
 	 * Sets the Map Type
 	 *
-	 * Changes the Google Map type and resets theme to none
+	 * @description Changes the Google Map type and resets theme to none
+	 * @since 1.0
 	 */
 	function set_map_type( reset ) {
 		if ( reset === true ) {
 			$( '#gmb_theme' ).val( 'none' );
+			$( '#gmb_theme_json' ).val( ' ' );
 		}
 
 		var map_type = $( '#gmb_type' ).val().toUpperCase();
@@ -1623,7 +1626,8 @@ var gmb_data;
 	/**
 	 * Sets the Map Theme
 	 *
-	 * Uses Snazzy Maps JSON arrow to set the colors for the map
+	 * @description Uses Snazzy Maps JSON arrow to set the colors for the map
+	 * @since 1.0
 	 */
 	function set_map_theme() {
 
@@ -1647,17 +1651,16 @@ var gmb_data;
 			set_custom_snazzy_map();
 		} );
 
-		//Sanity check to see if none|custom
+		//Sanity check to see if none
 		if ( preset_theme.val() !== 'none' ) {
 			map_type_select_field.val( 'RoadMap' );
 		}
-
 		//Snazzy maps select set to none
 		if ( preset_theme.val() === 'none' ) {
 			custom_theme_json.val( '' ); //clear value from custom JSON field
 		}
-		//Custom snazzy map NOT yet set
-		else if ( preset_theme.val() === 'custom' && custom_theme_json.val() !== '' ) {
+		//Custom snazzy map
+		else if ( preset_theme.val() === 'custom' ) {
 			custom_theme_json_wrap.show();
 			set_custom_snazzy_map();
 		}
