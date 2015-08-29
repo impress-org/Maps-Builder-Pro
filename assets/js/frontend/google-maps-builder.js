@@ -544,6 +544,9 @@ var gmb_data;
 			return false;
 		}
 
+		// Store the markers
+		var markers = [];
+
 		$( map_data.mashup_markers ).each( function ( index, mashup_value ) {
 
 			//Setup our vars
@@ -567,14 +570,18 @@ var gmb_data;
 
 				//Loop through marker data
 				$.each( response, function ( index, marker_data ) {
-					set_mashup_marker( map, data.index, marker_data, mashup_value, map_data );
+					var marker = set_mashup_marker( map, data.index, marker_data, mashup_value, map_data );
+					markers.push( marker );
 				} );
 
+				//Cluster?
+				if ( map_data.marker_cluster === 'yes' ) {
+					var markerCluster = new MarkerClusterer( map, markers );
+				}
 
 			}, 'json' );
 
 		} );
-
 
 	}
 
@@ -622,6 +629,8 @@ var gmb_data;
 		google.maps.event.addListener( marker, 'click', function () {
 			get_mashup_infowindow_content( marker, map_data );
 		} );
+
+		return marker;
 
 	}
 
