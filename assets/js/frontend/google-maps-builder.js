@@ -255,6 +255,11 @@ var gmb_data;
 		//Loop through repeatable field of markers
 		$( map_markers ).each( function ( index, marker_data ) {
 
+			// Make sure we have latitude and longitude before creating the marker
+			if ( marker_data.lat == '' || marker_data.lng == '' ) {
+				return;
+			}
+
 			var marker_label = '';
 
 			//check for custom marker and label data
@@ -571,7 +576,9 @@ var gmb_data;
 				//Loop through marker data
 				$.each( response, function ( index, marker_data ) {
 					var marker = set_mashup_marker( map, data.index, marker_data, mashup_value, map_data );
-					markers.push( marker );
+					if ( marker instanceof Marker ) {
+						markers.push(marker);
+					}
 				} );
 
 				//Cluster?
@@ -595,10 +602,17 @@ var gmb_data;
 	 */
 	function set_mashup_marker( map, mashup_index, marker_data, mashup_value, map_data ) {
 
-		var title = (typeof marker_data.title !== 'undefined' ? marker_data.title : '');
-		var address = (typeof marker_data.address !== 'undefined' ? marker_data.address : '');
+		// Get latitude and longitude
 		var lat = (typeof marker_data.latitude !== 'undefined' ? marker_data.latitude : '');
 		var lng = (typeof marker_data.longitude !== 'undefined' ? marker_data.longitude : '');
+
+		// Make sure we have latitude and longitude before creating the marker
+		if ( lat == '' || lng == '' ) {
+			return false;
+		}
+
+		var title = (typeof marker_data.title !== 'undefined' ? marker_data.title : '');
+		var address = (typeof marker_data.address !== 'undefined' ? marker_data.address : '');
 		var marker_position = new google.maps.LatLng( lat, lng );
 
 		var marker_icon = map_data.map_params.default_marker;
