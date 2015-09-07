@@ -4,7 +4,7 @@ Donate link: http://wordimpress.com/
 Tags: google maps, google map, google map widget, google map shortcode, maps, map, wp map, wp google maps, google maps directions, google maps builder, google maps plugin, google places, google places api, google maps api, google places reviews
 Requires at least: 4.0
 Tested up to: 4.3
-Stable tag: 2.0
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -122,6 +122,12 @@ The main developer of this plugin is WordImpress. To find out more information a
 5. **Settings Panel** - Adjust the various plugin settings using a UI that is built using WordPress' own styles.
 
 == Changelog ==
+
+= 2.0.1 =
+* Fix: Taxonomy terms checkbox selections now properly loaded via AJAX for mashups filtering @see: https://wordimpress.com/support/topic/mashup-taxonomy-filters-not-working/
+* Fix: Licensing system updated to work with Pro release and bypass WordPress.org updates completely
+* Fix: Ensure mashup markers have latitude and longitude before creating frontend markers - thanks @RachelC
+* Fix: Add ability for mashup markers to be clustered - thanks @RachelC
 
 = 2.0 =
 * General: This update focused on fixing a lot of pre-existing bugs commonly submitted to WordPress.org as well as improving the plugin base for future code enhancements.

@@ -4,7 +4,7 @@
  *
  * This class simplifies the process of adding license information to new Add-ons.
  *
- * @version 1.0
+ * @version 2.0
  */
 
 // Exit if accessed directly
@@ -39,21 +39,21 @@ if ( ! class_exists( 'GMB_License' ) ) :
 		 * @param string  $_api_url
 		 */
 		public function __construct( $_file, $_item_name, $_version, $_author, $_optname = null, $_api_url = null ) {
-			global $gmb_options;
 
-			$this->file           = $_file;
+			$this->settings = get_option( 'gmb_settings' );
+
+			$this->file           = GMB_PLUGIN_BASE;
 			$this->item_name      = $_item_name;
 			$this->item_shortname = 'gmb_' . preg_replace( '/[^a-zA-Z0-9_\s]/', '', str_replace( ' ', '_', strtolower( $this->item_name ) ) );
 			$this->version        = $_version;
-			$this->license        = isset( $gmb_options[ $this->item_shortname . '_license_key' ] ) ? trim( $gmb_options[ $this->item_shortname . '_license_key' ] ) : '';
+			$this->license        = isset( $this->settings['gmb_maps_builder_pro_license_key'] ) ? trim( $this->settings['gmb_maps_builder_pro_license_key'] ) : '';
 			$this->author         = $_author;
 			$this->api_url        = is_null( $_api_url ) ? $this->api_url : $_api_url;
-
 
 			// Setup hooks
 			$this->includes();
 			$this->hooks();
-			//$this->auto_updater();
+			$this->auto_updater();
 		}
 
 		/**
@@ -89,7 +89,9 @@ if ( ! class_exists( 'GMB_License' ) ) :
 			add_action( 'admin_init', array( $this, 'auto_updater' ), 0 );
 
 			add_action( 'admin_notices', array( $this, 'notices' ) );
+
 		}
+
 
 		/**
 		 * Auto updater
@@ -115,6 +117,7 @@ if ( ! class_exists( 'GMB_License' ) ) :
 					'author'    => $this->author
 				)
 			);
+
 		}
 
 
@@ -370,6 +373,8 @@ if ( ! class_exists( 'GMB_License' ) ) :
 			delete_transient( 'gmb_license_error' );
 
 		}
+
+
 	}
 
 endif; // end class_exists check

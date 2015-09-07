@@ -220,13 +220,11 @@ window.GMB_Mashups = (function ( window, document, $, undefined ) {
 		// We can also pass the url value separately from ajaxurl for front end AJAX implementations
 		jQuery.post( ajaxurl, data, function ( response ) {
 
-			var data = jQuery.parseJSON( response );
-
 			//Reset terms checklist
-			terms_filter_wrap.find( '.cmb2-checkbox-list' ).empty().html( data.terms_checklist );
+			terms_filter_wrap.find( '.cmb2-checkbox-list' ).empty().html( response.terms_checklist );
 			terms_filter_wrap.show();
 
-		} );
+		}, 'json' );
 
 
 	};
