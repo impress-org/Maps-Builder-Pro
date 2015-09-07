@@ -42,7 +42,7 @@ if ( ! class_exists( 'GMB_License' ) ) :
 
 			$this->settings = get_option( 'gmb_settings' );
 
-			$this->file           = GMB_PLUGIN_BASE;
+			$this->file           = $_file;
 			$this->item_name      = $_item_name;
 			$this->item_shortname = 'gmb_' . preg_replace( '/[^a-zA-Z0-9_\s]/', '', str_replace( ' ', '_', strtolower( $this->item_name ) ) );
 			$this->version        = $_version;

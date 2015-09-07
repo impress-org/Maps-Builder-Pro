@@ -56,7 +56,7 @@ class Google_Maps_Builder_Settings {
 	 * Core Licensing
 	 */
 	function gmb_core_licensing() {
-		$core_license = new GMB_License( __FILE__, 'Maps Builder Pro', '2.0', 'WordImpress', 'maps_builder_license_key' );
+		$core_license = new GMB_License( GMB_PLUGIN_BASE, 'Maps Builder Pro', GMB_VERSION, 'WordImpress', 'maps_builder_license_key' );
 	}
 
 	/**
