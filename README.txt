@@ -123,6 +123,10 @@ The main developer of this plugin is WordImpress. To find out more information a
 
 == Changelog ==
 
+= 2.0.2 =
+* Fix: Mashups now allow you to load all posts from a CPT without having to select a taxonomy - thanks @thatryan
+* Fix: Revamped how Google Maps API scripts are loaded to better prevent conflicts with other themes and plugins on both the admin and frontend
+
 = 2.0.1 =
 * Fix: Taxonomy terms checkbox selections now properly loaded via AJAX for mashups filtering @see: https://wordimpress.com/support/topic/mashup-taxonomy-filters-not-working/
 * Fix: Licensing system updated to work with Pro release and bypass WordPress.org updates completely

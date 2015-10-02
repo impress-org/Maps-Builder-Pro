@@ -102,7 +102,7 @@ class Google_Maps_Builder_Mashups_Metabox {
 	 *
 	 * @param $hook
 	 *
-	 * @return void
+	 * @return mixed
 	 */
 	public function enqueue_mashup_scripts( $hook ) {
 
@@ -113,13 +113,20 @@ class Google_Maps_Builder_Mashups_Metabox {
 
 		//Only enqueue on post edit screens
 		if ( $hook === 'post.php' || $hook === 'post-new.php' ) {
+
+			//Load Google Maps API on this CPT
+			wp_register_script( $this->plugin_slug . '-admin-gmaps', 'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places', array( 'jquery' ) );
+			wp_enqueue_script( $this->plugin_slug . '-admin-gmaps' );
+
+			//Check for Google Maps API JS conflicts
 			Google_Maps_Builder()->scripts->check_for_multiple_google_maps_api_calls();
 
-			wp_register_script( $this->plugin_slug . '-admin-mashups-scripts', GMB_PLUGIN_URL . 'assets/js/admin/admin-maps-mashup-metabox' . $suffix . '.js', array(
-				'jquery',
-				$this->plugin_slug . '-gmaps'
+			//Register our mashup metabox JS
+			wp_register_script( $this->plugin_slug . '-admin-mashups-script', GMB_PLUGIN_URL . 'assets/js/admin/admin-maps-mashup-metabox' . $suffix . '.js', array(
+				'jquery'
 			) );
-			wp_enqueue_script( $this->plugin_slug . '-admin-mashups-scripts' );
+
+			wp_enqueue_script( $this->plugin_slug . '-admin-mashups-script' );
 
 			wp_register_style( $this->plugin_slug . '-admin-mashups-style', GMB_PLUGIN_URL . 'assets/css/gmb-mashup-metabox.css' );
 			wp_enqueue_style( $this->plugin_slug . '-admin-mashups-style' );

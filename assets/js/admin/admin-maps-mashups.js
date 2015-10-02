@@ -211,6 +211,11 @@ window.GMB_Mashups = (function ( window, document, $, undefined ) {
 		//Hide terms wrap
 		terms_filter_wrap.hide();
 
+		//If value is none bounce
+		if ( this_value === 'none' ) {
+			return false;
+		}
+
 		var data = {
 			action  : 'get_taxonomy_terms',
 			taxonomy: this_value,
@@ -220,8 +225,16 @@ window.GMB_Mashups = (function ( window, document, $, undefined ) {
 		// We can also pass the url value separately from ajaxurl for front end AJAX implementations
 		jQuery.post( ajaxurl, data, function ( response ) {
 
+			//Check that there's terms for this tax
+			if ( response.status !== 'none' ) {
+				terms_filter_wrap.find( '.cmb-td' ).empty().html( response.terms_checklist );
+
+			} else {
+				//No terms for this tax
+				terms_filter_wrap.find( '.cmb-td' ).empty().html( response.terms_checklist );
+			}
+
 			//Reset terms checklist
-			terms_filter_wrap.find( '.cmb2-checkbox-list' ).empty().html( response.terms_checklist );
 			terms_filter_wrap.show();
 
 		}, 'json' );

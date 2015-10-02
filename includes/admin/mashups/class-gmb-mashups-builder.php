@@ -217,6 +217,13 @@ class Google_Maps_Builder_Mashups_Builder {
 			$taxonomies = get_object_taxonomies( $post_type, 'objects' );
 			$options    = '';
 
+			//Default "None"
+			$options .= $field_type_object->select_option( array(
+				'label'   => 'No filter',
+				'value'   => 'none',
+				'checked' => $value == 'none',
+			) );
+
 			//Do we have taxonomies?
 			if ( $taxonomies ) {
 				foreach ( $taxonomies as $taxonomy ) {
@@ -274,9 +281,8 @@ class Google_Maps_Builder_Mashups_Builder {
 
 			$output .= '</ul><p class="cmb2-metabox-description">' . __( 'Select the taxonomies (if any) that you would like to filter by.', $this->plugin_slug ) . '</p>';
 
-
 		} else {
-			$output = '<p class="no-terms" style="margin:0;">' . __( 'No terms found for this taxonomy', $this->plugin_slug ) . '</p>';
+			$output = '<ul class="cmb2-checkbox-list cmb2-list"><li>' . __( 'No terms found for this taxonomy', $this->plugin_slug ) . '</li></ul>';
 		}
 
 
@@ -388,8 +394,13 @@ class Google_Maps_Builder_Mashups_Builder {
 		$response['taxonomy_options'] = '';
 		$response['meta_key_options'] = '';
 
+
 		//Do we have taxonomies?
 		if ( $taxonomies ) {
+
+
+			//Default "no filter" options
+			$response['taxonomy_options'] .= '<option value="none">' . __( 'No filter', 'gmb' ) . '</option>';
 
 			//Create taxonomy options
 			foreach ( $taxonomies as $taxonomy ) {
@@ -448,8 +459,13 @@ class Google_Maps_Builder_Mashups_Builder {
 		//Do we have taxonomies?
 		if ( $terms ) {
 
+			$response['terms_checklist'] = '<ul class="cmb2-checkbox-list cmb2-list">';
+
+			$response['terms_checklist'] .= $this->gmb_get_terms_checklist( $terms, $repeater_index, '' );
+
+			$response['terms_checklist'] .= '</ul><p class="cmb2-metabox-description">' . __( 'Select the taxonomies (if any) that you would like to filter by.', $this->plugin_slug ) . '</p>';
 			//Get terms multicheck list for taxonomy and send to JS
-			$response['terms_checklist'] = $this->gmb_get_terms_checklist( $terms, $repeater_index, '' );
+			$response['status'] = 'success';
 
 		} else {
 

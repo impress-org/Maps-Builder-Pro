@@ -5,6 +5,7 @@
  *  @copyright: http://opensource.org/licenses/gpl-2.0.php GNU Public License
  *  @since: 2.0
  */
+
 window.GMB_Mashups_Metabox = (function ( window, document, $, undefined ) {
 	'use strict';
 
@@ -23,6 +24,7 @@ window.GMB_Mashups_Metabox = (function ( window, document, $, undefined ) {
 	 * Initialize
 	 */
 	app.init = function () {
+
 		app.cache();
 		app.set_mashup_autocomplete();
 		app.set_toggle_fields();
