@@ -3,8 +3,8 @@ Contributors: wordimpress, dlocc, webdevmattcrom
 Donate link: http://wordimpress.com/
 Tags: google maps, google map, google map widget, google map shortcode, maps, map, wp map, wp google maps, google maps directions, google maps builder, google maps plugin, google places, google places api, google maps api, google places reviews
 Requires at least: 4.0
-Tested up to: 4.3
-Stable tag: 2.0.1
+Tested up to: 4.3.1
+Stable tag: 2.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -125,6 +125,7 @@ The main developer of this plugin is WordImpress. To find out more information a
 
 = 2.0.2 =
 * New: Introduced the InfoBubble library for better handling of frontend marker info windows
+* New: Added link to individual post within a mashup marker's infowindow content
 * Fix: Mashups now allow you to load all posts from a CPT without having to select a taxonomy - thanks @thatryan
 * Fix: Revamped how Google Maps API scripts are loaded to better prevent conflicts with other themes and plugins on both the admin and frontend
 

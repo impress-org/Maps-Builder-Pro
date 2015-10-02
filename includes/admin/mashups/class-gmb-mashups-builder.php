@@ -591,6 +591,8 @@ class Google_Maps_Builder_Mashups_Builder {
 			$response['infowindow'] .= '<p class="place-description">' . $marker_content . '</p>';
 		}
 
+		$response['infowindow'] .= '<a href="' . get_permalink( $post_id ) . '" title="' . $marker_title . '" class="gmb-mashup-single-link">' . apply_filters( 'gmb_mashup_infowindow_content_readmore', __( 'Read More &raquo;', $this->plugin_slug ) ) . '</a>';
+
 		$response['infowindow'] .= '</div>';
 
 

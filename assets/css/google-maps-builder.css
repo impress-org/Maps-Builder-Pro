@@ -105,6 +105,10 @@ div[id^='google-maps-builder'] .gmb-infobubble {
     .gmb-infobubble .rating-wrap .star-rating-size {
       background: url('../img/review_stars.png') no-repeat 0 -13px transparent;
       height: 13px; }
+  .gmb-infobubble .gmb-mashup-single-link {
+    font-size: 14px;
+    display: block;
+    margin: 8px 0; }
 
 @media screen and (max-width: 440px) {
   .gmb-infobubble {
