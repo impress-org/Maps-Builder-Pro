@@ -14,12 +14,16 @@
 
 div[id^='google-maps-builder'] {
 
-  div#infobubble-content > div {
+  div.gmb-infobubble > div {
 	white-space: normal;
   }
 
   .gm-style-iw, .gm-style-iw > div, .gm-style-iw > div > div {
 	overflow: visible !important;
+  }
+
+  div[class*="_ibani_"] {
+	box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
   }
 
   iframe.gm-save-widget {

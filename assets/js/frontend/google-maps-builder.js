@@ -13,6 +13,21 @@ var gmb_data;
 	var info_window;
 	var directionsDisplay = [];
 	var search_markers = [];
+	var info_window_args = {
+		map                : map,
+		shadowStyle        : 0,
+		padding            : 0,
+		backgroundColor    : 'rgb(255, 255, 255)',
+		borderRadius       : 3,
+		arrowSize          : 15,
+		minHeight          : 100,
+		maxHeight          : 355,
+		minWidth           : 220,
+		maxWidth           : 355,
+		borderWidth        : 0,
+		disableAutoPan     : true,
+		backgroundClassName: 'gmb-infobubble'
+	};
 
 	/*
 	 * Global load function for other plugins / themes to use
@@ -82,9 +97,8 @@ var gmb_data;
 	 */
 	function initialize_map( map_canvas ) {
 		//info_window - Contains the place's information and content
-		info_window = new google.maps.InfoWindow( {
-			maxWidth: 315
-		} );
+		info_window = new InfoBubble( info_window_args );
+
 		var map_id = $( map_canvas ).data( 'map-id' );
 		var map_data = gmb_data[map_id];
 		var latitude = (map_data.map_params.latitude) ? map_data.map_params.latitude : '32.713240';
@@ -309,19 +323,20 @@ var gmb_data;
 			location_marker.setVisible( true );
 
 			google.maps.event.addListener( location_marker, 'click', function () {
-				info_window.close();
-				info_window.setContent( '<div id="infobubble-content" class="loading"></div>' );
 				set_info_window_content( marker_data, info_window );
 				info_window.open( map, location_marker );
+				info_window.updateContent_();
 			} );
 
 			//Opened by default?
 			if ( typeof marker_data.infowindow_open !== 'undefined' && marker_data.infowindow_open == 'opened' ) {
-				var info_window_opened = new google.maps.InfoWindow( {
-					maxWidth: 315
-				} );
-				set_info_window_content( marker_data, info_window_opened );
-				info_window_opened.open( map, location_marker );
+				google.maps.event.addListenerOnce( map, 'idle', function () {
+
+					info_window.setContent( '<div id="infobubble-content" class="loading"></div>' );
+					set_info_window_content( marker_data, info_window );
+					info_window.open( map, location_marker );
+					info_window.updateContent_();
+				});
 			}
 
 		} ); //end $.each()
@@ -369,14 +384,15 @@ var gmb_data;
 				if ( status == google.maps.places.PlacesServiceStatus.OK ) {
 
 					info_window_content += set_place_content_in_info_window( place );
-					info_window_content = set_info_window_wrapper( info_window_content ); //wraps the content in div and returns
 					info_window.setContent( info_window_content ); //set marker content
+					info_window.updateContent_();
 
 				}
 			} );
 		} else {
-			info_window_content = set_info_window_wrapper( info_window_content ); //wraps the content in div and returns
 			info_window.setContent( info_window_content ); //set marker content
+			info_window.updateContent_();
+
 		}
 
 
@@ -393,6 +409,7 @@ var gmb_data;
 	function set_place_content_in_info_window( place ) {
 
 		var info_window_content;
+
 		//additional info wrapper
 		info_window_content = '<div class="marker-info-wrapper">';
 
@@ -421,25 +438,6 @@ var gmb_data;
 		return info_window_content;
 
 	}
-
-	/**
-	 * Wrap Info Window Content
-	 *
-	 * Help function that sets a div container around info window
-	 * @param content
-	 */
-	function set_info_window_wrapper( content ) {
-
-		var info_window_content = '<div id="infobubble-content" class="main-place-infobubble-content">';
-
-		info_window_content += content;
-
-		info_window_content += '</div>';
-
-		return info_window_content;
-
-	}
-
 
 	/**
 	 * Google Places Nearby Search
@@ -519,7 +517,7 @@ var gmb_data;
 		google.maps.event.addListener( search_marker, 'click', function () {
 
 			info_window.close();
-			info_window.setContent( '<div id="infobubble-content" class="loading"></div>' );
+			info_window.setContent( '<div class="gmb-infobubble loading"></div>' );
 
 			var marker_data = {
 				title   : place.name,
@@ -527,7 +525,6 @@ var gmb_data;
 			};
 
 			set_info_window_content( marker_data, info_window );
-
 			info_window.open( map, search_marker );
 
 		} );
@@ -577,7 +574,7 @@ var gmb_data;
 				$.each( response, function ( index, marker_data ) {
 					var marker = set_mashup_marker( map, data.index, marker_data, mashup_value, map_data );
 					if ( marker instanceof Marker ) {
-						markers.push(marker);
+						markers.push( marker );
 					}
 				} );
 
@@ -594,11 +591,15 @@ var gmb_data;
 
 
 	/**
+	 *
 	 * Set Mashup Marker
 	 *
+	 * @param map
 	 * @param mashup_index
 	 * @param marker_data
 	 * @param mashup_value
+	 * @param map_data
+	 * @returns {*}
 	 */
 	function set_mashup_marker( map, mashup_index, marker_data, mashup_value, map_data ) {
 
@@ -649,9 +650,15 @@ var gmb_data;
 	}
 
 
+	/**
+	 * Get Mashup Infowindow Content
+	 *
+	 * @param marker
+	 * @param map_data
+	 */
 	function get_mashup_infowindow_content( marker, map_data ) {
 
-		info_window.setContent( '<div id="infobubble-content" class="loading"></div>' );
+		info_window.setContent( '<div class="gmb-infobubble loading"></div>' );
 
 		info_window.open( map, marker );
 
@@ -664,6 +671,7 @@ var gmb_data;
 		jQuery.post( map_data.ajax_url, data, function ( response ) {
 
 			info_window.setContent( response.infowindow );
+			info_window.updateContent_();
 
 		}, 'json' );
 	}
@@ -832,7 +840,7 @@ var gmb_data;
 		var placeSearchAutocomplete = new google.maps.places.Autocomplete( placeSearchInput );
 		placeSearchAutocomplete.bindTo( 'bounds', map );
 
-		var infowindow = new google.maps.InfoWindow();
+		var infowindow = new InfoBubble();
 		var marker = new google.maps.Marker( {
 			map        : map,
 			anchorPoint: new google.maps.Point( 0, -29 )
@@ -842,7 +850,7 @@ var gmb_data;
 			infowindow.close();
 			marker.setVisible( false );
 			var place = placeSearchAutocomplete.getPlace();
-			console.log( place );
+
 			if ( !place.geometry ) {
 				window.alert( "Autocomplete's returned place contains no geometry" );
 				return;
@@ -870,7 +878,6 @@ var gmb_data;
 				info_window_content = '<p class="place-title">' + place.name + '</p>';
 			}
 			info_window_content += set_place_content_in_info_window( place );
-			info_window_content = set_info_window_wrapper( info_window_content ); //wraps the content in div and returns
 			infowindow.setContent( info_window_content ); //set marker content
 			infowindow.open( map, marker );
 

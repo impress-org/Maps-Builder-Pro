@@ -124,6 +124,7 @@ The main developer of this plugin is WordImpress. To find out more information a
 == Changelog ==
 
 = 2.0.2 =
+* New: Introduced the InfoBubble library for better handling of frontend marker info windows
 * Fix: Mashups now allow you to load all posts from a CPT without having to select a taxonomy - thanks @thatryan
 * Fix: Revamped how Google Maps API scripts are loaded to better prevent conflicts with other themes and plugins on both the admin and frontend
 

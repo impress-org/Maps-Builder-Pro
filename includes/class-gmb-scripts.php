@@ -95,14 +95,19 @@ class Google_Maps_Builder_Scripts {
 		$suffix     = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
 		// Use minified libraries if SCRIPT_DEBUG is turned off
-		wp_register_script( $this->plugin_slug . '-plugin-script', $js_dir . 'google-maps-builder' . $suffix . '.js', array( 'jquery' ), GMB_VERSION, true );
-		wp_register_script( 'google-maps-builder-maps-icons', GMB_PLUGIN_URL . 'includes/libraries/map-icons/js/map-icons.js', array( 'jquery' ), GMB_VERSION, true );
-		wp_register_script( 'google-maps-builder-clusterer', $js_plugins . 'markerclusterer' . $suffix . '.js', array( 'jquery' ), GMB_VERSION, true );
-		wp_localize_script( $this->plugin_slug . '-plugin-script', 'gmb_data', array() );
-
-		wp_enqueue_script( 'google-maps-builder-clusterer' );
+		wp_register_script( 'google-maps-builder-plugin-script', $js_dir . 'google-maps-builder' . $suffix . '.js', array( 'jquery' ), GMB_VERSION, true );
 		wp_enqueue_script( 'google-maps-builder-plugin-script' );
+
+		wp_register_script( 'google-maps-builder-maps-icons', GMB_PLUGIN_URL . 'includes/libraries/map-icons/js/map-icons.js', array( 'jquery' ), GMB_VERSION, true );
 		wp_enqueue_script( 'google-maps-builder-maps-icons' );
+
+		wp_register_script( 'google-maps-builder-clusterer', $js_plugins . 'markerclusterer' . $suffix . '.js', array( 'jquery' ), GMB_VERSION, true );
+		wp_enqueue_script( 'google-maps-builder-clusterer' );
+
+		wp_register_script( 'google-maps-builder-infobubble', $js_plugins . 'infobubble' . $suffix . '.js', array( 'jquery' ), GMB_VERSION, true );
+		wp_enqueue_script( 'google-maps-builder-infobubble' );
+
+		wp_localize_script( $this->plugin_slug . '-plugin-script', 'gmb_data', array() );
 
 	}
 
@@ -141,9 +146,6 @@ class Google_Maps_Builder_Scripts {
 
 		//loop through registered scripts
 		foreach ( $wp_scripts->registered as $registered_script ) {
-
-
-
 
 			//find any that have the google script as the source, ensure it's not enqueud by this plugin
 			if (
