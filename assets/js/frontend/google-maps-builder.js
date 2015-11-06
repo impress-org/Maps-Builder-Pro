@@ -68,7 +68,11 @@ var gmb_data;
 			var panel = $( '.responsive-tabs__panel--active' ).get( 0 );
 			load_hidden_map( panel );
 		} );
-
+		//jQuery UI Accordions
+		$( '.ui-accordion-header' ).on( 'click', function ( e ) {
+			var panel = $( '.ui-accordion-content-active' ).get( 0 );
+			load_hidden_map( panel );
+		} );
 	} );
 
 	/**
@@ -336,7 +340,7 @@ var gmb_data;
 					set_info_window_content( marker_data, info_window );
 					info_window.open( map, location_marker );
 					info_window.updateContent_();
-				});
+				} );
 			}
 
 		} ); //end $.each()
