@@ -43,7 +43,7 @@ class Google_Maps_Builder_HTML_Elements {
 			'multiple'    => false,
 			'selected'    => 0,
 			'chosen'      => false,
-			'number'      => 30,
+			'number'      => -1,
 			'placeholder' => __( 'Select a Map', 'google-maps-builder' )
 		);
 
