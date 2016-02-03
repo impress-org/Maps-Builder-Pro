@@ -123,6 +123,10 @@ The main developer of this plugin is WordImpress. To find out more information a
 
 == Changelog ==
 
+= 2.0.3 =
+* New: Option to centered maps on marker when the user clicks on it - https://github.com/WordImpress/Maps-Builder-Pro/issues/17
+* Fix: Standardized spelling for loading image file extension names; the extensions were uppercase "GIF" causing 404s for some hosts
+
 = 2.0.2 =
 * New: Introduced the InfoBubble library for better handling of frontend marker info windows
 * New: Added link to individual post within a mashup marker's infowindow content

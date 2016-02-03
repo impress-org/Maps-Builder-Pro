@@ -330,6 +330,12 @@ var gmb_data;
 				set_info_window_content( marker_data, info_window );
 				info_window.open( map, location_marker );
 				info_window.updateContent_();
+
+				//Marker Centers Map on Click?
+				if(map_data.marker_centered == 'yes') {
+					map.panTo( location_marker.getPosition() );
+				}
+
 			} );
 
 			//Opened by default?
