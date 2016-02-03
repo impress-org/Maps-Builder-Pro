@@ -151,6 +151,18 @@ class Google_Maps_Builder_Admin {
 		);
 		$marker_box->add_field(
 			array(
+				'name'              => __( 'Center Map upon Marker Click', $this->plugin_slug ),
+				'desc'              => __( 'When a user clicks on a marker the map will be centered on the marker when this option is enabled.', $this->plugin_slug ),
+				'id'                => $prefix . 'marker_centered',
+				'type'              => 'multicheck',
+				'options'           => array(
+					'yes' => 'Yes, Enable'
+				),
+				'select_all_button' => false,
+			)
+		);
+		$marker_box->add_field(
+			array(
 				'name'              => __( 'Cluster Markers', $this->plugin_slug ),
 				'desc'              => __( 'If enabled Maps Builder will intelligently create and manage per-zoom-level clusters for a large number of markers.', $this->plugin_slug ),
 				'id'                => $prefix . 'marker_cluster',

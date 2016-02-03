@@ -89,7 +89,6 @@ class Google_Maps_Builder_Scripts {
 		wp_register_script( 'google-maps-builder-gmaps', $google_maps_api_url, array( 'jquery' ) );
 		wp_enqueue_script( 'google-maps-builder-gmaps' );
 
-
 		$js_dir     = GMB_PLUGIN_URL . 'assets/js/frontend/';
 		$js_plugins = GMB_PLUGIN_URL . 'assets/js/plugins/';
 		$suffix     = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';

@@ -118,6 +118,9 @@ class Google_Maps_Builder_Engine {
 		//Cluster
 		$cluster_option = isset( $all_meta['gmb_marker_cluster'][0] ) ? maybe_unserialize( $all_meta['gmb_marker_cluster'][0] ) : '';
 
+		//Marker Centered
+		$marker_centered = isset( $all_meta['gmb_marker_centered'][0] ) ? maybe_unserialize( $all_meta['gmb_marker_centered'][0] ) : '';
+
 		//Put destination into an array for JS usage
 		$destination_markers = isset( $all_meta['gmb_directions_group'][0] ) ? maybe_unserialize( $all_meta['gmb_directions_group'][0] ) : array();
 		$text_directions     = isset( $all_meta['gmb_text_directions'][0] ) ? maybe_unserialize( $all_meta['gmb_text_directions'][0] ) : 'none';
@@ -134,7 +137,7 @@ class Google_Maps_Builder_Engine {
 		$localized_data = apply_filters( 'gmb_localized_data', array(
 			$post->ID => array(
 				'id'                  => $atts['id'],
-				'ajax_url' => admin_url( 'admin-ajax.php' ),
+				'ajax_url'            => admin_url( 'admin-ajax.php' ),
 				'map_params'          => array(
 					'title'          => $post->post_title,
 					'width'          => $visual_info['width'],
@@ -158,6 +161,7 @@ class Google_Maps_Builder_Engine {
 					'map_theme_json' => ! empty( $all_meta['gmb_theme_json'][0] ) ? $all_meta['gmb_theme_json'][0] : 'none',
 				),
 				'signed_in_option'    => $signed_in_option,
+				'marker_centered'     => isset( $marker_centered[0] ) ? $marker_centered[0] : '',
 				'marker_cluster'      => isset( $cluster_option[0] ) ? $cluster_option[0] : '',
 				'site_name'           => get_bloginfo( 'name' ),
 				'site_url'            => get_bloginfo( 'url' ),
