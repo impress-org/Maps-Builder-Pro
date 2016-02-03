@@ -100,11 +100,13 @@ var gmb_data;
 	 * @param map_canvas
 	 */
 	function initialize_map( map_canvas ) {
-		//info_window - Contains the place's information and content
-		info_window = new InfoBubble( info_window_args );
 
 		var map_id = $( map_canvas ).data( 'map-id' );
 		var map_data = gmb_data[map_id];
+
+		//info_window - Contains the place's information and content
+		info_window = new InfoBubble( info_window_args );
+
 		var latitude = (map_data.map_params.latitude) ? map_data.map_params.latitude : '32.713240';
 		var longitude = (map_data.map_params.longitude) ? map_data.map_params.longitude : '-117.159443';
 		var map_options = {
@@ -124,6 +126,7 @@ var gmb_data;
 			]
 		};
 		map = new google.maps.Map( map_canvas[0], map_options );
+		info_window_args.map = map;
 		places_service = new google.maps.places.PlacesService( map );
 
 		set_map_options( map, map_data );
@@ -153,7 +156,6 @@ var gmb_data;
 
 		var map_type = map_data.map_theme.map_type.toUpperCase();
 		var map_theme = map_data.map_theme.map_theme_json;
-
 
 		//Custom (Snazzy) Theme
 		if ( map_type === 'ROADMAP' && map_theme !== 'none' ) {
@@ -332,10 +334,10 @@ var gmb_data;
 				info_window.updateContent_();
 
 				//Marker Centers Map on Click?
-				if(map_data.marker_centered == 'yes') {
-					map.panTo( location_marker.getPosition() );
+				if ( map_data.marker_centered == 'yes' ) {
+					info_window_args.disableAutoPan = false;
+					info_window.setOptions( info_window_args );
 				}
-
 			} );
 
 			//Opened by default?
@@ -346,6 +348,8 @@ var gmb_data;
 					set_info_window_content( marker_data, info_window );
 					info_window.open( map, location_marker );
 					info_window.updateContent_();
+
+
 				} );
 			}
 
@@ -652,7 +656,7 @@ var gmb_data;
 
 		//Set click action for marker to open infowindow
 		google.maps.event.addListener( marker, 'click', function () {
-			get_mashup_infowindow_content( marker, map_data );
+			get_mashup_infowindow_content( map, marker, map_data );
 		} );
 
 		return marker;
@@ -663,12 +667,20 @@ var gmb_data;
 	/**
 	 * Get Mashup Infowindow Content
 	 *
+	 * @param map
 	 * @param marker
 	 * @param map_data
 	 */
-	function get_mashup_infowindow_content( marker, map_data ) {
+	function get_mashup_infowindow_content( map, marker, map_data ) {
 
 		info_window.setContent( '<div class="gmb-infobubble loading"></div>' );
+
+		//Marker Centers Map on Click?
+		// This ensures that the map doesn't center when the loading icon appears
+		if ( map_data.marker_centered == 'yes' ) {
+			info_window_args.disableAutoPan = true;
+			info_window.setOptions( info_window_args );
+		}
 
 		info_window.open( map, marker );
 
@@ -680,8 +692,18 @@ var gmb_data;
 
 		jQuery.post( map_data.ajax_url, data, function ( response ) {
 
+
 			info_window.setContent( response.infowindow );
 			info_window.updateContent_();
+
+			//Marker Centers Map on Click?
+			// This ensures that the map centers AFTER the loaded via AJAX
+			if ( map_data.marker_centered == 'yes' ) {
+
+				info_window_args.disableAutoPan = false;
+				info_window.setOptions( info_window_args );
+			}
+
 
 		}, 'json' );
 	}
