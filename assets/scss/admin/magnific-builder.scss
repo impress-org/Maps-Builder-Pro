@@ -163,9 +163,7 @@ Magnific Builder
 
   .postbox {
 	margin: 0;
-	border-left: none;
-	border-right: none;
-	border-bottom: none;
+	border: none;
 
 	&:last-of-type {
 	  border-bottom: 1px solid #DDD;

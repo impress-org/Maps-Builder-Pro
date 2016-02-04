@@ -1509,9 +1509,7 @@ Magnific Builder
   width: 300px !important; }
 .magnific-builder#post .postbox {
   margin: 0;
-  border-left: none;
-  border-right: none;
-  border-bottom: none; }
+  border: none; }
   .magnific-builder#post .postbox:last-of-type {
     border-bottom: 1px solid #DDD; }
 .magnific-builder#post .toggle-repeater-groups {

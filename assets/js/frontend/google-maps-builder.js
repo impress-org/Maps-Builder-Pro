@@ -335,8 +335,10 @@ var gmb_data;
 
 				//Marker Centers Map on Click?
 				if ( map_data.marker_centered == 'yes' ) {
-					info_window_args.disableAutoPan = false;
-					info_window.setOptions( info_window_args );
+					window.setTimeout( function () {
+						// Pan into view, done in a time out to make it feel nicer :)
+						info_window.panToView();
+					}, 200 );
 				}
 			} );
 
@@ -665,7 +667,7 @@ var gmb_data;
 
 
 	/**
-	 * Get Mashup Infowindow Content
+	 * Get Mashup InfoWindow Content
 	 *
 	 * @param map
 	 * @param marker
@@ -674,14 +676,6 @@ var gmb_data;
 	function get_mashup_infowindow_content( map, marker, map_data ) {
 
 		info_window.setContent( '<div class="gmb-infobubble loading"></div>' );
-
-		//Marker Centers Map on Click?
-		// This ensures that the map doesn't center when the loading icon appears
-		if ( map_data.marker_centered == 'yes' ) {
-			info_window_args.disableAutoPan = true;
-			info_window.setOptions( info_window_args );
-		}
-
 		info_window.open( map, marker );
 
 		var data = {
@@ -692,16 +686,16 @@ var gmb_data;
 
 		jQuery.post( map_data.ajax_url, data, function ( response ) {
 
-
 			info_window.setContent( response.infowindow );
 			info_window.updateContent_();
 
 			//Marker Centers Map on Click?
 			// This ensures that the map centers AFTER the loaded via AJAX
 			if ( map_data.marker_centered == 'yes' ) {
-
-				info_window_args.disableAutoPan = false;
-				info_window.setOptions( info_window_args );
+				window.setTimeout( function () {
+					// Pan into view, done in a time out to make it feel nicer :)
+					info_window.panToView();
+				}, 200 );
 			}
 
 

@@ -158,6 +158,7 @@ class Google_Maps_Builder_Admin {
 				'options'           => array(
 					'yes' => 'Yes, Enable'
 				),
+				'default' => 'yes',
 				'select_all_button' => false,
 			)
 		);
