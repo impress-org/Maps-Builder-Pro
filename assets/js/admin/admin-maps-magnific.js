@@ -8,7 +8,7 @@ var gmb_data;
 function gmb_magnific( $, gmb ){
 
 	"use strict";
-    
+
     var poststuff = $( 'form#post' ),
         postboxes = $( '.postbox' ).not( '.cmb-row, .cmb-repeatable-grouping' ),
         map = $( '#map' ),
@@ -127,6 +127,8 @@ function gmb_magnific( $, gmb ){
             midClick : true
         } );
 
+
+
     };
 
     /**
@@ -163,6 +165,8 @@ function gmb_magnific( $, gmb ){
         $( '#post_status' ).val( 'Publish' );
         jQuery( '#publish' ).click();
     } );
+
+    $( '#map-builder' ).removeClass( 'disabled' );
 
 
 };
