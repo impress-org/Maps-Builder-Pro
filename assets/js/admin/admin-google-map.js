@@ -4,31 +4,29 @@
  */
 var gmb_data;
 
-(function ( $ ) {
+(function ( $, gmb ) {
 
 	"use strict";
 
 	/**
-	 * Window Load functions
+	 * Initialize on window load
 	 */
-	$( window ).load( function () {
-
-
-		toggle_metabox_fields();
+	gmb.init = function(){
+		gmb.toggle_metabox_fields();
 
 		//tooltips
-		initialize_tooltips();
+		gmb.initialize_tooltips();
 
 		//Map type Metabox on load
-		initialize_map( $( '#map' ) );
+		gmb.initialize_map( $( '#map' ) );
 
 		//Latitude on Change
 		$( '#gmb_lat_lng-latitude' ).on( 'change', function () {
-			lat_lng_field_change( map );
+			gmb.lat_lng_field_change( map );
 		} );
 		//Longitude on Change
 		$( '#gmb_lat_lng-longitude' ).on( 'change', function () {
-			lat_lng_field_change( map );
+			gmb.lat_lng_field_change( map );
 		} );
 
 		//click to add marker
@@ -41,7 +39,7 @@ var gmb_data;
 				$( this ).text( gmb_data.i18n.btn_drop_marker_click ).addClass( 'active' );
 				map.setOptions( {draggableCursor: 'crosshair'} );
 				var dropped_marker_event = google.maps.event.addListener( map, 'click', function ( event ) {
-					drop_marker( event.latLng, dropped_marker_event );
+					gmb.drop_marker( event.latLng, dropped_marker_event );
 				} );
 			}
 		} );
@@ -53,10 +51,10 @@ var gmb_data;
 		$( '#gmb_search_radius' ).on( 'focus', function () {
 			google.maps.event.trigger( map, 'resize' ); //refresh map to get exact center
 			current_radius = $( this ).val();
-			calc_radius( map, parseInt( $( this ).val() ) );
+			gmb.calc_radius( map, parseInt( $( this ).val() ) );
 		} ).focusout( function () {
 			if ( current_radius !== $( this ).val() ) {
-				perform_places_search();
+				gmb.perform_places_search();
 			}
 			radius_circle.setMap( null ); //removes circle on focus out
 			radius_marker.setMap( null ); //removes circle on focus out
@@ -83,8 +81,8 @@ var gmb_data;
 		//Places Update Map Button
 		$( document ).on( 'click', '.update-places-map', function ( e ) {
 			e.preventDefault();
-			scroll_to_field( "#google_maps_preview_metabox" );
-			perform_places_search();
+			gmb.scroll_to_field( "#google_maps_preview_metabox" );
+			gmb.perform_places_search();
 			$( this ).parent().fadeOut( function () {
 				$( this ).remove();
 			} );
@@ -119,12 +117,12 @@ var gmb_data;
 			tentative_location_marker.setVisible( false );
 
 			//get current number of repeatable rows ie markers
-			var index = get_marker_index();
+			var index = gmb.get_marker_index();
 
 			var place_id = $( this ).data( 'place_id' );
 
 			//add data to fields
-			get_editable_info_window( index, location_marker );
+			gmb.get_editable_info_window( index, location_marker );
 
 			$( 'input[data-field="#gmb_markers_group_' + index + '_title"]' ).val( $( this ).data( 'title' ) );
 			$( 'input#gmb_markers_group_' + index + '_lat' ).val( $( this ).data( 'lat' ) );
@@ -134,53 +132,53 @@ var gmb_data;
 
 			//location clicked
 			google.maps.event.addListener( location_marker, 'click', function () {
-				get_info_window_content( index, location_marker );
+				gmb.get_info_window_content( index, location_marker );
 			} );
 
 		} );
 
 		//Map Marker Set
-		set_map_marker_icon();
+		gmb.set_map_marker_icon();
 
 		//Map Type
 		$( '#gmb_type' ).change( function () {
-			set_map_type( true );
+			gmb.set_map_type( true );
 		} );
 		//Map Theme
 		$( '#gmb_theme' ).change( function () {
-			set_map_theme();
+			gmb.set_map_theme();
 		} );
 		//street view
 		$( '#gmb_street_view' ).change( function () {
-			set_street_view();
+			gmb.set_street_view();
 		} );
 		//Pan
 		$( '#gmb_pan' ).change( function () {
-			set_pan_control();
+			gmb.set_pan_control();
 		} );
 		//Draggable
 		$( '#gmb_draggable' ).change( function () {
-			set_draggable();
+			gmb.set_draggable();
 		} );
 		//Double Click Zoom
 		$( '#gmb_double_click' ).change( function () {
-			set_double_click_zoom();
+			gmb.set_double_click_zoom();
 		} );
 		//Double Click Zoom
 		$( '#gmb_wheel_zoom' ).change( function () {
-			set_mouse_wheel_scroll();
+			gmb.set_mouse_wheel_scroll();
 		} );
 		//Map Type Control
 		$( '#gmb_map_type_control' ).change( function () {
-			set_map_type_control();
+			gmb.set_map_type_control();
 		} );
 		//Zoom Control
 		$( '#gmb_zoom_control' ).change( function () {
-			set_map_zoom_control();
+			gmb.set_map_zoom_control();
 		} );
 		//Marker Animation
 		$( '#gmb_marker_animate1' ).change( function () {
-			toggle_marker_animation();
+			gmb.toggle_marker_animation();
 		} );
 
 
@@ -199,7 +197,7 @@ var gmb_data;
 			google.maps.event.trigger( map, 'resize' );
 		} );
 
-	} ); //End Window Load
+	};
 
 
 	var map;
@@ -234,7 +232,7 @@ var gmb_data;
 	 * @param lat_lng
 	 * @param event
 	 */
-	function drop_marker( lat_lng, event ) {
+	gmb.drop_marker = function( lat_lng, event ) {
 
 		var lat = lat_lng.lat();
 		var lng = lat_lng.lng();
@@ -258,20 +256,20 @@ var gmb_data;
 		} );
 
 		//get current number of repeatable rows ie markers
-		var index = get_marker_index();
+		var index = gmb.get_marker_index();
 
 		//add data to fields
 		$( '#gmb_markers_group_' + index + '_title' ).val( 'Point ' + parseInt( index + 1 ) ); //increment index to match visual ID (actually 0)
 		$( '#gmb_markers_group_' + index + '_lat' ).val( lat );
 		$( '#gmb_markers_group_' + index + '_lng' ).val( lng );
 
-		get_editable_info_window( index, drop_location_marker );
+		gmb.get_editable_info_window( index, drop_location_marker );
 
 		google.maps.event.addListener( drop_location_marker, 'click', function () {
-			get_info_window_content( index, drop_location_marker );
+			gmb.get_info_window_content( index, drop_location_marker );
 		} );
 
-	}
+	};
 
 	/**
 	 * Map Intialize
@@ -280,7 +278,7 @@ var gmb_data;
 	 *
 	 * @param map_canvas
 	 */
-	function initialize_map( map_canvas ) {
+	gmb.initialize_map = function( map_canvas ) {
 
 		lat_field = $( '#gmb_lat_lng-latitude' );
 		lng_field = $( '#gmb_lat_lng-longitude' );
@@ -341,15 +339,15 @@ var gmb_data;
 		}
 
 		//Set various map view options
-		set_map_type( false );
-		set_map_theme();
-		set_street_view();
-		set_pan_control();
-		set_draggable();
-		set_double_click_zoom();
-		set_mouse_wheel_scroll();
-		set_map_type_control();
-		set_map_zoom_control();
+		gmb.set_map_type( false );
+		gmb.set_map_theme();
+		gmb.set_street_view();
+		gmb.set_pan_control();
+		gmb.set_draggable();
+		gmb.set_double_click_zoom();
+		gmb.set_mouse_wheel_scroll();
+		gmb.set_map_type_control();
+		gmb.set_map_zoom_control();
 
 		//Setup Autocomplete field if undefined
 		if ( typeof(autocomplete) == 'undefined' ) {
@@ -399,7 +397,7 @@ var gmb_data;
 				}
 
 				map.setCenter( place.geometry.location );
-				add_tentative_marker( map, place.place_id );
+				gmb.add_tentative_marker( map, place.place_id );
 
 			} );
 		}
@@ -414,19 +412,19 @@ var gmb_data;
 		 */
 			//map loaded fully (fires once)
 		google.maps.event.addListenerOnce( map, 'idle', function () {
-			handle_map_zoom( map );
-			add_markers( map );
+			gmb.handle_map_zoom( map );
+			gmb.add_markers( map );
 
 			//toggle places
 			if ( typeof $( '.cmb2-id-gmb-show-places input:radio' ).prop( 'checked' ) !== 'undefined' && $( '.cmb2-id-gmb-show-places input:radio:checked' ).val() === 'yes' ) {
-				perform_places_search();
+				gmb.perform_places_search();
 			}
 
 		} );
 
 		//map Zoom Changed
 		google.maps.event.addListener( map, 'zoom_changed', function () {
-			handle_map_zoom( map );
+			gmb.handle_map_zoom( map );
 		} );
 
 		//Update lng and lat on map drag
@@ -438,15 +436,14 @@ var gmb_data;
 		} );
 
 
-	} //end initialize_map
-
+	}; //end initialize_map
 
 	/**
 	 * Shows a Marker when Autocomplete search is used
 	 * @param map
 	 * @param place_id
 	 */
-	function add_tentative_marker( map, place_id ) {
+	gmb.add_tentative_marker = function( map, place_id ) {
 
 		var map_center = map.getCenter();
 
@@ -463,7 +460,7 @@ var gmb_data;
 
 		//EVENTS
 		var location_marker_mouseover = google.maps.event.addListener( tentative_location_marker, 'mouseover', function ( event ) {
-			add_circle( place_id );
+			gmb.add_circle( place_id );
 		} );
 		var location_marker_mouseout = google.maps.event.addListener( tentative_location_marker, 'mouseout', function ( event ) {
 			hover_circle.setVisible( false );
@@ -478,7 +475,7 @@ var gmb_data;
 			hover_circle.setVisible( true );
 			//update marker icons
 			//Get initial place details from place_id
-			add_tenative_info_window( place_id, tentative_location_marker );
+			gmb.add_tenative_info_window( place_id, tentative_location_marker );
 		} );
 
 
@@ -486,14 +483,12 @@ var gmb_data;
 		tentative_location_marker.setVisible( true );
 		map.setZoom( zoom );
 
-
-	}
-
+	};
 
 	/**
 	 * Set the editable marker window content
 	 */
-	function add_tenative_info_window( place_id, marker ) {
+	gmb.add_tenative_info_window = function( place_id, marker ){
 
 		var request = {
 			key    : gmb_data.api_key,
@@ -509,11 +504,11 @@ var gmb_data;
 
 				var info_window_content = '<p class="place-title">' + place.name + '</p>';
 
-				info_window_content += add_place_content_to_info_window( place );
+				info_window_content += gmb.add_place_content_to_info_window( place );
 
 				info_window_content += '<div class="infowindow-toolbar clear"><a href="#" class="add-marker" data-title="' + place.name + '" data-place_id="' + place.place_id + '"  data-lat="' + lat + '" data-lng="' + lng + '">Add to Map</a></div>';
 
-				info_window_content = set_info_window_wrapper( info_window_content ); //wraps the content in div and returns
+				info_window_content = gmb.set_info_window_wrapper( info_window_content ); //wraps the content in div and returns
 
 				info_bubble.setContent( info_window_content ); //sets the info window content
 
@@ -531,8 +526,7 @@ var gmb_data;
 
 		} );
 
-	}
-
+	};
 
 	/**
 	 * info_bubble Content for Place Details
@@ -541,7 +535,7 @@ var gmb_data;
 	 *
 	 * @param place
 	 */
-	function add_place_content_to_info_window( place ) {
+	gmb.add_place_content_to_info_window = function( place ) {
 
 		var info_window_content;
 
@@ -578,8 +572,7 @@ var gmb_data;
 
 		return info_window_content;
 
-	}
-
+	};
 
 	/**
 	 * info_bubble Content for Place Details
@@ -587,7 +580,7 @@ var gmb_data;
 	 * This marker contains more information about the place.
 	 * @TODO: AJAXify & Clean up
 	 */
-	function get_editable_info_window( index, marker ) {
+	gmb.get_editable_info_window = function( index, marker ){
 
 		info_bubble.close();
 
@@ -595,7 +588,7 @@ var gmb_data;
 
 		info_bubble.open( map, marker );
 
-		var info_window_data = get_info_window_saved_data( index );
+		var info_window_data = gmb.get_info_window_saved_data( index );
 
 		var info_window_content;
 
@@ -624,9 +617,9 @@ var gmb_data;
 			'</div>';
 
 		//Set info_window content
-		info_window_content = set_info_window_wrapper( info_window_content );
+		info_window_content = gmb.set_info_window_wrapper( info_window_content );
 		info_bubble.setContent( info_window_content );
-		initialize_tooltips(); //refresh tooltips
+		gmb.initialize_tooltips(); //refresh tooltips
 
 		//Save info window content
 		google.maps.event.addDomListener( $( '.google-save-btn' )[0], 'click', function () {
@@ -642,7 +635,7 @@ var gmb_data;
 			$( desc_field_id ).val( desc_field_val );
 
 			//close info window and remove marker circle
-			get_info_window_content( $( this ).data( 'index' ), marker );
+			gmb.get_info_window_content( $( this ).data( 'index' ), marker );
 			google.maps.event.removeListener( save_icon_listener ); //remove this event listener
 			google.maps.event.removeListener( edit_marker_icon_button_click ); //remove this event listener
 
@@ -667,7 +660,7 @@ var gmb_data;
 		//Cancel info window content
 		google.maps.event.addDomListener( $( '.google-cancel-btn' )[0], 'click', function () {
 			//close info window and remove marker circle
-			get_info_window_content( $( this ).data( 'index' ), marker );
+			gmb.get_info_window_content( $( this ).data( 'index' ), marker );
 			google.maps.event.removeListener( save_icon_listener ); //remove this event listener
 			google.maps.event.removeListener( edit_marker_icon_button_click ); //remove this event listener
 
@@ -732,7 +725,7 @@ var gmb_data;
 
 			//Add event listener to new marker
 			google.maps.event.addListener( marker, 'click', function () {
-				get_info_window_content( index, marker );
+				gmb.get_info_window_content( index, marker );
 			} );
 
 			//Clean up modal and close
@@ -753,7 +746,7 @@ var gmb_data;
 
 		} );
 
-	}
+	};
 
 	/**
 	 * Wrap Info Window Content
@@ -761,7 +754,7 @@ var gmb_data;
 	 * Help function that sets a div container around info window
 	 * @param content
 	 */
-	function set_info_window_wrapper( content ) {
+	gmb.set_info_window_wrapper = function( content ) {
 
 		var info_window_content = '<div id="infobubble-content" class="main-place-infobubble-content">';
 
@@ -771,13 +764,12 @@ var gmb_data;
 
 		return info_window_content;
 
-	}
-
+	};
 
 	/**
 	 * Adds a marker circle
 	 */
-	function add_circle( place_id ) {
+	gmb.add_circle = function( place_id ) {
 
 		hover_circle = new google.maps.Marker( {
 			position : tentative_location_marker.getPosition(),
@@ -798,15 +790,14 @@ var gmb_data;
 
 		google.maps.event.addListener( hover_circle, 'click', function () {
 			//Get initial place details from place_id
-			add_tenative_info_window( place_id, tentative_location_marker );
+			gmb.add_tenative_info_window( place_id, tentative_location_marker );
 		} );
 		google.maps.event.addListener( tentative_location_marker, 'click', function () {
 			//Get initial place details from place_id
 			hover_circle.setVisible( true );
 		} );
 
-	}
-
+	};
 
 	/**
 	 *  Add Markers
@@ -815,9 +806,9 @@ var gmb_data;
 	 *
 	 * @param map
 	 */
-	function add_markers( map ) {
+	gmb.add_markers = function( map ){
 
-		clear_main_markers();
+		gmb.clear_main_markers();
 		var time = 500;
 		var markers = [];
 		var cluster_markers = $( '#gmb_marker_cluster1' ).prop( 'checked' );
@@ -883,7 +874,7 @@ var gmb_data;
 
 			//Set click action for marker to open infowindow
 			google.maps.event.addListener( location_marker, 'click', function () {
-				get_info_window_content( index, location_marker );
+				gmb.get_info_window_content( index, location_marker );
 			} );
 
 			time += 500;
@@ -907,10 +898,9 @@ var gmb_data;
 			var markerCluster = new MarkerClusterer( map, markers );
 		}
 
-	}
+	};
 
-
-	function get_info_window_saved_data( index ) {
+	gmb.get_info_window_saved_data = function( index ){
 
 		var info_window_data = {};
 
@@ -924,8 +914,7 @@ var gmb_data;
 
 		return info_window_data;
 
-
-	}
+	};
 
 	/**
 	 * Queries to get Google Place Details information
@@ -934,7 +923,7 @@ var gmb_data;
 	 * @param index
 	 * @param marker
 	 */
-	function get_info_window_content( index, marker ) {
+	gmb.get_info_window_content = function( index, marker ){
 
 		info_bubble.close();
 
@@ -942,7 +931,7 @@ var gmb_data;
 
 		info_bubble.open( map, marker );
 
-		var info_window_data = get_info_window_saved_data( index );
+		var info_window_data = gmb.get_info_window_saved_data( index );
 
 		//Start building infowindow content
 		var info_window_content = '<p class="place-title">' + info_window_data.title + '</p>';
@@ -960,19 +949,19 @@ var gmb_data;
 
 				if ( status == google.maps.places.PlacesServiceStatus.OK ) {
 
-					info_window_content += add_place_content_to_info_window( place );
-					info_window_content += set_marker_edit_icons( index );
-					add_edit_events( info_window_content, marker );
+					info_window_content += gmb.add_place_content_to_info_window( place );
+					info_window_content += gmb.set_marker_edit_icons( index );
+					gmb.add_edit_events( info_window_content, marker );
 
 				}
 
 			} ); //end getPlaces
 
 		} else {
-			info_window_content += set_marker_edit_icons( index );
-			add_edit_events( info_window_content, marker );
+			info_window_content += gmb.set_marker_edit_icons( index );
+			gmb.add_edit_events( info_window_content, marker );
 		}
-	}
+	};
 
 	/**
 	 * Add Edit Events
@@ -982,16 +971,16 @@ var gmb_data;
 	 * @param content
 	 * @param marker
 	 */
-	function add_edit_events( content, marker ) {
+	gmb.add_edit_events = function( content, marker ){
 
-		content = set_info_window_wrapper( content ); //wraps the content in div and returns
+		content = gmb.set_info_window_wrapper( content ); //wraps the content in div and returns
 		info_bubble.setContent( content ); //set infowindow content
-		initialize_tooltips(); //refresh tooltips
+		gmb.initialize_tooltips(); //refresh tooltips
 
 		//edit button event
 		google.maps.event.addDomListener( $( '.edit-info' )[0], 'click', function () {
 			//Edit Marker
-			get_editable_info_window( $( this ).data( 'index' ), marker );
+			gmb.get_editable_info_window( $( this ).data( 'index' ), marker );
 		} );
 
 		//trash button event
@@ -1006,8 +995,7 @@ var gmb_data;
 			marker.setVisible( false );
 		} );
 
-	}
-
+	};
 
 	/**
 	 * Marker Index
@@ -1015,7 +1003,7 @@ var gmb_data;
 	 * @description Helper function that returns the appropriate index for the repeatable group
 	 * @returns {Number}
 	 */
-	function get_marker_index() {
+	gmb.get_marker_index = function() {
 
 		var marker_repeatable = $( '#gmb_markers_group_repeat' );
 		var marker_repeatable_group = marker_repeatable.find( ' div.cmb-repeatable-grouping' );
@@ -1036,7 +1024,7 @@ var gmb_data;
 		}
 
 		return index;
-	}
+	};
 
 	/**
 	 * Google Places Marker Info Window
@@ -1044,7 +1032,7 @@ var gmb_data;
 	 * @param place
 	 * @param marker
 	 */
-	function get_place_info_window_content( place, marker ) {
+	gmb.get_place_info_window_content = function( place, marker ) {
 
 		info_bubble.setContent( '<div id="infobubble-content" class="loading"></div>' );
 
@@ -1064,13 +1052,13 @@ var gmb_data;
 				//place name
 				info_window_content = '<p class="place-title">' + place.name + '</p>';
 
-				info_window_content += add_place_content_to_info_window( place );
+				info_window_content += gmb.add_place_content_to_info_window( place );
 
-				info_window_content = set_info_window_wrapper( info_window_content ); //wraps the content in div and returns
+				info_window_content = gmb.set_info_window_wrapper( info_window_content ); //wraps the content in div and returns
 
 				info_bubble.setContent( info_window_content );
 
-				initialize_tooltips(); //refresh tooltips
+				gmg.initialize_tooltips(); //refresh tooltips
 
 			} else {
 				//There was an API error; display it for the user:
@@ -1078,8 +1066,7 @@ var gmb_data;
 
 			}
 		} );
-	}
-
+	};
 
 	/**
 	 * Get Places Types Array
@@ -1088,7 +1075,7 @@ var gmb_data;
 	 *
 	 * @returns get_places_type
 	 */
-	function get_places_type_array() {
+	gmb.get_places_type_array = function() {
 
 		var types_array = [];
 
@@ -1101,20 +1088,19 @@ var gmb_data;
 
 		return types_array;
 
-	}
-
+	};
 
 	/**
 	 * Google Places Nearby Search
 	 */
-	function perform_places_search() {
+	gmb.perform_places_search = function() {
 
 		$( '.places-loading' ).fadeIn();
 		$( '.warning-message' ).hide().empty();
 
-		var types_array = get_places_type_array();
+		var types_array = gmb.get_places_type_array();
 
-		clear_search_markers();
+		gmb.clear_search_markers();
 
 		//Check if any place types are selected
 		if ( types_array.length > 0 ) {
@@ -1122,21 +1108,20 @@ var gmb_data;
 			//perform search request
 			var request = {
 				key     : gmb_data.api_key,
-				location: return_lat_lng(),
+				location: gmb.return_lat_lng(),
 				types   : types_array,
 				radius  : parseInt( $( '#gmb_search_radius' ).val() )
 			};
-			places_service.nearbySearch( request, places_search_callback );
+			places_service.nearbySearch( request, gmb.places_search_callback );
 		}
 		//Display notice that no places are selected
 		else {
 
-			show_warning_message( '<strong>Notice: No Place Types are selected</strong><br/> Please select the types of places you would like to display on this map using the Place Type field checkboxes found below.' );
+			gmb.show_warning_message( '<strong>Notice: No Place Types are selected</strong><br/> Please select the types of places you would like to display on this map using the Place Type field checkboxes found below.' );
 
 		}
 
-	}
-
+	};
 
 	/**
 	 * Warning Messages
@@ -1144,11 +1129,10 @@ var gmb_data;
 	 * Helper function that shows a warning message below the google map
 	 * @param message
 	 */
-	function show_warning_message( message ) {
+	gmb.show_warning_message = function( message ) {
 		$( '.wpgp-loading' ).fadeOut(); //fade out all loading items
 		$( '.warning-message' ).empty().append( '<p>' + message + '</p>' ).fadeIn();
-	}
-
+	};
 
 	/**
 	 *
@@ -1158,11 +1142,11 @@ var gmb_data;
 	 *
 	 * @returns lat_lng
 	 */
-	function return_lat_lng() {
+	gmb.return_lat_lng = function() {
 		var map_center = map.getCenter();
 		var lat_lng = new google.maps.LatLng( map_center.lat(), map_center.lng() );
 		return lat_lng;
-	}
+	};
 
 	/**
 	 * Map Zoom
@@ -1170,7 +1154,7 @@ var gmb_data;
 	 * Sets the map zoom field and variable
 	 *
 	 */
-	function handle_map_zoom( map ) {
+	gmb.handle_map_zoom = function( map ) {
 
 		var new_zoom = map.getZoom();
 
@@ -1180,18 +1164,17 @@ var gmb_data;
 			map.setZoom( parseInt( $( this ).val() ) );
 		} );
 
-	}
+	};
 
 	/**
 	 * Map Lat Lng
 	 *
 	 * Sets the map zoom field and variable
 	 */
-	function lat_lng_field_change( map ) {
+	gmb.lat_lng_field_change = function( map ) {
 		var pan_point = new google.maps.LatLng( $( lat_field ).val(), $( lng_field ).val() );
 		map.panTo( pan_point );
-	}
-
+	};
 
 	/**
 	 * Places Search Callback
@@ -1202,7 +1185,7 @@ var gmb_data;
 	 * @param status
 	 * @param pagination
 	 */
-	function places_search_callback( results, status, pagination ) {
+	gmb.places_search_callback = function( results, status, pagination ) {
 
 		var i = 0;
 		var result;
@@ -1212,7 +1195,7 @@ var gmb_data;
 
 			//place new markers
 			for ( i = 0; result = results[i]; i++ ) {
-				create_search_result_marker( results[i] );
+				gmb.create_search_result_marker( results[i] );
 			}
 
 			//show all pages of results
@@ -1224,7 +1207,7 @@ var gmb_data;
 			}
 
 		}
-	}
+	};
 
 	/**
 	 * Create Search Result Marker
@@ -1233,7 +1216,7 @@ var gmb_data;
 	 *
 	 * @param place
 	 */
-	function create_search_result_marker( place ) {
+	gmb.create_search_result_marker = function( place ) {
 
 		var search_marker = new Marker( {
 			map      : map,
@@ -1254,20 +1237,19 @@ var gmb_data;
 
 
 		google.maps.event.addListener( search_marker, 'click', function () {
-			get_place_info_window_content( place, search_marker );
+			gmb.get_place_info_window_content( place, search_marker );
 		} );
 
 		search_markers.push( search_marker )
 
-	}
-
+	};
 
 	/**
 	 * Clears Main Markers
 	 *
 	 * Used to clear out main location marker to prevent from displaying multiple
 	 */
-	function clear_main_markers() {
+	gmb.clear_main_markers = function() {
 
 		//clear markers
 		for ( var i = 0; i < location_marker_array.length; i++ ) {
@@ -1281,23 +1263,21 @@ var gmb_data;
 			google.maps.event.trigger( info_bubble_array[i], 'closeclick' );
 		}
 		info_bubble_array.length = 0;
-	}
-
+	};
 
 	/**
 	 * Toggle Marker Animation
 	 */
-	function toggle_marker_animation() {
-		clear_main_markers();
-	}
-
+	gmb.toggle_marker_animation = function() {
+		gmb.clear_main_markers();
+	};
 
 	/**
 	 * Clears Search Markers
 	 *
 	 * Used to clear out main search markers
 	 */
-	function clear_search_markers() {
+	gmb.clear_search_markers = function() {
 
 		//remove existing markers
 		for ( var i = 0; i < search_markers.length; i++ ) {
@@ -1305,8 +1285,7 @@ var gmb_data;
 		}
 		search_markers = [];
 
-	}
-
+	};
 
 	/**
 	 * Geocode new marker position
@@ -1316,7 +1295,7 @@ var gmb_data;
 	 * @see: http://stackoverflow.com/questions/5688745/google-maps-v3-draggable-marker
 	 * @param pos
 	 */
-	function geocode_position( pos ) {
+	gmb.geocode_position = function( pos ) {
 
 		var request = {
 			key     : gmb_data.api_key,
@@ -1348,7 +1327,7 @@ var gmb_data;
 							$( '#gmb_geocoder' ).val( $( this ).data( 'name-address' ) );
 							$( '#gmb_place_id' ).val( $( this ).data( 'place_id' ) );
 							info_bubble.close();
-							get_info_window_content( $( this ).data( 'place_id' ) );
+							gmb.get_info_window_content( $( this ).data( 'place_id' ) );
 							//info_bubble.open( location_marker );
 						} );
 					} );
@@ -1365,20 +1344,19 @@ var gmb_data;
 
 		} );
 
-	}
-
+	};
 
 	/**
 	 * Scroll to Selector
 	 *
 	 * Helper function that scroll the user up to the map
 	 */
-	function scroll_to_field( selector ) {
+	gmb.scroll_to_field = function( selector ) {
 		//scroll to the map
 		$( 'html, body' ).animate( {
 			scrollTop: parseInt( $( selector ).offset().top )
 		}, 600 );
-	}
+	};
 
 	/**
 	 * Marker Drag End
@@ -1387,18 +1365,17 @@ var gmb_data;
 	 *
 	 * @param marker
 	 */
-	function marker_drag_end( marker ) {
+	gmb.marker_drag_end = function( marker ) {
 
 		var map_center = marker.getPosition();
-		geocode_position( map_center );
+		gmb.geocode_position( map_center );
 		//update with new map coordinates
 		$( lat_field ).val( map_center.lat() );
 		$( lng_field ).val( map_center.lng() );
 
 		//Map centered on this location
 		map.panTo( map_center );
-
-	}
+	};
 
 	/**
 	 * Radius Circle
@@ -1409,7 +1386,7 @@ var gmb_data;
 	 * @param map
 	 * @param radiusVal
 	 */
-	function calc_radius( map, radiusVal ) {
+	gmb.calc_radius = function( map, radiusVal ) {
 
 		//update marker with set marker
 		radius_marker = new Marker( {
@@ -1440,8 +1417,7 @@ var gmb_data;
 
 		radius_circle.bindTo( 'center', radius_marker, 'position' );
 
-	}
-
+	};
 
 	/**
 	 * Show/ Hide Map Fields
@@ -1449,7 +1425,7 @@ var gmb_data;
 	 * Helper function that handles all the toggle elements within the CPT admin post screen
 	 *
 	 */
-	function toggle_metabox_fields() {
+	gmb.toggle_metabox_fields = function() {
 
 		var show_places = $( '.cmb2-id-gmb-show-places input:radio' );
 
@@ -1469,21 +1445,21 @@ var gmb_data;
 			$( this ).find( 'input:radio' ).prop( 'checked', true );
 
 			if ( $( this ).val() === 'no' ) {
-				clear_search_markers();
+				gmb.clear_search_markers();
 				$( '.cmb2-id-gmb-search-radius, .cmb2-id-gmb-places-search-multicheckbox, .cmb2-id-gmb-places-search' ).hide();
 			} else {
-				perform_places_search();
+				gmb.perform_places_search();
 				$( '.cmb2-id-gmb-search-radius, .cmb2-id-gmb-places-search-multicheckbox, .cmb2-id-gmb-places-search' ).show();
 			}
 
 		} );
 
-	}
+	};
 
 	/**
 	 * Set Zoom Control
 	 */
-	function set_map_zoom_control() {
+	gmb.set_map_zoom_control = function() {
 
 		var zoom_control = $( '#gmb_zoom_control' ).val().toLowerCase();
 
@@ -1499,13 +1475,12 @@ var gmb_data;
 				}
 			} );
 		}
-	}
-
+	};
 
 	/**
 	 * Set Map Type Control
 	 */
-	function set_map_type_control() {
+	gmb.set_map_type_control = function() {
 		var map_type_control = $( '#gmb_map_type_control' ).val().toLowerCase();
 		if ( map_type_control == 'none' ) {
 			map.setOptions( {
@@ -1519,12 +1494,12 @@ var gmb_data;
 				}
 			} );
 		}
-	}
+	};
 
 	/**
 	 * Sets Mouse Wheel Scroll
 	 */
-	function set_mouse_wheel_scroll() {
+	gmb.set_mouse_wheel_scroll = function() {
 		var mouse_wheel_scroll = $( '#gmb_wheel_zoom' ).val();
 		if ( mouse_wheel_scroll === 'none' ) {
 			map.setOptions( {
@@ -1535,12 +1510,12 @@ var gmb_data;
 				scrollwheel: true
 			} );
 		}
-	}
+	};
 
 	/**
 	 * Sets Double Click Zoom on Map
 	 */
-	function set_double_click_zoom() {
+	gmb.set_double_click_zoom = function() {
 		var double_click_zoom = $( '#gmb_double_click' ).val();
 		if ( double_click_zoom === 'none' ) {
 			map.setOptions( {
@@ -1551,12 +1526,12 @@ var gmb_data;
 				disableDoubleClickZoom: false
 			} );
 		}
-	}
+	};
 
 	/**
 	 * Sets Draggable Map
 	 */
-	function set_draggable() {
+	gmb.set_draggable = function() {
 		var draggable = $( '#gmb_draggable' ).val();
 		if ( draggable == 'none' ) {
 			map.setOptions( {
@@ -1567,12 +1542,12 @@ var gmb_data;
 				draggable: true
 			} );
 		}
-	}
+	};
 
 	/**
 	 * Sets the Pan Control
 	 */
-	function set_pan_control() {
+	gmb.set_pan_control = function() {
 
 		var pan = $( '#gmb_pan' ).val();
 		if ( pan === 'none' ) {
@@ -1584,13 +1559,13 @@ var gmb_data;
 				panControl: true
 			} );
 		}
-	}
+	};
 
 	/**
 	 * Set Street View
 	 * @description Sets the Street View Control
 	 */
-	function set_street_view() {
+	gmb.set_street_view = function() {
 
 		var street_view = $( '#gmb_street_view' ).val();
 		if ( street_view === 'none' ) {
@@ -1602,7 +1577,7 @@ var gmb_data;
 				streetViewControl: true
 			} );
 		}
-	}
+	};
 
 	/**
 	 * Sets the Map Type
@@ -1610,7 +1585,7 @@ var gmb_data;
 	 * @description Changes the Google Map type and resets theme to none
 	 * @since 1.0
 	 */
-	function set_map_type( reset ) {
+	gmb.set_map_type = function( reset ) {
 		if ( reset === true ) {
 			$( '#gmb_theme' ).val( 'none' );
 			$( '#gmb_theme_json' ).val( ' ' );
@@ -1621,7 +1596,7 @@ var gmb_data;
 			mapTypeId: google.maps.MapTypeId[map_type],
 			styles   : false
 		} );
-	}
+	};
 
 	/**
 	 * Sets the Map Theme
@@ -1629,7 +1604,7 @@ var gmb_data;
 	 * @description Uses Snazzy Maps JSON arrow to set the colors for the map
 	 * @since 1.0
 	 */
-	function set_map_theme() {
+	gmb.set_map_theme = function() {
 
 		var preset_theme = $( '#gmb_theme' );
 		var map_theme_input_val = parseInt( preset_theme.val() );
@@ -1643,12 +1618,12 @@ var gmb_data;
 			preset_theme.val( 'custom' );
 			custom_theme_json_wrap.show();
 			custom_theme_json.val( '' ).focus();
-			set_custom_snazzy_map();
+			gmb.set_custom_snazzy_map();
 		} );
 
 		//On Snazzy Map textfield value change
 		custom_theme_json.on( 'change', function () {
-			set_custom_snazzy_map();
+			gmb.set_custom_snazzy_map();
 		} );
 
 		//Sanity check to see if none
@@ -1662,7 +1637,7 @@ var gmb_data;
 		//Custom snazzy map
 		else if ( preset_theme.val() === 'custom' ) {
 			custom_theme_json_wrap.show();
-			set_custom_snazzy_map();
+			gmb.set_custom_snazzy_map();
 		}
 		//Preconfigured snazzy map
 		else {
@@ -1687,7 +1662,7 @@ var gmb_data;
 			} );
 
 		}
-	}
+	};
 
 	/**
 	 * Custom Snazzy Maps
@@ -1695,7 +1670,7 @@ var gmb_data;
 	 * @description Sets a custom snazzy map from JS
 	 * @since 2.0
 	 */
-	function set_custom_snazzy_map() {
+	gmb.set_custom_snazzy_map = function() {
 
 		var custom_theme_json = $( '#gmb_theme_json' );
 
@@ -1715,12 +1690,12 @@ var gmb_data;
 			alert( 'Invalid JSON' );
 			custom_theme_json.val( '' ).focus();
 		}
-	}
+	};
 
 	/**
 	 * JS for Marker Icon Modal
 	 */
-	function set_map_marker_icon() {
+	gmb.set_map_marker_icon = function() {
 
 		var marker_containers = $( '.marker-icon-row' );
 		var marker_modal = $( '.marker-icon-modal' );
@@ -1796,7 +1771,7 @@ var gmb_data;
 
 		$( '.color-picker' ).wpColorPicker( color_picker_options );
 
-	}
+	};
 
 	/**
 	 * Set Marker Edit Icons
@@ -1805,21 +1780,20 @@ var gmb_data;
 	 * @param marker_index This markers index
 	 * @returns {string}
 	 */
-	function set_marker_edit_icons( marker_index ) {
+	gmb.set_marker_edit_icons = function( marker_index ) {
 		return '<div class="infowindow-toolbar"><ul id="edit-toolbar">' +
 			'<li class="edit-info" data-index="' + marker_index + '" data-tooltip="' + gmb_data.i18n.btn_edit_marker + '"></li>' +
 			'<li class="trash-marker" data-index="' + marker_index + '" data-tooltip="' + gmb_data.i18n.btn_delete_marker + '"></li>' +
 			'</ul>' +
 			'</div>';
-	}
-
+	};
 
 	/**
 	 * Refresh Tooltips
 	 *
 	 * Helper function to refresh tooltips when elements added dynamically to DOM
 	 */
-	function initialize_tooltips() {
+	gmb.initialize_tooltips = function(){
 		$( '[data-tooltip!=""]' ).qtip( { // Grab all elements with a non-blank data-tooltip attr.
 			content : {
 				attr: 'data-tooltip' // Tell qTip2 to look inside this attr for its content
@@ -1845,8 +1819,21 @@ var gmb_data;
 			}
 		} );
 
+	};
 
-	}
+}( jQuery, window.MapsBuilderAdmin || ( window.MapsBuilderAdmin = {} ) ) );
 
-}( jQuery ));
+
+jQuery( window ).load( function () {
+    MapsBuilderAdmin.init();
+
+    /**
+     * Event for after the MapsBuilder admin JS loads
+     *
+     * @since 2.1.0
+     *
+     * @type {CustomEvent}
+     */
+    var gmb_init = new CustomEvent( 'MapBuilderAdminInit' );
+} );
 

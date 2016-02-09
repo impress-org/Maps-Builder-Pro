@@ -5,8 +5,9 @@
  */
 var gmb_data;
 
-(function ( $ ) {
+(function ( $, gmb ) {
 	"use strict";
+    
 	var map;
 	var places_service;
 	var place;
@@ -29,51 +30,51 @@ var gmb_data;
 		backgroundClassName: 'gmb-infobubble'
 	};
 
+    gmb.init = function(){
+        var google_maps = $( '.google-maps-builder' );
+        /*
+         * Loop through maps and initialize
+         */
+        google_maps.each( function ( index, value ) {
+
+            gmb.initialize_map( $( google_maps[index] ) );
+
+        } );
+
+        // fix for bootstrap tabs
+        $( 'a[data-toggle="tab"]' ).on( 'shown.bs.tab', function ( e ) {
+            var panel = $( e.target ).attr( 'href' );
+            gmb.load_hidden_map( panel );
+        } );
+        //Beaver Builder Tabs
+        $( '.fl-tabs-label' ).on( 'click', function ( e ) {
+            var panel = $( '.fl-tabs-panel-content.fl-tab-active' ).get( 0 );
+            gmb.load_hidden_map( panel );
+        } );
+        //Tabby Tabs:
+        $( '.responsive-tabs__list__item' ).on( 'click', function ( e ) {
+            var panel = $( '.responsive-tabs__panel--active' ).get( 0 );
+            gmb.load_hidden_map( panel );
+        } );
+        //jQuery UI Accordions
+        $( '.ui-accordion-header' ).on( 'click', function ( e ) {
+            var panel = $( '.ui-accordion-content-active' ).get( 0 );
+            gmb.load_hidden_map( panel );
+        } );
+
+    };
+
 	/*
 	 * Global load function for other plugins / themes to use
 	 *
-	 * ex: google_maps_builder_load( object );
+	 * ex: MapsBuilder.google_maps_builder_load( object );
 	 */
-	window.google_maps_builder_load = function ( map_canvas ) {
+	gmb.global_load = function ( map_canvas ) {
 		if ( !$( map_canvas ).hasClass( 'google-maps-builder' ) ) {
 			return 'invalid Google Maps Builder';
 		}
-		initialize_map( map_canvas );
+		gmb.initialize_map( map_canvas );
 	};
-
-	$( document ).ready( function () {
-
-		var google_maps = $( '.google-maps-builder' );
-		/*
-		 * Loop through maps and initialize
-		 */
-		google_maps.each( function ( index, value ) {
-
-			initialize_map( $( google_maps[index] ) );
-
-		} );
-
-		// fix for bootstrap tabs
-		$( 'a[data-toggle="tab"]' ).on( 'shown.bs.tab', function ( e ) {
-			var panel = $( e.target ).attr( 'href' );
-			load_hidden_map( panel );
-		} );
-		//Beaver Builder Tabs
-		$( '.fl-tabs-label' ).on( 'click', function ( e ) {
-			var panel = $( '.fl-tabs-panel-content.fl-tab-active' ).get( 0 );
-			load_hidden_map( panel );
-		} );
-		//Tabby Tabs:
-		$( '.responsive-tabs__list__item' ).on( 'click', function ( e ) {
-			var panel = $( '.responsive-tabs__panel--active' ).get( 0 );
-			load_hidden_map( panel );
-		} );
-		//jQuery UI Accordions
-		$( '.ui-accordion-header' ).on( 'click', function ( e ) {
-			var panel = $( '.ui-accordion-content-active' ).get( 0 );
-			load_hidden_map( panel );
-		} );
-	} );
 
 	/**
 	 * Map Init After the fact
@@ -81,16 +82,16 @@ var gmb_data;
 	 * @description Good for tabs / ajax - pass in wrapper div class/id
 	 * @since 2.0
 	 */
-	function load_hidden_map( parent ) {
+    gmb.load_hidden_map = function( parent ) {
 		var google_hidden_maps = $( parent ).find( '.google-maps-builder' );
 		if ( !google_hidden_maps.length ) {
 			return;
 		}
 		google_hidden_maps.each( function ( index, value ) {
 			//google.maps.event.trigger( map, 'resize' ); //TODO: Ideally we'd resize the map rather than reinitialize for faster performance, but that requires a bit of rewrite in how the plugin works
-			initialize_map( $( google_hidden_maps[index] ) );
+            gmb.initialize_map( $( google_hidden_maps[index] ) );
 		} );
-	}
+	};
 
 	/**
 	 * Map Intialize
@@ -99,7 +100,7 @@ var gmb_data;
 	 *
 	 * @param map_canvas
 	 */
-	function initialize_map( map_canvas ) {
+    gmb.initialize_map = function( map_canvas ) {
 
 		var map_id = $( map_canvas ).data( 'map-id' );
 		var map_data = gmb_data[map_id];
@@ -129,13 +130,13 @@ var gmb_data;
 		info_window_args.map = map;
 		places_service = new google.maps.places.PlacesService( map );
 
-		set_map_options( map, map_data );
-		set_map_theme( map, map_data );
-		set_map_markers( map, map_data, info_window );
-		set_mashup_markers( map, map_data );
-		set_map_directions( map, map_data );
-		set_map_layers( map, map_data );
-		set_map_places_search( map, map_data );
+		gmb.set_map_options( map, map_data );
+		gmb.set_map_theme( map, map_data );
+		gmb.set_map_markers( map, map_data, info_window );
+		gmb.set_mashup_markers( map, map_data );
+		gmb.set_map_directions( map, map_data );
+		gmb.set_map_layers( map, map_data );
+		gmb.set_map_places_search( map, map_data );
 
 		//Display places?
 		if ( map_data.places_api.show_places === 'yes' ) {
@@ -143,7 +144,7 @@ var gmb_data;
 		}
 
 
-	} //end initialize_map
+	}; //end initialize_map
 
 
 	/**
@@ -152,7 +153,7 @@ var gmb_data;
 	 * @description: Sets up map theme
 	 *
 	 */
-	function set_map_theme( map, map_data ) {
+	 gmb.set_map_theme = function( map, map_data ) {
 
 		var map_type = map_data.map_theme.map_type.toUpperCase();
 		var map_theme = map_data.map_theme.map_theme_json;
@@ -175,7 +176,7 @@ var gmb_data;
 		}
 
 
-	}
+	};
 
 	/**
 	 * Set Map Options
@@ -183,7 +184,7 @@ var gmb_data;
 	 * Sets up map controls
 	 *
 	 */
-	function set_map_options( map, map_data ) {
+    gmb.set_map_options = function( map, map_data ) {
 
 		//Zoom control
 		var zoom_control = map_data.map_controls.zoom_control.toLowerCase();
@@ -262,12 +263,12 @@ var gmb_data;
 			} );
 		}
 
-	}
+	};
 
 	/**
 	 * Set Map Markers
 	 */
-	function set_map_markers( map, map_data, info_window ) {
+    gmb.set_map_markers = function( map, map_data, info_window ) {
 
 		var map_markers = map_data.map_markers;
 		var markers = [];
@@ -329,7 +330,7 @@ var gmb_data;
 			location_marker.setVisible( true );
 
 			google.maps.event.addListener( location_marker, 'click', function () {
-				set_info_window_content( marker_data, info_window );
+				gmb.set_info_window_content( marker_data, info_window );
 				info_window.open( map, location_marker );
 				info_window.updateContent_();
 
@@ -347,7 +348,7 @@ var gmb_data;
 				google.maps.event.addListenerOnce( map, 'idle', function () {
 
 					info_window.setContent( '<div id="infobubble-content" class="loading"></div>' );
-					set_info_window_content( marker_data, info_window );
+					gmb.set_info_window_content( marker_data, info_window );
 					info_window.open( map, location_marker );
 					info_window.updateContent_();
 
@@ -363,7 +364,7 @@ var gmb_data;
 		}
 
 
-	}
+	};
 
 	/**
 	 * Set Infowindow Content
@@ -373,7 +374,7 @@ var gmb_data;
 	 * @param marker_data
 	 * @param info_window
 	 */
-	function set_info_window_content( marker_data, info_window ) {
+	gmb.set_info_window_content = function( marker_data, info_window ) {
 
 		var info_window_content;
 
@@ -399,7 +400,7 @@ var gmb_data;
 
 				if ( status == google.maps.places.PlacesServiceStatus.OK ) {
 
-					info_window_content += set_place_content_in_info_window( place );
+					info_window_content += gmb.set_place_content_in_info_window( place );
 					info_window.setContent( info_window_content ); //set marker content
 					info_window.updateContent_();
 
@@ -412,7 +413,7 @@ var gmb_data;
 		}
 
 
-	}
+	};
 
 
 	/**
@@ -422,7 +423,7 @@ var gmb_data;
 	 *
 	 * @param place
 	 */
-	function set_place_content_in_info_window( place ) {
+	gmb.set_place_content_in_info_window = function( place ) {
 
 		var info_window_content;
 
@@ -489,7 +490,7 @@ var gmb_data;
 
 					//place new markers
 					for ( i = 0; result = results[i]; i++ ) {
-						create_search_result_marker( map, results[i], info_window );
+						gmb.create_search_result_marker( map, results[i], info_window );
 					}
 
 					//show all pages of results @see: http://stackoverflow.com/questions/11665684/more-than-20-results-by-pagination-with-google-places-api
@@ -502,8 +503,7 @@ var gmb_data;
 			} );
 		}
 
-	}
-
+	};
 
 	/**
 	 * Create Search Result Marker
@@ -513,7 +513,7 @@ var gmb_data;
 	 * @param place
 	 * @param info_window
 	 */
-	function create_search_result_marker( map, place, info_window ) {
+	gmb.create_search_result_marker = function( map, place, info_window ) {
 
 		var search_marker = new google.maps.Marker( {
 			map: map
@@ -540,14 +540,14 @@ var gmb_data;
 				place_id: place.place_id
 			};
 
-			set_info_window_content( marker_data, info_window );
+			gmb.set_info_window_content( marker_data, info_window );
 			info_window.open( map, search_marker );
 
 		} );
 
 		search_markers.push( search_marker )
 
-	}
+	};
 
 	/**
 	 * Create Mashup Marker
@@ -556,7 +556,7 @@ var gmb_data;
 	 * @param map
 	 * @param map_data
 	 */
-	function set_mashup_markers( map, map_data ) {
+	gmb.set_mashup_markers = function( map, map_data ) {
 
 		if ( typeof map_data.mashup_markers === 'undefined' || !map_data.mashup_markers ) {
 			return false;
@@ -588,7 +588,7 @@ var gmb_data;
 
 				//Loop through marker data
 				$.each( response, function ( index, marker_data ) {
-					var marker = set_mashup_marker( map, data.index, marker_data, mashup_value, map_data );
+					var marker = gmb.set_mashup_marker( map, data.index, marker_data, mashup_value, map_data );
 					if ( marker instanceof Marker ) {
 						markers.push( marker );
 					}
@@ -603,11 +603,9 @@ var gmb_data;
 
 		} );
 
-	}
-
+	};
 
 	/**
-	 *
 	 * Set Mashup Marker
 	 *
 	 * @param map
@@ -617,7 +615,7 @@ var gmb_data;
 	 * @param map_data
 	 * @returns {*}
 	 */
-	function set_mashup_marker( map, mashup_index, marker_data, mashup_value, map_data ) {
+	gmb.set_mashup_marker = function( map, mashup_index, marker_data, mashup_value, map_data ) {
 
 		// Get latitude and longitude
 		var lat = (typeof marker_data.latitude !== 'undefined' ? marker_data.latitude : '');
@@ -658,13 +656,12 @@ var gmb_data;
 
 		//Set click action for marker to open infowindow
 		google.maps.event.addListener( marker, 'click', function () {
-			get_mashup_infowindow_content( map, marker, map_data );
+			gmb.get_mashup_infowindow_content( map, marker, map_data );
 		} );
 
 		return marker;
 
-	}
-
+	};
 
 	/**
 	 * Get Mashup InfoWindow Content
@@ -673,7 +670,7 @@ var gmb_data;
 	 * @param marker
 	 * @param map_data
 	 */
-	function get_mashup_infowindow_content( map, marker, map_data ) {
+    gmb.get_mashup_infowindow_content = function( map, marker, map_data ) {
 
 		info_window.setContent( '<div class="gmb-infobubble loading"></div>' );
 		info_window.open( map, marker );
@@ -700,8 +697,7 @@ var gmb_data;
 
 
 		}, 'json' );
-	}
-
+	};
 
 	/**
 	 * Set Map Directions
@@ -709,7 +705,7 @@ var gmb_data;
 	 * @param map
 	 * @param map_data
 	 */
-	function set_map_directions( map, map_data ) {
+	gmb.set_map_directions = function( map, map_data ) {
 
 		//Setup destinations
 		$( map_data.destination_markers ).each( function ( index, markers ) {
@@ -811,8 +807,7 @@ var gmb_data;
 
 		} );
 
-	}
-
+	};
 
 	/**
 	 * Set Map Layers
@@ -820,7 +815,7 @@ var gmb_data;
 	 * @param map
 	 * @param map_data
 	 */
-	function set_map_layers( map, map_data ) {
+	gmb.set_map_layers = function( map, map_data ) {
 
 		var trafficLayer = new google.maps.TrafficLayer();
 		var transitLayer = new google.maps.TransitLayer();
@@ -839,7 +834,7 @@ var gmb_data;
 					break;
 			}
 		} );
-	}
+	};
 
 	/**
 	 * Set Places Search
@@ -848,7 +843,7 @@ var gmb_data;
 	 * @param map
 	 * @param map_data
 	 */
-	function set_map_places_search( map, map_data ) {
+	gmb.set_map_places_search = function( map, map_data ) {
 
 		//sanity check
 		if ( map_data.places_search[0] !== 'yes' ) {
@@ -903,7 +898,7 @@ var gmb_data;
 			if ( place.name ) {
 				info_window_content = '<p class="place-title">' + place.name + '</p>';
 			}
-			info_window_content += set_place_content_in_info_window( place );
+			info_window_content += gmb.set_place_content_in_info_window( place );
 			infowindow.setContent( info_window_content ); //set marker content
 			infowindow.open( map, marker );
 
@@ -923,6 +918,35 @@ var gmb_data;
 		setupClickListener( 'changetype-establishment', ['establishment'] );
 		setupClickListener( 'changetype-geocode', ['geocode'] );
 
-	}
+	};
 
-}( jQuery ));
+}( jQuery, window.MapsBuilder || ( window.MapsBuilder = {} ) ) );
+
+jQuery( document ).ready( function () {
+    MapsBuilder.init();
+
+    /**
+     * Event for after the MapsBuilder Front-end JS loads
+     *
+     * @since 2.1.0
+     *
+     * @type {CustomEvent}
+     */
+    var gmb_init = new CustomEvent( 'MapBuilderInit' );
+} );
+
+
+/*
+ * Backwards compatibility function
+ Instead use:
+
+ document.addEventListener("MapBuilderInit", function(){
+    MapsBuilder.global_load( map_canvas );
+ }, false);
+
+ */
+window.google_maps_builder_load = function ( map_canvas ) {
+    return MapsBuilder.global_load( map_canvas );
+};
+
+
