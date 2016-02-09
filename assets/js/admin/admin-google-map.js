@@ -1835,5 +1835,6 @@ jQuery( window ).load( function () {
      * @type {CustomEvent}
      */
     var gmb_init = new CustomEvent( 'MapBuilderAdminInit' );
+    window.dispatchEvent( gmb_init );
 } );
 

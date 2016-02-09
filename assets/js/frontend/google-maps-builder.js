@@ -933,6 +933,7 @@ jQuery( document ).ready( function () {
      * @type {CustomEvent}
      */
     var gmb_init = new CustomEvent( 'MapBuilderInit' );
+    window.dispatchEvent( gmb_init );
 } );
 
 
