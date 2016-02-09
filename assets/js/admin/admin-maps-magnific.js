@@ -5,11 +5,10 @@
  */
 var gmb_data;
 
-(function ( $ ) {
+function gmb_magnific( $, gmb ){
 
 	"use strict";
 
-	$( document ).ready( function () {
 
 		var poststuff = $( 'form#post' ),
 			postboxes = $( '.postbox' ).not( '.cmb-row, .cmb-repeatable-grouping' ),
@@ -21,16 +20,15 @@ var gmb_data;
 
 		$( '#map-builder' ).on( 'click', function ( e ) {
 			e.preventDefault();
-			magnific_builder();
+			gmb.magnific_builder();
 		} );
 
 		//Open by default?
 		if ( gmb_data.modal_default === 'true' ) {
-			magnific_builder();
+			gmb.magnific_builder();
 		}
 
-
-		function magnific_builder() {
+		gmb.magnific_builder = function() {
 
 			//Initialize Magnific Too
 			$.magnificPopup.open( {
@@ -39,7 +37,7 @@ var gmb_data;
 
 					beforeOpen: function () {
 
-						lightbox_resize();
+						gmb.lightbox_resize();
 
 						//Add save button
 						if ( $( '.magnific-submit' ).length === 0 ) {
@@ -58,7 +56,7 @@ var gmb_data;
 								//Move metaboxes to the sidebar
 								var parent = postbox.parent();
 
-								gmb_close_metaboxes( postbox );
+								gmb.close_metaboxes( postbox );
 
 								//Only move and close if not in sidebar & not the map preview
 								if ( parent.attr( 'id' ) == 'normal-sortables' && postbox.attr( 'id' ) !== 'google_maps_preview_metabox' ) {
@@ -93,7 +91,7 @@ var gmb_data;
 					},
 					resize    : function () {
 						if ( $.magnificPopup.instance.isOpen === true ) {
-							lightbox_resize();
+							gmb.lightbox_resize();
 						}
 					},
 					close     : function () {
@@ -130,23 +128,23 @@ var gmb_data;
 				midClick : true
 			} );
 
-		}
+		};
 
 		/**
 		 * Close and toggle metaboxes
 		 * @param postbox
 		 */
-		function gmb_close_metaboxes( postbox ) {
-			if ( postbox.attr( 'id' ) === 'google_maps_preview_metabox' ) {
-				//ensure Gmap metabox always is open
-				postbox.removeClass( 'closed' );
-			} else {
-				//Close all other GMB metaboxes by default
-				postbox.addClass( 'closed' );
-				//Ensure max height is applied to sidebar
-				//$( '.magnific-builder #side-sortables' ).height( $( window ).height() - 120 );
-			}
-		}
+		gmb.close_metaboxes = function( postbox ) {
+            if ( postbox.attr( 'id' ) === 'google_maps_preview_metabox' ) {
+                //ensure Gmap metabox always is open
+                postbox.removeClass( 'closed' );
+            } else {
+                //Close all other GMB metaboxes by default
+                postbox.addClass( 'closed' );
+                //Ensure max height is applied to sidebar
+                //$( '.magnific-builder #side-sortables' ).height( $( window ).height() - 120 );
+            }
+        };
 
 		/**
 		 * Window/Lightbox Resize
@@ -154,11 +152,11 @@ var gmb_data;
 		 * @description: Resizes modal elements as the browser resizes & refreshes Google Maps
 		 * @since 2.0
 		 */
-		function lightbox_resize() {
+		gmb.lightbox_resize = function() {
 			poststuff.addClass( 'magnific-builder' ).height( viewport );
 			$( '#map' ).height( viewport );
 			$( '#postbox-container-1' ).outerHeight( viewport );
-		}
+		};
 
 		//Form Modal Submit button
 		$( 'body' ).on( 'click', '.magnific-submit', function ( e ) {
@@ -167,5 +165,9 @@ var gmb_data;
 			jQuery( '#publish' ).click();
 		} );
 
-	} );
-}( jQuery ));
+
+};
+
+window.addEventListener( 'MapBuilderAdminInit', function(e){
+    gmb_magnific( jQuery, window.MapsBuilderAdmin );
+});
