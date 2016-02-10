@@ -7,7 +7,7 @@
  */
 var gmb_mashup;
 
-window.GMB_Mashups = (function ( window, document, $, undefined ) {
+(function ( $, gmb ) {
 	'use strict';
 
 	var app = {};
@@ -500,7 +500,7 @@ window.GMB_Mashups = (function ( window, document, $, undefined ) {
 
 	//Get it started
 	$( document ).ready( app.init );
-
+    gmb.GMB_Mashups = app;
 	return app;
 
-})( window, document, jQuery );
+}( jQuery, window.MapsBuilderAdmin || ( window.MapsBuilderAdmin = {} ) ) );
