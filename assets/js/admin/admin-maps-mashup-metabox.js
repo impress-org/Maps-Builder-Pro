@@ -6,7 +6,7 @@
  *  @since: 2.0
  */
 
-window.GMB_Mashups_Metabox = (function ( window, document, $, undefined ) {
+(function ( $, gmb ) {
 	'use strict';
 
 	var app = {};
@@ -120,8 +120,8 @@ window.GMB_Mashups_Metabox = (function ( window, document, $, undefined ) {
 
 	//Get it started
 	$( document ).ready( app.init );
-
+    gmb.GMB_Mashups_Metabox = app;
 	return app;
 
 
-})( window, document, jQuery );
+}( jQuery, window.MapsBuilderAdmin || ( window.MapsBuilderAdmin = {} ) ) );
