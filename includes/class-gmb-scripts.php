@@ -18,6 +18,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Google_Maps_Builder_Scripts {
 
 	/**
+	 * The plugin's menu slug
+	 *
+	 * @since 2.0.0
+	 *
+	 * @var string
+	 */
+	protected $plugin_slug;
+
+	/**
+	 * The plugin's settings
+	 *
+	 * @since 2.0.0
+	 *
+	 * @var array
+	 */
+	protected $plugin_settings;
+
+	/**
 	 * Var for loading google maps api
 	 * Var for dependency
 	 */
