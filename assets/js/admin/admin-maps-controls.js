@@ -13,7 +13,7 @@ var transitLayer = new google.maps.TransitLayer();
 var bicycleLayer = new google.maps.BicyclingLayer();
 var placeSearchAutocomplete;
 
-(function ( $ ) {
+(function ( $, gmb ) {
 
 	"use strict";
 
@@ -24,40 +24,40 @@ var placeSearchAutocomplete;
 
 		//Layers
 		$( '.cmb2-id-gmb-layers input' ).on( 'change', function () {
-			set_map_layers( $( this ) );
+			gmb.set_map_layers( $( this ) );
 		} );
 
 		//Loop through layers
 		$( '.cmb2-id-gmb-layers input:checkbox' ).each( function () {
-			set_map_layers( $( this ) );
+			gmb.set_map_layers( $( this ) );
 		} );
 
 		//Places Search
 		var places_search_control = $( '.cmb2-id-gmb-places-search input' );
 		places_search_control.on( 'change', function () {
-			toggle_map_places_search_field( $( this ) );
+			gmb.toggle_map_places_search_field( $( this ) );
 		} );
 
-		toggle_map_places_search_field( places_search_control );
+		gmb.toggle_map_places_search_field( places_search_control );
 
 		//Autocomplete
-		set_map_goto_location_autocomplete();
+		gmb.set_map_goto_location_autocomplete();
 
 		//Edit Title
-		set_map_edit_title();
+		gmb.set_map_edit_title();
 
 		//Set lng and lat when map dragging
 		google.maps.event.addListener( map, 'drag', function () {
-			set_toolbar_lat_lng();
+			gmb.set_toolbar_lat_lng();
 		} );
 		//Set lng and lat when map dragging
 		google.maps.event.addListener( map, 'dragend', function () {
-			set_toolbar_lat_lng();
+			gmb.set_toolbar_lat_lng();
 		} );
 
 		//Set lng and lat when map dragging
 		google.maps.event.addListener( map, 'zoom_changed', function () {
-			set_toolbar_lat_lng();
+			gmb.set_toolbar_lat_lng();
 		} );
 
 		//Initialize Magnific/Modal Functionality Too
@@ -93,12 +93,12 @@ var placeSearchAutocomplete;
 					//only on overlay
 					if ( $( e.target ).hasClass( 'inner-modal-wrap' ) || $( e.target ).hasClass( 'inner-modal-container' ) ) {
 						// Move back out of container
-						close_modal_within_modal( target );
+						gmb.close_modal_within_modal( target );
 					}
 				} );
 				//Close button
 				$( '.gmb-modal-close' ).on( 'click', function () {
-					close_modal_within_modal( target );
+                    gmb.close_modal_within_modal( target );
 				} );
 				//Autofocus
 				if ( autofocus == true ) {
@@ -187,7 +187,7 @@ var placeSearchAutocomplete;
 	 * @description Toggles various layers on and off
 	 * @param layer obj
 	 */
-	function set_map_layers( layer ) {
+	gmb.set_map_layers = function( layer ) {
 
 		if ( layer ) {
 			var this_val = layer.val();
@@ -226,18 +226,18 @@ var placeSearchAutocomplete;
 
 		}
 
-	}
+	};
 
 	/**
 	 * Toggle Places Search Field
 	 * @descrition: Adds and removes the places search field from the map preview
 	 * @param input
 	 */
-	function toggle_map_places_search_field( input ) {
+	gmb.toggle_map_places_search_field = function( input ) {
 
 		//Setup search or Toggle show/hide?
 		if ( typeof placeSearchAutocomplete === 'undefined' && input.prop( 'checked' ) === true ) {
-			set_map_places_search_field(); //hasn't been setup yet, so set it up
+			gmb.set_map_places_search_field(); //hasn't been setup yet, so set it up
 			$( '#places-search' ).show();
 		} else if ( input.prop( 'checked' ) === true && typeof placeSearchAutocomplete === 'object' ) {
 			$( '#places-search' ).show();
@@ -245,7 +245,7 @@ var placeSearchAutocomplete;
 			$( '#places-search' ).hide();
 		}
 
-	}
+	};
 
 	/**
 	 * Set up Places Search Field
@@ -253,7 +253,7 @@ var placeSearchAutocomplete;
 	 * @description Creates the Google Map custom control with autocomplete enabled
 	 *
 	 */
-	function set_map_places_search_field() {
+	gmb.set_map_places_search_field = function() {
 		var input = /** @type {HTMLInputElement} */(
 			document.getElementById( 'pac-input' ));
 
@@ -329,13 +329,13 @@ var placeSearchAutocomplete;
 			}
 		} );
 
-	}
+	};
 
 	/**
 	 * Goto Location Autocomplete
 	 *
 	 */
-	function set_map_goto_location_autocomplete() {
+	gmb.set_map_goto_location_autocomplete = function() {
 		var modal = $( '.map-autocomplete-wrap' );
 		var input = $( '#map-location-autocomplete' ).get( 0 );
 		var location_autocomplete = new google.maps.places.Autocomplete( input );
@@ -359,7 +359,7 @@ var placeSearchAutocomplete;
 
 			//Close modal
 			$( modal ).find( '.mfp-close' ).trigger( 'click' );
-			close_modal_within_modal( modal );
+            gmb.close_modal_within_modal( modal );
 
 
 		} );
@@ -371,25 +371,26 @@ var placeSearchAutocomplete;
 			}
 		} );
 
-	}
+	};
 
 	/**
 	 * Close a Modal within Modal
 	 *
 	 * @param modal
 	 */
-	function close_modal_within_modal( modal ) {
+    gmb.close_modal_within_modal = function( modal ) {
 		// Move back out of container
 		$( modal )
 			.addClass( 'mfp-hide' ) //ensure it's hidden
 			.appendTo( '.modal-placeholder' )  // Move it back to it's proper location
 			.unwrap(); // Remove the placeholder
-	}
+
+	};
 
 	/**
 	 * Edit Title within Modal
 	 */
-	function set_map_edit_title() {
+	gmb.set_map_edit_title = function() {
 
 		//When edit title button is clicked insert title into feax input
 		$( '.edit-title' ).on( 'click', function () {
@@ -401,13 +402,12 @@ var placeSearchAutocomplete;
 			$( 'input#title' ).val( $( this ).val() );
 		} );
 
-	}
-
+	};
 
 	/**
 	 * Update Toolbar Lat/Lng
 	 */
-	function set_toolbar_lat_lng() {
+	gmb.set_toolbar_lat_lng = function() {
 
 		var lat_lng_sidebar_btn = $( '.lat-lng-update-btn' );
 		var lat_lng_toolbar_btn = $( '.update-lat-lng' );
@@ -425,7 +425,7 @@ var placeSearchAutocomplete;
 		lat_lng_sidebar_btn.removeAttr( 'disabled' );
 		lat_lng_toolbar_btn.removeAttr( 'disabled' );
 
-	}
+	};
 
+}( jQuery, window.MapsBuilderAdmin || ( window.MapsBuilderAdmin = {} ) ) );
 
-}( jQuery ));
