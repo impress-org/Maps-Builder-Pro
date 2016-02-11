@@ -19,6 +19,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Define Constants
+ */
+// Plugin Folder Path
+if ( ! defined( 'GMB_PLUGIN_PATH' ) ) {
+	define( 'GMB_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+}
+// Plugin Folder URL
+if ( ! defined( 'GMB_PLUGIN_URL' ) ) {
+	define( 'GMB_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+}
+// Plugin base
+if ( ! defined( 'GMB_PLUGIN_BASE' ) ) {
+	define( 'GMB_PLUGIN_BASE', plugin_basename( __FILE__ ) );
+}
+// Plugin version
+if ( ! defined( 'GMB_VERSION' ) ) {
+	define( 'GMB_VERSION', '2.0.2' );
+}
+// Plugin Root File
+if ( ! defined( 'GMB_PLUGIN_FILE' ) ) {
+	define( 'GMB_PLUGIN_FILE', __FILE__ );
+}
+
+
 /*----------------------------------------------------------------------------*
  * Public-Facing Functionality
  *----------------------------------------------------------------------------*/
@@ -30,7 +55,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 //add_action( 'plugins_loaded', array( 'Google_Maps_Builder_Engine', 'get_instance' ) );
 
 if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
- * Main Give Class
+ * Main Maps Builder Class
  *
  * @since 2.0
  */ {
@@ -128,7 +153,6 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 			if ( ! isset( self::$instance ) && ! ( self::$instance instanceof Google_Maps_Builder ) ) {
 
 				self::$instance = new Google_Maps_Builder();
-				self::$instance->setup_constants();
 
 				add_action( 'plugins_loaded', array( self::$instance, 'load_textdomain' ) );
 
@@ -178,39 +202,6 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 		public function __wakeup() {
 			// Unserializing instances of the class is forbidden
 			_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'gmb' ), '2.0' );
-		}
-
-		/**
-		 * Setup plugin constants
-		 *
-		 * @access private
-		 * @since  2.0
-		 * @return void
-		 */
-		private function setup_constants() {
-
-			// Define Constants
-			// Plugin Folder Path
-			if ( ! defined( 'GMB_PLUGIN_PATH' ) ) {
-				define( 'GMB_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
-			}
-			// Plugin Folder URL
-			if ( ! defined( 'GMB_PLUGIN_URL' ) ) {
-				define( 'GMB_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-			}
-			// Plugin base
-			if ( ! defined( 'GMB_PLUGIN_BASE' ) ) {
-				define( 'GMB_PLUGIN_BASE', plugin_basename( __FILE__ ) );
-			}
-			// Plugin version
-			if ( ! defined( 'GMB_VERSION' ) ) {
-				define( 'GMB_VERSION', '2.0.2' );
-			}
-			// Plugin Root File
-			if ( ! defined( 'GMB_PLUGIN_FILE' ) ) {
-				define( 'GMB_PLUGIN_FILE', __FILE__ );
-			}
-
 		}
 
 		/**
@@ -336,6 +327,17 @@ function Google_Maps_Builder() {
 	return Google_Maps_Builder::instance();
 }
 
-// Get Give Running
-Google_Maps_Builder();
+/**
+ * Load plugin if core lib is present
+ */
+if( ! file_exists( GMB_PLUGIN_PATH . 'vendor/wordimpress/maps-builder-core/core.php' ) ) {
+	//@TODO something better than die()
+	die();
+}else{
+	require_once GMB_PLUGIN_PATH . 'vendor/wordimpress/maps-builder-core/core.php';
+	gmb_core_include_classes();
+	Google_Maps_Builder();
+}
+
+
 
