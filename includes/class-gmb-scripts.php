@@ -58,10 +58,17 @@ class Google_Maps_Builder_Scripts  {
 		$js_plugins = GMB_PLUGIN_URL . 'assets/js/plugins/';
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		//Directions
+
 		if ( ( $hook == 'post-new.php' || $hook == 'post.php' ) && 'google_maps' === $post->post_type ) {
+			//pro only
+			wp_register_script( $this->plugin_slug . '-admin-pro', $js_dir . 'admin-pro' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
+			wp_enqueue_script( $this->plugin_slug . '-admin-pro' );
+
+
+			//Directions
 			wp_register_script( $this->plugin_slug . '-admin-map-directions', $js_dir . 'admin-maps-directions' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
 			wp_enqueue_script( $this->plugin_slug . '-admin-map-directions' );
+
 			//Marker Clustering
 			wp_register_script( $this->plugin_slug . '-admin-map-marker-clustering', $js_plugins . 'markerclusterer' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
 			wp_enqueue_script( $this->plugin_slug . '-admin-map-marker-clustering' );
