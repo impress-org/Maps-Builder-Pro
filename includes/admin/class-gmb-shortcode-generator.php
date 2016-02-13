@@ -56,7 +56,7 @@ class GMB_Shortcode_Generator {
 	 * @return array
 	 */
 	public function add_tinymce_lang( $arr ) {
-		$arr['gmb_shortcode_button'] = GMB_PLUGIN_PATH . '/includes/admin/shortcode-generator-i18n.php';
+		$arr['gmb_shortcode_button'] = GMB_CORE_PATH . '/includes/admin/shortcode-generator-i18n.php';
 
 		return $arr;
 	}
