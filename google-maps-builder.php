@@ -135,6 +135,15 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 		public $html;
 
 		/**
+		 * User meta key for marking welcome message as dismissed
+		 *
+		 * @since 2.1.0
+		 *
+		 * @var string
+		 */
+		protected $hide_welcome_key = 'gmb_hide_pro_welcome';
+
+		/**
 		 * Main Google_Maps_Builder Instance
 		 *
 		 * Insures that only one instance of Google_Maps_Builder exists in memory at any one
@@ -223,7 +232,6 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-license-handler.php';
 			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-html-elements.php';
 
-			require_once GMB_PLUGIN_PATH . 'includes/admin/class-gmb-settings.php';
 			require_once GMB_PLUGIN_PATH . 'includes/admin/mashups/class-gmb-mashups-builder.php';
 
 			if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
@@ -288,6 +296,16 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 			return $this->plugin_slug;
 		}
 
+		/**
+		 * Get the user meta key for marking welcome message as dismissed
+		 *
+		 * @since 2.1.0
+		 *
+		 * @return string
+		 */
+		public function get_hide_welcome_key(){
+			return $this->hide_welcome_key;
+		}
 
 	}
 }

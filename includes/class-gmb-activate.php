@@ -47,7 +47,7 @@ class Google_Maps_Builder_Activate {
 		//Remove Welcome Message Meta so User Sees it Again
 		global $current_user;
 		$user_id = $current_user->ID;
-		delete_user_meta( $user_id, 'gmb_hide_pro_welcome' );
+		delete_user_meta( $user_id, Google_Maps_Builder()->get_hide_welcome_key() );
 
 		//Display Tooltip
 		$dismissed_pointers = explode( ',', get_user_meta( $user_id, 'dismissed_wp_pointers', true ) );
