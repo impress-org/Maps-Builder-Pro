@@ -15,6 +15,15 @@ class Google_Maps_Builder_Admin {
 
 
 	/**
+	 * This plugin's slug
+	 *
+	 * @since unknown
+	 *
+	 * @var string
+	 */
+	protected $plugin_slug;
+
+	/**
 	 * Initialize the plugin by loading admin scripts & styles and adding a
 	 * settings page and menu.
 	 *
