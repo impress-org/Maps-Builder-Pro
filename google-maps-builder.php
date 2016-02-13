@@ -243,7 +243,6 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 				require_once GMB_PLUGIN_PATH . 'includes/admin/mashups/class-gmb-mashups-metabox.php';
 				require_once GMB_PLUGIN_PATH . 'includes/admin/import-export/class-gmb-import-export.php';
 				require_once GMB_PLUGIN_PATH . 'includes/admin/system-info.php';
-
 			}
 
 		}
