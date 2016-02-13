@@ -77,7 +77,7 @@ class Google_Maps_Builder_Admin extends Google_Maps_Builder_Core_Admin {
 			)
 		);
 
-		$this->marker_box->add_group_field( $group_field_id, array(
+		$this->marker_box->add_group_field( $this->marker_box_group_field_id, array(
 				'name'              => __( 'Marker Infowindow', $this->plugin_slug ),
 				'desc'              => __( 'Would you like this marker\'s infowindow open by default on the map?', $this->plugin_slug ),
 				'id'                => 'infowindow_open',
