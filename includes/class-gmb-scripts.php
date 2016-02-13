@@ -34,10 +34,13 @@ class Google_Maps_Builder_Scripts  {
 	public function __construct(){
 		if( is_admin() ){
 			$obj = new Google_Maps_Builder_Core_Admin_Scripts();
-			//@todo MAKE PRO ONLY
+			//@todo MAKE HOOK PRO ONLY
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_hooks' ) );
 		}else{
+			//@todo MAKE HOOK PRO ONLY
+			add_action( 'wp_enqueue_scripts', array( $this, 'font_end_hooks' ) );
 			$obj = new Google_Maps_Builder_Core_Front_End_Scripts();
+
 		}
 		$this->plugin_slug = $obj->get_plugin_slug();
 
@@ -47,6 +50,8 @@ class Google_Maps_Builder_Scripts  {
 	 * Load additional admin scripts
 	 *
 	 * @todo MAKE PRO ONLY
+	 *
+	 * @since 2.1.0
 	 *
 	 * @uses "admin_enqueue_scripts"
 	 *
@@ -82,6 +87,27 @@ class Google_Maps_Builder_Scripts  {
 
 		}
 
+	}
+
+	/**
+	 * Load additional front-end scripts
+	 *
+	 * @todo MAKE PRO ONLY
+	 *
+	 * @since 2.1.0
+	 *
+	 * @uses "enqueue_scripts"
+	 *
+	 */
+	public function font_end_hooks(){
+		$js_dir = GMB_PLUGIN_URL . 'assets/js/frontend/';
+		$js_plugins = GMB_PLUGIN_URL . 'assets/js/plugins/';
+		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		wp_register_script( 'google-maps-builder-plugin-script-pro', $js_dir . 'google-maps-builder' . $suffix . '.js', array( 'jquery' ), GMB_VERSION, true );
+		wp_enqueue_script( 'google-maps-builder-plugin-script-pro' );
+
+		wp_register_script( 'google-maps-builder-clusterer', $js_plugins . 'markerclusterer' . $suffix . '.js', array( 'jquery' ), GMB_VERSION, true );
+		wp_enqueue_script( 'google-maps-builder-clusterer' );
 	}
 
 
