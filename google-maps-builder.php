@@ -217,7 +217,6 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 
 			Google_Maps_Builder_Core::cmb2_init();
 
-
 			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-scripts.php';
 			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-widget.php';
 			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-engine.php';
@@ -229,10 +228,7 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 
 			if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 
-				//Upgrades
-				require_once GMB_PLUGIN_PATH . 'includes/admin/upgrades/upgrade-functions.php';
-				require_once GMB_PLUGIN_PATH . 'includes/admin/upgrades/upgrades.php';
-
+				Google_Maps_Builder_Core::load_admin();
 				//Admin
 				require_once GMB_PLUGIN_PATH . 'includes/admin/custom-field-types/cmb2-field-directions.php';
 				require_once GMB_PLUGIN_PATH . 'includes/admin/custom-field-types/cmb2-field-select-posttype.php';
