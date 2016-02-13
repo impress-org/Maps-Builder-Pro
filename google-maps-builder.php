@@ -216,13 +216,13 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-activate.php';
 
 			Google_Maps_Builder_Core::cmb2_load();
-
+			Google_Maps_Builder_Core::load_files();
 			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-scripts.php';
 			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-widget.php';
 			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-engine.php';
 			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-license-handler.php';
 			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-html-elements.php';
-			require_once GMB_PLUGIN_PATH . 'includes/misc-functions.php';
+
 			require_once GMB_PLUGIN_PATH . 'includes/admin/class-gmb-settings.php';
 			require_once GMB_PLUGIN_PATH . 'includes/admin/mashups/class-gmb-mashups-builder.php';
 
@@ -233,7 +233,7 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 				require_once GMB_PLUGIN_PATH . 'includes/admin/custom-field-types/cmb2-field-directions.php';
 				require_once GMB_PLUGIN_PATH . 'includes/admin/custom-field-types/cmb2-field-select-posttype.php';
 				require_once GMB_PLUGIN_PATH . 'includes/admin/custom-field-types/cmb2-field-multicheck-posttype.php';
-				require_once GMB_PLUGIN_PATH . 'includes/admin/admin-actions.php';
+
 				require_once GMB_PLUGIN_PATH . 'includes/admin/class-gmb-admin.php';
 
 				require_once GMB_PLUGIN_PATH . 'includes/admin/mashups/class-gmb-mashups-metabox.php';
