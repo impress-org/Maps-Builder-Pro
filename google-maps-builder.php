@@ -234,7 +234,8 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 				require_once GMB_PLUGIN_PATH . 'includes/admin/custom-field-types/cmb2-field-select-posttype.php';
 				require_once GMB_PLUGIN_PATH . 'includes/admin/custom-field-types/cmb2-field-multicheck-posttype.php';
 
-				require_once GMB_PLUGIN_PATH . 'includes/admin/class-gmb-admin.php';
+				//@TODO only load when needed
+				Google_Maps_Builder_Core::init_map_editor_admin();
 
 				require_once GMB_PLUGIN_PATH . 'includes/admin/mashups/class-gmb-mashups-metabox.php';
 				require_once GMB_PLUGIN_PATH . 'includes/admin/import-export/class-gmb-import-export.php';
