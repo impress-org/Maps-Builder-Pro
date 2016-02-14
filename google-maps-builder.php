@@ -227,8 +227,7 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 			Google_Maps_Builder_Core::cmb2_load();
 			Google_Maps_Builder_Core::load_files();
 			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-scripts.php';
-			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-widget.php';
-			
+
 			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-license-handler.php';
 			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-html-elements.php';
 
@@ -307,6 +306,16 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 			return $this->hide_welcome_key;
 		}
 
+		/**
+		 * Registers the Google Maps Builder Widget.
+		 *
+		 * @since 2.1.0
+		 * @return void
+		 */
+		public function init_widget() {
+			register_widget( 'Google_Maps_Builder_Widget' );
+		}
+
 	}
 }
 
@@ -339,4 +348,7 @@ if( ! file_exists( GMB_PLUGIN_PATH . 'vendor/wordimpress/maps-builder-core/core.
 	require_once GMB_PLUGIN_PATH . 'vendor/wordimpress/maps-builder-core/core.php';
 	Google_Maps_Builder_Core::include_core_classes();
 	Google_Maps_Builder();
+
+	add_action( 'widgets_init', array( Google_Maps_Builder(), 'init_widget' ) );
 }
+
