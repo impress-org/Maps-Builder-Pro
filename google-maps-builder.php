@@ -228,7 +228,7 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 			Google_Maps_Builder_Core::load_files();
 			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-scripts.php';
 			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-widget.php';
-			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-engine.php';
+			
 			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-license-handler.php';
 			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-html-elements.php';
 
