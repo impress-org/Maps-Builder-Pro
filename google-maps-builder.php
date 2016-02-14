@@ -222,7 +222,7 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 		 */
 		private function includes() {
 
-			require_once GMB_PLUGIN_PATH . 'includes/class-gmb-activate.php';
+			Google_Maps_Builder_Core::load_activate();
 
 			Google_Maps_Builder_Core::cmb2_load();
 			Google_Maps_Builder_Core::load_files();
