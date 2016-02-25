@@ -16,9 +16,13 @@
 
 		<div class="col-md-10">
 
-			<h3><?php _e('Default Map Settings', $this->plugin_slug); ?></h3>
-			<p><?php _e('The following settings change the default map options that display when created a new map.', $this->plugin_slug); ?></p>
-			<?php cmb2_metabox_form( $this->map_option_fields(), self::$key ); ?>
+			<h3>
+				<?php _e('Default Map Settings', $plugin_slug); ?>
+			</h3>
+			<p>
+				<?php _e('The following settings change the default map options that display when created a new map.', $plugin_slug); ?>
+			</p>
+			<?php cmb2_metabox_form( $map_option_fields, $key ); ?>
 		</div>
 
 		<div class="col-md-2">

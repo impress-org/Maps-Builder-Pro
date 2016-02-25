@@ -31,19 +31,20 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 		$core_license = new GMB_License( GMB_PLUGIN_BASE, 'Maps Builder Pro', GMB_VERSION, 'WordImpress', 'maps_builder_license_key' );
 	}
 
-
-
-
-
-
-
 	/**
 	 * Admin page markup. Mostly handled by CMB
 	 *
 	 * @since  0.1.0
 	 */
 	public function admin_page_display() {
-		gmb_include_view( 'admin/views/settings-page.php' );
+		gmb_include_view( 'admin/views/settings-page.php', false, array(
+				'plugin_slug'           => $this->plugin_slug,
+				'key'                   => $this->key(),
+				'license_fields'        => $this->license_fields(),
+				'general_option_fields' => $this->general_option_fields(),
+				'map_option_fields'     => $this->map_option_fields()
+			)
+		);
 
 	}
 
@@ -58,21 +59,21 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 	public function license_fields() {
 
 		// Only need to initiate the array once per page-load
-		if ( ! empty( self::$plugin_options ) ) {
-			return self::$plugin_options;
+		if ( ! empty( $this->plugin_options ) ) {
+			return $this->plugin_options;
 		}
 
 		$prefix = 'gmb_';
 
-		self::$plugin_options = array(
+		$this->plugin_options = array(
 			'id'         => 'plugin_options',
-			'give_title' => __( 'Give Licenses', 'give' ),
+			'give_title' => __( 'Give Licenses', $this->plugin_slug ),
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( self::$key, ), ),
 			'fields'     => apply_filters( 'gmb_settings_licenses', array()
 			)
 		);
 
-		return apply_filters( 'gmb_general_options_fields', self::$plugin_options );
+		return apply_filters( 'gmb_general_options_fields', $this->plugin_options );
 
 	}
 
@@ -156,16 +157,16 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 	 * @return array
 	 */
 	public function map_option_fields() {
-		self::$plugin_options = parent::map_option_fields();
+		$this->plugin_options = parent::map_option_fields();
 		$prefix = $this->prefix();
-		self::$plugin_options[ 'fields' ][] = array(
+		$this->plugin_options[ 'fields' ][] = array(
 			'name'    => __( 'Map Language', $this->plugin_slug ),
 			'id'      => $prefix . 'language',
 			'type'    => 'select',
 			'options' => gmb_get_map_languages(),
 			'desc'    => __( 'The Google Maps API uses the user\'s browser preferred language setting when displaying textual information such as the names for controls, copyright notices, driving directions and labels on maps. In most cases, this is preferable; you usually do not wish to override the user\'s preferred language setting. However, if you wish to change the Maps API to ignore the browser\'s language setting and force it to display information in a particular language, you can configure that here.', $this->plugin_slug ),
 		);
-		self::$plugin_options[ 'fields' ] = array(
+		$this->plugin_options[ 'fields' ][] = array(
 			'name'    => __( 'Signed-in Maps', $this->plugin_slug ),
 			'id'      => $prefix . 'signed_in',
 			'type'    => 'select',
@@ -176,7 +177,7 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 			'desc'    => __( 'When you enable sign-in with Google Maps, the maps on your site will be tailored to your users. Users who are signed-in to their Google account will be able to save places for later viewing on the web or mobile devices. Places saved from the map will be attributed to your site. Notice: When sign-in is enabled, the default position and appearance of several controls will change.', $this->plugin_slug ),
 		);
 
-		return apply_filters( 'gmb_map_options_fields', self::$plugin_options );
+		return apply_filters( 'gmb_map_options_fields', $this->plugin_options );
 	}
 
 	/**
@@ -186,20 +187,18 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 	 * @return array
 	 */
 	public function general_option_fields() {
-		if ( empty( self::$plugin_options ) ) {
-			self::$plugin_options = parent::general_option_fields();
-		}
+		$this->plugin_options = parent::general_option_fields();
 
 		$prefix = $this->prefix();
 
-		self::$plugin_options[ 'fields' ][] = array(
+		$this->plugin_options[ 'fields' ][] = array(
 			'name' => __( 'Mashup Metabox', $this->plugin_slug ),
 			'id'   => $prefix . 'mashup_metabox',
 			'desc' => __( 'Select which post types you would like to display the mashup metabox.', $this->plugin_slug ),
 			'type' => 'multicheck_posttype',
 		);
 
-		return apply_filters( 'gmb_general_options_fields', self::$plugin_options );
+		return apply_filters( 'gmb_general_options_fields', $this->plugin_options );
 
 	}
 
