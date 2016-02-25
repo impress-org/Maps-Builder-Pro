@@ -6,8 +6,6 @@
  */
 class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 
-
-
 	/**
 	 * Constructor
 	 * @since 0.1.0
@@ -26,7 +24,6 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 		add_action( 'gmb_markers_before_save', array( $this, 'before_save' ) );
 
 	}
-
 
 	/**
 	 * Core Licensing
@@ -212,7 +209,7 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 	 * @uses "gmb_extra_markers" action
 	 */
 	public function pro_markers(){
-		gmb_include_view( 'admin/views/pro-markers.php', false, array( 'plugin_slug' => $this->plugin_slug ) );
+		gmb_include_view( 'admin/views/pro-markers.php', false, $this->view_data() );
 	}
 
 	/**
@@ -221,7 +218,18 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 	 * @uses "gmb_markers_before_save" action
 	 */
 	public function before_marker_save(){
-		gmb_include_view( 'admin/views/markers-before-save.php', false, array( 'plugin_slug' => $this->plugin_slug ) );
+		gmb_include_view( 'admin/views/markers-before-save.php', false, $this->view_data() );
 	}
 
+	/**
+	 * Markup for settings tab switcher
+	 *
+	 * @since 2.1.0
+	 *
+	 * @uses "gmb_settings_tabs" action
+	 */
+	public function settings_tabs( $active_tab ) {
+		parent::settings_tabs( $active_tab );
+		gmb_include_view( 'admin/views/pro-settings-tabs.php', false, $this->view_data( $this->tab_settings( $active_tab ), true ) );
+	}
 }
