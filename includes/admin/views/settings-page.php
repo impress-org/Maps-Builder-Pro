@@ -28,13 +28,13 @@
 					<h1 class="main-heading"><?php _e( 'Welcome to Maps Builder <em>Pro</em> ', $this->plugin_slug ); ?><?php echo Google_Maps_Builder()->meta['Version']; ?></h1>
 
 					<p class="main-subheading"><?php _e( 'Thank you for upgrading to the Maps Builder Pro', $this->plugin_slug ); ?>. <?php echo sprintf( __( 'As a Pro active license holder you receive %3$spriority support%2$s, awesome plugin features, and thoroughly written plugin %1$sdocumentation%2$s. We hope you enjoy using the Pro plugin version!', $this->plugin_slug ), '<a href="https://wordimpress.com/documentation/maps-builder-pro/" target="_blank">', '</a>', '<a href="https://wordimpress.com/support/forum/maps-builder-pro" target="_blank">' ); ?></p>
-					<?php include( 'social-media.php' ); ?>
+					<?php gmb_include_view( 'admin/social-media.php' ); ?>
 
 				</div>
 
 				<div class="col-md-3">
 					<div class="logo-svg">
-						<?php include( 'mascot-svg.php' ); ?>
+						<?php gmb_include_view( 'admin/mascot-svg.php' ); ?>
 					</div>
 				</div>
 			</div>
@@ -45,7 +45,7 @@
 	<div class="logo-svg logo-svg-small pull-right" <?php echo( ! get_user_meta( $user_id, 'gmb_hide_pro_welcome' ) ?
 		'style="display:none;"' : '' ); ?>>
 		<div class="gmb-plugin-heading">Google Maps Builder</div>
-		<?php include( 'logo-svg.php' ); ?>
+		<?php gmb_include_view( 'admin/logo-svg.php' ); ?>
 	</div>
 
 
@@ -73,19 +73,19 @@
 	 */
 	switch ( $active_tab ) {
 		case 'map_options':
-			include( 'tab-map-options.php' );
+			gmb_include_view( 'admin/tab-map-options.php' );
 			break;
 		case 'general_settings':
-			include( 'tab-general-settings.php' );
+			gmb_include_view( 'admin/tab-general-settings.php' );
 			break;
 		case 'license':
-			include( 'tab-license.php' );
+			gmb_include_view( 'admin/tab-license.php' );
 			break;
 		case 'system_info':
-			include( 'tab-system-info.php' );
+			gmb_include_view( 'admin/tab-system-info.php' );
 			break;
 		default :
-			include( 'tab-map-options.php' );
+			gmb_include_view( 'admin/tab-map-options.php' );
 			break;
 	}
 	?>

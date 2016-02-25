@@ -39,11 +39,11 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 
 	/**
 	 * Admin page markup. Mostly handled by CMB
+	 *
 	 * @since  0.1.0
 	 */
 	public function admin_page_display() {
-
-		include( 'views/settings-page.php' );
+		gmb_include_view( 'admin/views/settings-page.php' );
 
 	}
 
