@@ -21,6 +21,10 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 		add_action( 'plugins_loaded', array( $this, 'gmb_core_licensing' ) );
 		add_filter( 'cmb2_get_metabox_form_format', array( $this, 'gmb_modify_cmb2_form_output' ), 10, 3 );
 
+		//PRO only markup
+		add_action( 'gmb_extra_markers', array( $this, 'pro_markers' ) );
+		add_action( 'gmb_markers_before_save', array( $this, 'before_save' ) );
+
 	}
 
 
@@ -200,6 +204,24 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 
 		return apply_filters( 'gmb_general_options_fields', $this->plugin_options );
 
+	}
+
+	/**
+	 * Add pro-only markers in markers partial
+	 *
+	 * @uses "gmb_extra_markers" action
+	 */
+	public function pro_markers(){
+		gmb_include_view( 'admin/views/pro-markers.php', false, array( 'plugin_slug' => $this->plugin_slug ) );
+	}
+
+	/**
+	 * Add additional markup before save in markers partial
+	 *
+	 * @uses "gmb_markers_before_save" action
+	 */
+	public function before_marker_save(){
+		gmb_include_view( 'admin/views/markers-before-save.php', false, array( 'plugin_slug' => $this->plugin_slug ) );
 	}
 
 }
