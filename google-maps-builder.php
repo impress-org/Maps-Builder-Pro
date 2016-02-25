@@ -64,14 +64,13 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 		/** Singleton *************************************************************/
 
 		/**
-		 * @var Google_Maps_Builder The one true Give
+		 * @var Google_Maps_Builder The one true Google Maps Builder instance
 		 * @since 2.0
 		 */
 		private static $instance;
 
 
 		/**
-		 *
 		 * Unique identifier for plugin.
 		 *
 		 * The variable name is used as the text domain when internationalizing strings
@@ -88,7 +87,7 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 		/**
 		 * Activation Object
 		 *
-		 * @var object
+		 * @var Google_Maps_Builder_Activate
 		 * @since 2.0
 		 */
 		public $activate;
@@ -97,7 +96,7 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 		/**
 		 * GMB Scripts Object
 		 *
-		 * @var object
+		 * @var Google_Maps_Builder_Scripts
 		 * @since 2.0
 		 */
 		public $scripts;
@@ -105,7 +104,7 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 		/**
 		 * GMB Settings Object
 		 *
-		 * @var object
+		 * @var Google_Maps_Builder_Settings
 		 * @since 2.0
 		 */
 		public $settings;
@@ -113,7 +112,7 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 		/**
 		 * GMB Engine Object
 		 *
-		 * @var object
+		 * @var Google_Maps_Builder_Engine
 		 * @since 2.0
 		 */
 		public $engine;
@@ -121,7 +120,7 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 		/**
 		 * GMB Plugin Meta
 		 *
-		 * @var object
+		 * @var array
 		 * @since 2.0
 		 */
 		public $meta;
@@ -129,7 +128,7 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) : /**
 		/**
 		 * GMB HTML elements
 		 *
-		 * @var object
+		 * @var Google_Maps_Builder_HTML_Elements
 		 * @since 2.0
 		 */
 		public $html;
@@ -323,16 +322,16 @@ endif; // End if class_exists check
 
 
 /**
- * The main function responsible for returning the one true Give
+ * The main function responsible for returning the one true Maps Builder
  * Instance to functions everywhere.
  *
  * Use this function like you would a global variable, except without needing
  * to declare the global.
  *
- * Example: <?php $gmb = Give(); ?>
+ * Example: <?php $gmb = Google_Maps_Builder(); ?>
  *
  * @since 2.0
- * @return object - The one true Give Instance
+ * @return object|Google_Maps_Builder
  */
 function Google_Maps_Builder() {
 	return Google_Maps_Builder::instance();
