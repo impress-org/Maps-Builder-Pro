@@ -32,17 +32,15 @@ class Google_Maps_Builder_Scripts  {
 	 * @since 2.0.0
 	 */
 	public function __construct(){
+		$this->plugin_slug = Google_Maps_Builder::instance()->get_plugin_slug();
 		if( is_admin() ){
-			$obj = new Google_Maps_Builder_Core_Admin_Scripts();
-			//@todo MAKE HOOK PRO ONLY
+			new Google_Maps_Builder_Core_Admin_Scripts();
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_hooks' ) );
 		}else{
-			//@todo MAKE HOOK PRO ONLY
 			add_action( 'wp_enqueue_scripts', array( $this, 'font_end_hooks' ) );
-			$obj = new Google_Maps_Builder_Core_Front_End_Scripts();
+			new Google_Maps_Builder_Core_Front_End_Scripts();
 
 		}
-		$this->plugin_slug = $obj->get_plugin_slug();
 
 	}
 
