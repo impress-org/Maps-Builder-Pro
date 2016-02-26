@@ -232,4 +232,35 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 		parent::settings_tabs( $active_tab );
 		gmb_include_view( 'admin/views/pro-settings-tabs.php', false, $this->view_data( $this->tab_settings( $active_tab ), true ) );
 	}
+
+	/**
+	 * Handle main data for the settings page
+	 *
+	 * @since 2.1.0
+	 *
+	 * @return array
+	 */
+	protected function settings_page_data(){
+		//place holder
+		$data = array(
+			'welcome' => sprintf( '%1s Maps Builder<em>Pro</em> %s', 'Welcome to', Google_Maps_Builder()->meta['Version']  ),
+			'sub_heading' => $this->sub_heading()
+		);
+		return $this->view_data( $data );
+	}
+
+	/**
+	 * Sub heading markup for settings page
+	 *
+	 * @since 2.1.0
+	 *
+	 * @return string
+	 */
+	protected function sub_heading(){
+			$out = __( 'Thank you for upgrading to the Maps Builder Pro', 'google-maps-pro' );
+			$out .=  sprintf( __( 'As a Pro active license holder you receive %3$spriority support%2$s, awesome plugin features, and thoroughly written plugin %1$sdocumentation%2$s. We hope you enjoy using the Pro plugin version!', 'google-maps-pro' ), '<a href="https://wordimpress.com/documentation/maps-builder-pro/" target="_blank">', '</a>', '<a href="https://wordimpress.com/support/forum/maps-builder-pro" target="_blank">' );
+
+		return $out;
+
+	}
 }
