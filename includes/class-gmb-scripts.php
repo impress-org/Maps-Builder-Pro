@@ -47,8 +47,6 @@ class Google_Maps_Builder_Scripts  {
 	/**
 	 * Load additional admin scripts
 	 *
-	 * @todo MAKE PRO ONLY
-	 *
 	 * @since 2.1.0
 	 *
 	 * @uses "admin_enqueue_scripts"
@@ -89,8 +87,6 @@ class Google_Maps_Builder_Scripts  {
 
 	/**
 	 * Load additional front-end scripts
-	 *
-	 * @todo MAKE PRO ONLY
 	 *
 	 * @since 2.1.0
 	 *
