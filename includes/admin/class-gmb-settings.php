@@ -246,7 +246,7 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 			'welcome' => sprintf( '%1s Maps Builder<em>Pro</em> %s', __( 'Welcome To', 'maps-builder-pro' ), Google_Maps_Builder()->meta['Version']  ),
 			'sub_heading' => $this->sub_heading()
 		);
-		return $this->view_data( $data );
+		return $this->view_data( $data, true );
 	}
 
 	/**
