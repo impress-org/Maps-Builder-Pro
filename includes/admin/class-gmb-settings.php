@@ -32,23 +32,6 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 		$core_license = new GMB_License( GMB_PLUGIN_BASE, 'Maps Builder Pro', GMB_VERSION, 'WordImpress', 'maps_builder_license_key' );
 	}
 
-	/**
-	 * Admin page markup. Mostly handled by CMB
-	 *
-	 * @since  0.1.0
-	 */
-	public function admin_page_display() {
-		gmb_include_view( 'admin/views/settings-page.php', false, array(
-				'plugin_slug'           => $this->plugin_slug,
-				'key'                   => $this->key(),
-				'license_fields'        => $this->license_fields(),
-				'general_option_fields' => $this->general_option_fields(),
-				'map_option_fields'     => $this->map_option_fields()
-			)
-		);
-
-	}
-
 
 
 	/**
@@ -241,10 +224,10 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 	 * @return array
 	 */
 	protected function settings_page_data(){
-		//place holder
 		$data = array(
 			'welcome' => sprintf( '%1s Maps Builder<em>Pro</em> %s', __( 'Welcome To', 'maps-builder-pro' ), Google_Maps_Builder()->meta['Version']  ),
-			'sub_heading' => $this->sub_heading()
+			'sub_heading' => $this->sub_heading(),
+			'license_fields'        => $this->license_fields(),
 		);
 		return $this->view_data( $data, true );
 	}
