@@ -64,8 +64,7 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 	function add_plugin_meta_links( $meta, $file ) {
 
 		if ( $file == GMB_PLUGIN_BASE ) {
-			$meta[] = parent::add_plugin_meta_links( $meta, $file );
-			$meta[] = __( 'Thank You for using Google Maps Builder', $this->plugin_slug );
+			$meta[] = __( 'Thank You for using Google Maps Builder Pro', 'google-maps-pro' );
 		}
 
 		return $meta;
