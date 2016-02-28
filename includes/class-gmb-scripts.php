@@ -29,7 +29,7 @@ class Google_Maps_Builder_Scripts extends Google_Maps_Builder_Core_Scripts_Init 
 	public function admin_late( $hook ){
 		global $post;
 		$js_dir = GMB_PLUGIN_URL . 'assets/js/admin/';
-		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$suffix = $this->paths->suffix();
 		if ( ( $hook == 'post-new.php' || $hook == 'post.php' ) && 'google_maps' === $post->post_type ) {
 			//pro only
 			wp_register_script( $this->plugin_slug . '-admin-pro', $js_dir . 'admin-pro' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
@@ -50,7 +50,7 @@ class Google_Maps_Builder_Scripts extends Google_Maps_Builder_Core_Scripts_Init 
 		global $post;
 		$js_dir = GMB_PLUGIN_URL . 'assets/js/admin/';
 		$js_plugins = GMB_PLUGIN_URL . 'assets/js/plugins/';
-		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$suffix = $this->paths->suffix();
 
 
 		if ( ( $hook == 'post-new.php' || $hook == 'post.php' ) && 'google_maps' === $post->post_type ) {
@@ -84,7 +84,7 @@ class Google_Maps_Builder_Scripts extends Google_Maps_Builder_Core_Scripts_Init 
 	public function font_end_hooks(){
 		$js_dir = GMB_PLUGIN_URL . 'assets/js/frontend/';
 		$js_plugins = GMB_PLUGIN_URL . 'assets/js/plugins/';
-		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$suffix = $this->paths->suffix();
 		wp_register_script( 'google-maps-builder-plugin-script-pro', $js_dir . 'google-maps-builder' . $suffix . '.js', array( 'jquery' ), GMB_VERSION, true );
 		wp_enqueue_script( 'google-maps-builder-plugin-script-pro' );
 
