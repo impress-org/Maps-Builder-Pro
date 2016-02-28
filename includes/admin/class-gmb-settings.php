@@ -199,7 +199,7 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 	 *
 	 * @uses "gmb_markers_before_save" action
 	 */
-	public function before_marker_save(){
+	public function before_save(){
 		gmb_include_view( 'admin/views/markers-before-save.php', false, $this->view_data() );
 	}
 
