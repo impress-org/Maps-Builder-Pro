@@ -58,6 +58,14 @@ class Google_Maps_Builder_Scripts extends Google_Maps_Builder_Core_Scripts_Init 
 			wp_register_script( $this->plugin_slug . '-admin-map-directions', $js_dir . 'admin-maps-directions' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
 			wp_enqueue_script( $this->plugin_slug . '-admin-map-directions' );
 
+			//controls
+			wp_register_script( $this->plugin_slug . '-admin-maps-controls', $js_dir . 'admin-maps-controls' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
+			wp_enqueue_script( $this->plugin_slug . '-admin-maps-controls' );
+
+			//metabox
+			wp_register_script( $this->plugin_slug . '-admin-maps-mashup-metabox', $js_dir . 'admin-maps-mashup-metabox' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
+			wp_enqueue_script( $this->plugin_slug . '-admin-maps-mashup-metabox' );
+
 			//Marker Clustering
 			wp_register_script( $this->plugin_slug . '-admin-map-marker-clustering', $js_plugins . 'markerclusterer' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
 			wp_enqueue_script( $this->plugin_slug . '-admin-map-marker-clustering' );
