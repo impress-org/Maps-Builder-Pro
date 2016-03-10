@@ -82,14 +82,28 @@ class Google_Maps_Builder_Scripts extends Google_Maps_Builder_Core_Scripts_Init 
 	 *
 	 */
 	public function font_end_hooks(){
-		$js_dir = GMB_PLUGIN_URL . 'assets/js/frontend/';
 		$js_plugins = GMB_PLUGIN_URL . 'assets/js/plugins/';
+		$suffix = $this->paths->suffix();
+
+		wp_register_script( 'google-maps-builder-clusterer', $js_plugins . 'markerclusterer' . $suffix . '.js', array( 'jquery' ), GMB_VERSION, true );
+		wp_enqueue_script( 'google-maps-builder-clusterer' );
+	}
+
+	/**
+	 * Enqueue front-end scripts that need to run late
+	 *
+	 * @since 2.1.0
+	 *
+	 * @uses "wp_enqueue_scripts
+	 *
+	 * @param $hook
+	 */
+	public function front_end_late( $hook ){
+		$js_dir = GMB_PLUGIN_URL . 'assets/js/frontend/';
 		$suffix = $this->paths->suffix();
 		wp_register_script( 'google-maps-builder-plugin-script-pro', $js_dir . 'google-maps-builder' . $suffix . '.js', array( 'jquery' ), GMB_VERSION, true );
 		wp_enqueue_script( 'google-maps-builder-plugin-script-pro' );
 
-		wp_register_script( 'google-maps-builder-clusterer', $js_plugins . 'markerclusterer' . $suffix . '.js', array( 'jquery' ), GMB_VERSION, true );
-		wp_enqueue_script( 'google-maps-builder-clusterer' );
 	}
 
 
