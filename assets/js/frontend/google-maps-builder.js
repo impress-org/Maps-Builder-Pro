@@ -194,9 +194,13 @@
                 }
 
                 // Get the index of the max value, through the built in function inArray
-                var end_lat = markers.point[markers.point.length - 1].latitude;
-                var end_lng = markers.point[markers.point.length - 1].longitude;
-                var end_address = markers.point[markers.point.length - 1].address;
+                var point_index = parseInt( markers.point.length - 1, 10 );
+                if ( 'undefined' != markers.point[point_index] ) {
+                    var end_lat = markers.point[ point_index ].latitude;
+                    var end_lng = markers.point[ point_index ].longitude;
+                    var end_address = markers.point[ point_index ].address;
+                }
+
                 var destination;
                 if ( end_address ) {
                     destination = end_address;

@@ -67,6 +67,13 @@ class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 
 		//Put destination into an array for JS usage
 		$destination_markers = isset( $all_meta['gmb_directions_group'][0] ) ? maybe_unserialize( $all_meta['gmb_directions_group'][0] ) : array();
+		if( ! empty( $destination_markers ) ){
+			foreach( $destination_markers as $i=> $destination_marker ){
+				if( isset( $destination_marker[ 'point' ] ) && is_array( $destination_marker[ 'point' ] ) ){
+					$destination_markers[ $i ][ 'point' ] = array_values( $destination_marker[ 'point' ] );
+				}
+			}
+		}
 		$text_directions     = isset( $all_meta['gmb_text_directions'][0] ) ? maybe_unserialize( $all_meta['gmb_text_directions'][0] ) : 'none';
 		$signed_in_option    = gmb_get_option( 'gmb_signed_in' );
 		if ( is_array( $markers_repeatable ) ) {
