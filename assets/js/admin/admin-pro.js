@@ -234,12 +234,12 @@
             preset_theme.val( 'custom' );
             custom_theme_json_wrap.show();
             custom_theme_json.val( '' ).focus();
-            set_custom_snazzy_map();
+            gmb.set_custom_snazzy_map();
         } );
 
         //On Snazzy Map textfield value change
         custom_theme_json.on( 'change', function () {
-            set_custom_snazzy_map();
+            gmb.set_custom_snazzy_map();
         } );
 
         //Sanity check to see if none
@@ -253,7 +253,7 @@
         //Custom snazzy map
         else if ( preset_theme.val() === 'custom' ) {
             custom_theme_json_wrap.show();
-            set_custom_snazzy_map();
+            gmb.set_custom_snazzy_map();
         }
         //Preconfigured snazzy map
         else {
