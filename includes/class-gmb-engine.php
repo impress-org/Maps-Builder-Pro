@@ -13,6 +13,14 @@
  */
 class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 
+	/**
+	 * Localized data for script
+	 *
+	 * @since 2.1.0
+	 *
+	 * @var array
+	 */
+	protected $localized_data;
 
 	public function __construct(){
 		parent::__construct();
@@ -116,6 +124,7 @@ class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 			)
 		) );
 
+		$this->localized_data = $localized_data;
 		$this->array_push_localized_script( $localized_data );
 
 		ob_start();
@@ -127,7 +136,7 @@ class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 	}
 
 	/**
-	 * Add addtional markup to the bottom of the public view
+	 * Add additional markup to the bottom of the public view
 	 *
 	 * @since 2.1.0
 	 *
@@ -144,7 +153,7 @@ class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 		</div>
 
 		<?php
-		if ( isset( $localized_data[ $post->ID ]['places_search'][0] ) && $localized_data[ $post->ID ]['places_search'][0] === 'yes' ) {
+		if ( isset( $this->localized_data[ $post->ID ] ) && isset( $this->localized_data[ $post->ID ]['places_search'] ) && isset( $this->localized_data[ $post->ID ]['places_search'][0] ) && 'yes' == $this->localized_data[ $post->ID ]['places_search'][0]  ) {
 			include $this->get_google_maps_template( 'places-search.php' );
 		}
 
