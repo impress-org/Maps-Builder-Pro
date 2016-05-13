@@ -283,10 +283,10 @@ class Google_Maps_Builder_Settings {
 	 * @param $meta
 	 */
 	function cmb2_render_lat_lng_default( $field, $meta ) {
-
+		
 		$meta = wp_parse_args(
 			$meta, array(
-				'geolocate_map' => 'yes',
+				'geolocate_map' => 'no',
 				'latitude'      => '',
 				'longitude'     => '',
 			)
@@ -311,7 +311,7 @@ class Google_Maps_Builder_Settings {
 		$output .= '<p class="small-desc">' . sprintf( __( 'For quick lat/lng lookup use <a href="%s" class="new-window"  target="_blank">this service</a>', $this->plugin_slug ), esc_url( 'http://www.latlong.net/' ) ) . '</p>';
 		$output .= '</div><!-- /.search-coordinates-wrap -->';
 		$output .= '</div>'; //end #geolocate-wrap
-		$output .= '<p class="cmb2-metabox-description">' . __( 'When creating a new map the plugin will use your current longitude and latitude for the base location. If you see a blank space instead of the map, this is most likely because you have denied permission for location sharing. You may also specify a default longitude and latitude by turning off this option.', $this->plugin_slug ) . '</p>';
+		$output .= '<p class="cmb2-metabox-description">' . __( 'When creating a new map the plugin will use your current longitude and latitude for the base location. Note: Google now requires that your site be using HTTPS/SSL in order to use this feature. If you see a blank space instead of the map, this is most likely because you have either an insecure website or have denied permission for location sharing. You may also specify a default longitude and latitude by turning off this option.', $this->plugin_slug ) . '</p>';
 
 
 		echo $output;
