@@ -68,7 +68,6 @@ class Google_Maps_Builder_Scripts {
 	function load_frontend_scripts() {
 
 		$google_maps_api_url_args = array(
-			'sensor'    => 'false',
 			'libraries' => 'places'
 		);
 		//Google Maps API key present?
@@ -246,7 +245,6 @@ class Google_Maps_Builder_Scripts {
 		$signed_in_option    = gmb_get_option( 'gmb_signed_in' );
 
 		$google_maps_api_url_args = array(
-			'sensor'    => 'false',
 			'libraries' => 'places,drawing'
 		);
 		//Google Maps API key present?

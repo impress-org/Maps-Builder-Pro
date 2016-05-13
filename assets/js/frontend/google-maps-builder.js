@@ -214,8 +214,6 @@ var gmb_data;
 		}
 
 		//Mouse Type Control
-		// var map_type = map_data.
-
 		var map_type_control = map_data.map_controls.map_type_control;
 		if ( map_type_control == 'none' ) {
 			map.setOptions( {
