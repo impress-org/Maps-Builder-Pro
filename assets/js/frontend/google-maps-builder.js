@@ -213,6 +213,23 @@ var gmb_data;
 			} );
 		}
 
+		//Mouse Type Control
+		// var map_type = map_data.
+
+		var map_type_control = map_data.map_controls.map_type_control;
+		if ( map_type_control == 'none' ) {
+			map.setOptions( {
+				mapTypeControl: false
+			} );
+		} else {
+			map.setOptions( {
+				mapTypeControl       : true,
+				mapTypeControlOptions: {
+					style: google.maps.MapTypeControlStyle[map_type_control]
+				}
+			} );
+		}
+
 		//Pan Control
 		var pan = map_data.map_controls.pan_control.toLowerCase();
 		if ( pan === 'none' ) {
