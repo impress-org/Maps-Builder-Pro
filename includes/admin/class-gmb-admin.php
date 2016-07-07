@@ -23,8 +23,6 @@ class Google_Maps_Builder_Admin extends Google_Maps_Builder_Core_Admin {
 		$prefix          = 'gmb_';
 		$default_options = $this->get_default_map_options();
 
-
-
 		$this->marker_box->add_field(
 			array(
 				'name'              => __( 'Animate in Markers', $this->plugin_slug ),
