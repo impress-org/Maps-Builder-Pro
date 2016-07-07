@@ -224,7 +224,7 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 	 */
 	protected function settings_page_data(){
 		$data = array(
-			'welcome' => sprintf( '%1s Maps Builder<em>Pro</em> %s', __( 'Welcome To', 'maps-builder-pro' ), Google_Maps_Builder()->meta['Version']  ),
+			'welcome' => sprintf( '%1s Maps Builder <em>Pro</em> %s', __( 'Welcome To', 'maps-builder-pro' ), Google_Maps_Builder()->meta['Version']  ),
 			'sub_heading' => $this->sub_heading(),
 			'license_fields'        => $this->license_fields(),
 		);
