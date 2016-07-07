@@ -115,14 +115,14 @@ gulp.task('watch', function () {
     livereload.listen();
 
     //Add watching on Admin SCSS-files
-    gulp.watch('./vendor/wordimpress/maps-builder-core/assets/assets/scss/admin/*.scss', function () {
+    gulp.watch('./vendor/wordimpress/maps-builder-core/assets/scss/admin/*.scss', function () {
         gulp.start('admin_styles');
     });
 
     //Add watching on Frontend SCSS-files
-    gulp.watch( './vendor/wordimpress/maps-builder-core/assets/scss/frontend/*.scss', function () {
-    	gulp.start( 'frontend_styles' );
-    } );
+    gulp.watch('./vendor/wordimpress/maps-builder-core/assets/scss/frontend/*.scss', function () {
+        gulp.start('frontend_styles');
+    });
 
     //Add watching on JS files
     gulp.watch(source_paths.scripts, ['scripts']);
