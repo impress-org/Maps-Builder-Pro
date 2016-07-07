@@ -1,13 +1,9 @@
 /**
  * Google Maps CPT Handling
- *
- *
  */
-
 (function ( $ ) {
 
 	"use strict";
-
 
 	$( document ).on( 'ready', function () {
 
@@ -24,7 +20,6 @@
 
 
 	} );
-
 
 }( jQuery ));
 
