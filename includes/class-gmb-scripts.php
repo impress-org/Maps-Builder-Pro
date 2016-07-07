@@ -14,8 +14,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-
-class Google_Maps_Builder_Scripts extends Google_Maps_Builder_Core_Scripts_Init  {
+/**
+ * Class Google_Maps_Builder_Scripts
+ */
+class Google_Maps_Builder_Scripts extends Google_Maps_Builder_Core_Scripts_Init {
 
 	/**
 	 * Enqueue admin scripts that need to run late
@@ -26,7 +28,7 @@ class Google_Maps_Builder_Scripts extends Google_Maps_Builder_Core_Scripts_Init 
 	 *
 	 * @param $hook
 	 */
-	public function admin_late( $hook ){
+	public function admin_late( $hook ) {
 		global $post;
 		$js_dir = GMB_PLUGIN_URL . 'assets/js/admin/';
 		$suffix = $this->paths->suffix();
@@ -46,11 +48,11 @@ class Google_Maps_Builder_Scripts extends Google_Maps_Builder_Core_Scripts_Init 
 	 *
 	 * @param $hook
 	 */
-	public function admin_hooks( $hook ){
+	public function admin_hooks( $hook ) {
 		global $post;
-		$js_dir = GMB_PLUGIN_URL . 'assets/js/admin/';
+		$js_dir     = GMB_PLUGIN_URL . 'assets/js/admin/';
 		$js_plugins = GMB_PLUGIN_URL . 'assets/js/plugins/';
-		$suffix = $this->paths->suffix();
+		$suffix     = $this->paths->suffix();
 
 
 		if ( ( $hook == 'post-new.php' || $hook == 'post.php' ) && 'google_maps' === $post->post_type ) {
@@ -89,9 +91,9 @@ class Google_Maps_Builder_Scripts extends Google_Maps_Builder_Core_Scripts_Init 
 	 * @uses "enqueue_scripts"
 	 *
 	 */
-	public function font_end_hooks(){
+	public function front_end_hooks() {
 		$js_plugins = GMB_PLUGIN_URL . 'assets/js/plugins/';
-		$suffix = $this->paths->suffix();
+		$suffix     = $this->paths->suffix();
 
 		wp_register_script( 'google-maps-builder-clusterer', $js_plugins . 'markerclusterer' . $suffix . '.js', array( 'jquery' ), GMB_VERSION, true );
 		wp_enqueue_script( 'google-maps-builder-clusterer' );
@@ -106,7 +108,7 @@ class Google_Maps_Builder_Scripts extends Google_Maps_Builder_Core_Scripts_Init 
 	 *
 	 * @param $hook
 	 */
-	public function front_end_late( $hook ){
+	public function front_end_late( $hook ) {
 		$js_dir = GMB_PLUGIN_URL . 'assets/js/frontend/';
 		$suffix = $this->paths->suffix();
 		wp_register_script( 'google-maps-builder-plugin-script-pro', $js_dir . 'google-maps-builder' . $suffix . '.js', array( 'jquery' ), GMB_VERSION, true );

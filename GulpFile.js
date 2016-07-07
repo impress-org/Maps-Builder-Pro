@@ -24,7 +24,6 @@ var gulp = require('gulp'),
  ------------------------------------- */
 var source_paths = {
     admin_styles: ['./vendor/wordimpress/maps-builder-core/assets/scss/**/gmb-admin.scss'],
-    plugin_styles: ['./vendor/wordimpress/maps-builder-core/assets/scss/**/*.scss'],
     frontend_styles: ['./vendor/wordimpress/maps-builder-core/assets/scss/frontend/maps-builder.scss'],
     scripts: [
         './assets/js/**/*.js',
@@ -55,7 +54,6 @@ gulp.task('admin_styles', function () {
         .pipe(gulp.dest('./vendor/wordimpress/maps-builder-core/assets/css'))
         .pipe(rename('gmb-admin.min.css'))
         .pipe(cssmin())
-        .pipe(sourcemaps.write())
         .pipe(gulp.dest('./assets/css'))
         .pipe(livereload())
         .pipe(notify({
@@ -79,7 +77,6 @@ gulp.task('frontend_styles', function () {
         .pipe(gulp.dest('./vendor/wordimpress/maps-builder-core/assets/css')) //place compiled file in appropriate directory
         .pipe(rename('google-maps-builder.min.css')) //rename for our minified version
         .pipe(cssmin())
-        .pipe(sourcemaps.write('')) //write SCSS source maps to the appropriate plugin dir
         .pipe(gulp.dest('./assets/css')) //place the minified compiled file
         .pipe(livereload()) //reload browser
         .pipe(notify({
@@ -121,9 +118,9 @@ gulp.task('watch', function () {
     });
 
     //Add watching on Frontend SCSS-files
-    //gulp.watch( 'assets/scss/frontend/*.scss', function () {
-    //	gulp.start( 'frontend_styles' );
-    //} );
+    gulp.watch( './vendor/wordimpress/maps-builder-core/assets/scss/frontend/*.scss', function () {
+    	gulp.start( 'frontend_styles' );
+    } );
 
     //Add watching on JS files
     gulp.watch(source_paths.scripts, ['scripts']);

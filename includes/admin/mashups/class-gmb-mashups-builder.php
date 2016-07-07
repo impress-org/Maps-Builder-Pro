@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Google Maps Mashups
  *
@@ -17,10 +16,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Class Google_Maps_Builder_Mashups_Builder
+ */
 class Google_Maps_Builder_Mashups_Builder {
 
 	/**
-	 * Go
+	 * Google_Maps_Builder_Mashups_Builder constructor.
+	 *
 	 * @since     2.0
 	 */
 	public function __construct() {
@@ -659,7 +662,7 @@ class Google_Maps_Builder_Mashups_Builder {
 			echo '<button class="gmb-load-mashup button button-primary">' . __( 'Load Markers', $this->plugin_slug ) . '</button>';
 		}
 
-		echo '<img src="' . GMB_PLUGIN_URL . 'assets/img/loading.GIF" class="gmb-mashups-loading">';
+		echo '<img src="' . GMB_PLUGIN_URL . 'assets/img/loading.gif" class="gmb-mashups-loading">';
 
 	}
 
