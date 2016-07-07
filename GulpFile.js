@@ -54,6 +54,7 @@ gulp.task('admin_styles', function () {
         .pipe(gulp.dest('./vendor/wordimpress/maps-builder-core/assets/css'))
         .pipe(rename('gmb-admin.min.css'))
         .pipe(cssmin())
+        .pipe(gulp.dest('./vendor/wordimpress/maps-builder-core/assets/css'))
         .pipe(gulp.dest('./assets/css'))
         .pipe(livereload())
         .pipe(notify({
@@ -77,6 +78,7 @@ gulp.task('frontend_styles', function () {
         .pipe(gulp.dest('./vendor/wordimpress/maps-builder-core/assets/css')) //place compiled file in appropriate directory
         .pipe(rename('google-maps-builder.min.css')) //rename for our minified version
         .pipe(cssmin())
+        .pipe(gulp.dest('./vendor/wordimpress/maps-builder-core/assets/css')) //place the minified compiled file
         .pipe(gulp.dest('./assets/css')) //place the minified compiled file
         .pipe(livereload()) //reload browser
         .pipe(notify({
