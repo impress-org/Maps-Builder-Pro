@@ -1,9 +1,9 @@
 module.exports = function (grunt) {
 
-// Load multiple grunt tasks using globbing patterns
+    // Load multiple grunt tasks using globbing patterns
     require('load-grunt-tasks')(grunt);
 
-// Project configuration.
+    // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
