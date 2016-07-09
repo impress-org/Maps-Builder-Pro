@@ -49,7 +49,7 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) :
 	/**
 	 * Load plugin if core lib is present
 	 */
-	if( ! file_exists( GMB_PLUGIN_PATH . 'vendor/wordimpress/maps-builder-core/core.php' ) ) {
+	if ( ! file_exists( GMB_PLUGIN_PATH . 'vendor/wordimpress/maps-builder-core/core.php' ) ) {
 		add_action( 'admin_notices', 'gmb_no_core_lib' );
 
 		/**
@@ -57,16 +57,21 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) :
 		 *
 		 * @uses "admin_notice" hook
 		 */
-		function gmb_no_core_lib(){
+		function gmb_no_core_lib() {
 			printf( '<div class="notice notice-error"><p>%s</p></div>', esc_html__( 'Your install of Maps Builder is missing its Composer dependencies and can not load.', 'maps-builder-pro' ) );
 		}
-	}else {
+
+	} else {
+
+		//We have a Core lib folks! Proceed
 		require_once GMB_PLUGIN_PATH . 'vendor/wordimpress/maps-builder-core/core.php';
 
 		/**
 		 * Main Maps Builder Class
 		 *
 		 * @since 2.0
+		 * 
+		 * Class Google_Maps_Builder
 		 */
 		final class Google_Maps_Builder extends Google_Maps_Builder_Core {
 
@@ -109,6 +114,7 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) :
 			 * @return    Google_Maps_Builder
 			 */
 			public static function instance() {
+				
 				if ( ! isset( self::$instance ) && ! ( self::$instance instanceof Google_Maps_Builder ) ) {
 
 					self::$instance = new Google_Maps_Builder();
@@ -154,10 +160,8 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) :
 				$this->cmb2_load();
 				$this->load_files();
 				require_once GMB_PLUGIN_PATH . 'includes/class-gmb-scripts.php';
-
 				require_once GMB_PLUGIN_PATH . 'includes/class-gmb-license-handler.php';
 				require_once GMB_PLUGIN_PATH . 'includes/class-gmb-html-elements.php';
-
 				require_once GMB_PLUGIN_PATH . 'includes/admin/mashups/class-gmb-mashups-builder.php';
 
 				if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
