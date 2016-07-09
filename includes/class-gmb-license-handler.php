@@ -18,12 +18,40 @@ if ( ! class_exists( 'GMB_License' ) ) :
 	 * GMB_License Class
 	 */
 	class GMB_License {
+
+		/**
+		 * @var string
+		 */
 		private $file;
+
+		/**
+		 * @var string
+		 */
 		private $license;
+
+		/**
+		 * @var string
+		 */
 		private $item_name;
+
+		/**
+		 * @var string
+		 */
 		private $item_shortname;
+
+		/**
+		 * @var string
+		 */
 		private $version;
+
+		/**
+		 * @var string
+		 */
 		private $author;
+
+		/**
+		 * @var null|string
+		 */
 		private $api_url = 'https://wordimpress.com/edd-sl-api/';
 
 		/**
@@ -31,12 +59,12 @@ if ( ! class_exists( 'GMB_License' ) ) :
 		 *
 		 * @global  array $gmb_options
 		 *
-		 * @param string  $_file
-		 * @param string  $_item_name
-		 * @param string  $_version
-		 * @param string  $_author
-		 * @param string  $_optname
-		 * @param string  $_api_url
+		 * @param string $_file
+		 * @param string $_item_name
+		 * @param string $_version
+		 * @param string $_author
+		 * @param string $_optname
+		 * @param string $_api_url
 		 */
 		public function __construct( $_file, $_item_name, $_version, $_author, $_optname = null, $_api_url = null ) {
 
@@ -53,7 +81,8 @@ if ( ! class_exists( 'GMB_License' ) ) :
 			// Setup hooks
 			$this->includes();
 			$this->hooks();
-			$this->auto_updater();
+//			$this->auto_updater();
+
 		}
 
 		/**
@@ -178,7 +207,6 @@ if ( ! class_exists( 'GMB_License' ) ) :
 		 */
 		public function activate_license() {
 
-
 			if ( ! isset( $_POST[ $this->item_shortname . '_license_key' ] ) ) {
 				return;
 			}
@@ -212,7 +240,7 @@ if ( ! class_exists( 'GMB_License' ) ) :
 
 			// Data to send to the API
 			$api_params = array(
-				'edd_action' => 'activate_license', //never change from "edd_" to "gmb_"!
+				'edd_action' => 'activate_license', //never change action from "edd_" to "gmb_"!
 				'license'    => $license,
 				'item_name'  => urlencode( $this->item_name ),
 				'url'        => home_url()
@@ -378,3 +406,4 @@ if ( ! class_exists( 'GMB_License' ) ) :
 	}
 
 endif; // end class_exists check
+
