@@ -70,7 +70,7 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) :
 		 * Main Maps Builder Class
 		 *
 		 * @since 2.0
-		 * 
+		 *
 		 * Class Google_Maps_Builder
 		 */
 		final class Google_Maps_Builder extends Google_Maps_Builder_Core {
@@ -114,7 +114,7 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) :
 			 * @return    Google_Maps_Builder
 			 */
 			public static function instance() {
-				
+
 				if ( ! isset( self::$instance ) && ! ( self::$instance instanceof Google_Maps_Builder ) ) {
 
 					self::$instance = new Google_Maps_Builder();
