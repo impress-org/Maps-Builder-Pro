@@ -68,8 +68,7 @@ if ( ! class_exists( 'GMB_License' ) ) :
 		 */
 		public function __construct( $_file, $_item_name, $_version, $_author, $_optname = null, $_api_url = null ) {
 
-			$this->settings = get_option( 'gmb_settings' );
-
+			$this->settings       = get_option( 'gmb_settings' );
 			$this->file           = $_file;
 			$this->item_name      = $_item_name;
 			$this->item_shortname = 'gmb_' . preg_replace( '/[^a-zA-Z0-9_\s]/', '', str_replace( ' ', '_', strtolower( $this->item_name ) ) );
@@ -176,37 +175,13 @@ if ( ! class_exists( 'GMB_License' ) ) :
 		}
 
 		/**
-		 * Add Some Content to the Licensing Settings
-		 *
-		 * @access  public
-		 *
-		 * @param array $settings
-		 *
-		 * @return  array
-		 */
-		public function license_settings_content( $settings ) {
-
-			$gmb_license_settings = array(
-				array(
-					'name' => __( 'Add-on Licenses', 'google-maps-builder' ),
-					'desc' => '<hr>',
-					'type' => 'gmb_title',
-					'id'   => 'gmb_title'
-				),
-			);
-
-			return array_merge( $settings, $gmb_license_settings );
-		}
-
-
-		/**
 		 * Activate the license key
 		 *
 		 * @access  public
 		 * @return  void
 		 */
 		public function activate_license() {
-
+			
 			if ( ! isset( $_POST[ $this->item_shortname . '_license_key' ] ) ) {
 				return;
 			}
@@ -227,7 +202,7 @@ if ( ! class_exists( 'GMB_License' ) ) :
 			if ( ! current_user_can( 'install_plugins' ) ) {
 				return;
 			}
-
+			
 			if ( 'valid' === get_option( $this->item_shortname . '_license_active' ) ) {
 				return;
 			}
@@ -255,6 +230,7 @@ if ( ! class_exists( 'GMB_License' ) ) :
 					'body'      => $api_params
 				)
 			);
+
 
 			// Make sure there are no errors
 			if ( is_wp_error( $response ) ) {
@@ -319,7 +295,6 @@ if ( ! class_exists( 'GMB_License' ) ) :
 						'body'      => $api_params
 					)
 				);
-
 
 				// Make sure there are no errors
 				if ( is_wp_error( $response ) ) {
