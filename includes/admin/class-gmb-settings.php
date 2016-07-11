@@ -15,7 +15,7 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 		//Custom CMB2 Settings Fields
 		add_action( 'cmb2_render_license_key', array( $this, 'gmb_license_key_callback' ), 10, 5 );
 		add_action( 'cmb2_render_lat_lng_default', array( $this, 'cmb2_render_lat_lng_default' ), 10, 2 );
-		add_action( 'plugins_loaded', array( $this, 'gmb_core_licensing' ) );
+		add_action( 'admin_init', array( $this, 'gmb_core_licensing' ), 1 );
 		add_filter( 'cmb2_get_metabox_form_format', array( $this, 'gmb_modify_cmb2_form_output' ), 10, 3 );
 
 		//PRO only markup
@@ -28,7 +28,9 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 	 * Core Licensing
 	 */
 	public function gmb_core_licensing() {
-		new GMB_License( GMB_PLUGIN_BASE, 'Maps Builder Pro', GMB_VERSION, 'WordImpress', 'maps_builder_license_key' );
+		if ( class_exists( 'GMB_License' ) && is_admin() ) {
+			new GMB_License( GMB_PLUGIN_BASE, 'Maps Builder Pro', GMB_VERSION, 'WordImpress', 'maps_builder_license_key' );
+		}
 	}
 
 
@@ -46,13 +48,8 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 			'id'         => 'plugin_options',
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( self::$key, ), ),
 			'show_names' => true,
-			'fields'     => array(
-				array(
-					'name' => __( 'Hello', $this->plugin_slug ),
-					'id'   => $prefix . '',
-					'type' => 'license_key',
-				),
-			),
+			'fields'     => apply_filters( 'gmb_settings_licenses', array()
+			)
 		);
 
 		return apply_filters( 'gmb_license_fields', $this->plugin_options );
@@ -98,11 +95,16 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 		$html = $field_type_object->input(
 			array(
 				'class' => $field_classes,
-				'type'  => 'text'
-			) );
+				'type'  => $license_status == 'valid' ? 'password' : 'text'
+			)
+		);
 
-		if ( $license_status === 'valid' ) {
+		//Valid License
+		if ( $license_status == 'valid' ) {
 			$html .= '<input type="submit" class="button-secondary gmb-license-deactivate" name="' . $id . '_deactivate" value="' . __( 'Deactivate License', 'give' ) . '"/>';
+		} else {
+			//This license is not valid so delete it
+			gmb_delete_option( $id );
 		}
 
 		$html .= '<label for="give_settings[' . $id . ']"> ' . $field_description . '</label>';
@@ -110,7 +112,7 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 		wp_nonce_field( $id . '-nonce', $id . '-nonce' );
 
 		echo $html;
-		
+
 	}
 
 	/**
