@@ -54,7 +54,6 @@ class Google_Maps_Builder_Scripts extends Google_Maps_Builder_Core_Scripts_Init 
 		$js_plugins = GMB_PLUGIN_URL . 'assets/js/plugins/';
 		$suffix     = $this->paths->suffix();
 
-
 		if ( ( $hook == 'post-new.php' || $hook == 'post.php' ) && 'google_maps' === $post->post_type ) {
 			//Directions
 			wp_register_script( $this->plugin_slug . '-admin-map-directions', $js_dir . 'admin-maps-directions' . $suffix . '.js', array( 'jquery' ), GMB_VERSION );
