@@ -96,10 +96,10 @@ class GMB_CSV_Manager {
 			 */
 			$active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'import';
 			?>
-			<h2 class="nav-tab-wrapper">
+			<h1 class="nav-tab-wrapper">
 				<a href="?post_type=google_maps&page=<?php echo self::$key; ?>" class="nav-tab <?php echo $active_tab == 'import' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Import', $this->plugin_slug ); ?></a>
 				<a href="?post_type=google_maps&page=<?php echo self::$key; ?>&tab=export" class="nav-tab <?php echo $active_tab == 'export' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Export', $this->plugin_slug ); ?></a>
-			</h2>
+			</h1>
 
 			<?php
 			/**
