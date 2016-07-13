@@ -119,8 +119,7 @@
             var custom_marker_img = $('#gmb_markers_group_' + index + '_marker_img').val();
 
             if (custom_marker_img) {
-                marker_icon = gmb_data.plugin_url + custom_marker_img;
-                console.log(marker_icon);
+                marker_icon = custom_marker_img;
             } else if (custom_marker_icon.length > 0 && custom_marker_icon.length > 0) {
                 var custom_label = $('#gmb_markers_group_' + index + '_label').val();
                 marker_icon = eval("(" + custom_marker_icon + ")");
