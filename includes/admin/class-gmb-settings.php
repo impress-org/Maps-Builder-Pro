@@ -18,10 +18,12 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 		add_action( 'admin_init', array( $this, 'gmb_core_licensing' ), 1 );
 		add_filter( 'cmb2_get_metabox_form_format', array( $this, 'gmb_modify_cmb2_form_output' ), 10, 3 );
 
-		//PRO only markup
+		//Pro Markers
 		add_action( 'gmb_extra_marker_options', array( $this, 'pro_markers_options' ) );
-		add_action( 'gmb_extra_markers', array( $this, 'pro_markers' ) );
-		add_action( 'gmb_markers_before_save', array( $this, 'before_save' ) );
+		add_action( 'gmb_maps_icons_markers_list_after', array( $this, 'pro_markers_default' ) );
+		add_action( 'gmb_markers_before_save', array( $this, 'pro_markers_maps_icons' ) );
+		add_action( 'gmb_markers_before_save', array( $this, 'pro_markers_templatic' ) );
+		add_action( 'gmb_markers_before_save', array( $this, 'pro_markers_uploader' ) );
 
 	}
 
@@ -190,19 +192,40 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 	/**
 	 * Add pro-only markers in markers partial
 	 *
-	 * @uses "gmb_extra_markers" action
+	 * @uses "gmb_markers_before_save" action
 	 */
-	public function pro_markers() {
-		gmb_include_view( 'admin/views/pro-markers.php', false, $this->view_data() );
+	public function pro_markers_default() {
+		gmb_include_view( 'admin/views/pro-markers-default-icons.php', false, $this->view_data() );
 	}
 
 	/**
-	 * Add additional markup before save in markers partial
+	 * Add Additional Pro-only Maps Icons Markers
+	 *
+	 * @description: Adds additional icons to the ul list in the admin markers modal
+	 *
+	 * @uses "gmb_maps_icons_markers_list_after" action
+	 */
+	public function pro_markers_maps_icons() {
+		gmb_include_view( 'admin/views/pro-markers-maps-icons.php', false, $this->view_data() );
+	}
+
+	/**
+	 * Adds Templatic Pro Markers
 	 *
 	 * @uses "gmb_markers_before_save" action
 	 */
-	public function before_save() {
-		gmb_include_view( 'admin/views/markers-before-save.php', false, $this->view_data() );
+	public function pro_markers_templatic() {
+		gmb_include_view( 'admin/views/pro-markers-templatic.php', false, $this->view_data() );
+	}
+
+
+	/**
+	 * Adds the Uploader HTML element
+	 *
+	 * @uses "gmb_markers_before_save" action
+	 */
+	public function pro_markers_uploader() {
+		gmb_include_view( 'admin/views/pro-markers-uploader.php', false, $this->view_data() );
 	}
 
 	/**
