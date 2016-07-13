@@ -58,6 +58,10 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 	}
 
 	/**
+	 * Add Plugin Meta Links
+	 *
+	 * @description: Adds links to the plugin listing page in wp-admin
+	 *
 	 * @param $meta
 	 * @param $file
 	 *
@@ -66,7 +70,10 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 	function add_plugin_meta_links( $meta, $file ) {
 
 		if ( $file == GMB_PLUGIN_BASE ) {
-			$meta[] = __( 'Thank you for using Maps Builder Pro', 'google-maps-builder' );
+			$meta[] = "<a href='http://wordpress.org/support/view/plugin-reviews/google-maps-builder' target='_blank' title='" . __( 'Rate Google Maps Builder on WordPress.org', $this->plugin_slug ) . "'>" . __( 'Rate Plugin', $this->plugin_slug ) . "</a>";
+			$meta[] = '<a href="https://wordimpress.com/support/" target="_blank" title="' . __( 'Have an active license? Get priority support from WordImpress.', $this->plugin_slug ) . '">' . __( 'Support', $this->plugin_slug ) . '</a>';
+			$meta[] = "<a href='https://wordimpress.com/documentation/maps-builder-pro/' target='_blank' title='" . __( 'View the plugin documentation', $this->plugin_slug ) . "'>" . __( 'Documentation', $this->plugin_slug ) . "</a>";
+
 		}
 
 		return $meta;
