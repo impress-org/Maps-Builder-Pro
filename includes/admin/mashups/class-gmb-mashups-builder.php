@@ -179,6 +179,12 @@ class Google_Maps_Builder_Mashups_Builder {
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
 			'name'        => __( 'Marker Data', $this->plugin_slug ),
+			'id'          => 'marker_included_img',
+			'row_classes' => 'gmb-mashup-marker-label gmb-hidden',
+			'type'        => 'text',
+		) );
+		$mashup_metabox->add_group_field( $group_field_id, array(
+			'name'        => __( 'Marker Data', $this->plugin_slug ),
 			'id'          => 'marker',
 			'row_classes' => 'gmb-mashup-marker-label gmb-hidden',
 			'type'        => 'textarea_code',
@@ -403,7 +409,7 @@ class Google_Maps_Builder_Mashups_Builder {
 
 
 			//Default "no filter" options
-			$response['taxonomy_options'] .= '<option value="none">' . __( 'No filter', 'gmb' ) . '</option>';
+			$response['taxonomy_options'] .= '<option value="none">' . __( 'No filter', 'google-maps-builder' ) . '</option>';
 
 			//Create taxonomy options
 			foreach ( $taxonomies as $taxonomy ) {
