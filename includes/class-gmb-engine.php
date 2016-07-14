@@ -22,10 +22,11 @@ class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 	 */
 	protected $localized_data;
 
-	public function __construct(){
+	public function __construct() {
 		parent::__construct();
 		add_action( 'gmb_public_view_bottom', array( $this, 'public_bottom' ), 10, 3 );
 	}
+
 	/**
 	 * Google Maps Builder Shortcode
 	 *
@@ -67,15 +68,15 @@ class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 
 		//Put destination into an array for JS usage
 		$destination_markers = isset( $all_meta['gmb_directions_group'][0] ) ? maybe_unserialize( $all_meta['gmb_directions_group'][0] ) : array();
-		if( ! empty( $destination_markers ) ){
-			foreach( $destination_markers as $i=> $destination_marker ){
-				if( isset( $destination_marker[ 'point' ] ) && is_array( $destination_marker[ 'point' ] ) ){
-					$destination_markers[ $i ][ 'point' ] = array_values( $destination_marker[ 'point' ] );
+		if ( ! empty( $destination_markers ) ) {
+			foreach ( $destination_markers as $i => $destination_marker ) {
+				if ( isset( $destination_marker['point'] ) && is_array( $destination_marker['point'] ) ) {
+					$destination_markers[ $i ]['point'] = array_values( $destination_marker['point'] );
 				}
 			}
 		}
-		$text_directions     = isset( $all_meta['gmb_text_directions'][0] ) ? maybe_unserialize( $all_meta['gmb_text_directions'][0] ) : 'none';
-		$signed_in_option    = gmb_get_option( 'gmb_signed_in' );
+		$text_directions  = isset( $all_meta['gmb_text_directions'][0] ) ? maybe_unserialize( $all_meta['gmb_text_directions'][0] ) : 'none';
+		$signed_in_option = gmb_get_option( 'gmb_signed_in' );
 		if ( is_array( $markers_repeatable ) ) {
 			foreach ( $markers_repeatable as $marker ) {
 				array_push( $map_marker_array, $marker );
@@ -114,6 +115,7 @@ class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 				'signed_in_option'    => $signed_in_option,
 				'marker_centered'     => isset( $marker_centered[0] ) ? $marker_centered[0] : '',
 				'marker_cluster'      => isset( $cluster_option[0] ) ? $cluster_option[0] : '',
+				'plugin_url'          => GMB_PLUGIN_URL,
 				'site_name'           => get_bloginfo( 'name' ),
 				'site_url'            => get_bloginfo( 'url' ),
 				'mashup_markers'      => $mashup_marker_array,
@@ -153,14 +155,16 @@ class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 	 * @param $text_directions
 	 * @param $post
 	 */
-	public function public_bottom( $atts, $text_directions, $post ){ ?>
+	public function public_bottom( $atts, $text_directions, $post ) { ?>
 		<div id="directions-panel-<?php echo $atts['id']; ?>" class="gmb-directions-panel panel-<?php echo $text_directions; ?>">
-			<div class="gmb-directions-toggle"><span class="gmb-directions-icon"><span class="gmb-hide-text"><?php _e( 'Toggle Directions', $this->plugin_slug ); ?></span></span></div>
+			<div class="gmb-directions-toggle">
+				<span class="gmb-directions-icon"><span class="gmb-hide-text"><?php _e( 'Toggle Directions', $this->plugin_slug ); ?></span></span>
+			</div>
 			<div class="gmb-directions-panel-inner"></div>
 		</div>
 
 		<?php
-		if ( isset( $this->localized_data[ $post->ID ] ) && isset( $this->localized_data[ $post->ID ]['places_search'] ) && isset( $this->localized_data[ $post->ID ]['places_search'][0] ) && 'yes' == $this->localized_data[ $post->ID ]['places_search'][0]  ) {
+		if ( isset( $this->localized_data[ $post->ID ] ) && isset( $this->localized_data[ $post->ID ]['places_search'] ) && isset( $this->localized_data[ $post->ID ]['places_search'][0] ) && 'yes' == $this->localized_data[ $post->ID ]['places_search'][0] ) {
 			include $this->get_google_maps_template( 'places-search.php' );
 		}
 
