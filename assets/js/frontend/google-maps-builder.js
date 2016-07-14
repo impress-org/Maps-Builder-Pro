@@ -5,6 +5,7 @@
  */
 
 (function ($, gmb) {
+
     /**
      * Create Mashup Marker
      *
@@ -44,6 +45,7 @@
 
                 //Loop through marker data
                 $.each(response, function (index, marker_data) {
+                    //Set mashup markers
                     var marker = gmb.set_mashup_marker(map, data.index, marker_data, mashup_value, map_data);
                     if (marker instanceof Marker) {
                         markers.push(marker);
@@ -92,12 +94,18 @@
         //check for custom marker and label data
         var custom_marker_icon = (typeof mashup_value.marker !== 'undefined' ? mashup_value.marker : '');
         var custom_marker_img = (typeof mashup_value.marker_img !== 'undefined' ? mashup_value.marker_img : '');
+        var included_marker_img = (typeof mashup_value.marker_included_img !== 'undefined' ? mashup_value.marker_included_img : '');
 
-        if (custom_marker_img) {
+        //Plugin included marker image
+        if (included_marker_img) {
+            marker_icon = map_data.plugin_url + included_marker_img;
+        } else if (custom_marker_img) {
+            //Uploaded marker image
             marker_icon = custom_marker_img;
         } else if (custom_marker_icon.length > 0 && custom_marker_icon.length > 0) {
+            //SVG Marker
             var custom_label = (typeof mashup_value.label !== 'undefined' ? mashup_value.label : '');
-            marker_icon = eval("(" + custom_marker_icon + ")");
+            marker_icon = eval('(' + custom_marker_icon + ')');
             marker_label = custom_label;
         }
 
@@ -128,8 +136,8 @@
      */
     gmb.get_mashup_infowindow_content = function (map, marker, map_data) {
 
-        info_window.setContent('<div class="gmb-infobubble loading"></div>');
-        info_window.open(map, marker);
+        gmb.info_window.setContent('<div class="gmb-infobubble loading"></div>');
+        gmb.info_window.open(map, marker);
 
         var data = {
             action: 'get_mashup_marker_infowindow',
@@ -139,15 +147,15 @@
 
         jQuery.post(map_data.ajax_url, data, function (response) {
 
-            info_window.setContent(response.infowindow);
-            info_window.updateContent_();
+            gmb.info_window.setContent(response.infowindow);
+            gmb.info_window.updateContent_();
 
             //Marker Centers Map on Click?
             // This ensures that the map centers AFTER the loaded via AJAX
             if (map_data.marker_centered == 'yes') {
                 window.setTimeout(function () {
                     // Pan into view, done in a time out to make it feel nicer :)
-                    info_window.panToView();
+                    gmb.info_window.panToView();
                 }, 200);
             }
 
