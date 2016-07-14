@@ -118,9 +118,6 @@ class Google_Maps_Builder_Mashups_Metabox {
 			wp_register_script( $this->plugin_slug . '-admin-gmaps', 'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places', array( 'jquery' ) );
 			wp_enqueue_script( $this->plugin_slug . '-admin-gmaps' );
 
-			//Check for Google Maps API JS conflicts
-			Google_Maps_Builder()->scripts->check_for_multiple_google_maps_api_calls();
-
 			//Register our mashup metabox JS
 			wp_register_script( $this->plugin_slug . '-admin-mashups-script', GMB_PLUGIN_URL . 'assets/js/admin/admin-maps-mashup-metabox' . $suffix . '.js', array(
 				'jquery'
