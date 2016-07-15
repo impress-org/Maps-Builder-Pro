@@ -104,3 +104,13 @@ Toggle Fields
 #cmb2-metabox-google_maps_mashup_metabox label:after, #side-sortables #cmb2-metabox-google_maps_mashup_metabox .cmb-th label:after {
 	display: none;
 }
+
+/*-------------------------------------
+Google API Errors
+---------------------------------------*/
+
+input#_gmb_mashup_autocomplete[placeholder*="Oops!"] {
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding-left: 35px;
+}
