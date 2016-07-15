@@ -11,11 +11,17 @@
  * @link      http://wordimpress.com
  * @copyright 2015 WordImpress
  */
+
+/**
+ * Class Google_Maps_Builder_Mashups_Metabox
+ */
 class Google_Maps_Builder_Mashups_Metabox {
 
 	public $enabled_post_types;
 
 	/**
+	 * Google_Maps_Builder_Mashups_Metabox constructor.
+	 *
 	 * Initialize the plugin by loading admin scripts & styles and adding a
 	 * settings page and menu.
 	 *
@@ -109,20 +115,21 @@ class Google_Maps_Builder_Mashups_Metabox {
 		if ( $this->is_mashup_metabox_enabled() == false ) {
 			return false;
 		}
+
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$apikey  = gmb_get_option('maps_api_key');
 
 		//Only enqueue on post edit screens
 		if ( $hook === 'post.php' || $hook === 'post-new.php' ) {
 
 			//Load Google Maps API on this CPT
-			wp_register_script( $this->plugin_slug . '-admin-gmaps', 'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places', array( 'jquery' ) );
+			wp_register_script( $this->plugin_slug . '-admin-gmaps', 'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=' . $apikey, array( 'jquery' ) );
 			wp_enqueue_script( $this->plugin_slug . '-admin-gmaps' );
 
 			//Register our mashup metabox JS
 			wp_register_script( $this->plugin_slug . '-admin-mashups-script', GMB_PLUGIN_URL . 'assets/js/admin/admin-maps-mashup-metabox' . $suffix . '.js', array(
 				'jquery'
 			) );
-
 			wp_enqueue_script( $this->plugin_slug . '-admin-mashups-script' );
 
 			wp_register_style( $this->plugin_slug . '-admin-mashups-style', GMB_PLUGIN_URL . 'assets/css/gmb-mashup-metabox.css' );
