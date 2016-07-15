@@ -129,6 +129,10 @@ The main developer of this plugin is WordImpress. To find out more information a
 = 2.0.3 =
 * New: Option to centered maps on marker when the user clicks on it - https://github.com/WordImpress/Maps-Builder-Pro/issues/17
 * Fix: Standardized spelling for loading image file extension names; the extensions were uppercase "GIF" causing 404s for some hosts
+* Fix: When the "Map Control Type" was set to none the controls would still appear on the map - https://github.com/WordImpress/Maps-Builder-Pro/issues/79
+* Fix: Cluster markers changed from Google to Github so the URLs for the images are now updated - https://github.com/WordImpress/Maps-Builder-Pro/issues/84
+* Fix: Better way to include CMB2 so there's fewer conflicts with other plugins that are using the same library
+* Tweak: Removed 'sensor' arguments to prevent Google's console "Google Maps API warning sensor is not required"
 
 = 2.0.2 =
 * New: Introduced the InfoBubble library for better handling of frontend marker info windows
