@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Google Maps Mashups
  *
@@ -17,10 +16,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Class Google_Maps_Builder_Mashups_Builder
+ */
 class Google_Maps_Builder_Mashups_Builder {
 
 	/**
-	 * Go
+	 * Google_Maps_Builder_Mashups_Builder constructor.
+	 *
 	 * @since     2.0
 	 */
 	public function __construct() {
@@ -173,6 +176,12 @@ class Google_Maps_Builder_Mashups_Builder {
 				'url'                  => false,
 				'add_upload_file_text' => __( 'Add Marker Image', $this->plugin_slug )
 			),
+		) );
+		$mashup_metabox->add_group_field( $group_field_id, array(
+			'name'        => __( 'Marker Data', $this->plugin_slug ),
+			'id'          => 'marker_included_img',
+			'row_classes' => 'gmb-mashup-marker-label gmb-hidden',
+			'type'        => 'text',
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
 			'name'        => __( 'Marker Data', $this->plugin_slug ),
@@ -400,7 +409,7 @@ class Google_Maps_Builder_Mashups_Builder {
 
 
 			//Default "no filter" options
-			$response['taxonomy_options'] .= '<option value="none">' . __( 'No filter', 'gmb' ) . '</option>';
+			$response['taxonomy_options'] .= '<option value="none">' . __( 'No filter', 'google-maps-builder' ) . '</option>';
 
 			//Create taxonomy options
 			foreach ( $taxonomies as $taxonomy ) {
@@ -659,7 +668,7 @@ class Google_Maps_Builder_Mashups_Builder {
 			echo '<button class="gmb-load-mashup button button-primary">' . __( 'Load Markers', $this->plugin_slug ) . '</button>';
 		}
 
-		echo '<img src="' . GMB_PLUGIN_URL . 'assets/img/loading.GIF" class="gmb-mashups-loading">';
+		echo '<img src="' . GMB_PLUGIN_URL . 'assets/img/loading.gif" class="gmb-mashups-loading">';
 
 	}
 

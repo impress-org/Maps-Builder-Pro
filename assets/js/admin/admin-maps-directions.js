@@ -6,7 +6,7 @@
  *  @since: 2.0
  */
 var gmb_data;
-window.GMB_Directions = (function ( window, document, $, undefined ) {
+(function ( $, gmb ) {
 	'use strict';
 
 	var app = {};
@@ -223,8 +223,8 @@ window.GMB_Directions = (function ( window, document, $, undefined ) {
 
 	//Get it started
 	$( document ).ready( app.init );
-
+    gmb.GMB_Directions = app;
 	return app;
 
 
-})( window, document, jQuery );
+}( jQuery, window.MapsBuilderAdmin || ( window.MapsBuilderAdmin = {} ) ) );
