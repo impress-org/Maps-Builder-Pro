@@ -17,6 +17,9 @@
  */
 class Google_Maps_Builder_Mashups_Metabox {
 
+	/**
+	 * @var
+	 */
 	public $enabled_post_types;
 
 	/**
@@ -49,7 +52,8 @@ class Google_Maps_Builder_Mashups_Metabox {
 	 * Defines the Google Places CPT metabox and field configuration
 	 *
 	 * @since  2.0
-	 * @return array
+	 *
+	 * @return array|mixed
 	 */
 	public function mashup_metabox_fields() {
 
