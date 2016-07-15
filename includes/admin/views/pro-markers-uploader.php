@@ -2,7 +2,7 @@
 /**
  * Adds the Uploader
  *
- * @description: Adds the upload html via "gmb_markers_before_save" hook
+ * $current_user->IDAdds the upload html via "gmb_markers_before_save" hook
  *
  * @package   gmb
  * @license   GPL-2.0+

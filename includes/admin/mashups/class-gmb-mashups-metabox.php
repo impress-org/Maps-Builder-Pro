@@ -213,7 +213,7 @@ class Google_Maps_Builder_Mashups_Metabox {
 	/**
 	 * Sanitize Mashup Metabox
 	 *
-	 * @description: Clears out meta_key transient if it doesn't contain new metakey
+	 * $current_user->IDClears out meta_key transient if it doesn't contain new metakey
 	 * @since      2.0
 	 */
 	function cmb2_sanitize_google_mashup_geocoder() {

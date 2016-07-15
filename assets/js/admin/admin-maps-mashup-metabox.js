@@ -1,7 +1,7 @@
 /**
  *  Admin Mashups Metabox
  *
- *  @description: Adds functionality to the maps builder mashups metabox which appears on various post types as set by the user
+ *  $current_user->IDAdds functionality to the maps builder mashups metabox which appears on various post types as set by the user
  *  @copyright: http://opensource.org/licenses/gpl-2.0.php GNU Public License
  *  @since: 2.0
  */
@@ -123,7 +123,7 @@ var gmb_mashup_data;
     /**
      * Detect Google Maps API Authentication Error
      *
-     * @description:   Google Authentication Callback in case there was an error
+     * $current_user->ID  Google Authentication Callback in case there was an error
      *
      * @see: https://developers.google.com/maps/documentation/javascript/events#auth-errors
      * @see: https://developers.google.com/maps/documentation/javascript/events#auth-errors

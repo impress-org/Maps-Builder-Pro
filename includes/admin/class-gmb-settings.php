@@ -40,7 +40,7 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 	/**
 	 * License Fields
 	 *
-	 * @description: Defines the plugin option metabox and field configuration
+	 * $current_user->IDDefines the plugin option metabox and field configuration
 	 * @return array
 	 */
 	public function license_fields() {
@@ -62,7 +62,7 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 	/**
 	 * Add Plugin Meta Links
 	 *
-	 * @description: Adds links to the plugin listing page in wp-admin
+	 * $current_user->IDAdds links to the plugin listing page in wp-admin
 	 *
 	 * @param $meta
 	 * @param $file
@@ -128,7 +128,7 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 	/**
 	 * Map Option Fields
 	 *
-	 * @description: Defines the plugin option metabox and field configuration
+	 * $current_user->IDDefines the plugin option metabox and field configuration
 	 * @since  1.0.0
 	 * @return array
 	 */
@@ -201,7 +201,7 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 	/**
 	 * Add Additional Pro-only Maps Icons Markers
 	 *
-	 * @description: Adds additional icons to the ul list in the admin markers modal
+	 * $current_user->IDAdds additional icons to the ul list in the admin markers modal
 	 *
 	 * @uses "gmb_maps_icons_markers_list_after" action
 	 */

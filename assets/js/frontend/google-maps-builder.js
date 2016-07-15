@@ -1,7 +1,7 @@
 /**
  * Maps Builder JS
  *
- * @description: Frontend form rendering
+ * $current_user->IDFrontend form rendering
  */
 
 (function ($, gmb) {

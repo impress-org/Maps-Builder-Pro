@@ -1,7 +1,7 @@
 /**
  *  Maps Directions
  *
- *  @description: Adds directions functionality to the maps builder
+ *  $current_user->IDAdds directions functionality to the maps builder
  *  @copyright: http://opensource.org/licenses/gpl-2.0.php GNU Public License
  *  @since: 2.0
  */

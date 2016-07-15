@@ -1,7 +1,7 @@
 /**
  *  Admin Mashup Functionality
  *
- *  @description: Adds directions functionality to the maps builder
+ *  $current_user->IDAdds directions functionality to the maps builder
  *  @copyright: http://opensource.org/licenses/gpl-2.0.php GNU Public License
  *  @since: 2.0
  */
@@ -76,7 +76,7 @@ var gmb_mashup;
 
     /**
      * Loads Mashups
-     * @description: When the map loads it will load mashups that have been already configured
+     * $current_user->IDWhen the map loads it will load mashups that have been already configured
      */
     app.load_configured_mashups = function () {
 
@@ -311,7 +311,7 @@ var gmb_mashup;
     /**
      * Set Mashup Marker
      *
-     * @description: Used in foreach loop to place markers
+     * $current_user->IDUsed in foreach loop to place markers
      * @param mashup_index
      * @param marker_data
      * @param loop_index
@@ -383,7 +383,7 @@ var gmb_mashup;
     /**
      * Get Mashup Infowindow Content
      *
-     * @description: Retrieves the marker content via AJAX request
+     * $current_user->IDRetrieves the marker content via AJAX request
      */
     app.get_infowindow_content = function (marker) {
 
@@ -429,7 +429,7 @@ var gmb_mashup;
     /**
      * Set Mashup Marker Icon
      *
-     * @description: Configures a mashup group's marker icon
+     * $current_user->IDConfigures a mashup group's marker icon
      */
     app.set_mashup_marker_icon = function () {
 

@@ -1,6 +1,8 @@
 /**
  * Maps Builder Gulp File
- * @description Compiles SCSS, minifies scripts, renames files, and many other useful tasks; using Gulp.js
+ *
+ * Compiles SCSS, minifies scripts, renames files, and many other useful tasks; using Gulp.js
+ *
  * @since 2.0
  */
 
