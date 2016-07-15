@@ -32,6 +32,7 @@
      * Sets the Map Theme
      *
      * @description Uses Snazzy Maps JSON arrow to set the colors for the map
+     *
      * @since 1.0
      */
     gmb.set_map_theme = function () {
@@ -93,36 +94,6 @@
 
         }
     };
-
-    /**
-     * Marker Index
-     *
-     * @description Helper function that returns the appropriate index for the repeatable group
-     * @returns {Number}
-     */
-    gmb.get_marker_index = function () {
-
-        var marker_repeatable = $('#gmb_markers_group_repeat');
-        var marker_repeatable_group = marker_repeatable.find(' div.cmb-repeatable-grouping');
-        var marker_add_row_btn = marker_repeatable.find('.cmb-add-group-row.button');
-
-        //Create a new marker repeatable meta group
-        var index = parseInt(marker_repeatable_group.last().attr('data-iterator'));
-        var existing_vals = marker_repeatable_group.first().find('input,textarea').val();
-
-        //Ensure appropriate index is used for marker
-        if (existing_vals && index === 0) {
-            marker_add_row_btn.trigger('click');
-            index = 1;
-        } else if (index !== 0) {
-            marker_add_row_btn.trigger('click');
-            //recount rows
-            index = parseInt(marker_repeatable.find(' div.cmb-repeatable-grouping').last().attr('data-iterator'));
-        }
-
-        return index;
-    };
-
 
 }(jQuery, window.MapsBuilderAdmin || ( window.MapsBuilderAdmin = {} )) );
 
