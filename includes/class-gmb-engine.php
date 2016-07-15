@@ -11,6 +11,10 @@
  * @link      http://wordimpress.com
  * @copyright 2015 WordImpress, Devin Walker
  */
+
+/**
+ * Class Google_Maps_Builder_Engine
+ */
 class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 
 	/**
@@ -22,6 +26,9 @@ class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 	 */
 	protected $localized_data;
 
+	/**
+	 * Google_Maps_Builder_Engine constructor.
+	 */
 	public function __construct() {
 		parent::__construct();
 		add_action( 'gmb_public_view_bottom', array( $this, 'public_bottom' ), 10, 3 );
