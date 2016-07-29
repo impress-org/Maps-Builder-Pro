@@ -148,7 +148,6 @@
         jQuery.post(map_data.ajax_url, data, function (response) {
 
             gmb.info_window.setContent(response.infowindow);
-            gmb.info_window.updateContent_();
 
             //Marker Centers Map on Click?
             // This ensures that the map centers AFTER the loaded via AJAX
