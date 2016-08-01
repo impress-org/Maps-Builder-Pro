@@ -109,6 +109,10 @@
             marker_label = custom_label;
         }
 
+        // Whether or not an individual marker displays its featured image is decided by the parent mashup's settings;
+        // if it's set to "yes", then the image displays, else it doesn't.
+        marker_data['featured_img'] = (mashup_value['featured_img'] === 'yes');
+
         // make and place map maker.
         var marker = new Marker({
             map: map,
@@ -141,8 +145,7 @@
 
         var data = {
             action: 'get_mashup_marker_infowindow',
-            marker_data: marker.marker_data,
-            featured_img: marker.featured_img
+            marker_data: marker.marker_data
         };
 
         jQuery.post(map_data.ajax_url, data, function (response) {

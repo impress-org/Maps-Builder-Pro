@@ -578,7 +578,7 @@ class Google_Maps_Builder_Mashups_Builder {
 		//Set Vars
 		$marker_data       = isset( $_POST['marker_data'] ) ? $_POST['marker_data'] : '';
 		$post_id           = isset( $marker_data['id'] ) ? intval( $marker_data['id'] ) : '';
-		$featured_img_show = isset( $_POST['featured_img'] ) ? $_POST['featured_img'] : '';
+		$featured_img_show = isset( $marker_data['featured_img'] ) ? filter_var( $marker_data['featured_img'], FILTER_VALIDATE_BOOLEAN ) : false;
 
 		$post_object      = get_post( $post_id );
 		$marker_title     = $post_object->post_title;
@@ -591,7 +591,7 @@ class Google_Maps_Builder_Mashups_Builder {
 
 		$response['infowindow'] .= '<div id="infobubble-content" class="main-place-infobubble-content">';
 
-		if ( ! empty( $marker_thumbnail[0] ) && $featured_img_show !== 'false' ) {
+		if ( ! empty( $marker_thumbnail[0] ) && $featured_img_show !== false ) {
 			$response['infowindow'] .= '<div class="place-thumb"><img src="' . $marker_thumbnail[0] . '" alt="' . $marker_title . '"></div>';
 		}
 		if ( ! empty( $marker_title ) ) {
