@@ -121,7 +121,7 @@ class Google_Maps_Builder_Mashups_Metabox {
 		}
 
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-		$apikey = gmb_get_option( 'maps_api_key' );
+		$apikey = gmb_get_option( 'gmb_maps_api_key' );
 
 		//Only enqueue on post edit screens
 		if ( $hook === 'post.php' || $hook === 'post-new.php' ) {

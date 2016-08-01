@@ -195,7 +195,7 @@ module.exports = function (grunt) {
                     allowEmpty: true
                 },
                 files: {
-                    src: ['package.json', 'ingot.php', 'releases/<%= pkg.name %>-<%= pkg.version %>.zip']
+                    src: ['package.json', 'google-maps-builder.php', 'releases/<%= pkg.name %>-<%= pkg.version %>.zip']
                 }
             }
         },
@@ -225,20 +225,15 @@ module.exports = function (grunt) {
 
     });
 
-// Default task. - grunt makepot
+    // Default task. - grunt makepot
     grunt.registerTask('default', 'makepot');
 
-// Makepot and push it on Transifex task(s).
-    grunt.registerTask('tx-push', ['makepot', 'exec:txpush_s']);
 
-// Pull from Transifex and create .mo task(s).
-    grunt.registerTask('tx-pull', ['exec:txpull', 'potomo']);
-
-// Setup dev environment, not doing much now, but when we add bower and such it will.
+    // Setup dev environment, not doing much now, but when we add bower and such it will.
     grunt.registerTask('setup-dev', ['exec:composer_update']);
 
 
-    //release tasks
+    // Release tasks
     grunt.registerTask('version_number', ['replace:core_file']);
     grunt.registerTask('pre_vcs', ['exec:composer_release_update', 'tx-push', 'version_number', 'copy', 'clean:pre_compress', 'compress']);
     grunt.registerTask('do_git', ['gitadd', 'gitcommit', 'gittag', 'gitpush']);
