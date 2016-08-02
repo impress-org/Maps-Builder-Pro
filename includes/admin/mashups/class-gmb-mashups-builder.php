@@ -578,7 +578,7 @@ class Google_Maps_Builder_Mashups_Builder {
 		//Set Vars
 		$marker_data       = isset( $_POST['marker_data'] ) ? $_POST['marker_data'] : '';
 		$post_id           = isset( $marker_data['id'] ) ? intval( $marker_data['id'] ) : '';
-		$featured_img_show = isset( $_POST['featured_img'] ) ? $_POST['featured_img'] : '';
+		$featured_img_show = isset( $marker_data['featured_img'] ) ? filter_var( $marker_data['featured_img'], FILTER_VALIDATE_BOOLEAN ) : false;
 
 		$post_object      = get_post( $post_id );
 		$marker_title     = $post_object->post_title;
@@ -587,9 +587,11 @@ class Google_Maps_Builder_Mashups_Builder {
 
 		$response = '';
 
-		$response['infowindow'] = '<div id="infobubble-content" class="main-place-infobubble-content">';
+        $response['infowindow'] = '<div class="gmb-infobubble">';
 
-		if ( ! empty( $marker_thumbnail[0] ) && $featured_img_show !== 'false' ) {
+		$response['infowindow'] .= '<div id="infobubble-content" class="main-place-infobubble-content">';
+
+		if ( ! empty( $marker_thumbnail[0] ) && $featured_img_show !== false ) {
 			$response['infowindow'] .= '<div class="place-thumb"><img src="' . $marker_thumbnail[0] . '" alt="' . $marker_title . '"></div>';
 		}
 		if ( ! empty( $marker_title ) ) {
@@ -602,7 +604,9 @@ class Google_Maps_Builder_Mashups_Builder {
 
 		$response['infowindow'] .= '<a href="' . get_permalink( $post_id ) . '" title="' . $marker_title . '" class="gmb-mashup-single-link">' . apply_filters( 'gmb_mashup_infowindow_content_readmore', __( 'Read More &raquo;', $this->plugin_slug ) ) . '</a>';
 
-		$response['infowindow'] .= '</div>';
+		$response['infowindow'] .= '</div>'; // #infobubble-content
+
+        $response['infowindow'] .= '</div>'; // .gmb-infobubble
 
 
 		$response = apply_filters( 'gmb_mashup_infowindow_content', $response, $marker_data, $post_id ); //Filter so users can add/remove fields
