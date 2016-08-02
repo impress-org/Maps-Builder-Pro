@@ -328,7 +328,7 @@
         var placeSearchAutocomplete = new google.maps.places.Autocomplete(placeSearchInput);
         placeSearchAutocomplete.bindTo('bounds', map);
 
-        var infowindow = new InfoBubble();
+        var infowindow = new google.maps.InfoWindow();
         var marker = new google.maps.Marker({
             map: map,
             anchorPoint: new google.maps.Point(0, -29)
@@ -361,11 +361,12 @@
             marker.setPosition(place.geometry.location);
             marker.setVisible(true);
 
-            var info_window_content;
+            var info_window_content = '<div class="gmb-infobubble">';
             if (place.name) {
-                info_window_content = '<p class="place-title">' + place.name + '</p>';
+                info_window_content += '<p class="place-title">' + place.name + '</p>';
             }
             info_window_content += gmb.set_place_content_in_info_window(place);
+            info_window_content += '</div>'; // .gmb-infobubble
             infowindow.setContent(info_window_content); //set marker content
             infowindow.open(map, marker);
 
