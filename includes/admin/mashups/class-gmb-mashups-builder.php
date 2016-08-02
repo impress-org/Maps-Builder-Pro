@@ -587,7 +587,7 @@ class Google_Maps_Builder_Mashups_Builder {
 
 		$response = '';
 
-        $response['infowindow'] = '<div class="gmb-infobubble">';
+        $response['infowindow'] = '';
 
 		$response['infowindow'] .= '<div id="infobubble-content" class="main-place-infobubble-content">';
 
@@ -605,8 +605,6 @@ class Google_Maps_Builder_Mashups_Builder {
 		$response['infowindow'] .= '<a href="' . get_permalink( $post_id ) . '" title="' . $marker_title . '" class="gmb-mashup-single-link">' . apply_filters( 'gmb_mashup_infowindow_content_readmore', __( 'Read More &raquo;', $this->plugin_slug ) ) . '</a>';
 
 		$response['infowindow'] .= '</div>'; // #infobubble-content
-
-        $response['infowindow'] .= '</div>'; // .gmb-infobubble
 
 
 		$response = apply_filters( 'gmb_mashup_infowindow_content', $response, $marker_data, $post_id ); //Filter so users can add/remove fields
