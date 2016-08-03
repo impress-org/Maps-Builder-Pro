@@ -31,7 +31,7 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 	 * Core Licensing
 	 */
 	public function gmb_core_licensing() {
-		if ( class_exists( 'GMB_License' ) && is_admin() ) {
+		if ( class_exists( 'GMB_License' ) ) {
 			new GMB_License( GMB_PLUGIN_BASE, 'Maps Builder Pro', GMB_VERSION, 'WordImpress', 'maps_builder_license_key' );
 		}
 	}
@@ -44,8 +44,6 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 	 * @return array
 	 */
 	public function license_fields() {
-
-		$prefix = $this->prefix();
 
 		$this->plugin_options = array(
 			'id'         => 'plugin_options',
@@ -267,7 +265,7 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 	 * @return string
 	 */
 	protected function sub_heading() {
-		$out = __( 'Thank you for upgrading to the Maps Builder Pro.', 'google-maps-pro' ) . ' ';
+		$out = __( 'Thank you for upgrading to Maps Builder Pro.', 'google-maps-pro' ) . ' ';
 		$out .= sprintf( __( 'As a Pro active license holder you receive %3$spriority support%2$s, awesome plugin features, and thoroughly written plugin %1$sdocumentation%2$s. We hope you enjoy using the Pro plugin version!', 'google-maps-pro' ), '<a href="https://wordimpress.com/documentation/maps-builder-pro/" target="_blank">', '</a>', '<a href="https://wordimpress.com/support/forum/maps-builder-pro" target="_blank">' );
 
 		return $out;
