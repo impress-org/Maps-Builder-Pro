@@ -355,6 +355,10 @@ var gmb_mashup;
             marker_label = custom_label;
         }
 
+        // Whether or not an individual marker displays its featured image is decided by the parent mashup's settings;
+        // if it's set to "yes", then the image displays, else it doesn't.
+        var featured_img = marker_data['featured_img'] = $('#gmb_mashup_group_' + mashup_index + '_featured_img1').is(':checked');
+
         // make and place map maker.
         var marker = new Marker({
             map: window.map,
