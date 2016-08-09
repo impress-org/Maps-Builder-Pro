@@ -57,8 +57,9 @@ class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 		$post     = get_post( $atts['id'] );
 		$all_meta = get_post_custom( $atts['id'] );
 
-		$visual_info = maybe_unserialize( $all_meta['gmb_width_height'][0] );
-		$lat_lng     = maybe_unserialize( $all_meta['gmb_lat_lng'][0] );
+		$visual_info     = maybe_unserialize( $all_meta['gmb_width_height'][0] );
+		$infowindow_size = isset( $all_meta['gmb_infowindow_size'][0] ) ? maybe_unserialize( $all_meta['gmb_infowindow_size'][0] ) : '';
+		$lat_lng         = maybe_unserialize( $all_meta['gmb_lat_lng'][0] );
 
 		//Put markers into an array for JS usage
 		$map_marker_array   = array();
@@ -90,7 +91,6 @@ class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 			}
 		}
 
-		//send data for AJAX usage
 		//Add params to AJAX for Shortcode Usage
 		//@see: http://benjaminrojas.net/using-wp_localize_script-dynamically/
 		$localized_data = apply_filters( 'gmb_localized_data', array(
@@ -98,13 +98,15 @@ class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 				'id'                  => $atts['id'],
 				'ajax_url'            => admin_url( 'admin-ajax.php' ),
 				'map_params'          => array(
-					'title'          => $post->post_title,
-					'width'          => $visual_info['width'],
-					'height'         => $visual_info['height'],
-					'latitude'       => $lat_lng['latitude'],
-					'longitude'      => $lat_lng['longitude'],
-					'zoom'           => ! empty( $all_meta['gmb_zoom'][0] ) ? $all_meta['gmb_zoom'][0] : '15',
-					'default_marker' => apply_filters( 'gmb_default_marker', GMB_PLUGIN_URL . 'assets/img/spotlight-poi.png' ),
+					'title'             => $post->post_title,
+					'width'             => $visual_info['width'],
+					'height'            => $visual_info['height'],
+					'latitude'          => $lat_lng['latitude'],
+					'longitude'         => $lat_lng['longitude'],
+					'infowindow_width'  => ! empty( $infowindow_size['width'] ) ? $infowindow_size['width'] : 355,
+					'infowindow_height' => ! empty( $infowindow_size['height'] ) ? $infowindow_size['height'] : 150,
+					'zoom'              => ! empty( $all_meta['gmb_zoom'][0] ) ? $all_meta['gmb_zoom'][0] : '15',
+					'default_marker'    => apply_filters( 'gmb_default_marker', GMB_PLUGIN_URL . 'assets/img/spotlight-poi.png' ),
 				),
 				'map_controls'        => array(
 					'zoom_control'      => ! empty( $all_meta['gmb_zoom_control'][0] ) ? strtoupper( $all_meta['gmb_zoom_control'][0] ) : 'STANDARD',

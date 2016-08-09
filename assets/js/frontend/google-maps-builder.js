@@ -140,6 +140,7 @@
      */
     gmb.get_mashup_infowindow_content = function (map, marker, map_data) {
 
+        gmb.style_info_window();
         gmb.info_window.setContent('<div class="gmb-infobubble loading"></div>');
         gmb.info_window.open(map, marker);
 
@@ -163,6 +164,8 @@
 
 
         }, 'json');
+
+
     };
 
     /**

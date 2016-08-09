@@ -36,7 +36,8 @@ var gmb_mashup_data;
 
 
     /**
-     * Set Mashup Autcomplete FIeld
+     * Set Mashup Autcomplete Field.
+     *
      * @returns {{}}
      */
     app.set_mashup_autocomplete = function () {
