@@ -140,7 +140,7 @@
      */
     gmb.get_mashup_infowindow_content = function (map, marker, map_data) {
 
-        gmb.info_window.setContent('<div class="gmb-infobubble loading"></div>');
+        gmb.info_window.setContent('<div class="gmb-infobubble__loading"></div>');
         gmb.info_window.open(map, marker);
 
         var data = {
@@ -331,14 +331,13 @@
         var placeSearchAutocomplete = new google.maps.places.Autocomplete(placeSearchInput);
         placeSearchAutocomplete.bindTo('bounds', map);
 
-        var infowindow = new InfoBubble();
         var marker = new google.maps.Marker({
             map: map,
             anchorPoint: new google.maps.Point(0, -29)
         });
 
         google.maps.event.addListener(placeSearchAutocomplete, 'place_changed', function () {
-            infowindow.close();
+            gmb.info_window.close();
             marker.setVisible(false);
             var place = placeSearchAutocomplete.getPlace();
 
@@ -369,8 +368,8 @@
                 info_window_content = '<p class="place-title">' + place.name + '</p>';
             }
             info_window_content += gmb.set_place_content_in_info_window(place);
-            infowindow.setContent(info_window_content); //set marker content
-            infowindow.open(map, marker);
+            gmb.info_window.setContent(info_window_content); //set marker content
+            gmb.info_window.open(map, marker);
 
         });
 
