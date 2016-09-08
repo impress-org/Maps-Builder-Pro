@@ -1,19 +1,22 @@
 /**
- * Maps Builder JS
+ * Maps Builder JS.
  *
  * $current_user->IDFrontend form rendering
  */
 
 (function ($, gmb) {
 
+
     /**
-     * Create Mashup Marker
+     * Create Mashup Marker.
      *
-     * Loops through data and creates mashup markers
+     * Loops through data and creates mashup markers.
+     *
      * @param map
      * @param map_data
      */
     gmb.set_mashup_markers = function (map, map_data) {
+
 
         if (typeof map_data.mashup_markers === 'undefined' || !map_data.mashup_markers) {
             return false;
@@ -84,17 +87,17 @@
             return false;
         }
 
-        var title = (typeof marker_data.title !== 'undefined' ? marker_data.title : '');
-        var address = (typeof marker_data.address !== 'undefined' ? marker_data.address : '');
+        var title = (typeof marker_data.title !== 'undefined') ? marker_data.title : '';
+        var address = (typeof marker_data.address !== 'undefined') ? marker_data.address : '';
         var marker_position = new google.maps.LatLng(lat, lng);
 
         var marker_icon = map_data.map_params.default_marker;
         var marker_label = '';
 
         //check for custom marker and label data
-        var custom_marker_icon = (typeof mashup_value.marker !== 'undefined' ? mashup_value.marker : '');
-        var custom_marker_img = (typeof mashup_value.marker_img !== 'undefined' ? mashup_value.marker_img : '');
-        var included_marker_img = (typeof mashup_value.marker_included_img !== 'undefined' ? mashup_value.marker_included_img : '');
+        var custom_marker_icon = (typeof mashup_value.marker !== 'undefined') ? mashup_value.marker : '';
+        var custom_marker_img = (typeof mashup_value.marker_img !== 'undefined') ? mashup_value.marker_img : '';
+        var included_marker_img = (typeof mashup_value.marker_included_img !== 'undefined') ? mashup_value.marker_included_img : '';
 
         //Plugin included marker image
         if (included_marker_img) {
@@ -122,7 +125,7 @@
             custom_label: marker_label
         });
 
-        //Set click action for marker to open infowindow
+        //Set click action for marker to open info_window
         google.maps.event.addListener(marker, 'click', function () {
             gmb.get_mashup_infowindow_content(map, marker, map_data);
         });
@@ -132,16 +135,13 @@
     };
 
     /**
-     * Get Mashup InfoWindow Content
+     * Get Mashup InfoWindow Content.
      *
      * @param map
      * @param marker
      * @param map_data
      */
     gmb.get_mashup_infowindow_content = function (map, marker, map_data) {
-
-        gmb.info_window.setContent('<div class="gmb-infobubble loading"></div>');
-        gmb.info_window.open(map, marker);
 
         var data = {
             action: 'get_mashup_marker_infowindow',
@@ -150,23 +150,25 @@
 
         jQuery.post(map_data.ajax_url, data, function (response) {
 
-            gmb.info_window.setContent(response.infowindow);
+            map.info_window.setContent(response.infowindow);
+            map.info_window.updateContent_();
+            map.info_window.open(map, marker);
 
             //Marker Centers Map on Click?
-            // This ensures that the map centers AFTER the loaded via AJAX
+            // This ensures that the map centers AFTER the loaded via AJAX.
             if (map_data.marker_centered == 'yes') {
                 window.setTimeout(function () {
                     // Pan into view, done in a time out to make it feel nicer :)
-                    gmb.info_window.panToView();
+                    map.info_window.panToView();
                 }, 200);
             }
 
-
         }, 'json');
+
     };
 
     /**
-     * Set Map Directions
+     * Set Map Directions.
      *
      * @param map
      * @param map_data
@@ -309,7 +311,7 @@
     /**
      * Set Places Search
      *
-     * @description Adds a places search box that users search for place, addresses, estiblishments, etc.
+     * Adds a places search box that users search for place, addresses, establishments, etc.
      * @param map
      * @param map_data
      */
@@ -331,7 +333,7 @@
         var placeSearchAutocomplete = new google.maps.places.Autocomplete(placeSearchInput);
         placeSearchAutocomplete.bindTo('bounds', map);
 
-        var infowindow = new InfoBubble();
+        var infowindow = new GMB_InfoBubble();
         var marker = new google.maps.Marker({
             map: map,
             anchorPoint: new google.maps.Point(0, -29)
