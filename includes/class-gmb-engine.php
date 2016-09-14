@@ -84,6 +84,8 @@ class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 		}
 		$text_directions  = isset( $all_meta['gmb_text_directions'][0] ) ? maybe_unserialize( $all_meta['gmb_text_directions'][0] ) : 'none';
 		$signed_in_option = gmb_get_option( 'gmb_signed_in' );
+
+		//Assemble map marker array.
 		if ( is_array( $markers_repeatable ) ) {
 			foreach ( $markers_repeatable as $marker ) {
 				array_push( $map_marker_array, $marker );

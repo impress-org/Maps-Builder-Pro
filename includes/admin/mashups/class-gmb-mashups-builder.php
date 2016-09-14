@@ -1,8 +1,8 @@
 <?php
 /**
- * Google Maps Mashups
+ * Google Maps Mashups.
  *
- * Adds mashup functionality to Maps Builder Pro
+ * Adds mashup functionality to Maps Builder Pro.
  *
  * @package   Google_Maps_Builder_Admin
  * @author    WordImpress
@@ -81,9 +81,9 @@ class Google_Maps_Builder_Mashups_Builder {
 
 
 	/**
-	 * Mashup Metabox Field
+	 * Mashup Metabox Field.
 	 *
-	 * Defines the Google Places CPT metabox and field configuration
+	 * Defines the Google Places CPT metabox and field configuration.
 	 *
 	 * @since  2.0
 	 * @return array
@@ -206,7 +206,7 @@ class Google_Maps_Builder_Mashups_Builder {
 
 
 	/**
-	 * Mashups Select Taxonomies
+	 * Mashups Select Taxonomies.
 	 *
 	 * @param $field
 	 * @param $value
@@ -260,7 +260,7 @@ class Google_Maps_Builder_Mashups_Builder {
 	}
 
 	/**
-	 * Mashups Select Terms
+	 * Mashups Select Terms.
 	 *
 	 * @param $field
 	 * @param $value
