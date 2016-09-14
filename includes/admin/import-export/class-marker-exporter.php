@@ -27,7 +27,6 @@ class GMB_CSV_Marker_Exporter {
 	public function __construct() {
 
 		$this->page        = 'edit.php?post_type=google_maps&page=gmb_import_export';
-		$this->plugin_slug = Google_Maps_Builder()->get_plugin_slug();
 
 		add_action( 'gmb_export_page', array( $this, 'add_metabox' ) );
 

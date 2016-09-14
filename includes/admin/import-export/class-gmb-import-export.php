@@ -30,8 +30,6 @@ class GMB_CSV_Manager {
 	 */
 	public function __construct() {
 
-		$this->plugin_slug = Google_Maps_Builder()->get_plugin_slug();
-
 		//			$this->setup_constants();
 		$this->includes();
 		//			$this->product_exporter();

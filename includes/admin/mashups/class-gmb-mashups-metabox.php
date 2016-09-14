@@ -32,8 +32,6 @@ class Google_Maps_Builder_Mashups_Metabox {
 	 */
 	public function __construct() {
 
-		$this->plugin_slug = Google_Maps_Builder()->get_plugin_slug();
-
 		//Add metaboxes and fields to CPT
 		add_action( 'cmb2_init', array( $this, 'mashup_metabox_fields' ) );
 		add_action( 'cmb2_render_google_mashup_geocoder', array( $this, 'cmb2_render_google_mashup_geocoder' ), 10, 2 );
@@ -127,24 +125,24 @@ class Google_Maps_Builder_Mashups_Metabox {
 		if ( $hook === 'post.php' || $hook === 'post-new.php' ) {
 
 			//Load Google Maps API on this CPT
-			wp_register_script( $this->plugin_slug . '-admin-gmaps', 'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=' . $apikey, array( 'jquery' ) );
-			wp_enqueue_script( $this->plugin_slug . '-admin-gmaps' );
+			wp_register_script( 'google-maps-builder-admin-gmaps', 'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=' . $apikey, array( 'jquery' ) );
+			wp_enqueue_script( 'google-maps-builder-admin-gmaps' );
 
 			//Register our mashup metabox JS
-			wp_register_script( $this->plugin_slug . '-admin-mashups-script', GMB_PLUGIN_URL . 'assets/js/admin/admin-maps-mashup-metabox' . $suffix . '.js', array(
+			wp_register_script( 'google-maps-builder-admin-mashups-script', GMB_PLUGIN_URL . 'assets/js/admin/admin-maps-mashup-metabox' . $suffix . '.js', array(
 				'jquery'
 			) );
-			wp_enqueue_script( $this->plugin_slug . '-admin-mashups-script' );
+			wp_enqueue_script( 'google-maps-builder-admin-mashups-script' );
 
 			//Localize
-			wp_localize_script( $this->plugin_slug . '-admin-mashups-script', 'gmb_mashup_data', array(
+			wp_localize_script( 'google-maps-builder-admin-mashups-script', 'gmb_mashup_data', array(
 				'i18n' => array(
 					'api_key_required'         => sprintf( __( '%1$sGoogle API Error:%2$s Please include your Google Maps API key in the %3$splugin settings%5$s to start using the plugin. An API key with Maps and Places APIs enabled is now required due to recent changes by Google. Getting an API key is free and easy. %4$sView Documentation%5$s', 'google-maps-builder' ), '<strong>', '</strong>', '<a href="' . esc_url( admin_url( 'edit.php?post_type=google_maps&page=gmb_settings' ) ) . '">', '<a href="https://wordimpress.com/documentation/maps-builder-pro/creating-maps-api-key/" target="_blank" class="new-window">', '</a>' )
 				)
 			) );
 
-			wp_register_style( $this->plugin_slug . '-admin-mashups-style', GMB_PLUGIN_URL . 'assets/css/gmb-mashup-metabox.css' );
-			wp_enqueue_style( $this->plugin_slug . '-admin-mashups-style' );
+			wp_register_style( 'google-maps-builder-admin-mashups-style', GMB_PLUGIN_URL . 'assets/css/gmb-mashup-metabox.css' );
+			wp_enqueue_style( 'google-maps-builder-admin-mashups-style' );
 		}
 
 

@@ -25,8 +25,8 @@ class Google_Maps_Builder_Admin extends Google_Maps_Builder_Core_Admin {
 
 		$this->marker_box->add_field(
 			array(
-				'name'              => __( 'Animate in Markers', $this->plugin_slug ),
-				'desc'              => __( 'If you\'re adding a number of markers, you may want to drop them on the map consecutively rather than all at once.', $this->plugin_slug ),
+				'name'              => __( 'Animate in Markers', 'google-maps-builder' ),
+				'desc'              => __( 'If you\'re adding a number of markers, you may want to drop them on the map consecutively rather than all at once.', 'google-maps-builder' ),
 				'id'                => $prefix . 'marker_animate',
 				'type'              => 'multicheck',
 				'options'           => array(
@@ -37,7 +37,7 @@ class Google_Maps_Builder_Admin extends Google_Maps_Builder_Core_Admin {
 		);
 		$this->marker_box->add_field(
 			array(
-				'name'              => __( 'Center Map upon Marker Click', $this->plugin_slug ),
+				'name'              => __( 'Center Map upon Marker Click', 'google-maps-builder' ),
 				'desc'              => __( 'When a user clicks on a marker the map will be centered on the marker when this option is enabled.', $this->plugin_slug ),
 				'id'                => $prefix . 'marker_centered',
 				'type'              => 'multicheck',

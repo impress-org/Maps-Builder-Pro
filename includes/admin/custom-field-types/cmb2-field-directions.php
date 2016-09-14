@@ -59,7 +59,7 @@ function gmb_cmb2_render_destination_field_callback( $field, $value, $object_id,
 				'name'        => $field_type_object->_name( '[destination]' ),
 				'id'          => $field_type_object->_id( '_destination' ),
 				'value'       => $value['destination'],
-				'placeholder' => __( 'Enter a location', Google_Maps_Builder()->get_plugin_slug() )
+				'placeholder' => __( 'Enter a location', 'google-maps-builder' )
 			) ); ?>
 		</div>
 		<div class="destination-longitude">
@@ -69,7 +69,7 @@ function gmb_cmb2_render_destination_field_callback( $field, $value, $object_id,
 				'id'          => $field_type_object->_id( '_longitude' ),
 				'value'       => $value['longitude'],
 				'readonly'    => 'readonly',
-				'placeholder' => __( 'Longitude', Google_Maps_Builder()->get_plugin_slug() ),
+				'placeholder' => __( 'Longitude', 'google-maps-builder' ),
 			) ); ?>
 		</div>
 		<div class="destination-latitude">
@@ -79,7 +79,7 @@ function gmb_cmb2_render_destination_field_callback( $field, $value, $object_id,
 				'id'          => $field_type_object->_id( '_latitude' ),
 				'value'       => $value['latitude'],
 				'readonly'    => 'readonly',
-				'placeholder' => __( 'Latitude', Google_Maps_Builder()->get_plugin_slug() ),
+				'placeholder' => __( 'Latitude', 'google-maps-builder' ),
 			) ); ?>
 		</div>
 		<div class="destination-place-id">
@@ -99,7 +99,7 @@ function gmb_cmb2_render_destination_field_callback( $field, $value, $object_id,
 				'value'       => $value['address'],
 				'type'        => 'text',
 				'readonly'    => 'readonly',
-				'placeholder' => __( 'No Address Set', Google_Maps_Builder()->get_plugin_slug() ),
+				'placeholder' => __( 'No Address Set', 'google-maps-builder' ),
 			) ); ?>
 		</div>
 	</div>

@@ -28,7 +28,6 @@ class GMB_CSV_Marker_Importer {
 	public function __construct() {
 
 		$this->page        = 'edit.php?post_type=google_maps&page=gmb_import_export';
-		$this->plugin_slug = Google_Maps_Builder()->get_plugin_slug();
 
 		// Handle uploading of a CSV
 		add_action( 'gmb_upload_csv', array( $this, 'upload' ) );

@@ -28,8 +28,6 @@ class Google_Maps_Builder_Mashups_Builder {
 	 */
 	public function __construct() {
 
-		$this->plugin_slug = Google_Maps_Builder()->get_plugin_slug();
-
 		//CMB2 - Add metaboxes and fields to CPT
 		add_action( 'cmb2_init', array( $this, 'mashup_builder_fields' ) );
 		add_action( 'cmb2_render_select_taxonomies', array( $this, 'gmb_cmb_render_select_taxonomies' ), 10, 5 );
@@ -62,8 +60,8 @@ class Google_Maps_Builder_Mashups_Builder {
 
 		//Only enqueue scripts for CPT on post type screen
 		if ( ( $hook == 'post-new.php' || $hook == 'post.php' ) && 'google_maps' === $post->post_type ) {
-			wp_register_script( $this->plugin_slug . '-admin-mashups', GMB_PLUGIN_URL . 'assets/js/admin/admin-maps-mashups' . $suffix . '.js', array( 'jquery' ) );
-			wp_enqueue_script( $this->plugin_slug . '-admin-mashups' );
+			wp_register_script( 'google-maps-builder-admin-mashups', GMB_PLUGIN_URL . 'assets/js/admin/admin-maps-mashups' . $suffix . '.js', array( 'jquery' ) );
+			wp_enqueue_script( 'google-maps-builder-admin-mashups' );
 
 			$ajax_array = array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
@@ -72,7 +70,7 @@ class Google_Maps_Builder_Mashups_Builder {
 					'mashup_configured' => __( 'Mashup Configured', $this->plugin_slug )
 				)
 			);
-			wp_localize_script( $this->plugin_slug . '-admin-mashups', 'gmb_mashup', $ajax_array );
+			wp_localize_script( 'google-maps-builder-admin-mashups', 'gmb_mashup', $ajax_array );
 
 
 		}
