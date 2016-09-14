@@ -67,7 +67,7 @@ class Google_Maps_Builder_Mashups_Metabox {
 		//Output metabox on appropriate CPTs
 		$preview_box = cmb2_get_metabox( array(
 			'id'           => 'google_maps_mashup_metabox',
-			'title'        => __( 'Maps Builder Pro Mashup', $this->plugin_slug ),
+			'title'        => __( 'Maps Builder Pro Mashup', 'google-maps-builder' ),
 			'object_types' => $this->enabled_post_types, // post type
 			'context'      => 'side', //  'normal', 'advanced', or 'side'
 			'priority'     => 'core', //  'high', 'core', 'default' or 'low'
@@ -76,29 +76,29 @@ class Google_Maps_Builder_Mashups_Metabox {
 		$preview_box->add_field( array(
 			'id'      => $prefix . 'mashup_autocomplete',
 			'type'    => 'google_mashup_geocoder',
-			'after'   => '<div class="gmb-toggle-fields-wrap"><a href="#" class="gmb-toggle-fields"><span class="dashicons dashicons-arrow-down"></span>' . __( 'View Location Fields', $this->plugin_slug ) . '</a></div>',
+			'after'   => '<div class="gmb-toggle-fields-wrap"><a href="#" class="gmb-toggle-fields"><span class="dashicons dashicons-arrow-down"></span>' . __( 'View Location Fields', 'google-maps-builder' ) . '</a></div>',
 			'default' => '',
 		) );
 
 		$preview_box->add_field( array(
-			'name'       => __( 'Marker Latitude', $this->plugin_slug ),
+			'name'       => __( 'Marker Latitude', 'google-maps-builder' ),
 			'before_row' => '<div class="gmb-toggle">',
 			'id'         => $prefix . 'lat',
 			'type'       => 'text',
 		) );
 		$preview_box->add_field( array(
-			'name' => __( 'Marker Longitude', $this->plugin_slug ),
+			'name' => __( 'Marker Longitude', 'google-maps-builder' ),
 			'id'   => $prefix . 'lng',
 			'type' => 'text',
 		) );
 		$preview_box->add_field( array(
-			'name' => __( 'Address', $this->plugin_slug ),
+			'name' => __( 'Address', 'google-maps-builder' ),
 			'id'   => $prefix . 'address',
 			'type' => 'text',
 		) );
 
 		$preview_box->add_field( array(
-			'name'      => __( 'Marker Place ID', $this->plugin_slug ),
+			'name'      => __( 'Marker Place ID', 'google-maps-builder' ),
 			'id'        => $prefix . 'place_id',
 			'type'      => 'text',
 			'after_row' => '</div>',//Closes .gmb-toggle
@@ -195,12 +195,12 @@ class Google_Maps_Builder_Mashups_Metabox {
 
 		$output = '<div class="autocomplete-wrap" ' . ( $meta['geocode_set'] == '1' ? 'style="display:none;"' : '' ) . '>';
 
-		$output .= '<label for="' . $field->args( 'id' ) . '">' . __( 'Add Location', $this->plugin_slug ) . '</label>';
+		$output .= '<label for="' . $field->args( 'id' ) . '">' . __( 'Add Location', 'google-maps-builder' ) . '</label>';
 		$output .= '<input type="text" name="' . $field->args( 'id' ) . '[geocode]" id="' . $field->args( 'id' ) . '" value="" class="search-autocomplete" />';
 		$output .= '<input type="hidden" name="' . $field->args( 'id' ) . '[geocode_set]" id="' . $field->args( 'id' ) . '" value="' . $meta['geocode_set'] . '" class="search-autocomplete-set" />';
-		$output .= '<p class="autocomplete-description"> ' . __( 'Enter the name of a point of interest, address, or establishment above or manually set the fields below.', $this->plugin_slug ) . '</p>';
+		$output .= '<p class="autocomplete-description"> ' . __( 'Enter the name of a point of interest, address, or establishment above or manually set the fields below.', 'google-maps-builder' ) . '</p>';
 		$output .= '</div>';//autocomplete-wrap
-		$output .= '<div class="gmb-autocomplete-notice"' . ( $meta['geocode_set'] !== '1' ? 'style="display:none;"' : '' ) . '><p>' . __( 'Location set for this post', $this->plugin_slug ) . '</p><a href="#" class="gmb-reset-autocomplete button button-small">' . __( 'Reset', $this->plugin_slug ) . '</a>';
+		$output .= '<div class="gmb-autocomplete-notice"' . ( $meta['geocode_set'] !== '1' ? 'style="display:none;"' : '' ) . '><p>' . __( 'Location set for this post', 'google-maps-builder' ) . '</p><a href="#" class="gmb-reset-autocomplete button button-small">' . __( 'Reset', 'google-maps-builder' ) . '</a>';
 		$output .= '</div>';
 
 		echo $output;

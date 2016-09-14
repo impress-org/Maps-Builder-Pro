@@ -76,12 +76,12 @@ class GMB_CSV_Marker_Importer {
 			}
 
 			echo '<div class="map-selection">';
-			echo '<label>' . __( 'Step 1: Select a map to import markers', $this->plugin_slug ) . '</label>';
+			echo '<label>' . __( 'Step 1: Select a map to import markers', 'google-maps-builder' ) . '</label>';
 			echo Google_Maps_Builder()->html->maps_dropdown();
 			echo '</div>';
 
 			echo '<div class="csv-upload gmb-hidden">';
-			echo '<label>' . __( 'Step 2: Upload a properly formatted CSV file', $this->plugin_slug ) . '</label>';
+			echo '<label>' . __( 'Step 2: Upload a properly formatted CSV file', 'google-maps-builder' ) . '</label>';
 			echo '<p><input type="file" name="import_file" /></p>';
 			echo '<p><label for="has_headers"><input type="checkbox" id="has_headers" name="has_headers" checked="yes" /> ' . __( 'Does the CSV include a header row?', 'google-maps-builder' ) . '</label></p>';
 			echo '<input type="hidden" name="gmb_action" value="upload_csv" />';

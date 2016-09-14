@@ -167,7 +167,7 @@ class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 	public function public_bottom( $atts, $text_directions, $post ) { ?>
 		<div id="directions-panel-<?php echo $atts['id']; ?>" class="gmb-directions-panel panel-<?php echo $text_directions; ?>">
 			<div class="gmb-directions-toggle">
-				<span class="gmb-directions-icon"><span class="gmb-hide-text"><?php _e( 'Toggle Directions', $this->plugin_slug ); ?></span></span>
+				<span class="gmb-directions-icon"><span class="gmb-hide-text"><?php _e( 'Toggle Directions', 'google-maps-builder' ); ?></span></span>
 			</div>
 			<div class="gmb-directions-panel-inner"></div>
 		</div>

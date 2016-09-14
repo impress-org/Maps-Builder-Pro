@@ -70,9 +70,9 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 	function add_plugin_meta_links( $meta, $file ) {
 
 		if ( $file == GMB_PLUGIN_BASE ) {
-			$meta[] = "<a href='http://wordpress.org/support/view/plugin-reviews/google-maps-builder' target='_blank' title='" . __( 'Rate Google Maps Builder on WordPress.org', $this->plugin_slug ) . "'>" . __( 'Rate Plugin', $this->plugin_slug ) . "</a>";
-			$meta[] = '<a href="https://wordimpress.com/support/" target="_blank" title="' . __( 'Have an active license? Get priority support from WordImpress.', $this->plugin_slug ) . '">' . __( 'Support', $this->plugin_slug ) . '</a>';
-			$meta[] = "<a href='https://wordimpress.com/documentation/maps-builder-pro/' target='_blank' title='" . __( 'View the plugin documentation', $this->plugin_slug ) . "'>" . __( 'Documentation', $this->plugin_slug ) . "</a>";
+			$meta[] = "<a href='http://wordpress.org/support/view/plugin-reviews/google-maps-builder' target='_blank' title='" . __( 'Rate Google Maps Builder on WordPress.org', 'google-maps-builder' ) . "'>" . __( 'Rate Plugin', 'google-maps-builder' ) . "</a>";
+			$meta[] = '<a href="https://wordimpress.com/support/" target="_blank" title="' . __( 'Have an active license? Get priority support from WordImpress.', 'google-maps-builder' ) . '">' . __( 'Support', 'google-maps-builder' ) . '</a>';
+			$meta[] = "<a href='https://wordimpress.com/documentation/maps-builder-pro/' target='_blank' title='" . __( 'View the plugin documentation', 'google-maps-builder' ) . "'>" . __( 'Documentation', 'google-maps-builder' ) . "</a>";
 
 		}
 
@@ -134,21 +134,21 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 		$this->plugin_options             = parent::map_option_fields();
 		$prefix                           = $this->prefix();
 		$this->plugin_options['fields'][] = array(
-			'name'    => __( 'Map Language', $this->plugin_slug ),
+			'name'    => __( 'Map Language', 'google-maps-builder' ),
 			'id'      => $prefix . 'language',
 			'type'    => 'select',
 			'options' => gmb_get_map_languages(),
-			'desc'    => __( 'The Google Maps API uses the user\'s browser preferred language setting when displaying textual information such as the names for controls, copyright notices, driving directions and labels on maps. In most cases, this is preferable; you usually do not wish to override the user\'s preferred language setting. However, if you wish to change the Maps API to ignore the browser\'s language setting and force it to display information in a particular language, you can configure that here.', $this->plugin_slug ),
+			'desc'    => __( 'The Google Maps API uses the user\'s browser preferred language setting when displaying textual information such as the names for controls, copyright notices, driving directions and labels on maps. In most cases, this is preferable; you usually do not wish to override the user\'s preferred language setting. However, if you wish to change the Maps API to ignore the browser\'s language setting and force it to display information in a particular language, you can configure that here.', 'google-maps-builder' ),
 		);
 		$this->plugin_options['fields'][] = array(
-			'name'    => __( 'Signed-in Maps', $this->plugin_slug ),
+			'name'    => __( 'Signed-in Maps', 'google-maps-builder' ),
 			'id'      => $prefix . 'signed_in',
 			'type'    => 'select',
 			'options' => array(
 				'disabled' => 'Disabled',
 				'enabled'  => 'Enabled'
 			),
-			'desc'    => __( 'When you enable sign-in with Google Maps, the maps on your site will be tailored to your users. Users who are signed-in to their Google account will be able to save places for later viewing on the web or mobile devices. Places saved from the map will be attributed to your site. Notice: When sign-in is enabled, the default position and appearance of several controls will change.', $this->plugin_slug ),
+			'desc'    => __( 'When you enable sign-in with Google Maps, the maps on your site will be tailored to your users. Users who are signed-in to their Google account will be able to save places for later viewing on the web or mobile devices. Places saved from the map will be attributed to your site. Notice: When sign-in is enabled, the default position and appearance of several controls will change.', 'google-maps-builder' ),
 		);
 
 		return apply_filters( 'gmb_map_options_fields', $this->plugin_options );
@@ -168,9 +168,9 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 		$prefix = $this->prefix();
 
 		$this->plugin_options['fields'][] = array(
-			'name' => __( 'Mashup Metabox', $this->plugin_slug ),
+			'name' => __( 'Mashup Metabox', 'google-maps-builder' ),
 			'id'   => $prefix . 'mashup_metabox',
-			'desc' => __( 'Select which post types you would like to display the mashup metabox.', $this->plugin_slug ),
+			'desc' => __( 'Select which post types you would like to display the mashup metabox.', 'google-maps-builder' ),
 			'type' => 'multicheck_posttype',
 		);
 

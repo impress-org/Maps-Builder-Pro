@@ -67,8 +67,8 @@ class GMB_CSV_Manager {
 
 		$this->options_page = add_submenu_page(
 			'edit.php?post_type=google_maps',
-			__( 'Maps Builder Settings', $this->plugin_slug ),
-			__( 'Import/Export', $this->plugin_slug ),
+			__( 'Maps Builder Settings', 'google-maps-builder' ),
+			__( 'Import/Export', 'google-maps-builder' ),
 			'manage_options',
 			self::$key,
 			array( $this, 'import_export_page_display' )
@@ -95,8 +95,8 @@ class GMB_CSV_Manager {
 			$active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'import';
 			?>
 			<h1 class="nav-tab-wrapper">
-				<a href="?post_type=google_maps&page=<?php echo self::$key; ?>" class="nav-tab <?php echo $active_tab == 'import' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Import', $this->plugin_slug ); ?></a>
-				<a href="?post_type=google_maps&page=<?php echo self::$key; ?>&tab=export" class="nav-tab <?php echo $active_tab == 'export' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Export', $this->plugin_slug ); ?></a>
+				<a href="?post_type=google_maps&page=<?php echo self::$key; ?>" class="nav-tab <?php echo $active_tab == 'import' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Import', 'google-maps-builder' ); ?></a>
+				<a href="?post_type=google_maps&page=<?php echo self::$key; ?>&tab=export" class="nav-tab <?php echo $active_tab == 'export' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Export', 'google-maps-builder' ); ?></a>
 			</h1>
 
 			<?php

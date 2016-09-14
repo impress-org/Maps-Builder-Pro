@@ -38,7 +38,7 @@ class Google_Maps_Builder_Admin extends Google_Maps_Builder_Core_Admin {
 		$this->marker_box->add_field(
 			array(
 				'name'              => __( 'Center Map upon Marker Click', 'google-maps-builder' ),
-				'desc'              => __( 'When a user clicks on a marker the map will be centered on the marker when this option is enabled.', $this->plugin_slug ),
+				'desc'              => __( 'When a user clicks on a marker the map will be centered on the marker when this option is enabled.', 'google-maps-builder' ),
 				'id'                => $prefix . 'marker_centered',
 				'type'              => 'multicheck',
 				'options'           => array(
@@ -50,8 +50,8 @@ class Google_Maps_Builder_Admin extends Google_Maps_Builder_Core_Admin {
 		);
 		$this->marker_box->add_field(
 			array(
-				'name'              => __( 'Cluster Markers', $this->plugin_slug ),
-				'desc'              => __( 'If enabled Maps Builder will intelligently create and manage per-zoom-level clusters for a large number of markers.', $this->plugin_slug ),
+				'name'              => __( 'Cluster Markers', 'google-maps-builder' ),
+				'desc'              => __( 'If enabled Maps Builder will intelligently create and manage per-zoom-level clusters for a large number of markers.', 'google-maps-builder' ),
 				'id'                => $prefix . 'marker_cluster',
 				'type'              => 'multicheck',
 				'options'           => array(
@@ -62,14 +62,14 @@ class Google_Maps_Builder_Admin extends Google_Maps_Builder_Core_Admin {
 		);
 
 		$this->marker_box->add_group_field( $this->marker_box_group_field_id, array(
-				'name'              => __( 'Marker Infowindow', $this->plugin_slug ),
-				'desc'              => __( 'Would you like this marker\'s infowindow open by default on the map?', $this->plugin_slug ),
+				'name'              => __( 'Marker Infowindow', 'google-maps-builder' ),
+				'desc'              => __( 'Would you like this marker\'s infowindow open by default on the map?', 'google-maps-builder' ),
 				'id'                => 'infowindow_open',
 				'type'              => 'select',
 				'default'           => 'closed',
 				'options'           => array(
-					'closed' => __( 'Closed by default', $this->plugin_slug ),
-					'opened' => __( 'Opened by default', $this->plugin_slug )
+					'closed' => __( 'Closed by default', 'google-maps-builder' ),
+					'opened' => __( 'Opened by default', 'google-maps-builder' )
 				),
 				'select_all_button' => false,
 			)
@@ -78,7 +78,7 @@ class Google_Maps_Builder_Admin extends Google_Maps_Builder_Core_Admin {
 		// Directions
 		$directions_box = cmb2_get_metabox( array(
 			'id'           => 'google_maps_directions',
-			'title'        => __( 'Directions', $this->plugin_slug ),
+			'title'        => __( 'Directions', 'google-maps-builder' ),
 			'object_types' => array( 'google_maps' ), // post type
 			'context'      => 'normal', //  'normal', 'advanced', or 'side'
 			'priority'     => 'core', //  'high', 'core', 'default' or 'low'
@@ -86,8 +86,8 @@ class Google_Maps_Builder_Admin extends Google_Maps_Builder_Core_Admin {
 		) );
 		$directions_box->add_field(
 			array(
-				'name'    => __( 'Directions Display', $this->plugin_slug ),
-				'desc'    => __( 'How would you like to display the text directions on your website?', $this->plugin_slug ),
+				'name'    => __( 'Directions Display', 'google-maps-builder' ),
+				'desc'    => __( 'How would you like to display the text directions on your website?', 'google-maps-builder' ),
 				'id'      => $prefix . 'text_directions',
 				'type'    => 'select',
 				'default' => 'overlay',
@@ -99,47 +99,47 @@ class Google_Maps_Builder_Admin extends Google_Maps_Builder_Core_Admin {
 			)
 		);
 		$group_field_id = $directions_box->add_field( array(
-			'name'        => __( 'Direction Groups', $this->plugin_slug ),
+			'name'        => __( 'Direction Groups', 'google-maps-builder' ),
 			'id'          => $prefix . 'directions_group',
 			'type'        => 'group',
-			'description' => __( 'Add sets of directions below.', $this->plugin_slug ),
+			'description' => __( 'Add sets of directions below.', 'google-maps-builder' ),
 			'options'     => array(
 				'group_title'   => __( 'Directions: {#}', 'cmb' ),
-				'add_button'    => __( 'Add Directions', $this->plugin_slug ),
-				'remove_button' => __( 'Remove Directions', $this->plugin_slug ),
+				'add_button'    => __( 'Add Directions', 'google-maps-builder' ),
+				'remove_button' => __( 'Remove Directions', 'google-maps-builder' ),
 				'sortable'      => false, // beta
 			),
 		) );
 		$directions_box->add_group_field( $group_field_id, array(
-			'name'       => __( 'Travel Mode', $this->plugin_slug ),
+			'name'       => __( 'Travel Mode', 'google-maps-builder' ),
 			'id'         => 'travel_mode',
 			'type'       => 'select',
 			'attributes' => array(
 				'class' => 'gmb-travel-mode',
 			),
 			'options'    => array(
-				'DRIVING'   => __( 'Driving', $this->plugin_slug ),
-				'WALKING'   => __( 'Walking', $this->plugin_slug ),
-				'BICYCLING' => __( 'Bicycling', $this->plugin_slug ),
-				'TRANSIT'   => __( 'Transit', $this->plugin_slug ),
+				'DRIVING'   => __( 'Driving', 'google-maps-builder' ),
+				'WALKING'   => __( 'Walking', 'google-maps-builder' ),
+				'BICYCLING' => __( 'Bicycling', 'google-maps-builder' ),
+				'TRANSIT'   => __( 'Transit', 'google-maps-builder' ),
 			),
 		) );
 		$directions_box->add_group_field( $group_field_id, array(
-			'name'       => __( 'Destinations', $this->plugin_slug ),
+			'name'       => __( 'Destinations', 'google-maps-builder' ),
 			'id'         => 'point',
 			'type'       => 'destination',
 			'repeatable' => true,
 			'options'    => array(
-				'add_row_text'  => __( 'Add Destination', $this->plugin_slug ),
-				'remove_button' => __( 'Remove Destination', $this->plugin_slug ),
+				'add_row_text'  => __( 'Add Destination', 'google-maps-builder' ),
+				'remove_button' => __( 'Remove Destination', 'google-maps-builder' ),
 				'sortable'      => false, // beta
 			),
 		) );
 
 		$this->search_options->add_field(
 			array(
-				'name'              => __( 'Places Search', $this->plugin_slug ),
-				'desc'              => __( 'Adds a search box to a map, using the Google Place Autocomplete feature. The search box will return a pick list containing a mix of places and predicted search terms.', $this->plugin_slug ),
+				'name'              => __( 'Places Search', 'google-maps-builder' ),
+				'desc'              => __( 'Adds a search box to a map, using the Google Place Autocomplete feature. The search box will return a pick list containing a mix of places and predicted search terms.', 'google-maps-builder' ),
 				'id'                => $prefix . 'places_search',
 				'type'              => 'multicheck',
 				'options'           => array(

@@ -44,18 +44,18 @@ class GMB_CSV_Marker_Exporter {
 	 */
 	public function add_metabox() {
 		echo '<div class="postbox import-export-metabox" id="gmb-product-export">';
-		echo '<h3 class="hndle ui-sortable-handle">' . __( 'Export Map Markers to CSV', $this->plugin_slug ) . '</h3>';
+		echo '<h3 class="hndle ui-sortable-handle">' . __( 'Export Map Markers to CSV', 'google-maps-builder' ) . '</h3>';
 		echo '<div class="inside">';
-		echo '<p class="intro">' . __( 'Export markers from your Maps to a .csv file.', $this->plugin_slug ) . '</p>';
+		echo '<p class="intro">' . __( 'Export markers from your Maps to a .csv file.', 'google-maps-builder' ) . '</p>';
 		echo '<form method="post" enctype="multipart/form-data" action="' . admin_url( $this->page ) . '">';
 
 		echo '<div class="map-selection">';
-		echo '<label>' . __( 'Step 1: Select a map to export markers', $this->plugin_slug ) . '</label>';
+		echo '<label>' . __( 'Step 1: Select a map to export markers', 'google-maps-builder' ) . '</label>';
 		echo Google_Maps_Builder()->html->maps_dropdown();
 		echo '</div>';
 		echo '<div class="marker-export-submit gmb-hidden">';
 		echo '<input type="hidden" name="gmb_action" value="export_csv" />';
-		submit_button( __( 'Export', $this->plugin_slug ), 'secondary', 'submit', false );
+		submit_button( __( 'Export', 'google-maps-builder' ), 'secondary', 'submit', false );
 		echo '</div>';
 		echo '</form>';
 		echo '</div>';
@@ -72,13 +72,13 @@ class GMB_CSV_Marker_Exporter {
 	 */
 	public function export() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'You do not have permission to export data.', $this->plugin_slug ), __( 'Error', $this->plugin_slug ) );
+			wp_die( __( 'You do not have permission to export data.', 'google-maps-builder' ), __( 'Error', 'google-maps-builder' ) );
 		}
 
 		$map_id = isset( $_POST['gmb-maps'] ) ? $_POST['gmb-maps'] : '';
 
 		if ( empty( $map_id ) ) {
-			wp_die( __( 'You need to select a map in order to export map data.', $this->plugin_slug ), __( 'Error', $this->plugin_slug ) );
+			wp_die( __( 'You need to select a map in order to export map data.', 'google-maps-builder' ), __( 'Error', 'google-maps-builder' ) );
 
 		}
 
