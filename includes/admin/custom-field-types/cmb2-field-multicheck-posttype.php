@@ -1,16 +1,22 @@
 <?php
 /**
- *  googlemapsbuilderpro.dev - cmb2-field-multicheck-posttype.php
+ * Render multicheck post type CMB2 custom field
  *
- * @description:
- * @author     :  Daniele Mte90 Scasciafratte
  * @copyright  : http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since      : 2.0
+ *
+ * @param $field
+ * @param $escaped_value
+ * @param $object_id
+ * @param $object_type
+ * @param $field_type_object
  */
-//render multicheck-posttype
-add_action( 'cmb2_render_multicheck_posttype', 'gmb_cmb_render_multicheck_posttype', 10, 5 );
-
 function gmb_cmb_render_multicheck_posttype( $field, $escaped_value, $object_id, $object_type, $field_type_object ) {
+
+	if ( version_compare( CMB2_VERSION, '2.2.2', '>=' ) ) {
+		$field_type_object->type = new CMB2_Type_Radio( $field_type_object );
+	}
+
 	$cpts = get_post_types();
 	unset( $cpts['nav_menu_item'] );
 	unset( $cpts['revision'] );
@@ -18,6 +24,8 @@ function gmb_cmb_render_multicheck_posttype( $field, $escaped_value, $object_id,
 	unset( $cpts['edd_discount'] );
 	unset( $cpts['deprecated_log'] );
 	unset( $cpts['google_maps'] );
+
+
 	$options = '';
 	$i       = 1;
 	$values  = (array) $escaped_value;
@@ -40,5 +48,9 @@ function gmb_cmb_render_multicheck_posttype( $field, $escaped_value, $object_id,
 	}
 
 	$classes = false === $field->args( 'select_all_button' ) ? 'cmb2-checkbox-list no-select-all cmb2-list' : 'cmb2-checkbox-list cmb2-list';
+
 	echo $field_type_object->radio( array( 'class' => $classes, 'options' => $options ), 'multicheck_posttype' );
+
 }
+
+add_action( 'cmb2_render_multicheck_posttype', 'gmb_cmb_render_multicheck_posttype', 10, 5 );
