@@ -32,8 +32,6 @@ class Google_Maps_Builder_Mashups_Metabox {
 	 */
 	public function __construct() {
 
-		$this->plugin_slug = Google_Maps_Builder()->get_plugin_slug();
-
 		//Add metaboxes and fields to CPT
 		add_action( 'cmb2_init', array( $this, 'mashup_metabox_fields' ) );
 		add_action( 'cmb2_render_google_mashup_geocoder', array( $this, 'cmb2_render_google_mashup_geocoder' ), 10, 2 );
@@ -69,7 +67,7 @@ class Google_Maps_Builder_Mashups_Metabox {
 		//Output metabox on appropriate CPTs
 		$preview_box = cmb2_get_metabox( array(
 			'id'           => 'google_maps_mashup_metabox',
-			'title'        => __( 'Maps Builder Pro Mashup', $this->plugin_slug ),
+			'title'        => __( 'Maps Builder Pro Mashup', 'google-maps-builder' ),
 			'object_types' => $this->enabled_post_types, // post type
 			'context'      => 'side', //  'normal', 'advanced', or 'side'
 			'priority'     => 'core', //  'high', 'core', 'default' or 'low'
@@ -78,29 +76,29 @@ class Google_Maps_Builder_Mashups_Metabox {
 		$preview_box->add_field( array(
 			'id'      => $prefix . 'mashup_autocomplete',
 			'type'    => 'google_mashup_geocoder',
-			'after'   => '<div class="gmb-toggle-fields-wrap"><a href="#" class="gmb-toggle-fields"><span class="dashicons dashicons-arrow-down"></span>' . __( 'View Location Fields', $this->plugin_slug ) . '</a></div>',
+			'after'   => '<div class="gmb-toggle-fields-wrap"><a href="#" class="gmb-toggle-fields"><span class="dashicons dashicons-arrow-down"></span>' . __( 'View Location Fields', 'google-maps-builder' ) . '</a></div>',
 			'default' => '',
 		) );
 
 		$preview_box->add_field( array(
-			'name'       => __( 'Marker Latitude', $this->plugin_slug ),
+			'name'       => __( 'Marker Latitude', 'google-maps-builder' ),
 			'before_row' => '<div class="gmb-toggle">',
 			'id'         => $prefix . 'lat',
 			'type'       => 'text',
 		) );
 		$preview_box->add_field( array(
-			'name' => __( 'Marker Longitude', $this->plugin_slug ),
+			'name' => __( 'Marker Longitude', 'google-maps-builder' ),
 			'id'   => $prefix . 'lng',
 			'type' => 'text',
 		) );
 		$preview_box->add_field( array(
-			'name' => __( 'Address', $this->plugin_slug ),
+			'name' => __( 'Address', 'google-maps-builder' ),
 			'id'   => $prefix . 'address',
 			'type' => 'text',
 		) );
 
 		$preview_box->add_field( array(
-			'name'      => __( 'Marker Place ID', $this->plugin_slug ),
+			'name'      => __( 'Marker Place ID', 'google-maps-builder' ),
 			'id'        => $prefix . 'place_id',
 			'type'      => 'text',
 			'after_row' => '</div>',//Closes .gmb-toggle
@@ -127,24 +125,24 @@ class Google_Maps_Builder_Mashups_Metabox {
 		if ( $hook === 'post.php' || $hook === 'post-new.php' ) {
 
 			//Load Google Maps API on this CPT
-			wp_register_script( $this->plugin_slug . '-admin-gmaps', 'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=' . $apikey, array( 'jquery' ) );
-			wp_enqueue_script( $this->plugin_slug . '-admin-gmaps' );
+			wp_register_script( 'google-maps-builder-admin-gmaps', 'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=' . $apikey, array( 'jquery' ) );
+			wp_enqueue_script( 'google-maps-builder-admin-gmaps' );
 
 			//Register our mashup metabox JS
-			wp_register_script( $this->plugin_slug . '-admin-mashups-script', GMB_PLUGIN_URL . 'assets/js/admin/admin-maps-mashup-metabox' . $suffix . '.js', array(
+			wp_register_script( 'google-maps-builder-admin-mashups-script', GMB_PLUGIN_URL . 'assets/js/admin/admin-maps-mashup-metabox' . $suffix . '.js', array(
 				'jquery'
 			) );
-			wp_enqueue_script( $this->plugin_slug . '-admin-mashups-script' );
+			wp_enqueue_script( 'google-maps-builder-admin-mashups-script' );
 
 			//Localize
-			wp_localize_script( $this->plugin_slug . '-admin-mashups-script', 'gmb_mashup_data', array(
+			wp_localize_script( 'google-maps-builder-admin-mashups-script', 'gmb_mashup_data', array(
 				'i18n' => array(
 					'api_key_required'         => sprintf( __( '%1$sGoogle API Error:%2$s Please include your Google Maps API key in the %3$splugin settings%5$s to start using the plugin. An API key with Maps and Places APIs enabled is now required due to recent changes by Google. Getting an API key is free and easy. %4$sView Documentation%5$s', 'google-maps-builder' ), '<strong>', '</strong>', '<a href="' . esc_url( admin_url( 'edit.php?post_type=google_maps&page=gmb_settings' ) ) . '">', '<a href="https://wordimpress.com/documentation/maps-builder-pro/creating-maps-api-key/" target="_blank" class="new-window">', '</a>' )
 				)
 			) );
 
-			wp_register_style( $this->plugin_slug . '-admin-mashups-style', GMB_PLUGIN_URL . 'assets/css/gmb-mashup-metabox.css' );
-			wp_enqueue_style( $this->plugin_slug . '-admin-mashups-style' );
+			wp_register_style( 'google-maps-builder-admin-mashups-style', GMB_PLUGIN_URL . 'assets/css/gmb-mashup-metabox.css' );
+			wp_enqueue_style( 'google-maps-builder-admin-mashups-style' );
 		}
 
 
@@ -197,12 +195,12 @@ class Google_Maps_Builder_Mashups_Metabox {
 
 		$output = '<div class="autocomplete-wrap" ' . ( $meta['geocode_set'] == '1' ? 'style="display:none;"' : '' ) . '>';
 
-		$output .= '<label for="' . $field->args( 'id' ) . '">' . __( 'Add Location', $this->plugin_slug ) . '</label>';
+		$output .= '<label for="' . $field->args( 'id' ) . '">' . __( 'Add Location', 'google-maps-builder' ) . '</label>';
 		$output .= '<input type="text" name="' . $field->args( 'id' ) . '[geocode]" id="' . $field->args( 'id' ) . '" value="" class="search-autocomplete" />';
 		$output .= '<input type="hidden" name="' . $field->args( 'id' ) . '[geocode_set]" id="' . $field->args( 'id' ) . '" value="' . $meta['geocode_set'] . '" class="search-autocomplete-set" />';
-		$output .= '<p class="autocomplete-description"> ' . __( 'Enter the name of a point of interest, address, or establishment above or manually set the fields below.', $this->plugin_slug ) . '</p>';
+		$output .= '<p class="autocomplete-description"> ' . __( 'Enter the name of a point of interest, address, or establishment above or manually set the fields below.', 'google-maps-builder' ) . '</p>';
 		$output .= '</div>';//autocomplete-wrap
-		$output .= '<div class="gmb-autocomplete-notice"' . ( $meta['geocode_set'] !== '1' ? 'style="display:none;"' : '' ) . '><p>' . __( 'Location set for this post', $this->plugin_slug ) . '</p><a href="#" class="gmb-reset-autocomplete button button-small">' . __( 'Reset', $this->plugin_slug ) . '</a>';
+		$output .= '<div class="gmb-autocomplete-notice"' . ( $meta['geocode_set'] !== '1' ? 'style="display:none;"' : '' ) . '><p>' . __( 'Location set for this post', 'google-maps-builder' ) . '</p><a href="#" class="gmb-reset-autocomplete button button-small">' . __( 'Reset', 'google-maps-builder' ) . '</a>';
 		$output .= '</div>';
 
 		echo $output;

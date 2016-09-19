@@ -28,8 +28,6 @@ class Google_Maps_Builder_Mashups_Builder {
 	 */
 	public function __construct() {
 
-		$this->plugin_slug = Google_Maps_Builder()->get_plugin_slug();
-
 		//CMB2 - Add metaboxes and fields to CPT
 		add_action( 'cmb2_init', array( $this, 'mashup_builder_fields' ) );
 		add_action( 'cmb2_render_select_taxonomies', array( $this, 'gmb_cmb_render_select_taxonomies' ), 10, 5 );
@@ -62,17 +60,17 @@ class Google_Maps_Builder_Mashups_Builder {
 
 		//Only enqueue scripts for CPT on post type screen
 		if ( ( $hook == 'post-new.php' || $hook == 'post.php' ) && 'google_maps' === $post->post_type ) {
-			wp_register_script( $this->plugin_slug . '-admin-mashups', GMB_PLUGIN_URL . 'assets/js/admin/admin-maps-mashups' . $suffix . '.js', array( 'jquery' ) );
-			wp_enqueue_script( $this->plugin_slug . '-admin-mashups' );
+			wp_register_script( 'google-maps-builder-admin-mashups', GMB_PLUGIN_URL . 'assets/js/admin/admin-maps-mashups' . $suffix . '.js', array( 'jquery' ) );
+			wp_enqueue_script( 'google-maps-builder-admin-mashups' );
 
 			$ajax_array = array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
 				'i18n'     => array(
-					'load_markers'      => __( 'Load Markers', $this->plugin_slug ),
-					'mashup_configured' => __( 'Mashup Configured', $this->plugin_slug )
+					'load_markers'      => __( 'Load Markers', 'google-maps-builder' ),
+					'mashup_configured' => __( 'Mashup Configured', 'google-maps-builder' )
 				)
 			);
-			wp_localize_script( $this->plugin_slug . '-admin-mashups', 'gmb_mashup', $ajax_array );
+			wp_localize_script( 'google-maps-builder-admin-mashups', 'gmb_mashup', $ajax_array );
 
 
 		}
@@ -94,68 +92,68 @@ class Google_Maps_Builder_Mashups_Builder {
 
 		$mashup_metabox = cmb2_get_metabox( array(
 			'id'           => 'google_maps_mashup_builder',
-			'title'        => __( 'Mashups', $this->plugin_slug ),
-			'description'  => __( 'Aggregate map markers from post types of your choosing.', $this->plugin_slug ),
+			'title'        => __( 'Mashups', 'google-maps-builder' ),
+			'description'  => __( 'Aggregate map markers from post types of your choosing.', 'google-maps-builder' ),
 			'object_types' => array( 'google_maps' ), // post type
 			'context'      => 'normal', //  'normal', 'advanced', or 'side'
 			'priority'     => 'default', //  'high', 'core', 'default' or 'low'
 			'show_names'   => true, // Show field names on the left
 		) );
 		$group_field_id = $mashup_metabox->add_field( array(
-			'name'        => __( 'Mashup Groups', $this->plugin_slug ),
+			'name'        => __( 'Mashup Groups', 'google-maps-builder' ),
 			'id'          => $prefix . 'mashup_group',
 			'type'        => 'group',
-			'description' => __( 'Select the criteria for loading markers within each mashup group.', $this->plugin_slug ),
+			'description' => __( 'Select the criteria for loading markers within each mashup group.', 'google-maps-builder' ),
 			'options'     => array(
 				'group_title'   => __( 'Mashup: {#}', 'cmb' ),
-				'add_button'    => __( 'Add Another Mashup', $this->plugin_slug ),
-				'remove_button' => __( 'Remove', $this->plugin_slug ),
+				'add_button'    => __( 'Add Another Mashup', 'google-maps-builder' ),
+				'remove_button' => __( 'Remove', 'google-maps-builder' ),
 				'sortable'      => false, // beta
 			),
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
-			'name'        => __( 'Post Type', $this->plugin_slug ),
+			'name'        => __( 'Post Type', 'google-maps-builder' ),
 			'id'          => 'post_type',
-			'description' => __( 'Select the post type containing your marker information.', $this->plugin_slug ),
+			'description' => __( 'Select the post type containing your marker information.', 'google-maps-builder' ),
 			'row_classes' => 'gmb-mashup-post-type-field',
 			'type'        => 'select_posttype',
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
-			'name'        => __( 'Taxonomy Filter', $this->plugin_slug ),
+			'name'        => __( 'Taxonomy Filter', 'google-maps-builder' ),
 			'id'          => 'taxonomy',
 			'row_classes' => 'gmb-taxonomy-select-field',
-			'description' => __( 'Select the taxonomy (if any) that you would like to filter markers by.', $this->plugin_slug ),
+			'description' => __( 'Select the taxonomy (if any) that you would like to filter markers by.', 'google-maps-builder' ),
 			'type'        => 'select_taxonomies',
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
-			'name'        => __( 'Taxonomy Terms', $this->plugin_slug ),
+			'name'        => __( 'Taxonomy Terms', 'google-maps-builder' ),
 			'id'          => 'terms',
 			'row_classes' => 'gmb-terms-multicheck-field',
-			'description' => __( 'Select the terms from this taxonomy that you would like to filter markers by.', $this->plugin_slug ),
+			'description' => __( 'Select the terms from this taxonomy that you would like to filter markers by.', 'google-maps-builder' ),
 			'type'        => 'select_terms',
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
-			'name'        => __( 'Latitude Field', $this->plugin_slug ),
+			'name'        => __( 'Latitude Field', 'google-maps-builder' ),
 			'id'          => 'latitude',
 			'default'     => '_gmb_lat',
 			'row_classes' => 'gmb-latitude-select-field',
-			'description' => __( 'Select the field containing the marker latitude data. Default is set to use Maps Builder field.', $this->plugin_slug ),
+			'description' => __( 'Select the field containing the marker latitude data. Default is set to use Maps Builder field.', 'google-maps-builder' ),
 			'type'        => 'select_custom_meta',
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
-			'name'        => __( 'Longitude Field', $this->plugin_slug ),
+			'name'        => __( 'Longitude Field', 'google-maps-builder' ),
 			'id'          => 'longitude',
 			'default'     => '_gmb_lng',
 			'row_classes' => 'gmb-longitude-select-field',
-			'description' => __( 'Select the field containing the marker longitude data. Default is set to use Maps Builder field.', $this->plugin_slug ),
+			'description' => __( 'Select the field containing the marker longitude data. Default is set to use Maps Builder field.', 'google-maps-builder' ),
 			'type'        => 'select_custom_meta',
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
-			'name'        => __( 'Show Featured Image', $this->plugin_slug ),
+			'name'        => __( 'Show Featured Image', 'google-maps-builder' ),
 			'id'          => 'featured_img',
 			'default'     => 'yes',
 			'row_classes' => 'gmb-featured-image-field',
-			'description' => __( 'Would you like the featured image displayed in the marker\'s infowindow?', $this->plugin_slug ),
+			'description' => __( 'Would you like the featured image displayed in the marker\'s infowindow?', 'google-maps-builder' ),
 			'options'     => array(
 				'yes' => 'Yes',
 				'no'  => 'No'
@@ -163,40 +161,40 @@ class Google_Maps_Builder_Mashups_Builder {
 			'type'        => 'radio_inline',
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
-			'name' => __( 'Customize Mashup Marker', $this->plugin_slug ),
+			'name' => __( 'Customize Mashup Marker', 'google-maps-builder' ),
 			'id'   => 'set_custom',
 			'type' => 'customize_mashup_marker',
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
-			'name'        => __( 'Marker Image', $this->plugin_slug ),
+			'name'        => __( 'Marker Image', 'google-maps-builder' ),
 			'id'          => 'marker_img',
 			'row_classes' => 'gmb-mashup-marker-label gmb-hidden',
 			'type'        => 'file',
 			'options'     => array(
 				'url'                  => false,
-				'add_upload_file_text' => __( 'Add Marker Image', $this->plugin_slug )
+				'add_upload_file_text' => __( 'Add Marker Image', 'google-maps-builder' )
 			),
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
-			'name'        => __( 'Marker Data', $this->plugin_slug ),
+			'name'        => __( 'Marker Data', 'google-maps-builder' ),
 			'id'          => 'marker_included_img',
 			'row_classes' => 'gmb-mashup-marker-label gmb-hidden',
 			'type'        => 'text',
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
-			'name'        => __( 'Marker Data', $this->plugin_slug ),
+			'name'        => __( 'Marker Data', 'google-maps-builder' ),
 			'id'          => 'marker',
 			'row_classes' => 'gmb-mashup-marker-label gmb-hidden',
 			'type'        => 'textarea_code',
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
-			'name'        => __( 'Marker Label Data', $this->plugin_slug ),
+			'name'        => __( 'Marker Label Data', 'google-maps-builder' ),
 			'id'          => 'label',
 			'row_classes' => 'gmb-mashup-marker-label gmb-hidden',
 			'type'        => 'textarea_code',
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
-			'name'        => __( 'Load Mashup', $this->plugin_slug ),
+			'name'        => __( 'Load Mashup', 'google-maps-builder' ),
 			'id'          => 'load_panel',
 			'row_classes' => 'gmb-mashup-loading',
 			'type'        => 'mashups_load_panel',
@@ -244,7 +242,7 @@ class Google_Maps_Builder_Mashups_Builder {
 				}
 			} else {
 				$options .= $field_type_object->select_option( array(
-					'label' => __( 'No taxonomies found', $this->plugin_slug ),
+					'label' => __( 'No taxonomies found', 'google-maps-builder' ),
 					'value' => 'none'
 				) );
 			}
@@ -288,10 +286,10 @@ class Google_Maps_Builder_Mashups_Builder {
 
 			$output .= $this->gmb_get_terms_checklist( $terms, $field->group->index, $value );
 
-			$output .= '</ul><p class="cmb2-metabox-description">' . __( 'Select the taxonomies (if any) that you would like to filter by.', $this->plugin_slug ) . '</p>';
+			$output .= '</ul><p class="cmb2-metabox-description">' . __( 'Select the taxonomies (if any) that you would like to filter by.', 'google-maps-builder' ) . '</p>';
 
 		} else {
-			$output = '<ul class="cmb2-checkbox-list cmb2-list"><li>' . __( 'No terms found for this taxonomy', $this->plugin_slug ) . '</li></ul>';
+			$output = '<ul class="cmb2-checkbox-list cmb2-list"><li>' . __( 'No terms found for this taxonomy', 'google-maps-builder' ) . '</li></ul>';
 		}
 
 
@@ -334,7 +332,7 @@ class Google_Maps_Builder_Mashups_Builder {
 
 			} else {
 				$options .= $field_type_object->select_option( array(
-					'label' => __( 'No custom fields found', $this->plugin_slug ),
+					'label' => __( 'No custom fields found', 'google-maps-builder' ),
 					'value' => 'none'
 				) );
 			}
@@ -374,7 +372,7 @@ class Google_Maps_Builder_Mashups_Builder {
 		$meta_keys = $wpdb->get_col( $wpdb->prepare( $query, $post_type ) );
 
 		if ( empty( $meta_keys ) ) {
-			return array( __( 'No meta keys found', $this->plugin_slug ) );
+			return array( __( 'No meta keys found', 'google-maps-builder' ) );
 		}
 
 		set_transient( $post_type . '_meta_keys', $meta_keys, 60 * 60 * 24 ); # 1 Day Expiration
@@ -432,7 +430,7 @@ class Google_Maps_Builder_Mashups_Builder {
 
 		} else {
 
-			$response['taxonomy_options'] = '<option value="none">' . __( 'No taxonomies found', $this->plugin_slug ) . '</option>';
+			$response['taxonomy_options'] = '<option value="none">' . __( 'No taxonomies found', 'google-maps-builder' ) . '</option>';
 			$response['status']           = 'none';
 
 		}
@@ -472,13 +470,13 @@ class Google_Maps_Builder_Mashups_Builder {
 
 			$response['terms_checklist'] .= $this->gmb_get_terms_checklist( $terms, $repeater_index, '' );
 
-			$response['terms_checklist'] .= '</ul><p class="cmb2-metabox-description">' . __( 'Select the taxonomies (if any) that you would like to filter by.', $this->plugin_slug ) . '</p>';
+			$response['terms_checklist'] .= '</ul><p class="cmb2-metabox-description">' . __( 'Select the taxonomies (if any) that you would like to filter by.', 'google-maps-builder' ) . '</p>';
 			//Get terms multicheck list for taxonomy and send to JS
 			$response['status'] = 'success';
 
 		} else {
 
-			$response['terms_checklist'] = '<li>' . __( 'No terms found for this taxonomy', $this->plugin_slug ) . '</li>';
+			$response['terms_checklist'] = '<li>' . __( 'No terms found for this taxonomy', 'google-maps-builder' ) . '</li>';
 			$response['status']          = 'none';
 
 		}
@@ -557,7 +555,7 @@ class Google_Maps_Builder_Mashups_Builder {
 
 		} else {
 
-			$response['error'] = __( 'Error - No posts found.', $this->plugin_slug );
+			$response['error'] = __( 'Error - No posts found.', 'google-maps-builder' );
 
 			echo json_encode( $response );
 
@@ -600,7 +598,7 @@ class Google_Maps_Builder_Mashups_Builder {
 			$response['infowindow'] .= '<p class="place-description">' . $marker_content . '</p>';
 		}
 
-		$response['infowindow'] .= '<a href="' . get_permalink( $post_id ) . '" title="' . $marker_title . '" class="gmb-mashup-single-link">' . apply_filters( 'gmb_mashup_infowindow_content_readmore', __( 'Read More &raquo;', $this->plugin_slug ) ) . '</a>';
+		$response['infowindow'] .= '<a href="' . get_permalink( $post_id ) . '" title="' . $marker_title . '" class="gmb-mashup-single-link">' . apply_filters( 'gmb_mashup_infowindow_content_readmore', __( 'Read More &raquo;', 'google-maps-builder' ) ) . '</a>';
 
 		$response['infowindow'] .= '</div>'; // #infobubble-content
 
@@ -660,11 +658,11 @@ class Google_Maps_Builder_Mashups_Builder {
 			'id'   => 'mashup_configured',
 			'type' => 'hidden',
 		) );
-		echo '<div class="mashup-load-status-wrap"><label>' . __( 'Marker Load Status:', $this->plugin_slug ) . '</label><div class="mashup-load-status"><ol></ol></div></div>';
+		echo '<div class="mashup-load-status-wrap"><label>' . __( 'Marker Load Status:', 'google-maps-builder' ) . '</label><div class="mashup-load-status"><ol></ol></div></div>';
 		if ( $value == 'true' ) {
-			echo '<button class="gmb-load-mashup button" disabled="disabled">' . __( 'Mashup Configured', $this->plugin_slug ) . '</button>';
+			echo '<button class="gmb-load-mashup button" disabled="disabled">' . __( 'Mashup Configured', 'google-maps-builder' ) . '</button>';
 		} else {
-			echo '<button class="gmb-load-mashup button button-primary">' . __( 'Load Markers', $this->plugin_slug ) . '</button>';
+			echo '<button class="gmb-load-mashup button button-primary">' . __( 'Load Markers', 'google-maps-builder' ) . '</button>';
 		}
 
 		echo '<img src="' . GMB_PLUGIN_URL . 'assets/img/loading.gif" class="gmb-mashups-loading">';
@@ -683,7 +681,7 @@ class Google_Maps_Builder_Mashups_Builder {
 	public function gmb_cmb_customize_mashup_marker( $field, $value, $object_id, $object_type, $field_type_object ) {
 
 		//Output button
-		echo '<button class="gmb-set-mashup-marker button gmb-magnific-inline" data-target="marker-icon-modal" data-mfp-src="#marker-icon-modal" data-iterator="' . $field->group->index . '">' . __( 'Configure Mashup Marker', $this->plugin_slug ) . '</button>';
+		echo '<button class="gmb-set-mashup-marker button gmb-magnific-inline" data-target="marker-icon-modal" data-mfp-src="#marker-icon-modal" data-iterator="' . $field->group->index . '">' . __( 'Configure Mashup Marker', 'google-maps-builder' ) . '</button>';
 
 
 	}
