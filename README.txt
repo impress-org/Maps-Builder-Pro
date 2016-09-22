@@ -124,7 +124,19 @@ The main developer of this plugin is WordImpress. To find out more information a
 == Changelog ==
 
 = 2.1 =
+* Fix: Add "Get Directions" link to Places in InfoBubble on Frontend - https://github.com/WordImpress/Google-Maps-Builder/issues/103
+* Fix: Show thumbnail properly in backend InfoBubbles - https://github.com/WordImpress/Google-Maps-Builder/issues/213
+* Fix: Google Places API error outputs badly - https://github.com/WordImpress/Google-Maps-Builder/issues/176
+* Fix: Properly support new requirements for Google Places API - https://github.com/WordImpress/Google-Maps-Builder/issues/174
+* Fix: Featured image displays in InfoBubble even when disabled - https://github.com/WordImpress/Google-Maps-Builder/issues/165
+* Fix: Save Button doesn't appear when editing a Marker that was already edited once - https://github.com/WordImpress/Google-Maps-Builder/issues/210
+* Fix: "Save Changes" tool tip stays on screen after saving changes - https://github.com/WordImpress/Google-Maps-Builder/issues/205
+* Fix: Map Type Control doesn't affect map properly - https://github.com/WordImpress/Google-Maps-Builder/issues/162
+* Tweak: Settings screen CSS made tabs shift in bad ways - https://github.com/WordImpress/Google-Maps-Builder/issues/171
+* Tweak: Google Marker images were moved. Updated to new location - https://github.com/WordImpress/Google-Maps-Builder/issues/175
 * Tweak: Removed sensor parameter to prevent console warning https://github.com/WordImpress/Maps-Builder-Pro/issues/19
+* Enhancement: Support basic HTML in InfoBubbles - https://github.com/WordImpress/Google-Maps-Builder/issues/218
+* Enhancement: Vastly improved InfoBubble CSS and sizing - https://github.com/WordImpress/Google-Maps-Builder/issues/214
 
 = 2.0.3 =
 * New: Option to centered maps on marker when the user clicks on it - https://github.com/WordImpress/Maps-Builder-Pro/issues/17
