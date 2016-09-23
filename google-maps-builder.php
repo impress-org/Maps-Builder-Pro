@@ -147,7 +147,7 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) :
 
 
 			/**
-			 * Include required files
+			 * Include required files.
 			 *
 			 * @access protected
 			 * @since  2.0
@@ -169,8 +169,8 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) :
 					$this->load_admin();
 					//Admin
 					require_once GMB_PLUGIN_PATH . 'includes/admin/custom-field-types/cmb2-field-directions.php';
-					require_once GMB_PLUGIN_PATH . 'includes/admin/custom-field-types/cmb2-field-select-posttype.php';
-					require_once GMB_PLUGIN_PATH . 'includes/admin/custom-field-types/cmb2-field-multicheck-posttype.php';
+					require_once GMB_PLUGIN_PATH . 'includes/admin/custom-field-types/cmb2-field-select-post-type.php';
+					require_once GMB_PLUGIN_PATH . 'includes/admin/custom-field-types/cmb2-field-multicheck-post-type.php';
 
 					//@TODO only load when needed
 					$this->init_map_editor_admin();

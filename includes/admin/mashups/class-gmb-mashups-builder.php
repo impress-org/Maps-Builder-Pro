@@ -116,7 +116,7 @@ class Google_Maps_Builder_Mashups_Builder {
 			'id'          => 'post_type',
 			'description' => __( 'Select the post type containing your marker information.', 'google-maps-builder' ),
 			'row_classes' => 'gmb-mashup-post-type-field',
-			'type'        => 'select_posttype',
+			'type'        => 'select_post_type',
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
 			'name'        => __( 'Taxonomy Filter', 'google-maps-builder' ),
@@ -210,28 +210,32 @@ class Google_Maps_Builder_Mashups_Builder {
 	 * @param $value
 	 * @param $object_id
 	 * @param $object_type
-	 * @param $field_type_object
+	 * @param $field_type_object CMB2_Types
 	 */
 	public function gmb_cmb_render_select_taxonomies( $field, $value, $object_id, $object_type, $field_type_object ) {
+
+		if ( version_compare( CMB2_VERSION, '2.2.2', '>=' ) ) {
+			$field_type_object->type = new CMB2_Type_Select( $field_type_object );
+		}
 
 		$group_data_array = maybe_unserialize( get_post_meta( $object_id, 'gmb_mashup_group', true ) );
 		$post_type        = isset( $group_data_array[ $field->group->index ]['post_type'] ) ? $group_data_array[ $field->group->index ]['post_type'] : 'post';
 
-		//First check to see if mashups post type field has been set
+		//First check to see if mashups post type field has been set.
 		if ( ! empty( $post_type ) ) {
 
-			//Get taxonomies for CPT
+			//Get taxonomies for CPT.
 			$taxonomies = get_object_taxonomies( $post_type, 'objects' );
 			$options    = '';
 
-			//Default "None"
+			//Default "None".
 			$options .= $field_type_object->select_option( array(
 				'label'   => 'No filter',
 				'value'   => 'none',
 				'checked' => $value == 'none',
 			) );
 
-			//Do we have taxonomies?
+			//Do we have taxonomies?.
 			if ( $taxonomies ) {
 				foreach ( $taxonomies as $taxonomy ) {
 					$options .= $field_type_object->select_option( array(
@@ -246,7 +250,7 @@ class Google_Maps_Builder_Mashups_Builder {
 					'value' => 'none'
 				) );
 			}
-			//Output taxonomies select
+			//Output taxonomies select.
 			echo $field_type_object->select( array(
 				'options'      => $options,
 				'autocomplete' => 'off'
@@ -305,9 +309,13 @@ class Google_Maps_Builder_Mashups_Builder {
 	 * @param $value
 	 * @param $object_id
 	 * @param $object_type
-	 * @param $field_type_object
+	 * @param $field_type_object CMB2_Types
 	 */
 	public function gmb_cmb_render_select_custom_meta( $field, $value, $object_id, $object_type, $field_type_object ) {
+
+		if ( version_compare( CMB2_VERSION, '2.2.2', '>=' ) ) {
+			$field_type_object->type = new CMB2_Type_Select( $field_type_object );
+		}
 
 		$group_data_array = maybe_unserialize( get_post_meta( $object_id, 'gmb_mashup_group', true ) );
 		$post_type        = isset( $group_data_array[ $field->group->index ]['post_type'] ) ? $group_data_array[ $field->group->index ]['post_type'] : 'post';
@@ -348,7 +356,7 @@ class Google_Maps_Builder_Mashups_Builder {
 	}
 
 	/**
-	 * Generate Post Type Meta Keys
+	 * Generate Post Type Meta Keys.
 	 *
 	 * @see: http://wordpress.stackexchange.com/questions/58834/echo-all-meta-keys-of-a-custom-post-type
 	 * @return array
@@ -520,15 +528,8 @@ class Google_Maps_Builder_Mashups_Builder {
 
 		}
 
-		//Check if we have a transient here & we're not busting it
-		$transient_name = md5( 'gmb_mashup_' . http_build_query( $args ) ); //md5 to keep characters under 40
-		$saved_query    = get_transient( $transient_name );
-
-		//@TODO: Is saving a transient necessary for performance?
-		//		if ( $saved_query !== false ) {
-		//			echo json_encode( maybe_unserialize( $saved_query ) );
-		//			wp_die();
-		//		}
+		//Check if we have a transient here & we're not busting it.
+		$transient_name = md5( 'gmb_mashup_' . http_build_query( $args ) );
 
 		// The Query
 		$wp_query = new WP_Query( $args );
@@ -567,9 +568,9 @@ class Google_Maps_Builder_Mashups_Builder {
 	}
 
 	/**
-	 * AJAX Marker Infowindow Callback
+	 * AJAX Marker Infowindow Callback.
 	 *
-	 * @description Returns the infowindow content for a mashup marker
+	 * Returns the infowindow content for a mashup marker.
 	 */
 	function get_mashup_marker_infowindow_callback() {
 

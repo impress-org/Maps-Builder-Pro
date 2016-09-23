@@ -1,6 +1,6 @@
 <?php
 /**
- * Render 'destination' custom field type
+ * Render 'destination' custom field type.
  *
  * @since 2.0
  *
@@ -135,6 +135,15 @@ function cmb2_sanitize_destination_field( $check, $meta_value, $object_id, $fiel
 
 add_filter( 'cmb2_sanitize_destination', 'cmb2_sanitize_destination_field', 10, 5 );
 
+/**
+ *
+ * @param $check
+ * @param $meta_value
+ * @param $field_args
+ * @param $field_object
+ *
+ * @return array
+ */
 function cmb2_types_esc_destination_field( $check, $meta_value, $field_args, $field_object ) {
 	// if not repeatable, bail out.
 	if ( ! is_array( $meta_value ) || ! $field_args['repeatable'] ) {
