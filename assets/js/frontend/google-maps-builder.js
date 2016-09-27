@@ -317,7 +317,7 @@
      */
     gmb.set_map_places_search = function (map, map_data) {
 
-        //sanity check
+        //Sanity check.
         if (map_data.places_search[0] !== 'yes') {
             return false;
         }
@@ -328,19 +328,18 @@
             placeSearchWrap.find('#pac-input').get(0));
         var placeTypes = $('#google-maps-builder-' + map_data.id).siblings('.places-search-wrap').find('#type-selector').get(0);
 
+        //Adds the Places control at the map's center.
         map.controls[google.maps.ControlPosition.TOP_CENTER].push(placeSearchWrap.get(0));
 
         var placeSearchAutocomplete = new google.maps.places.Autocomplete(placeSearchInput);
         placeSearchAutocomplete.bindTo('bounds', map);
 
-        var infowindow = new GMB_InfoBubble();
         var marker = new google.maps.Marker({
             map: map,
             anchorPoint: new google.maps.Point(0, -29)
         });
 
         google.maps.event.addListener(placeSearchAutocomplete, 'place_changed', function () {
-            infowindow.close();
             marker.setVisible(false);
             var place = placeSearchAutocomplete.getPlace();
 
@@ -371,8 +370,9 @@
                 info_window_content = '<p class="place-title">' + place.name + '</p>';
             }
             info_window_content += gmb.set_place_content_in_info_window(place);
-            infowindow.setContent(info_window_content); //set marker content
-            infowindow.open(map, marker);
+            map.info_window.setContent(info_window_content);
+            map.info_window.updateContent_();
+            map.info_window.open(map, marker);
 
         });
 
