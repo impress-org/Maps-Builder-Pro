@@ -173,7 +173,11 @@ class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 		</div>
 
 		<?php
-		if ( isset( $this->localized_data[ $post->ID ] ) && isset( $this->localized_data[ $post->ID ]['places_search'] ) && isset( $this->localized_data[ $post->ID ]['places_search'][0] ) && 'yes' == $this->localized_data[ $post->ID ]['places_search'][0] ) {
+		$localized_data = isset( $this->localized_data[ $atts['id'] ] ) ? $this->localized_data[ $atts['id'] ] : '';
+		//Google places search enabled?
+		if ( isset( $localized_data['places_search'] ) &&
+		     isset( $localized_data['places_search'][0] ) &&
+		     'yes' == $localized_data['places_search'][0] ) {
 			include $this->get_google_maps_template( 'places-search.php' );
 		}
 
