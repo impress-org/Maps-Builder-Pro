@@ -143,6 +143,8 @@
      */
     gmb.get_mashup_infowindow_content = function (map, marker, map_data) {
 
+        map.info_window.close();
+
         var data = {
             action: 'get_mashup_marker_infowindow',
             marker_data: marker.marker_data
@@ -160,7 +162,7 @@
                 window.setTimeout(function () {
                     // Pan into view, done in a time out to make it feel nicer :)
                     map.info_window.panToView();
-                }, 200);
+                }, 100);
             }
 
         }, 'json');
