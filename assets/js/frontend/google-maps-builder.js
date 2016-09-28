@@ -154,16 +154,7 @@
 
             map.info_window.setContent(response.infowindow);
             map.info_window.updateContent_();
-            map.info_window.open(map, marker);
-
-            //Marker Centers Map on Click?
-            // This ensures that the map centers AFTER the loaded via AJAX.
-            if (map_data.marker_centered == 'yes') {
-                window.setTimeout(function () {
-                    // Pan into view, done in a time out to make it feel nicer :)
-                    map.info_window.panToView();
-                }, 100);
-            }
+            map.info_window.open(map, marker, map_data);
 
         }, 'json');
 
@@ -325,10 +316,8 @@
         }
 
         var placeSearchWrap = $('#google-maps-builder-' + map_data.id).siblings('.places-search-wrap');
-
         var placeSearchInput = /** @type {HTMLInputElement} */(
             placeSearchWrap.find('#pac-input').get(0));
-        var placeTypes = $('#google-maps-builder-' + map_data.id).siblings('.places-search-wrap').find('#type-selector').get(0);
 
         //Adds the Places control at the map's center.
         map.controls[google.maps.ControlPosition.TOP_CENTER].push(placeSearchWrap.get(0));
@@ -374,12 +363,13 @@
             info_window_content += gmb.set_place_content_in_info_window(place);
             map.info_window.setContent(info_window_content);
             map.info_window.updateContent_();
-            map.info_window.open(map, marker);
+            map.info_window.open(map, marker, map_data);
 
         });
 
-        // Sets a listener on a radio button to change the filter type on Places
-        // Autocomplete.
+        var placeTypes = $('#google-maps-builder-' + map_data.id).siblings('.places-search-wrap').find('#type-selector').get(0);
+
+        // Sets a listener on a radio button to change the filter type on Places Autocomplete.
         function setupClickListener(id, placeTypes) {
             var radioButton = document.getElementById(id);
             google.maps.event.addDomListener(radioButton, 'click', function () {
