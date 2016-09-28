@@ -265,8 +265,8 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 	 * @return string
 	 */
 	protected function sub_heading() {
-		$out = __( 'Thank you for upgrading to Maps Builder Pro.', 'google-maps-pro' ) . ' ';
-		$out .= sprintf( __( 'As a Pro active license holder you receive <a href="%1$s" target="_blank">priority support</a>, awesome plugin features, and thoroughly written plugin <a href="%2$s" target="_blank">documentation</a>. We hope you enjoy using the Pro plugin version!', 'google-maps-pro' ), 'https://wordimpress.com/documentation/maps-builder-pro/', 'https://wordimpress.com/support/' );
+		$out = __( 'Thank you for upgrading to Maps Builder Pro.', 'google-maps-builder' ) . ' ';
+		$out .= sprintf( __( 'As a Pro active license holder you receive <a href="%1$s" target="_blank">priority support</a>, awesome plugin features, and thoroughly written plugin <a href="%2$s" target="_blank">documentation</a>. We hope you enjoy using the Pro plugin version!', 'google-maps-builder' ), 'https://wordimpress.com/documentation/maps-builder-pro/', 'https://wordimpress.com/support/' );
 
 		return $out;
 
