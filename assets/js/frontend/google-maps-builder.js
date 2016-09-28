@@ -156,6 +156,14 @@
             map.info_window.updateContent_();
             map.info_window.open(map, marker, map_data);
 
+            //Center markers on click option.
+            //Timeout required to calculate height properly.
+            if (map_data.marker_centered == 'yes') {
+                window.setTimeout(function () {
+                    map.info_window.panToView();
+                }, 300);
+            }
+
         }, 'json');
 
     };
@@ -364,6 +372,15 @@
             map.info_window.setContent(info_window_content);
             map.info_window.updateContent_();
             map.info_window.open(map, marker, map_data);
+
+            //Center markers on click option.
+            //Timeout required to calculate height properly.
+            if (map_data.marker_centered == 'yes') {
+                window.setTimeout(function () {
+                    map.info_window.panToView();
+                }, 300);
+            }
+
 
         });
 
