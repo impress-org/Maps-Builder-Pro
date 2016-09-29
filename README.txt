@@ -3,8 +3,8 @@ Contributors: wordimpress, dlocc, webdevmattcrom
 Donate link: http://wordimpress.com/
 Tags: google maps, google map, google map widget, google map shortcode, maps, map, wp map, wp google maps, google maps directions, google maps builder, google maps plugin, google places, google places api, google maps api, google places reviews
 Requires at least: 4.0
-Tested up to: 4.3.1
-Stable tag: 2.0.2
+Tested up to: 4.6.1
+Stable tag: 2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -124,6 +124,9 @@ The main developer of this plugin is WordImpress. To find out more information a
 == Changelog ==
 
 = 2.1 =
+* Enhancement: Support basic HTML in InfoBubbles - https://github.com/WordImpress/Google-Maps-Builder/issues/218
+* Enhancement: Vastly improved InfoBubble CSS and sizing - https://github.com/WordImpress/Google-Maps-Builder/issues/214
+* Enhancement: Wider selection of Snazzy Maps added - https://github.com/WordImpress/Google-Maps-Builder/issues/20
 * Fix: Add "Get Directions" link to Places in InfoBubble on Frontend - https://github.com/WordImpress/Google-Maps-Builder/issues/103
 * Fix: Show thumbnail properly in backend InfoBubbles - https://github.com/WordImpress/Google-Maps-Builder/issues/213
 * Fix: Google Places API error outputs badly - https://github.com/WordImpress/Google-Maps-Builder/issues/176
@@ -132,11 +135,12 @@ The main developer of this plugin is WordImpress. To find out more information a
 * Fix: Save Button doesn't appear when editing a Marker that was already edited once - https://github.com/WordImpress/Google-Maps-Builder/issues/210
 * Fix: "Save Changes" tool tip stays on screen after saving changes - https://github.com/WordImpress/Google-Maps-Builder/issues/205
 * Fix: Map Type Control doesn't affect map properly - https://github.com/WordImpress/Google-Maps-Builder/issues/162
+* Fix: The "Get Directions" link wasn't displaying properly in InfoBubbles - https://github.com/WordImpress/Google-Maps-Builder/issues/103
 * Tweak: Settings screen CSS made tabs shift in bad ways - https://github.com/WordImpress/Google-Maps-Builder/issues/171
+* Tweak: Changed default geocoding option and settings now that Google requires SSL to enable - https://github.com/WordImpress/Google-Maps-Builder/issues/164
 * Tweak: Google Marker images were moved. Updated to new location - https://github.com/WordImpress/Google-Maps-Builder/issues/175
 * Tweak: Removed sensor parameter to prevent console warning https://github.com/WordImpress/Maps-Builder-Pro/issues/19
-* Enhancement: Support basic HTML in InfoBubbles - https://github.com/WordImpress/Google-Maps-Builder/issues/218
-* Enhancement: Vastly improved InfoBubble CSS and sizing - https://github.com/WordImpress/Google-Maps-Builder/issues/214
+* Tweak: Updated Google logo to the newest version - https://github.com/WordImpress/Maps-Builder-Pro/issues/209
 
 = 2.0.3 =
 * New: Option to centered maps on marker when the user clicks on it - https://github.com/WordImpress/Maps-Builder-Pro/issues/17
