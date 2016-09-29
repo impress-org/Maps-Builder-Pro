@@ -25,9 +25,7 @@ var gmb_data;
      * Cache
      */
     app.cache = function () {
-
         app.$body = $('body');
-
     };
 
     /**
@@ -149,7 +147,7 @@ var gmb_data;
             directionsDisplay[index].setMap(window.map);
             var repeatable_row = $(this).find('.cmb-repeat-row');
 
-            //Get origin
+            //Get origin.
             var start_lat = repeatable_row.first().find('.gmb-directions-latitude').val();
             var start_lng = repeatable_row.first().find('.gmb-directions-longitude').val();
             var start_address = repeatable_row.first().find('.gmb-directions-address').val();
@@ -160,7 +158,7 @@ var gmb_data;
                 origin = start_lat + ',' + start_lng;
             }
 
-            //Get Destination
+            //Get Destination.
             var end_lat = repeatable_row.last().find('.gmb-directions-latitude').val();
             var end_lng = repeatable_row.last().find('.gmb-directions-longitude').val();
             var end_address = repeatable_row.last().find('.gmb-directions-address').val();
@@ -176,7 +174,7 @@ var gmb_data;
             var travel_mode = $(this).find('.gmb-travel-mode').val();
             var waypts = [];
 
-            //Next Loop through interior destionations (not first or last) to get waypoints
+            //Next Loop through interior destinations (not first or last) to get waypoints.
             repeatable_row.not(':first').not(':last').each(function (index, value) {
 
                 var waypoint_address = $(this).find('.gmb-directions-address').val();
@@ -189,7 +187,6 @@ var gmb_data;
                 } else {
                     waypoint_location = waypoint_lat + ',' + waypoint_lng;
                 }
-
                 waypts.push({
                     location: waypoint_location,
                     stopover: true
@@ -197,8 +194,7 @@ var gmb_data;
 
             });
 
-
-            //Directions Request
+            //Directions request.
             var request = {
                 origin: origin,
                 destination: final_destination,
@@ -208,11 +204,10 @@ var gmb_data;
             };
 
             directionsService.route(request, function (response, status) {
-
                 if (status == google.maps.DirectionsStatus.OK) {
-
-                    directionsDisplay[index].setOptions({preserveViewport: true}); //ensure users set lat/lng doesn't get all messed u
-                    directionsDisplay[index].setDirections(response); //Set dem directions
+                    //ensure users set lat/lng doesn't get all messed up.
+                    directionsDisplay[index].setOptions({preserveViewport: true});
+                    directionsDisplay[index].setDirections(response); //Set the directions.
 
                 }
             });
