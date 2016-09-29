@@ -204,6 +204,7 @@ var gmb_data;
             };
 
             directionsService.route(request, function (response, status) {
+
                 if (status == google.maps.DirectionsStatus.OK) {
                     //ensure users set lat/lng doesn't get all messed up.
                     directionsDisplay[index].setOptions({preserveViewport: true});
