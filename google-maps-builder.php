@@ -3,7 +3,7 @@
  * Maps Builder Pro
  *
  * Plugin Name:       Maps Builder Pro
- * Plugin URI:        https://wordimpress.com/
+ * Plugin URI:        http://mapsbuilder.wordimpress.com/
  * Description:       Create stylish and powerful Google Maps quickly and easily.
  * Version:           2.1
  * Author:            WordImpress
