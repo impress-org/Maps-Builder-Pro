@@ -128,11 +128,6 @@ if ( ! class_exists( 'Google_Maps_Builder' ) ) :
 					self::$instance->engine   = new Google_Maps_Builder_Engine();
 					self::$instance->html     = new Google_Maps_Builder_HTML_Elements();
 
-					register_activation_hook( __FILE__, array(
-						self::$instance->activate,
-						'activation_flush_rewrites'
-					) );
-
 					// Read plugin meta
 					// Check that function get_plugin_data exists
 					if ( ! function_exists( 'get_plugin_data' ) ) {
