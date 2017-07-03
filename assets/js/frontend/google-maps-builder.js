@@ -51,7 +51,8 @@
                     //Set mashup markers
                     var marker = gmb.set_mashup_marker(map, data.index, marker_data, mashup_value, map_data);
                     if (marker instanceof Marker) {
-                        markers.push(marker);
+                        // Add mashup marker to array with key equal to its post ID.
+                        markers[marker.marker_data.id] = marker;
                     }
                 });
 
