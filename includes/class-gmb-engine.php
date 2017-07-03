@@ -139,7 +139,8 @@ class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 					'search_places' => ! empty( $all_meta['gmb_places_search_multicheckbox'][0] ) ? maybe_unserialize( $all_meta['gmb_places_search_multicheckbox'][0] ) : '',
 				),
 				'map_markers_icon'    => ! empty( $all_meta['gmb_map_marker'] ) ? $all_meta['gmb_map_marker'][0] : 'none',
-			)
+				'current_post'        => get_the_ID(),
+			),
 		) );
 
 		$this->localized_data = $localized_data;
