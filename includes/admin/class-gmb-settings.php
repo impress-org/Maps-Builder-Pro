@@ -140,16 +140,6 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 			'options' => gmb_get_map_languages(),
 			'desc'    => __( 'The Google Maps API uses the user\'s browser preferred language setting when displaying textual information such as the names for controls, copyright notices, driving directions and labels on maps. In most cases, this is preferable; you usually do not wish to override the user\'s preferred language setting. However, if you wish to change the Maps API to ignore the browser\'s language setting and force it to display information in a particular language, you can configure that here.', 'google-maps-builder' ),
 		);
-		$this->plugin_options['fields'][] = array(
-			'name'    => __( 'Signed-in Maps', 'google-maps-builder' ),
-			'id'      => $prefix . 'signed_in',
-			'type'    => 'select',
-			'options' => array(
-				'disabled' => 'Disabled',
-				'enabled'  => 'Enabled'
-			),
-			'desc'    => __( 'When you enable sign-in with Google Maps, the maps on your site will be tailored to your users. Users who are signed-in to their Google account will be able to save places for later viewing on the web or mobile devices. Places saved from the map will be attributed to your site. Notice: When sign-in is enabled, the default position and appearance of several controls will change.', 'google-maps-builder' ),
-		);
 
 		return apply_filters( 'gmb_map_options_fields', $this->plugin_options );
 	}

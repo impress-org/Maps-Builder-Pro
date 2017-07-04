@@ -83,7 +83,6 @@ class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 			}
 		}
 		$text_directions  = isset( $all_meta['gmb_text_directions'][0] ) ? maybe_unserialize( $all_meta['gmb_text_directions'][0] ) : 'none';
-		$signed_in_option = gmb_get_option( 'gmb_signed_in' );
 
 		//Assemble map marker array.
 		if ( is_array( $markers_repeatable ) ) {
@@ -121,7 +120,6 @@ class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 					'map_type'       => ! empty( $all_meta['gmb_type'][0] ) ? $all_meta['gmb_type'][0] : 'RoadMap',
 					'map_theme_json' => ! empty( $all_meta['gmb_theme_json'][0] ) ? $all_meta['gmb_theme_json'][0] : 'none',
 				),
-				'signed_in_option'    => $signed_in_option,
 				'marker_centered'     => isset( $marker_centered[0] ) ? $marker_centered[0] : '',
 				'marker_cluster'      => isset( $cluster_option[0] ) ? $cluster_option[0] : '',
 				'plugin_url'          => GMB_PLUGIN_URL,
