@@ -508,24 +508,20 @@ class Google_Maps_Builder_Mashups_Builder {
 	 * AJAX Taxonomies Callback
 	 */
 	function get_mashup_markers_callback() {
-
-		//Set Vars
 		$repeater_index = isset( $_POST['index'] ) ? $_POST['index'] : '';
 		$taxonomy       = isset( $_POST['taxonomy'] ) ? $_POST['taxonomy'] : '';
 		$terms          = isset( $_POST['terms'] ) ? $_POST['terms'] : '';
 		$post_type      = isset( $_POST['post_type'] ) ? $_POST['post_type'] : '';
 		$lat_field      = isset( $_POST['lat_field'] ) ? $_POST['lat_field'] : '_gmb_lat';
 		$lng_field      = isset( $_POST['lng_field'] ) ? $_POST['lng_field'] : '_gmb_lng';
-		$response       = '';
 
 		$args = array(
 			'post_type'      => $post_type,
 			'posts_per_page' => - 1
 		);
-		//Handle taxonomy & terms filter
-		if ( ! empty( $taxonomy ) && $taxonomy !== 'none' ) {
 
-			//Build $args taxonomy params
+		// Filter posts by taxonomy terms if applicable.
+		if ( ! empty( $taxonomy ) && $taxonomy !== 'none' ) {
 			$args['tax_query'] = array(
 				array(
 					'taxonomy' => $taxonomy,
@@ -534,18 +530,12 @@ class Google_Maps_Builder_Mashups_Builder {
 					'operator' => 'IN',
 				)
 			);
-
 		}
 
-		//Check if we have a transient here & we're not busting it.
-		$transient_name = md5( 'gmb_mashup_' . http_build_query( $args ) );
-
-		// The Query
+		// Query posts using mash-up criteria.
 		$wp_query = new WP_Query( $args );
 
-		// The Loop
 		if ( $wp_query->have_posts() ) : while ( $wp_query->have_posts() ) :
-
 			$wp_query->the_post();
 			$post_id = get_the_ID();
 
@@ -554,26 +544,19 @@ class Google_Maps_Builder_Mashups_Builder {
 			$response[ $post_id ]['address']   = get_post_meta( $post_id, '_gmb_address', true ); //Geocoding Coming soon
 			$response[ $post_id ]['latitude']  = get_post_meta( $post_id, $lat_field, true );
 			$response[ $post_id ]['longitude'] = get_post_meta( $post_id, $lng_field, true );
-
 		endwhile; endif;
 		wp_reset_postdata();
 
-		//Set query transient
 		if ( is_array( $response ) ) {
+			// Store marker data in transient to speed up future callbacks.
 			set_transient( $transient_name, $response, 24 * HOUR_IN_SECONDS ); //save transient for 24 hours
-			echo json_encode( $response );
-
 		} else {
-
 			$response['error'] = __( 'Error - No posts found.', 'google-maps-builder' );
-
-			echo json_encode( $response );
-
 		}
 
+		echo json_encode( $response );
+
 		wp_die();
-
-
 	}
 
 	/**
