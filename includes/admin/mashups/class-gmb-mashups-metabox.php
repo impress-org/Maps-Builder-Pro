@@ -28,11 +28,12 @@ class Google_Maps_Builder_Mashups_Metabox {
 	 * Initialize the plugin by loading admin scripts & styles and adding a
 	 * settings page and menu.
 	 *
-	 * @since     2.0
+	 * @since 2.0.0
+	 * @since 2.1.2 Added CMB2 hooks to delete transients on save.
 	 */
 	public function __construct() {
 
-		//Add metaboxes and fields to CPT
+		// Add metaboxes and fields to CPT.
 		add_action( 'cmb2_init', array( $this, 'mashup_metabox_fields' ) );
 		add_action( 'cmb2_render_google_mashup_geocoder', array( $this, 'cmb2_render_google_mashup_geocoder' ), 10, 2 );
 		add_filter( 'cmb2_sanitize_google_mashup_geocoder', array(
@@ -41,8 +42,13 @@ class Google_Maps_Builder_Mashups_Metabox {
 		), 10, 2 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_mashup_scripts' ) );
 
-	}
+		// Check if location fields have changed on save.
+		add_action( 'cmb2_save_field__gmb_lat', array( $this, 'maybe_delete_transient' ), 10, 3 );
+		add_action( 'cmb2_save_field__gmb_lng', array( $this, 'maybe_delete_transient' ), 10, 3 );
+		add_action( 'cmb2_save_field__gmb_address', array( $this, 'maybe_delete_transient' ), 10, 3 );
+		add_action( 'cmb2_save_field__gmb_place_id', array( $this, 'maybe_delete_transient' ), 10, 3 );
 
+	}
 
 	/**
 	 * Mashup Metabox Field
@@ -62,6 +68,7 @@ class Google_Maps_Builder_Mashups_Metabox {
 			return;
 		}
 
+		// This prefix is used in CMB2 hooks when deleting transients!
 		$prefix = '_gmb_';
 
 		//Output metabox on appropriate CPTs
@@ -227,6 +234,47 @@ class Google_Maps_Builder_Mashups_Metabox {
 			delete_transient( $post->post_type . '_meta_keys' );
 		}
 
+	}
+
+	/**
+	 * Deletes mash-up transient if a location field has been updated.
+	 *
+	 * When a location field is updated, transients that store mash-up data
+	 * for that post type must be deleted. Otherwise the mash-up markers will
+	 * not reflect the updated fields on the map.
+	 *
+	 * @since 2.1.2
+	 *
+	 * @param bool              $updated Whether the metadata update action occurred.
+	 * @param string            $action  Action performed. Could be "repeatable", "updated", or "removed".
+	 * @param CMB2_Field object $field   This field object
+	 */
+	function maybe_delete_transient( $updated, $action, $field ) {
+		if ( $updated ) {
+			global $wpdb;
+			$post_type = get_post_type( $field->object_id );
+
+			// Delete all mash-up transients associated with this post type.
+			$wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->options WHERE option_name LIKE %s", '%gmb_mashup_' . $post_type . '%' ) );
+
+			// Unhook actions from other location fields. No need to check them.
+			$this->unhook_maybe_delete_transient();
+		}
+	}
+
+	/**
+	 * Unhooks actions after mash-up transient has been deleted.
+	 *
+	 * Once a transient is deleted, there is no need to continue checking
+	 * whether other location fields have changed.
+	 *
+	 * @since 2.1.2
+	 */
+	function unhook_maybe_delete_transient() {
+		remove_action( 'cmb2_save_field__gmb_lat', array( $this, 'maybe_delete_transient' ) );
+		remove_action( 'cmb2_save_field__gmb_lng', array( $this, 'maybe_delete_transient' ) );
+		remove_action( 'cmb2_save_field__gmb_address', array( $this, 'maybe_delete_transient' ) );
+		remove_action( 'cmb2_save_field__gmb_place_id', array( $this, 'maybe_delete_transient' ) );
 	}
 
 
