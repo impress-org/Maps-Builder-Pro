@@ -508,12 +508,11 @@ class Google_Maps_Builder_Mashups_Builder {
 	 * AJAX Taxonomies Callback
 	 */
 	function get_mashup_markers_callback() {
-		$repeater_index = isset( $_POST['index'] ) ? $_POST['index'] : '';
-		$taxonomy       = isset( $_POST['taxonomy'] ) ? $_POST['taxonomy'] : '';
-		$terms          = isset( $_POST['terms'] ) ? $_POST['terms'] : '';
-		$post_type      = isset( $_POST['post_type'] ) ? $_POST['post_type'] : '';
-		$lat_field      = isset( $_POST['lat_field'] ) ? $_POST['lat_field'] : '_gmb_lat';
-		$lng_field      = isset( $_POST['lng_field'] ) ? $_POST['lng_field'] : '_gmb_lng';
+		$taxonomy       = isset( $_POST['taxonomy'] ) ? sanitize_text_field( $_POST['taxonomy'] ) : '';
+		$terms          = isset( $_POST['terms'] ) ? array_map( 'intval', $_POST['terms'] ) : '';
+		$post_type      = isset( $_POST['post_type'] ) ? sanitize_text_field( $_POST['post_type'] ) : '';
+		$lat_field      = isset( $_POST['lat_field'] ) ? sanitize_text_field( $_POST['lat_field'] ) : '_gmb_lat';
+		$lng_field      = isset( $_POST['lng_field'] ) ? sanitize_text_field( $_POST['lng_field'] ) : '_gmb_lng';
 
 		$args = array(
 			'post_type'      => $post_type,
