@@ -547,6 +547,18 @@ class Google_Maps_Builder_Mashups_Builder {
 		endwhile; endif;
 		wp_reset_postdata();
 
+		/**
+		 * Filters the array of mash-up markers.
+		 *
+		 * @author Tobias Malikowski tobias.malikowski@gmail.com
+		 *
+		 * @param array    $response       Array of mash-up marker data.
+		 * @param WP_Query $wp_query       Query used to retrieve mash-up posts.
+		 * @param string   $transient_name Transient used to store marker data.
+		 * @param array    $args           Args passed to WP_Query.
+		 */
+		apply_filters( 'gmb_get_mashup_markers_callback', $response, $wp_query, $transient_name, $args );
+
 		if ( is_array( $response ) ) {
 			// Store marker data in transient to speed up future callbacks.
 			set_transient( $transient_name, $response, 24 * HOUR_IN_SECONDS ); //save transient for 24 hours
