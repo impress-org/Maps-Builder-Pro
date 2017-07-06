@@ -531,38 +531,53 @@ class Google_Maps_Builder_Mashups_Builder {
 			);
 		}
 
-		// Query posts using mash-up criteria.
-		$wp_query = new WP_Query( $args );
+		$transient_name = 'gmb_mashup_' . $post_type . '_' . md5( http_build_query( $args ) );
 
-		if ( $wp_query->have_posts() ) : while ( $wp_query->have_posts() ) :
-			$wp_query->the_post();
-			$post_id = get_the_ID();
+		// Load marker data from transient if available.
+		if ( false === ( $response = get_transient( $transient_name ) ) ) {
+			// Transient does not exist or is expired. Proceed with query.
+			$wp_query = new WP_Query( $args );
 
-			$response[ $post_id ]['title']     = get_the_title( $post_id );
-			$response[ $post_id ]['id']        = $post_id;
-			$response[ $post_id ]['address']   = get_post_meta( $post_id, '_gmb_address', true ); //Geocoding Coming soon
-			$response[ $post_id ]['latitude']  = get_post_meta( $post_id, $lat_field, true );
-			$response[ $post_id ]['longitude'] = get_post_meta( $post_id, $lng_field, true );
-		endwhile; endif;
-		wp_reset_postdata();
+			if ( $wp_query->have_posts() ) : while ( $wp_query->have_posts() ) :
+				$wp_query->the_post();
+				$post_id = get_the_ID();
 
-		/**
-		 * Filters the array of mash-up markers.
-		 *
-		 * @author Tobias Malikowski tobias.malikowski@gmail.com
-		 *
-		 * @param array    $response       Array of mash-up marker data.
-		 * @param WP_Query $wp_query       Query used to retrieve mash-up posts.
-		 * @param string   $transient_name Transient used to store marker data.
-		 * @param array    $args           Args passed to WP_Query.
-		 */
-		apply_filters( 'gmb_get_mashup_markers_callback', $response, $wp_query, $transient_name, $args );
+				// Get latitude and longitude associated with post.
+				$lat = get_post_meta( $post_id, $lat_field, true );
+				$lng = get_post_meta( $post_id, $lng_field, true );
 
-		if ( is_array( $response ) ) {
-			// Store marker data in transient to speed up future callbacks.
-			set_transient( $transient_name, $response, 24 * HOUR_IN_SECONDS ); //save transient for 24 hours
-		} else {
-			$response['error'] = __( 'Error - No posts found.', 'google-maps-builder' );
+				if ( empty( $lat ) || empty( $lng ) ) {
+					// Do not add marker if latitude or longitude are empty.
+					continue;
+				}
+
+				// Add marker data to response.
+				$response[ $post_id ]['title']     = get_the_title( $post_id );
+				$response[ $post_id ]['id']        = $post_id;
+				$response[ $post_id ]['address']   = get_post_meta( $post_id, '_gmb_address', true ); //Geocoding Coming soon
+				$response[ $post_id ]['latitude']  = $lat;
+				$response[ $post_id ]['longitude'] = $lng;
+			endwhile; endif;
+			wp_reset_postdata();
+
+			/**
+			 * Filters the array of mash-up markers.
+			 *
+			 * @author Tobias Malikowski tobias.malikowski@gmail.com
+			 *
+			 * @param array    $response       Array of mash-up marker data.
+			 * @param WP_Query $wp_query       Query used to retrieve mash-up posts.
+			 * @param string   $transient_name Transient used to store marker data.
+			 * @param array    $args           Args passed to WP_Query.
+			 */
+			apply_filters( 'gmb_get_mashup_markers_callback', $response, $wp_query, $transient_name, $args );
+
+			if ( is_array( $response ) ) {
+				// Store marker data in transient to speed up future callbacks.
+				set_transient( $transient_name, $response, 24 * HOUR_IN_SECONDS ); //save transient for 24 hours
+			} else {
+				$response['error'] = __( 'Error - No posts found.', 'google-maps-builder' );
+			}
 		}
 
 		echo json_encode( $response );
