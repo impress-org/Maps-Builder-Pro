@@ -131,6 +131,16 @@
             gmb.get_mashup_infowindow_content(map, marker, map_data);
         });
 
+	    /**
+	     * Adds custom event so marker can be manipulated before it is set.
+	     *
+	     * @since 2.1.2
+	     * @author Tobias Malikowski tobias.malikowski@gmail.com
+	     * @see http://api.jquery.com/trigger/
+	     * @see http://api.jquery.com/on/
+	     */
+	    $( document ).trigger( 'gmb.set_mashup_marker', [marker, map, mashup_index, marker_data, mashup_value, map_data] );
+
         return marker;
 
     };
