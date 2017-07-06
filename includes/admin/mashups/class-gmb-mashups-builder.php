@@ -200,6 +200,15 @@ class Google_Maps_Builder_Mashups_Builder {
 			'type'        => 'mashups_load_panel',
 		) );
 
+		/**
+		 * Filters the CMB2 fields used to define a mash-up.
+		 *
+		 * @author Tobias Malikowski tobias.malikowski@gmail.com
+		 *
+		 * @param string $group_field_id ID of the CMB2 field group used for mash-ups.
+		 * @param CMB2   $mashup_metabox CMB2 meta box used for mash-ups.
+		 */
+		apply_filters( 'gmb_mashup_builder_fields', $group_field_id, $mashup_metabox );
 	}
 
 
