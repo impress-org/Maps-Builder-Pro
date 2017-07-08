@@ -51,7 +51,8 @@
                     //Set mashup markers
                     var marker = gmb.set_mashup_marker(map, data.index, marker_data, mashup_value, map_data);
                     if (marker instanceof Marker) {
-                        markers.push(marker);
+                        // Add mashup marker to array with key equal to its post ID.
+                        markers[marker.marker_data.id] = marker;
                     }
                 });
 
@@ -129,6 +130,16 @@
         google.maps.event.addListener(marker, 'click', function () {
             gmb.get_mashup_infowindow_content(map, marker, map_data);
         });
+
+	    /**
+	     * Adds custom event so marker can be manipulated before it is set.
+	     *
+	     * @since 2.1.2
+	     * @author Tobias Malikowski tobias.malikowski@gmail.com
+	     * @see http://api.jquery.com/trigger/
+	     * @see http://api.jquery.com/on/
+	     */
+	    $( document ).trigger( 'gmb.set_mashup_marker', [marker, map, mashup_index, marker_data, mashup_value, map_data] );
 
         return marker;
 

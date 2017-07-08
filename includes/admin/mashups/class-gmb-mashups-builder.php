@@ -200,6 +200,15 @@ class Google_Maps_Builder_Mashups_Builder {
 			'type'        => 'mashups_load_panel',
 		) );
 
+		/**
+		 * Filters the CMB2 fields used to define a mash-up.
+		 *
+		 * @author Tobias Malikowski tobias.malikowski@gmail.com
+		 *
+		 * @param string $group_field_id ID of the CMB2 field group used for mash-ups.
+		 * @param CMB2   $mashup_metabox CMB2 meta box used for mash-ups.
+		 */
+		apply_filters( 'gmb_mashup_builder_fields', $group_field_id, $mashup_metabox );
 	}
 
 
@@ -499,24 +508,19 @@ class Google_Maps_Builder_Mashups_Builder {
 	 * AJAX Taxonomies Callback
 	 */
 	function get_mashup_markers_callback() {
-
-		//Set Vars
-		$repeater_index = isset( $_POST['index'] ) ? $_POST['index'] : '';
-		$taxonomy       = isset( $_POST['taxonomy'] ) ? $_POST['taxonomy'] : '';
-		$terms          = isset( $_POST['terms'] ) ? $_POST['terms'] : '';
-		$post_type      = isset( $_POST['post_type'] ) ? $_POST['post_type'] : '';
-		$lat_field      = isset( $_POST['lat_field'] ) ? $_POST['lat_field'] : '_gmb_lat';
-		$lng_field      = isset( $_POST['lng_field'] ) ? $_POST['lng_field'] : '_gmb_lng';
-		$response       = '';
+		$taxonomy       = isset( $_POST['taxonomy'] ) ? sanitize_text_field( $_POST['taxonomy'] ) : '';
+		$terms          = isset( $_POST['terms'] ) ? array_map( 'intval', $_POST['terms'] ) : '';
+		$post_type      = isset( $_POST['post_type'] ) ? sanitize_text_field( $_POST['post_type'] ) : '';
+		$lat_field      = isset( $_POST['lat_field'] ) ? sanitize_text_field( $_POST['lat_field'] ) : '_gmb_lat';
+		$lng_field      = isset( $_POST['lng_field'] ) ? sanitize_text_field( $_POST['lng_field'] ) : '_gmb_lng';
 
 		$args = array(
 			'post_type'      => $post_type,
 			'posts_per_page' => - 1
 		);
-		//Handle taxonomy & terms filter
-		if ( ! empty( $taxonomy ) && $taxonomy !== 'none' ) {
 
-			//Build $args taxonomy params
+		// Filter posts by taxonomy terms if applicable.
+		if ( ! empty( $taxonomy ) && $taxonomy !== 'none' ) {
 			$args['tax_query'] = array(
 				array(
 					'taxonomy' => $taxonomy,
@@ -525,46 +529,60 @@ class Google_Maps_Builder_Mashups_Builder {
 					'operator' => 'IN',
 				)
 			);
-
 		}
 
-		//Check if we have a transient here & we're not busting it.
-		$transient_name = md5( 'gmb_mashup_' . http_build_query( $args ) );
+		$transient_name = 'gmb_mashup_' . $post_type . '_' . md5( http_build_query( $args ) );
 
-		// The Query
-		$wp_query = new WP_Query( $args );
+		// Load marker data from transient if available.
+		if ( false === ( $response = get_transient( $transient_name ) ) ) {
+			// Transient does not exist or is expired. Proceed with query.
+			$wp_query = new WP_Query( $args );
 
-		// The Loop
-		if ( $wp_query->have_posts() ) : while ( $wp_query->have_posts() ) :
+			if ( $wp_query->have_posts() ) : while ( $wp_query->have_posts() ) :
+				$wp_query->the_post();
+				$post_id = get_the_ID();
 
-			$wp_query->the_post();
-			$post_id = get_the_ID();
+				// Get latitude and longitude associated with post.
+				$lat = get_post_meta( $post_id, $lat_field, true );
+				$lng = get_post_meta( $post_id, $lng_field, true );
 
-			$response[ $post_id ]['title']     = get_the_title( $post_id );
-			$response[ $post_id ]['id']        = $post_id;
-			$response[ $post_id ]['address']   = get_post_meta( $post_id, '_gmb_address', true ); //Geocoding Coming soon
-			$response[ $post_id ]['latitude']  = get_post_meta( $post_id, $lat_field, true );
-			$response[ $post_id ]['longitude'] = get_post_meta( $post_id, $lng_field, true );
+				if ( empty( $lat ) || empty( $lng ) ) {
+					// Do not add marker if latitude or longitude are empty.
+					continue;
+				}
 
-		endwhile; endif;
-		wp_reset_postdata();
+				// Add marker data to response.
+				$response[ $post_id ]['title']     = get_the_title( $post_id );
+				$response[ $post_id ]['id']        = $post_id;
+				$response[ $post_id ]['address']   = get_post_meta( $post_id, '_gmb_address', true ); //Geocoding Coming soon
+				$response[ $post_id ]['latitude']  = $lat;
+				$response[ $post_id ]['longitude'] = $lng;
+			endwhile; endif;
+			wp_reset_postdata();
 
-		//Set query transient
-		if ( is_array( $response ) ) {
-			set_transient( $transient_name, $response, 24 * HOUR_IN_SECONDS ); //save transient for 24 hours
-			echo json_encode( $response );
+			/**
+			 * Filters the array of mash-up markers.
+			 *
+			 * @author Tobias Malikowski tobias.malikowski@gmail.com
+			 *
+			 * @param array    $response       Array of mash-up marker data.
+			 * @param WP_Query $wp_query       Query used to retrieve mash-up posts.
+			 * @param string   $transient_name Transient used to store marker data.
+			 * @param array    $args           Args passed to WP_Query.
+			 */
+			apply_filters( 'gmb_get_mashup_markers_callback', $response, $wp_query, $transient_name, $args );
 
-		} else {
-
-			$response['error'] = __( 'Error - No posts found.', 'google-maps-builder' );
-
-			echo json_encode( $response );
-
+			if ( is_array( $response ) ) {
+				// Store marker data in transient to speed up future callbacks.
+				set_transient( $transient_name, $response, 24 * HOUR_IN_SECONDS ); //save transient for 24 hours
+			} else {
+				$response['error'] = __( 'Error - No posts found.', 'google-maps-builder' );
+			}
 		}
+
+		echo json_encode( $response );
 
 		wp_die();
-
-
 	}
 
 	/**
