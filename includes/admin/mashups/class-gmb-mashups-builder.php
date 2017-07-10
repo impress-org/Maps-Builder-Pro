@@ -45,7 +45,7 @@ class Google_Maps_Builder_Mashups_Builder {
 		add_action( 'wp_ajax_get_mashup_marker_infowindow', array( $this, 'get_mashup_marker_infowindow_callback' ) );
 		add_action( 'wp_ajax_nopriv_get_mashup_marker_infowindow', array(
 			$this,
-			'get_mashup_marker_infowindow_callback'
+			'get_mashup_marker_infowindow_callback',
 		) );
 	}
 
@@ -67,8 +67,8 @@ class Google_Maps_Builder_Mashups_Builder {
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
 				'i18n'     => array(
 					'load_markers'      => __( 'Load Markers', 'google-maps-builder' ),
-					'mashup_configured' => __( 'Mashup Configured', 'google-maps-builder' )
-				)
+					'mashup_configured' => __( 'Mashup Configured', 'google-maps-builder' ),
+				),
 			);
 			wp_localize_script( 'google-maps-builder-admin-mashups', 'gmb_mashup', $ajax_array );
 
@@ -156,7 +156,7 @@ class Google_Maps_Builder_Mashups_Builder {
 			'description' => __( 'Would you like the featured image displayed in the marker\'s infowindow?', 'google-maps-builder' ),
 			'options'     => array(
 				'yes' => 'Yes',
-				'no'  => 'No'
+				'no'  => 'No',
 			),
 			'type'        => 'radio_inline',
 		) );
@@ -172,7 +172,7 @@ class Google_Maps_Builder_Mashups_Builder {
 			'type'        => 'file',
 			'options'     => array(
 				'url'                  => false,
-				'add_upload_file_text' => __( 'Add Marker Image', 'google-maps-builder' )
+				'add_upload_file_text' => __( 'Add Marker Image', 'google-maps-builder' ),
 			),
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
@@ -256,13 +256,13 @@ class Google_Maps_Builder_Mashups_Builder {
 			} else {
 				$options .= $field_type_object->select_option( array(
 					'label' => __( 'No taxonomies found', 'google-maps-builder' ),
-					'value' => 'none'
+					'value' => 'none',
 				) );
 			}
 			//Output taxonomies select.
 			echo $field_type_object->select( array(
 				'options'      => $options,
-				'autocomplete' => 'off'
+				'autocomplete' => 'off',
 			) );
 
 		}
@@ -343,20 +343,20 @@ class Google_Maps_Builder_Mashups_Builder {
 					$options .= $field_type_object->select_option( array(
 						'label'   => $meta_key,
 						'value'   => $meta_key,
-						'checked' => ( ! empty( $value ) ? $value : $field->args['default'] ) == $meta_key
+						'checked' => ( ! empty( $value ) ? $value : $field->args['default'] ) == $meta_key,
 					) );
 				}
 
 			} else {
 				$options .= $field_type_object->select_option( array(
 					'label' => __( 'No custom fields found', 'google-maps-builder' ),
-					'value' => 'none'
+					'value' => 'none',
 				) );
 			}
 			//Output taxonomies select
 			echo $field_type_object->select( array(
 				'options'      => $options,
-				'autocomplete' => 'off'
+				'autocomplete' => 'off',
 			) );
 
 		}
@@ -508,15 +508,15 @@ class Google_Maps_Builder_Mashups_Builder {
 	 * AJAX Taxonomies Callback
 	 */
 	function get_mashup_markers_callback() {
-		$taxonomy       = isset( $_POST['taxonomy'] ) ? sanitize_text_field( $_POST['taxonomy'] ) : '';
-		$terms          = isset( $_POST['terms'] ) ? array_map( 'intval', $_POST['terms'] ) : '';
-		$post_type      = isset( $_POST['post_type'] ) ? sanitize_text_field( $_POST['post_type'] ) : '';
-		$lat_field      = isset( $_POST['lat_field'] ) ? sanitize_text_field( $_POST['lat_field'] ) : '_gmb_lat';
-		$lng_field      = isset( $_POST['lng_field'] ) ? sanitize_text_field( $_POST['lng_field'] ) : '_gmb_lng';
+		$taxonomy  = isset( $_POST['taxonomy'] ) ? sanitize_text_field( $_POST['taxonomy'] ) : '';
+		$terms     = isset( $_POST['terms'] ) && is_array( $_POST['terms'] ) ? array_map( 'intval', $_POST['terms'] ) : '';
+		$post_type = isset( $_POST['post_type'] ) ? sanitize_text_field( $_POST['post_type'] ) : '';
+		$lat_field = isset( $_POST['lat_field'] ) ? sanitize_text_field( $_POST['lat_field'] ) : '_gmb_lat';
+		$lng_field = isset( $_POST['lng_field'] ) ? sanitize_text_field( $_POST['lng_field'] ) : '_gmb_lng';
 
 		$args = array(
 			'post_type'      => $post_type,
-			'posts_per_page' => - 1
+			'posts_per_page' => - 1,
 		);
 
 		// Filter posts by taxonomy terms if applicable.
@@ -527,7 +527,7 @@ class Google_Maps_Builder_Mashups_Builder {
 					'field'    => 'term_id',
 					'terms'    => $terms,
 					'operator' => 'IN',
-				)
+				),
 			);
 		}
 
@@ -590,21 +590,22 @@ class Google_Maps_Builder_Mashups_Builder {
 	 *
 	 * Returns the infowindow content for a mashup marker.
 	 */
-	function get_mashup_marker_infowindow_callback() {
+	public function get_mashup_marker_infowindow_callback() {
 
 		//Set Vars
 		$marker_data       = isset( $_POST['marker_data'] ) ? $_POST['marker_data'] : '';
 		$post_id           = isset( $marker_data['id'] ) ? intval( $marker_data['id'] ) : '';
 		$featured_img_show = isset( $marker_data['featured_img'] ) ? filter_var( $marker_data['featured_img'], FILTER_VALIDATE_BOOLEAN ) : false;
 
+
 		$post_object      = get_post( $post_id );
 		$marker_title     = $post_object->post_title;
 		$marker_content   = wp_trim_words( $post_object->post_content, 55 );
 		$marker_thumbnail = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'large' );
 
-		$response = '';
+		$response = array();
 
-		$response['infowindow'] .= '<div id="infobubble-content" class="main-place-infobubble-content">';
+		$response['infowindow'] = '<div id="infobubble-content" class="main-place-infobubble-content">';
 
 		if ( ! empty( $marker_thumbnail[0] ) && $featured_img_show !== false ) {
 			$response['infowindow'] .= '<div class="place-thumb"><img src="' . $marker_thumbnail[0] . '" alt="' . $marker_title . '"></div>';
@@ -623,7 +624,7 @@ class Google_Maps_Builder_Mashups_Builder {
 
 		$response = apply_filters( 'gmb_mashup_infowindow_content', $response, $marker_data, $post_id ); //Filter so users can add/remove fields
 
-		echo json_encode( $response );
+		echo wp_json_encode( $response );
 
 		wp_die();
 
