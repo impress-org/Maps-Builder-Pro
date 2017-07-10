@@ -574,7 +574,7 @@ class Google_Maps_Builder_Mashups_Builder {
 
 			if ( is_array( $response ) ) {
 				// Store marker data in transient to speed up future callbacks.
-				set_transient( $transient_name, $response, 24 * HOUR_IN_SECONDS ); //save transient for 24 hours
+				set_transient( $transient_name, $response, 30 * DAY_IN_SECONDS );
 			} else {
 				$response['error'] = __( 'Error - No posts found.', 'google-maps-builder' );
 			}
