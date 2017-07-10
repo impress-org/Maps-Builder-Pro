@@ -125,6 +125,16 @@ The main developer of this plugin is WordImpress. To find out more information a
 
 = 2.1.2 =
 * Fix: Provide compatibility with IE11 because the browser does not support Maps Builders current usage of CustomEvent in JS - https://github.com/WordImpress/maps-builder-core/issues/47
+* Fix: Map permalinks no longer require manual refresh after installation - https://github.com/WordImpress/Google-Maps-Builder/issues/240
+* Fix: Correct default slug from google_maps to google-maps
+* Fix: Rename constructor to prevent PHP 7 notice - https://github.com/WordImpress/Google-Maps-Builder/issues/242
+* Fix: Prevent themes from affecting width of close button - https://github.com/WordImpress/Google-Maps-Builder/issues/250
+* Improvement: Refactor and improve performance for hidden maps upon reveal - https://github.com/WordImpress/Google-Maps-Builder/issues/251
+* Improvement: Support popular tab solutions including Tabby, Elementor, Divi, Bootsrap, Beaver Builder, and Visual Composer
+* Improvement: Add new PHP filters and JS triggers for developers - https://github.com/WordImpress/Google-Maps-Builder/issues/249
+* Improvement: Use transients if available to load mash-up markers - https://github.com/WordImpress/Google-Maps-Builder/issues/251
+* General: Add featured image support to map posts - https://github.com/WordImpress/Google-Maps-Builder/issues/123
+* Deprecate: Google Maps has removed support for signed-in functionality - https://github.com/WordImpress/Google-Maps-Builder/issues/231
 
 = 2.1.1 =
 * Fix: Conflict with the Give donation plugin using the same function name throwing a fatal error upon activation. Fixed with custom prefix.
