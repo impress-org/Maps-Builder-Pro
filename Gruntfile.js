@@ -235,7 +235,7 @@ module.exports = function (grunt) {
 
     // Release tasks
     grunt.registerTask('version_number', ['replace:core_file']);
-    grunt.registerTask('pre_vcs', ['exec:composer_release_update', 'tx-push', 'version_number', 'copy', 'clean:pre_compress', 'compress']);
+    grunt.registerTask('pre_vcs', ['exec:composer_release_update', 'version_number', 'copy', 'clean:pre_compress', 'compress']);
     grunt.registerTask('do_git', ['gitadd', 'gitcommit', 'gittag', 'gitpush']);
     grunt.registerTask('just_build', ['exec:composer_release_update', 'copy', 'clean:pre_compress', 'compress', 'clean:post_build']);
     grunt.registerTask('install', ['shell:activate']);
