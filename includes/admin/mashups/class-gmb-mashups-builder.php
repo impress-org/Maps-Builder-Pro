@@ -532,7 +532,7 @@ class Google_Maps_Builder_Mashups_Builder {
 			);
 		}
 
-		$transient_name = 'gmb_mashup_' . $post_type . '_' . md5( http_build_query( $args ) );
+		$transient_name = 'gmb_mashup_' . $post_type . '_' . md5( http_build_query( $args ) . '_' . uniqid() );
 
 		// Load marker data from transient if available.
 		if ( false === ( $response = get_transient( $transient_name ) ) ) {
