@@ -517,6 +517,7 @@ class Google_Maps_Builder_Mashups_Builder {
 		$args = array(
 			'post_type'      => $post_type,
 			'posts_per_page' => - 1,
+			'post_status'    => 'publish',
 		);
 
 		// Filter posts by taxonomy terms if applicable.
