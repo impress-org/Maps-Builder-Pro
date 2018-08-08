@@ -273,7 +273,7 @@ var gmb_mashup;
      * @param data
      */
     app.load_mashup = function (data) {
-
+        var cluster_markers_admin = $('#gmb_marker_cluster1').prop('checked');
         jQuery.post(ajaxurl, data, function (response) {
 
             //Setup Load Log
@@ -298,6 +298,10 @@ var gmb_mashup;
             $.each(response, function (index, value) {
                 app.set_mashup_marker(data.index, value);
             });
+
+            if (cluster_markers_admin === true) {
+                var markerCluster = new MarkerClusterer(map, markers[data.index]);
+            }
 
             //Set mashup as configured
             load_panel.find('#mashup_configured').val(true); //hidden field

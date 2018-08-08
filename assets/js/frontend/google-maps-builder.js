@@ -15,7 +15,7 @@
      * @param map
      * @param map_data
      */
-    gmb.set_mashup_markers = function (map, map_data) {
+    gmb.set_mashup_markers_front = function (map, map_data) {
 
 
         if (typeof map_data.mashup_markers === 'undefined' || !map_data.mashup_markers) {
