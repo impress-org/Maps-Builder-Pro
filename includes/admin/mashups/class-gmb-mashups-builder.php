@@ -509,11 +509,12 @@ class Google_Maps_Builder_Mashups_Builder {
 	 * AJAX Taxonomies Callback
 	 */
 	function get_mashup_markers_callback() {
-		$taxonomy  = isset( $_POST['taxonomy'] ) ? sanitize_text_field( $_POST['taxonomy'] ) : '';
-		$terms     = isset( $_POST['terms'] ) && is_array( $_POST['terms'] ) ? array_map( 'intval', $_POST['terms'] ) : '';
-		$post_type = isset( $_POST['post_type'] ) ? sanitize_text_field( $_POST['post_type'] ) : '';
-		$lat_field = isset( $_POST['lat_field'] ) ? sanitize_text_field( $_POST['lat_field'] ) : '_gmb_lat';
-		$lng_field = isset( $_POST['lng_field'] ) ? sanitize_text_field( $_POST['lng_field'] ) : '_gmb_lng';
+		$taxonomy         = isset( $_POST['taxonomy'] ) ? sanitize_text_field( $_POST['taxonomy'] ) : '';
+		$terms            = isset( $_POST['terms'] ) && is_array( $_POST['terms'] ) ? array_map( 'intval', $_POST['terms'] ) : '';
+		$post_type        = isset( $_POST['post_type'] ) ? sanitize_text_field( $_POST['post_type'] ) : '';
+		$lat_field        = isset( $_POST['lat_field'] ) ? sanitize_text_field( $_POST['lat_field'] ) : '_gmb_lat';
+		$lng_field        = isset( $_POST['lng_field'] ) ? sanitize_text_field( $_POST['lng_field'] ) : '_gmb_lng';
+		$group_data_array = maybe_unserialize( get_post_meta( $_POST['map_post_id'], 'gmb_mashup_group', true ) );
 
 		$args = array(
 			'post_type'      => $post_type,
@@ -564,7 +565,9 @@ class Google_Maps_Builder_Mashups_Builder {
 				$marker_content                     = wp_trim_words( $marker_post_content, 55 );
 				$marker_thumbnail                   = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'large' );
 				$response[ $post_id ]['infowindow'] = '<div id="infobubble-content" class="main-place-infobubble-content">';
-				$response[ $post_id ]['infowindow'] .= '<div class="place-thumb"><img src="' . $marker_thumbnail[0] . '" alt="' . $marker_title . '"></div>';
+				if ( 'yes' === $group_data_array[0]['featured_img'] ) {
+					$response[ $post_id ]['infowindow'] .= '<div class="place-thumb"><img src="' . $marker_thumbnail[0] . '" alt="' . $response[ $post_id ]['title'] . '"></div>';
+				}
 				if ( ! empty( $marker_title ) ) {
 					$response[ $post_id ]['infowindow'] .= '<p class="place-title">' . $response[ $post_id ]['title'] . '</p>';
 				}
