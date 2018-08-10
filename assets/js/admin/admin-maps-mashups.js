@@ -389,26 +389,10 @@ var gmb_mashup;
      *
      * $current_user->IDRetrieves the marker content via AJAX request
      */
-    app.get_infowindow_content = function (marker) {
-
-        info_bubble.setContent('<div id="infobubble-content" class="loading"></div>');
-
-        info_bubble.open(map, marker);
-
-        var data = {
-            action: 'get_mashup_marker_infowindow',
-            marker_data: marker.marker_data,
-            featured_img: marker.featured_img
-        };
-
-        jQuery.post(ajaxurl, data, function (response) {
-
-            info_bubble.setContent(response.infowindow);
-
-        }, 'json');
-
-
-    };
+		app.get_infowindow_content = function( marker ) {
+			info_bubble.open( map, marker );
+			info_bubble.setContent( marker.marker_data[ 'infowindow' ] );
+		};
 
 
     /**

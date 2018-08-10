@@ -47,6 +47,7 @@ class Google_Maps_Builder_Mashups_Builder {
 			$this,
 			'get_mashup_marker_infowindow_callback',
 		) );
+		add_action( 'save_post', array( $this, 'delete_transient_gmb_mashup' ) );
 	}
 
 	/**
@@ -557,6 +558,21 @@ class Google_Maps_Builder_Mashups_Builder {
 				$response[ $post_id ]['address']   = get_post_meta( $post_id, '_gmb_address', true ); //Geocoding Coming soon
 				$response[ $post_id ]['latitude']  = $lat;
 				$response[ $post_id ]['longitude'] = $lng;
+
+				// Info bubble content set
+				$marker_post_content                = get_post_field( 'post_content', $post_id );
+				$marker_content                     = wp_trim_words( $marker_post_content, 55 );
+				$marker_thumbnail                   = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'large' );
+				$response[ $post_id ]['infowindow'] = '<div id="infobubble-content" class="main-place-infobubble-content">';
+				$response[ $post_id ]['infowindow'] .= '<div class="place-thumb"><img src="' . $marker_thumbnail[0] . '" alt="' . $marker_title . '"></div>';
+				if ( ! empty( $marker_title ) ) {
+					$response[ $post_id ]['infowindow'] .= '<p class="place-title">' . $response[ $post_id ]['title'] . '</p>';
+				}
+				if ( ! empty( $marker_content ) ) {
+					$response[ $post_id ]['infowindow'] .= '<p class="place-description">' . $marker_content . '</p>';
+				}
+				$response[ $post_id ]['infowindow'] .= '<a href="' . get_permalink( $post_id ) . '" title="' . $marker_title . '" class="gmb-mashup-single-link">' . apply_filters( 'gmb_mashup_infowindow_content_readmore', __( 'Read More &raquo;', 'google-maps-builder' ) ) . '</a>';
+				$response[ $post_id ]['infowindow'] .= '</div>';
 			endwhile; endif;
 			wp_reset_postdata();
 
@@ -704,6 +720,23 @@ class Google_Maps_Builder_Mashups_Builder {
 		echo '<button class="gmb-set-mashup-marker button gmb-magnific-inline" data-target="marker-icon-modal" data-mfp-src="#marker-icon-modal" data-iterator="' . $field->group->index . '">' . __( 'Configure Mashup Marker', 'google-maps-builder' ) . '</button>';
 
 
+	}
+
+	/**
+	 * Save data from post metabox
+	 *
+	 * @since  1.0.0
+	 *
+	 * @param  int   $post_id Post ID
+	 * @param  mixed $post    Post object
+	 *
+	 * @return void
+	 */
+	public function delete_transient_gmb_mashup( $post_id, $post = false ) {
+		global $wpdb;
+		$post_type = $post ? $post->post_type : get_post_type( $post_id );
+		// Delete all mash-up transients associated with this post type.
+		$wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->options WHERE option_name LIKE %s", '%gmb_mashup_' . $post_type . '%' ) );
 	}
 
 } //end class
