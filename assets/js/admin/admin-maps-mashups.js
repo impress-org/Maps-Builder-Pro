@@ -114,29 +114,31 @@ var gmb_mashup;
      * @description One place to handle ajax data
      * @param index
      */
-    app.setup_marker_ajax_request = function (index) {
+		app.setup_marker_ajax_request = function( index ) {
 
-        //Setup our vars
-        var post_type = $('#gmb_mashup_group_' + index + '_post_type').val();
-        var taxonomy = $('#gmb_mashup_group_' + index + '_taxonomy').val();
-        var lat_field = $('#gmb_mashup_group_' + index + '_latitude').val();
-        var lng_field = $('#gmb_mashup_group_' + index + '_longitude').val();
-        var terms = [];
-        $('input[id^=gmb_mashup_group_' + index + '_terms]:checked').each(function (i) {
-            terms[i] = $(this).val();
-        });
+			//Setup our vars
+			var post_type = $( '#gmb_mashup_group_' + index + '_post_type' ).val();
+			var taxonomy = $( '#gmb_mashup_group_' + index + '_taxonomy' ).val();
+			var lat_field = $( '#gmb_mashup_group_' + index + '_latitude' ).val();
+			var lng_field = $( '#gmb_mashup_group_' + index + '_longitude' ).val();
+			var map_post_id = $( '#post_ID' ).val();
+			var terms = [];
+			$( 'input[id^=gmb_mashup_group_' + index + '_terms]:checked' ).each( function( i ) {
+				terms[ i ] = $( this ).val();
+			} );
 
-        return {
-            action: 'get_mashup_markers',
-            post_type: post_type,
-            taxonomy: taxonomy,
-            terms: terms,
-            index: index,
-            lat_field: lat_field,
-            lng_field: lng_field
-        };
+			return {
+				action: 'get_mashup_markers',
+				post_type: post_type,
+				taxonomy: taxonomy,
+				terms: terms,
+				index: index,
+				lat_field: lat_field,
+				lng_field: lng_field,
+				map_post_id: map_post_id
+			};
 
-    };
+		};
 
     /**
      * Toggle Mashup Taxonomies
@@ -389,26 +391,10 @@ var gmb_mashup;
      *
      * $current_user->IDRetrieves the marker content via AJAX request
      */
-    app.get_infowindow_content = function (marker) {
-
-        info_bubble.setContent('<div id="infobubble-content" class="loading"></div>');
-
-        info_bubble.open(map, marker);
-
-        var data = {
-            action: 'get_mashup_marker_infowindow',
-            marker_data: marker.marker_data,
-            featured_img: marker.featured_img
-        };
-
-        jQuery.post(ajaxurl, data, function (response) {
-
-            info_bubble.setContent(response.infowindow);
-
-        }, 'json');
-
-
-    };
+		app.get_infowindow_content = function( marker ) {
+			info_bubble.open( map, marker );
+			info_bubble.setContent( marker.marker_data[ 'infowindow' ] );
+		};
 
 
     /**

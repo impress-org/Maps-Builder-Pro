@@ -152,32 +152,18 @@
      * @param marker
      * @param map_data
      */
-    gmb.get_mashup_infowindow_content = function (map, marker, map_data) {
-
-        map.info_window.close();
-
-        var data = {
-            action: 'get_mashup_marker_infowindow',
-            marker_data: marker.marker_data
-        };
-
-        jQuery.post(map_data.ajax_url, data, function (response) {
-
-            map.info_window.setContent(response.infowindow);
-            map.info_window.updateContent_();
-            map.info_window.open(map, marker, map_data);
-
-            //Center markers on click option.
-            //Timeout required to calculate height properly.
-            if (map_data.marker_centered == 'yes') {
-                window.setTimeout(function () {
-                    map.info_window.panToView();
-                }, 300);
-            }
-
-        }, 'json');
-
-    };
+		gmb.get_mashup_infowindow_content = function( map, marker, map_data ) {
+			map.info_window.close();
+			map.info_window.setContent( marker.marker_data[ 'infowindow' ] );
+			map.info_window.updateContent_();
+			map.info_window.open( map, marker, map_data );
+			//Timeout required to calculate height properly.
+			if ( map_data.marker_centered == 'yes' ) {
+				window.setTimeout( function() {
+					map.info_window.panToView();
+				}, 300 );
+			}
+		};
 
     /**
      * Set Map Directions.
