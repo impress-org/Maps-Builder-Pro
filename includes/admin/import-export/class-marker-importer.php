@@ -58,9 +58,7 @@ class GMB_CSV_Marker_Importer {
 		echo '<p class="intro">' . sprintf( __( 'Import map markers to your site from a .csv file. Please use the %1$sexample marker import csv%2$s as reference.', 'google-maps-builder' ), '<a href="' . GMB_PLUGIN_URL . 'includes/admin/import-export/samples/markers.csv' . '">', '</a>' ) . '</p>';
 
 		echo '<form method="post" id="gmb-import-form" enctype="multipart/form-data" action="' . admin_url( $this->page ) . '">';
-		if ( isset( $_GET['errno'] ) && isset( $_GET['type'] ) && $_GET['type'] == 'markers' ) {
-			gmb_csv_error_handler( $_GET['errno'] );
-		}
+
 
 		/*-----------------------------------
 		STEP 1
@@ -142,7 +140,9 @@ class GMB_CSV_Marker_Importer {
 
 		}
 		echo '</form>';
-
+		if ( isset( $_GET['errno'] ) && isset( $_GET['type'] ) && $_GET['type'] == 'markers' ) {
+			gmb_csv_error_handler( $_GET['errno'] );
+		}
 		echo '</div>';
 		echo '</div>';
 	}
@@ -497,8 +497,8 @@ class GMB_CSV_Marker_Importer {
 					'step'  => '1',
 					'errno' => '3'
 				), $this->page ) ;
-			echo  ( $response );
-			wp_die();
+			echo $response ;
+			exit;
 		}
 
 		//All good, we imported!
@@ -510,7 +510,7 @@ class GMB_CSV_Marker_Importer {
 				'total_import' => count($new_markers_array)
 			), $this->page );
 		echo  $response;
-		wp_die();
+		exit;
 	}
 
 	/**
