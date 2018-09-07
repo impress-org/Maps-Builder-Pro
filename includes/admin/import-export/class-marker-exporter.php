@@ -43,19 +43,19 @@ class GMB_CSV_Marker_Exporter {
 	 * @return      void
 	 */
 	public function add_metabox() {
-		echo '<div class="postbox import-export-metabox" id="gmb-product-export">';
+		echo '<div class="postbox import-export-metabox gmb-marker-import-export" id="gmb-product-export">';
 		echo '<h3 class="hndle ui-sortable-handle">' . __( 'Export Map Markers to CSV', 'google-maps-builder' ) . '</h3>';
 		echo '<div class="inside">';
 		echo '<p class="intro">' . __( 'Export markers from your Maps to a .csv file.', 'google-maps-builder' ) . '</p>';
 		echo '<form method="post" enctype="multipart/form-data" action="' . admin_url( $this->page ) . '">';
 
-		echo '<div class="map-selection">';
-		echo '<label>' . __( 'Step 1: Select a map to export markers', 'google-maps-builder' ) . '</label>';
+		echo '<div class="map-selection field-wrap">';
+		echo '<div class="field-label">' . __( 'Select a map to export markers', 'google-maps-builder' ) . '</div>';
 		echo Google_Maps_Builder()->html->maps_dropdown();
 		echo '</div>';
-		echo '<div class="marker-export-submit gmb-hidden">';
+		echo '<div class="marker-export-submit gmb-hidden field-wrap">';
 		echo '<input type="hidden" name="gmb_action" value="export_csv" />';
-		submit_button( __( 'Export', 'google-maps-builder' ), 'secondary', 'submit', false );
+		submit_button( __( 'Export', 'google-maps-builder' ), 'secondary button button-primary', 'submit', false );
 		echo '</div>';
 		echo '</form>';
 		echo '</div>';
