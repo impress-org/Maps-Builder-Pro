@@ -49,54 +49,52 @@ class GMB_CSV_Marker_Importer {
 	 * @return      void
 	 */
 	public function add_metabox() {
-
 		$wp_upload_dir = wp_upload_dir();
-
 		ob_start();
-
-		echo '<div class="postbox import-export-metabox" id="gmb-marker-import">';
+		echo '<div class="postbox import-export-metabox gmb-marker-import-export" id="gmb-marker-import">';
 		echo '<h3 class="hndle ui-sortable-handle">' . __( 'Import Map Markers from CSV', 'google-maps-builder' ) . '</h3>';
 		echo '<div class="inside">';
 
 		echo '<p class="intro">' . sprintf( __( 'Import map markers to your site from a .csv file. Please use the %1$sexample marker import csv%2$s as reference.', 'google-maps-builder' ), '<a href="' . GMB_PLUGIN_URL . 'includes/admin/import-export/samples/markers.csv' . '">', '</a>' ) . '</p>';
 
-		echo '<form method="post" enctype="multipart/form-data" action="' . admin_url( $this->page ) . '">';
+		echo '<form method="post" id="gmb-import-form" enctype="multipart/form-data" action="' . admin_url( $this->page ) . '">';
 
-		if ( isset( $_GET['errno'] ) && isset( $_GET['type'] ) && $_GET['type'] == 'markers' ) {
-			gmb_csv_error_handler( $_GET['errno'] );
-		}
 
 		/*-----------------------------------
 		STEP 1
-		--------------------------------------*/
+		--------------------------------------*/ ?>
+		<?php
 		if ( empty( $_GET['step'] ) || $_GET['step'] == 1 || ( isset( $_GET['type'] ) && $_GET['type'] != 'markers' ) ) {
 			if ( empty( $_GET['step'] ) || $_GET['step'] == 1 ) {
 				// Cleanup data to prevent accidental carryover
 				$this->cleanup();
 			}
-
-			echo '<div class="map-selection">';
-			echo '<label>' . __( 'Step 1: Select a map to import markers', 'google-maps-builder' ) . '</label>';
+			$this->gmb_render_progress();
+			echo '<div class="field-wrap">';
+			echo '<div class="field-label">' . __( 'Select a map to import markers', 'google-maps-builder' ) . '</div>';
 			echo Google_Maps_Builder()->html->maps_dropdown();
 			echo '</div>';
 
-			echo '<div class="csv-upload gmb-hidden">';
-			echo '<label>' . __( 'Step 2: Upload a properly formatted CSV file', 'google-maps-builder' ) . '</label>';
-			echo '<p><input type="file" name="import_file" /></p>';
+			echo '<div class="csv-upload gmb-hidden field-wrap">';
+			echo '<div class="field-label">' . __( 'Choose CSV file', 'google-maps-builder' ) . '</div>';
+			echo '<input type="file" name="import_file" />';
+			echo '</div>';
+			echo '<div class="field-wrap">';
 			echo '<p><label for="has_headers"><input type="checkbox" id="has_headers" name="has_headers" checked="yes" /> ' . __( 'Does the CSV include a header row?', 'google-maps-builder' ) . '</label></p>';
 			echo '<input type="hidden" name="gmb_action" value="upload_csv" />';
-			wp_nonce_field( 'gmb_import_nonce', 'gmb_import_nonce' );
-			submit_button( __( 'Next', 'google-maps-builder' ), 'secondary', 'submit', false );
 			echo '</div>';
+			echo '<div class="field-wrap">';
+			wp_nonce_field( 'gmb_import_nonce', 'gmb_import_nonce' );
+			submit_button( __( 'Next', 'google-maps-builder' ), 'secondary button-primary', 'submit', false );
+			echo '</div>';
+
 
 		} /*-----------------------------------
 			STEP 2
 		--------------------------------------*/
 		elseif ( $_GET['step'] == 2 && isset( $_GET['type'] ) && $_GET['type'] == 'markers' ) {
-
 			$fields = get_transient( 'gmb_csv_headers' );
-
-			// Display CSV fields for mapping
+			$this->gmb_render_progress();
 			echo '<div class="csv-mapping-header">';
 			echo '<span>' . __( 'CSV Headers', 'google-maps-builder' ) . '</span>';
 			echo '<span>' . __( 'Map Fields', 'google-maps-builder' ) . '</span>';
@@ -118,14 +116,38 @@ class GMB_CSV_Marker_Importer {
 					echo '</div>';
 				}
 			}
-			echo '<p><input type="hidden" name="gmb_action" value="map_csv" />';
+
+
+			echo '<div class="gmb-import-submit-spinner"><input type="hidden" name="gmb_action" value="map_csv" />';
+
+			echo '<input type="hidden" name="gmb_action" value="map_csv" />';
+
 			wp_nonce_field( 'gmb_import_nonce', 'gmb_import_nonce' );
-			submit_button( __( 'Import', 'google-maps-builder' ), 'secondary', 'submit', false );
-			echo '</p>';
+			submit_button( __( 'Import', 'google-maps-builder' ), 'secondary cls-gmb-import button button-primary', 'submit', false );
+			echo '<div class="spinner"></div>';
+			echo '</div>';
+
+
+		} else if ( empty( $_GET['step'] ) || $_GET['step'] == 3 || ( isset( $_GET['type'] ) && $_GET['type'] != 'markers' ) ) {
+			if ( empty( $_GET['step'] ) || $_GET['step'] == 1 ) {
+				// Cleanup data to prevent accidental carryover
+				$this->cleanup();
+			}
+			$this->gmb_render_progress();
+			if ( isset( $_GET['total_import'] ) && ! empty( $_GET['total_import'] ) ) {
+				echo '<div class="csv-mapping-header-step3">';
+				echo '<h2>Import completed! <strong>' . $_GET['total_import'] . '</strong> record processed</h2>';
+				echo '<p> <a href="' . add_query_arg( array(
+						'post_type' => 'google_maps',
+					), admin_url( 'edit.php' ) ) . '" class="button button-primary">' . __( ' Go to Map List', 'google-maps-builder' ) . '</a></p>';
+				echo '</div>';
+			}
 
 		}
-
 		echo '</form>';
+		if ( isset( $_GET['errno'] ) && isset( $_GET['type'] ) && $_GET['type'] == 'markers' ) {
+			gmb_csv_error_handler( $_GET['errno'] );
+		}
 		echo '</div>';
 		echo '</div>';
 	}
@@ -460,42 +482,82 @@ class GMB_CSV_Marker_Importer {
 				'label'           => $new_row[ $marker_label_key ],
 				'infowindow_open' => $new_row[ $infowindow_open_key ],
 			);
-
 			$new_markers_array[ $key ] = $marker_data;
-
 		}
-
 		//Update Marker Repeater data with new data
-		if ( isset( $existing_markers_array[0] ) && empty( $existing_markers_array[0]['longitude'] ) && empty( $existing_markers_array[0]['latitude'] ) ) {
+		if ( isset( $existing_markers_array[0] ) && empty( $existing_markers_array[0]['lat'] ) && empty( $existing_markers_array[0]['lng'] ) ) {
 			$final_marker_array = $new_markers_array;
 		} else {
 			$final_marker_array = array_merge( $existing_markers_array, $new_markers_array );
 		}
 		update_post_meta( $map_id, 'gmb_markers_group', $final_marker_array );
 
-
 		//Error occurred
 		if ( ! empty( $file_errors ) ) {
 			$file_errors = serialize( $file_errors );
 			set_transient( 'gmb_file_errors', $file_errors );
-
-			wp_redirect( add_query_arg( array(
-				'tab'   => 'import',
-				'type'  => 'markers',
-				'step'  => '1',
-				'errno' => '3'
-			), $this->page ) );
+			 $response = admin_url() . add_query_arg( array(
+					'tab'   => 'import',
+					'type'  => 'markers',
+					'step'  => '1',
+					'errno' => '3'
+				), $this->page ) ;
+			echo $response ;
 			exit;
 		}
 
 		//All good, we imported!
-		wp_redirect( add_query_arg( array(
-			'tab'   => 'import',
-			'type'  => 'markers',
-			'step'  => '1',
-			'errno' => '0'
-		), $this->page ) );
+		$response = admin_url() . add_query_arg( array(
+				'tab'   => 'import',
+				'type'  => 'markers',
+				'step'  => '3',
+				'errno' => '0',
+				'total_import' => count($new_markers_array)
+			), $this->page );
+		echo  $response;
 		exit;
+	}
+
+	/**
+	 * Will return the import step.
+	 *
+	 * @since 2.2.0
+	 *
+	 * @return int $step on which step doest the import is on.
+	 */
+	public function gmb_get_step_id() {
+		$step    = (int) ( isset( $_GET['step'] ) ? give_clean( $_GET['step'] ) : 0 );
+		$step_id = 1;
+		if ( empty( $step ) || 1 === $step ) {
+			$step_id = 1;
+		} elseif ( 2 === $step ) {
+			$step_id = 2;
+		} elseif ( 3 === $step ) {
+			$step_id = 3;
+		}
+
+		return $step_id;
+	}
+	/**
+	 * Used to display process progress where the process is.
+	 *
+	 * @since 2.2.0
+	 */
+	public function gmb_render_progress() {
+		$step = $this->gmb_get_step_id();
+		?>
+		<ol class="gmb-progress-steps">
+			<li class="<?php echo( 1 === $step ? 'active' : '' ); ?>">
+				<?php esc_html_e( 'Upload CSV file', 'give' ); ?>
+			</li>
+			<li class="<?php echo( 2 === $step ? 'active' : '' ); ?>">
+				<?php esc_html_e( 'Column Map', 'give' ); ?>
+			</li>
+			<li class="<?php echo( 3 === $step ? 'active' : '' ); ?>">
+				<?php esc_html_e( 'Done!', 'give' ); ?>
+			</li>
+		</ol>
+		<?php
 	}
 }
 
