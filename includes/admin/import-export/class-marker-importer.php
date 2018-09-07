@@ -99,24 +99,29 @@ class GMB_CSV_Marker_Importer {
 			echo '<span>' . __( 'CSV Headers', 'google-maps-builder' ) . '</span>';
 			echo '<span>' . __( 'Map Fields', 'google-maps-builder' ) . '</span>';
 			echo '</div>';
+			if ( ! empty ( $fields ) ) {
+				foreach ( $fields as $id => $field ) {
+					if ( get_transient( 'has_headers' ) ) {
+						$field_label = $field;
+						$field_id    = $field;
+					} else {
+						$i           = $id + 1;
+						$field_label = 'column_' . $i;
+						$field_id    = $id;
+					}
 
-			foreach ( $fields as $id => $field ) {
-				if ( get_transient( 'has_headers' ) ) {
-					$field_label = $field;
-					$field_id    = $field;
-				} else {
-					$i           = $id + 1;
-					$field_label = 'column_' . $i;
-					$field_id    = $id;
+					echo '<div class="field-wrap">';
+					echo '<div class="field-label">' . $field_label . '</div>';
+					echo '<select name="csv_fields[' . $field_id . ']" >' . $this->get_fields( $field_label ) . '</select>';
+					echo '</div>';
 				}
-
-				echo '<div class="field-wrap">';
-				echo '<div class="field-label">' . $field_label . '</div>';
-				echo '<select name="csv_fields[' . $field_id . ']" >' . $this->get_fields( $field_label ) . '</select>';
-				echo '</div>';
 			}
 
+
 			echo '<div class="gmb-import-submit-spinner"><input type="hidden" name="gmb_action" value="map_csv" />';
+
+			echo '<input type="hidden" name="gmb_action" value="map_csv" />';
+
 			wp_nonce_field( 'gmb_import_nonce', 'gmb_import_nonce' );
 			submit_button( __( 'Import', 'google-maps-builder' ), 'secondary cls-gmb-import button button-primary', 'submit', false );
 			echo '<div class="spinner"></div>';
