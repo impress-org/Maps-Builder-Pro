@@ -67,83 +67,83 @@
 
     };
 
-    /**
-     * Set Mashup Marker
-     *
-     * @param map
-     * @param mashup_index
-     * @param marker_data
-     * @param mashup_value
-     * @param map_data
-     * @returns {*}
-     */
-    gmb.set_mashup_marker = function (map, mashup_index, marker_data, mashup_value, map_data) {
+	/**
+	 * Set Mashup Marker
+	 *
+	 * @param map
+	 * @param mashup_index
+	 * @param marker_data
+	 * @param mashup_value
+	 * @param map_data
+	 * @returns {*}
+	 */
+	gmb.set_mashup_marker = function( map, mashup_index, marker_data, mashup_value, map_data ) {
 
-        // Get latitude and longitude
-        var lat = (typeof marker_data.latitude !== 'undefined' ? marker_data.latitude : '');
-        var lng = (typeof marker_data.longitude !== 'undefined' ? marker_data.longitude : '');
+		// Get latitude and longitude
+		var lat = (typeof marker_data.latitude !== 'undefined' ? marker_data.latitude : '');
+		var lng = (typeof marker_data.longitude !== 'undefined' ? marker_data.longitude : '');
 
-        // Make sure we have latitude and longitude before creating the marker
-        if (lat == '' || lng == '') {
-            return false;
-        }
+		// Make sure we have latitude and longitude before creating the marker
+		if ( lat == '' || lng == '' ) {
+			return false;
+		}
 
-        var title = (typeof marker_data.title !== 'undefined') ? marker_data.title : '';
-        var address = (typeof marker_data.address !== 'undefined') ? marker_data.address : '';
-        var marker_position = new google.maps.LatLng(lat, lng);
+		var title = (typeof marker_data.title !== 'undefined') ? marker_data.title : '';
+		var address = (typeof marker_data.address !== 'undefined') ? marker_data.address : '';
+		var marker_position = new google.maps.LatLng( lat, lng );
 
-        var marker_icon = map_data.map_params.default_marker;
-        var marker_label = '';
+		var marker_icon = map_data.map_params.default_marker;
+		var marker_label = '';
 
-        //check for custom marker and label data
-        var custom_marker_icon = (typeof mashup_value.marker !== 'undefined') ? mashup_value.marker : '';
-        var custom_marker_img = (typeof mashup_value.marker_img !== 'undefined') ? mashup_value.marker_img : '';
-        var included_marker_img = (typeof mashup_value.marker_included_img !== 'undefined') ? mashup_value.marker_included_img : '';
+		//check for custom marker and label data
+		var custom_marker_icon = (typeof mashup_value.marker !== 'undefined') ? mashup_value.marker : '';
+		var custom_marker_img = (typeof mashup_value.marker_img !== 'undefined') ? mashup_value.marker_img : '';
+		var included_marker_img = (typeof mashup_value.marker_included_img !== 'undefined') ? mashup_value.marker_included_img : '';
 
-        //Plugin included marker image
-        if (included_marker_img) {
-            marker_icon = map_data.plugin_url + included_marker_img;
-        } else if (custom_marker_img) {
-            //Uploaded marker image
-            marker_icon = custom_marker_img;
-        } else if (custom_marker_icon.length > 0 && custom_marker_icon.length > 0) {
-            //SVG Marker
-            var custom_label = (typeof mashup_value.label !== 'undefined' ? mashup_value.label : '');
-            marker_icon = eval('(' + custom_marker_icon + ')');
-            marker_label = custom_label;
-        }
+		//Plugin included marker image
+		if ( included_marker_img ) {
+			marker_icon = map_data.plugin_url + included_marker_img;
+		} else if ( custom_marker_img ) {
+			//Uploaded marker image
+			marker_icon = custom_marker_img;
+		} else if ( custom_marker_icon.length > 0 && custom_marker_icon.length > 0 ) {
+			//SVG Marker
+			var custom_label = (typeof mashup_value.label !== 'undefined' ? mashup_value.label : '');
+			marker_icon = eval( '(' + custom_marker_icon + ')' );
+			marker_label = custom_label;
+		}
 
-        // Whether or not an individual marker displays its featured image is decided by the parent mashup's settings;
-        // if it's set to "yes", then the image displays, else it doesn't.
-        marker_data['featured_img'] = (mashup_value['featured_img'] === 'yes');
+		// Whether or not an individual marker displays its featured image is decided by the parent mashup's settings;
+		// if it's set to "yes", then the image displays, else it doesn't.
+		marker_data[ 'featured_img' ] = (mashup_value[ 'featured_img' ] === 'yes');
 
-        // make and place map maker.
-        var marker = new Marker({
-            map: map,
-            position: marker_position,
-            marker_data: marker_data,
-            icon: marker_icon,
-            custom_label: marker_label
-        });
+		// make and place map maker.
+		var marker = new mapIcons.Marker( {
+			map: map,
+			position: marker_position,
+			marker_data: marker_data,
+			icon: marker_icon,
+			map_icon_label: marker_label
+		} );
 
-        //Set click action for marker to open info_window
-        google.maps.event.addListener(marker, 'click', function () {
-            gmb.get_mashup_infowindow_content(map, marker, map_data);
-        });
+		//Set click action for marker to open info_window
+		google.maps.event.addListener( marker, 'click', function() {
+			gmb.get_mashup_infowindow_content( map, marker, map_data );
+		} );
 
-	    /**
-	     * Adds custom event so marker can be manipulated before it is set.
-	     *
-	     * @since 2.1.2
-	     * @author Tobias Malikowski tobias.malikowski@gmail.com
-	     * @see http://api.jquery.com/trigger/
-	     * @see http://api.jquery.com/on/
-	     */
-	    $( document ).trigger( 'gmb.set_mashup_marker', [marker, map, mashup_index, marker_data, mashup_value, map_data] );
+		/**
+		 * Adds custom event so marker can be manipulated before it is set.
+		 *
+		 * @since 2.1.2
+		 * @author Tobias Malikowski tobias.malikowski@gmail.com
+		 * @see http://api.jquery.com/trigger/
+		 * @see http://api.jquery.com/on/
+		 */
+		$( document ).trigger( 'gmb.set_mashup_marker', [ marker, map, mashup_index, marker_data, mashup_value, map_data ] );
 
-        return marker;
+		return marker;
 
-    };
+	};
 
     /**
      * Get Mashup InfoWindow Content.
