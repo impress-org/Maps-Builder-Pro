@@ -314,81 +314,81 @@ var gmb_mashup;
 
     };
 
-    /**
-     * Set Mashup Marker
-     *
-     * $current_user->IDUsed in foreach loop to place markers
-     * @param mashup_index
-     * @param marker_data
-     * @param loop_index
-     */
-    app.set_mashup_marker = function (mashup_index, marker_data, loop_index) {
+	/**
+	 * Set Mashup Marker
+	 *
+	 * $current_user->IDUsed in foreach loop to place markers
+	 * @param mashup_index
+	 * @param marker_data
+	 * @param loop_index
+	 */
+	app.set_mashup_marker = function( mashup_index, marker_data, loop_index ) {
 
-        title = (typeof marker_data.title !== 'undefined' ? marker_data.title : '');
-        address = (typeof marker_data.address !== 'undefined' ? marker_data.address : '');
-        lat = (typeof marker_data.latitude !== 'undefined' ? marker_data.latitude : '');
-        lng = (typeof marker_data.longitude !== 'undefined' ? marker_data.longitude : '');
-        var marker_position = new google.maps.LatLng(lat, lng);
+		title = (typeof marker_data.title !== 'undefined' ? marker_data.title : '');
+		address = (typeof marker_data.address !== 'undefined' ? marker_data.address : '');
+		lat = (typeof marker_data.latitude !== 'undefined' ? marker_data.latitude : '');
+		lng = (typeof marker_data.longitude !== 'undefined' ? marker_data.longitude : '');
+		var marker_position = new google.maps.LatLng( lat, lng );
 
-        if (!lat || !lng) {
-            var error = '<li class="gmb-marker-status gmb-error"><strong>Marker Error:</strong> ' + title + ' - No latitude or longitude values found for this post.</li>';
-            load_log.html(load_log.html() + error);
-            return; //this is equivalent of 'continue' for jQuery loop
-        } else if (typeof lat !== 'string' || typeof lng !== 'string') {
-            error = '<li class="gmb-marker-status gmb-error"><strong>Marker Error:</strong> ' + title + ' - Improperly formatted latitude or longitude field data detected.</li>';
-            load_log.html(load_log.html() + error);
-            return; //this is equivalent of 'continue' for jQuery loop
-        }
+		if ( ! lat || ! lng ) {
+			var error = '<li class="gmb-marker-status gmb-error"><strong>Marker Error:</strong> ' + title + ' - No latitude or longitude values found for this post.</li>';
+			load_log.html( load_log.html() + error );
+			return; //this is equivalent of 'continue' for jQuery loop
+		} else if ( typeof lat !== 'string' || typeof lng !== 'string' ) {
+			error = '<li class="gmb-marker-status gmb-error"><strong>Marker Error:</strong> ' + title + ' - Improperly formatted latitude or longitude field data detected.</li>';
+			load_log.html( load_log.html() + error );
+			return; //this is equivalent of 'continue' for jQuery loop
+		}
 
-        var marker_icon = gmb_data.default_marker;
-        var marker_label = '';
+		var marker_icon = gmb_data.default_marker;
+		var marker_label = '';
 
-        //check for custom marker and label data
-        var custom_marker_icon = $('#gmb_mashup_group_' + mashup_index + '_marker').val();
-        var custom_marker_img = $('#gmb_mashup_group_' + mashup_index + '_marker_img').val();
-        var included_marker_img = $('#gmb_mashup_group_' + mashup_index + '_marker_included_img').val();
+		//check for custom marker and label data
+		var custom_marker_icon = $( '#gmb_mashup_group_' + mashup_index + '_marker' ).val();
+		var custom_marker_img = $( '#gmb_mashup_group_' + mashup_index + '_marker_img' ).val();
+		var included_marker_img = $( '#gmb_mashup_group_' + mashup_index + '_marker_included_img' ).val();
 
-        //Plugin included marker image
-        if (included_marker_img) {
-            marker_icon = gmb_data.plugin_url + included_marker_img;
-        } else if (custom_marker_img) {
-            //Uploaded marker image
-            marker_icon = custom_marker_img;
-        } else if (custom_marker_icon.length > 0 && custom_marker_icon.length > 0) {
-            //SVG Marker
-            var custom_label = $('#gmb_mashup_group_' + mashup_index + '_label').val();
-            marker_icon = eval("(" + custom_marker_icon + ")");
-            marker_label = custom_label;
-        }
+		//Plugin included marker image
+		if ( included_marker_img ) {
+			marker_icon = gmb_data.plugin_url + included_marker_img;
+		} else if ( custom_marker_img ) {
+			//Uploaded marker image
+			marker_icon = custom_marker_img;
+		} else if ( custom_marker_icon.length > 0 && custom_marker_icon.length > 0 ) {
+			//SVG Marker
+			var custom_label = $( '#gmb_mashup_group_' + mashup_index + '_label' ).val();
+			marker_icon = eval( '(' + custom_marker_icon + ')' );
+			marker_label = custom_label;
+		}
 
-        // Whether or not an individual marker displays its featured image is decided by the parent mashup's settings;
-        // if it's set to "yes", then the image displays, else it doesn't.
-        var featured_img = marker_data['featured_img'] = $('#gmb_mashup_group_' + mashup_index + '_featured_img1').is(':checked');
+		// Whether or not an individual marker displays its featured image is decided by the parent mashup's settings;
+		// if it's set to "yes", then the image displays, else it doesn't.
+		var featured_img = marker_data[ 'featured_img' ] = $( '#gmb_mashup_group_' + mashup_index + '_featured_img1' ).is( ':checked' );
 
-        // make and place map maker.
-        var marker = new Marker({
-            map: window.map,
-            position: marker_position,
-            marker_data: marker_data,
-            featured_img: featured_img,
-            icon: marker_icon,
-            custom_label: marker_label
-        });
+		// make and place map maker.
+		var marker = new mapIcons.Marker( {
+			map: window.map,
+			position: marker_position,
+			marker_data: marker_data,
+			featured_img: featured_img,
+			icon: marker_icon,
+			map_icon_label: marker_label
+		} );
 
-        //Update status
-        if (marker) {
-            var status = '<li class="gmb-marker-status gmb-loaded"><strong>Marker Loaded:</strong> ' + title + ' - Lat: ' + lat + ' Lng: ' + lng + '</liv>';
-            load_log.html(load_log.html() + status);
-        }
+		//Update status
+		if ( marker ) {
+			var status = '<li class="gmb-marker-status gmb-loaded"><strong>Marker Loaded:</strong> ' + title + ' - Lat: ' + lat + ' Lng: ' + lng + '</liv>';
+			load_log.html( load_log.html() + status );
+		}
 
-        //Set click action for marker to open infowindow
-        google.maps.event.addListener(marker, 'click', function () {
-            app.get_infowindow_content(marker);
-        });
+		//Set click action for marker to open infowindow
+		google.maps.event.addListener( marker, 'click', function() {
+			app.get_infowindow_content( marker );
+		} );
 
-        markers[mashup_index].push(marker); //Add to markers array
+		markers[ mashup_index ].push( marker ); //Add to markers array
 
-    };
+	};
 
     /**
      * Get Mashup Infowindow Content
