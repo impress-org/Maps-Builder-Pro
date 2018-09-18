@@ -110,56 +110,58 @@ class Google_Maps_Builder_Mashups_Builder {
 				'add_button'    => __( 'Add Another Mashup', 'google-maps-builder' ),
 				'remove_button' => __( 'Remove', 'google-maps-builder' ),
 				'sortable'      => false, // beta
+				'label_cb' =>  Google_Maps_Builder_Core_Admin::render_maker_field_tooltip( 'render_marker_mashup_group_tooltip' ),
+
 			),
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
 			'name'        => __( 'Post Type', 'google-maps-builder' ),
 			'id'          => 'post_type',
-			'description' => __( 'Select the post type containing your marker information.', 'google-maps-builder' ),
 			'row_classes' => 'gmb-mashup-post-type-field',
 			'type'        => 'select_post_type',
+			'label_cb' =>  Google_Maps_Builder_Core_Admin::render_maker_field_tooltip( 'render_marker_post_type_tooltip' ),
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
 			'name'        => __( 'Taxonomy Filter', 'google-maps-builder' ),
 			'id'          => 'taxonomy',
 			'row_classes' => 'gmb-taxonomy-select-field',
-			'description' => __( 'Select the taxonomy (if any) that you would like to filter markers by.', 'google-maps-builder' ),
 			'type'        => 'select_taxonomies',
+			'label_cb' =>  Google_Maps_Builder_Core_Admin::render_maker_field_tooltip( 'render_marker_taxonomy_tooltip' ),
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
 			'name'        => __( 'Taxonomy Terms', 'google-maps-builder' ),
 			'id'          => 'terms',
 			'row_classes' => 'gmb-terms-multicheck-field',
-			'description' => __( 'Select the terms from this taxonomy that you would like to filter markers by.', 'google-maps-builder' ),
 			'type'        => 'select_terms',
+			'label_cb' =>  Google_Maps_Builder_Core_Admin::render_maker_field_tooltip( 'render_marker_terms_tooltip' ),
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
 			'name'        => __( 'Latitude Field', 'google-maps-builder' ),
 			'id'          => 'latitude',
 			'default'     => '_gmb_lat',
 			'row_classes' => 'gmb-latitude-select-field',
-			'description' => __( 'Select the field containing the marker latitude data. Default is set to use Maps Builder field.', 'google-maps-builder' ),
 			'type'        => 'select_custom_meta',
+			'label_cb' =>  Google_Maps_Builder_Core_Admin::render_maker_field_tooltip( 'render_marker_latitude_tooltip' ),
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
 			'name'        => __( 'Longitude Field', 'google-maps-builder' ),
 			'id'          => 'longitude',
 			'default'     => '_gmb_lng',
 			'row_classes' => 'gmb-longitude-select-field',
-			'description' => __( 'Select the field containing the marker longitude data. Default is set to use Maps Builder field.', 'google-maps-builder' ),
 			'type'        => 'select_custom_meta',
+			'label_cb' =>  Google_Maps_Builder_Core_Admin::render_maker_field_tooltip( 'render_marker_longitude_tooltip' ),
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
 			'name'        => __( 'Show Featured Image', 'google-maps-builder' ),
 			'id'          => 'featured_img',
 			'default'     => 'yes',
 			'row_classes' => 'gmb-featured-image-field',
-			'description' => __( 'Would you like the featured image displayed in the marker\'s infowindow?', 'google-maps-builder' ),
 			'options'     => array(
 				'yes' => 'Yes',
 				'no'  => 'No',
 			),
 			'type'        => 'radio_inline',
+			'label_cb' =>  Google_Maps_Builder_Core_Admin::render_maker_field_tooltip( 'render_marker_featured_img_tooltip' ),
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
 			'name' => __( 'Customize Mashup Marker', 'google-maps-builder' ),
@@ -300,7 +302,7 @@ class Google_Maps_Builder_Mashups_Builder {
 
 			$output .= $this->gmb_get_terms_checklist( $terms, $field->group->index, $value );
 
-			$output .= '</ul><p class="cmb2-metabox-description">' . __( 'Select the taxonomies (if any) that you would like to filter by.', 'google-maps-builder' ) . '</p>';
+			$output .= '</ul>';
 
 		} else {
 			$output = '<ul class="cmb2-checkbox-list cmb2-list"><li>' . __( 'No terms found for this taxonomy', 'google-maps-builder' ) . '</li></ul>';
@@ -488,7 +490,7 @@ class Google_Maps_Builder_Mashups_Builder {
 
 			$response['terms_checklist'] .= $this->gmb_get_terms_checklist( $terms, $repeater_index, '' );
 
-			$response['terms_checklist'] .= '</ul><p class="cmb2-metabox-description">' . __( 'Select the taxonomies (if any) that you would like to filter by.', 'google-maps-builder' ) . '</p>';
+			$response['terms_checklist'] .= '</ul>';
 			//Get terms multicheck list for taxonomy and send to JS
 			$response['status'] = 'success';
 
