@@ -515,13 +515,21 @@ class Google_Maps_Builder_Mashups_Builder {
 		$lat_field        = isset( $_POST['lat_field'] ) ? sanitize_text_field( $_POST['lat_field'] ) : '_gmb_lat';
 		$lng_field        = isset( $_POST['lng_field'] ) ? sanitize_text_field( $_POST['lng_field'] ) : '_gmb_lng';
 		$group_data_array = maybe_unserialize( get_post_meta( $_POST['map_post_id'], 'gmb_mashup_group', true ) );
+
 		/**
-		 * Filter added for infowindow image size and height
+		 * Filter added for infowindow width and height
 		 *
 		 * @since 2.2.0
 		 */
 		$min_width = apply_filters('gmb_infowindow_img_min_width','335');
 		$min_height = apply_filters('gmb_infowindow_img_min_height','80');
+
+		/**
+		 * Filter added for infowindow image size
+		 *
+		 * @since 2.2.0
+		 */
+		$gmb_image_size = apply_filters('gmb_infowindow_img_size','large');
 
 		$args = array(
 			'post_type'      => $post_type,
@@ -571,7 +579,7 @@ class Google_Maps_Builder_Mashups_Builder {
 				// Info bubble content set
 				$marker_post_content                = get_post_field( 'post_content', $post_id );
 				$marker_content                     = wp_trim_words( $marker_post_content, 55 );
-				$marker_thumbnail                   = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'large' );
+				$marker_thumbnail                   = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $gmb_image_size);
 				$response[ $post_id ]['infowindow'] = '<div id="infobubble-content" class="main-place-infobubble-content">';
 				if ( 'yes' === $group_data_array[0]['featured_img'] ) {
 					$response[ $post_id ]['infowindow'] .= '<div class="place-thumb"><img src="' . $marker_thumbnail[0] . '" alt="' . $response[ $post_id ]['title'] . '" style="min-width:' . $min_width . 'px ;min-height:' . $min_height . 'px"></div>';
