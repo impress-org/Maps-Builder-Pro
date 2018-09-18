@@ -27,58 +27,52 @@ class Google_Maps_Builder_Admin extends Google_Maps_Builder_Core_Admin {
 		$this->marker_box->add_field(
 			array(
 				'name'              => __( 'Animate in Markers', 'google-maps-builder' ),
-				//'desc'              => __( 'If you\'re adding a number of markers, you may want to drop them on the map consecutively rather than all at once.',
-				// 'google-maps-builder' ),
 				'id'                => $prefix . 'marker_animate',
 				'type'              => 'multicheck',
 				'options'           => array(
-					'yes' => 'Yes, Enable'
+					'yes' => 'Yes, Enable',
 				),
 				'select_all_button' => false,
-				'label_cb' => $this->render_maker_field_tooltip( 'render_marker_animate_tooltip' )
+				'label_cb'          => $this->render_maker_field_tooltip( 'render_marker_animate_tooltip' ),
 			)
 		);
 		$this->marker_box->add_field(
 			array(
 				'name'              => __( 'Center Map upon Marker Click', 'google-maps-builder' ),
-				//'desc'              => __( 'When a user clicks on a marker the map will be centered on the marker when this option is enabled.', 'google-maps-builder' ),
 				'id'                => $prefix . 'marker_centered',
 				'type'              => 'multicheck',
 				'options'           => array(
-					'yes' => 'Yes, Enable'
+					'yes' => 'Yes, Enable',
 				),
-				'default' => 'yes',
+				'default'           => 'yes',
 				'select_all_button' => false,
-				'label_cb' => $this->render_maker_field_tooltip( 'render_marker_centered_tooltip' )
+				'label_cb'          => $this->render_maker_field_tooltip( 'render_marker_centered_tooltip' ),
 			)
 		);
 		$this->marker_box->add_field(
 			array(
 				'name'              => __( 'Cluster Markers', 'google-maps-builder' ),
-				//'desc'              => __( 'If enabled Maps Builder will intelligently create and manage per-zoom-level clusters for a large number of markers.',
-				// 'google-maps-builder' ),
 				'id'                => $prefix . 'marker_cluster',
 				'type'              => 'multicheck',
 				'options'           => array(
-					'yes' => 'Yes, Enable'
+					'yes' => 'Yes, Enable',
 				),
 				'select_all_button' => false,
-				'label_cb' => $this->render_maker_field_tooltip( 'render_marker_marker_cluster' )
+				'label_cb'          => $this->render_maker_field_tooltip( 'render_marker_marker_cluster' ),
 			)
 		);
 
 		$this->marker_box->add_group_field( $this->marker_box_group_field_id, array(
 				'name'              => __( 'Marker Infowindow', 'google-maps-builder' ),
-				//'desc'              => __( 'Would you like this marker\'s infowindow open by default on the map?', 'google-maps-builder' ),
 				'id'                => 'infowindow_open',
 				'type'              => 'select',
 				'default'           => 'closed',
 				'options'           => array(
 					'closed' => __( 'Closed by default', 'google-maps-builder' ),
-					'opened' => __( 'Opened by default', 'google-maps-builder' )
+					'opened' => __( 'Opened by default', 'google-maps-builder' ),
 				),
 				'select_all_button' => false,
-				'label_cb' => $this->render_maker_field_tooltip( 'render_marker_infowindow_open' )
+				'label_cb'          => $this->render_maker_field_tooltip( 'render_marker_infowindow_open' ),
 			)
 		);
 
@@ -93,29 +87,29 @@ class Google_Maps_Builder_Admin extends Google_Maps_Builder_Core_Admin {
 		) );
 		$directions_box->add_field(
 			array(
-				'name'    => __( 'Directions Display', 'google-maps-builder' ),
-				'id'      => $prefix . 'text_directions',
-				'type'    => 'select',
-				'default' => 'overlay',
-				'options' => array(
+				'name'     => __( 'Directions Display', 'google-maps-builder' ),
+				'id'       => $prefix . 'text_directions',
+				'type'     => 'select',
+				'default'  => 'overlay',
+				'options'  => array(
 					'none'    => __( 'No text directions', 'cmb' ),
 					'overlay' => __( 'Display in overlay panel', 'cmb' ),
 					'below'   => __( 'Display below map', 'cmb' ),
 				),
-				'label_cb' => $this->render_maker_field_tooltip( 'render_marker_text_directions_tooltip' )
+				'label_cb' => $this->render_maker_field_tooltip( 'render_marker_text_directions_tooltip' ),
 			)
 		);
 		$group_field_id = $directions_box->add_field( array(
-			'name'        => __( 'Direction Groups', 'google-maps-builder' ),
-			'id'          => $prefix . 'directions_group',
-			'type'        => 'group',
-			'options'     => array(
+			'name'     => __( 'Direction Groups', 'google-maps-builder' ),
+			'id'       => $prefix . 'directions_group',
+			'type'     => 'group',
+			'options'  => array(
 				'group_title'   => __( 'Directions: {#}', 'cmb' ),
 				'add_button'    => __( 'Add Directions', 'google-maps-builder' ),
 				'remove_button' => __( 'Remove Directions', 'google-maps-builder' ),
 				'sortable'      => false, // beta
 			),
-			'label_cb' => $this->render_maker_field_tooltip( 'render_marker_directions_group' )
+			'label_cb' => $this->render_maker_field_tooltip( 'render_marker_directions_group' ),
 
 		) );
 		$directions_box->add_group_field( $group_field_id, array(
@@ -151,7 +145,7 @@ class Google_Maps_Builder_Admin extends Google_Maps_Builder_Core_Admin {
 				'id'                => $prefix . 'places_search',
 				'type'              => 'multicheck',
 				'options'           => array(
-					'yes' => 'Yes, Enable Places Search'
+					'yes' => 'Yes, Enable Places Search',
 				),
 				'select_all_button' => false,
 			)
@@ -160,7 +154,8 @@ class Google_Maps_Builder_Admin extends Google_Maps_Builder_Core_Admin {
 		//Snazzy maps.
 		$this->display_options->add_field( array(
 			'name'    => __( 'Map Theme', 'google-maps-builder' ),
-			'desc'    => sprintf( __( 'Set optional preconfigured <a href="%1s" class="snazzy-link new-window"  target="_blank">Snazzy Maps</a> styles by selecting from the dropdown above or use your own style.', 'google-maps-builder' ), esc_url( 'http://snazzymaps.com' ) ) . '<br><a href="#" class="button button-small custom-snazzy-toggle">' . __( 'Set a Custom Snazzy Map', 'google-maps-builder' ) . '</a>',			'id'      => $prefix . 'theme',
+			'desc'    => sprintf( __( 'Set optional preconfigured <a href="%1s" class="snazzy-link new-window"  target="_blank">Snazzy Maps</a> styles by selecting from the dropdown above or use your own style.', 'google-maps-builder' ), esc_url( 'http://snazzymaps.com' ) ) . '<br><a href="#" class="button button-small custom-snazzy-toggle">' . __( 'Set a Custom Snazzy Map', 'google-maps-builder' ) . '</a>',
+			'id'      => $prefix . 'theme',
 			'type'    => 'select',
 			'default' => 'none',
 			'options' => apply_filters( 'gmb_snazzy_maps', array(
@@ -249,7 +244,7 @@ class Google_Maps_Builder_Admin extends Google_Maps_Builder_Core_Admin {
 				'14'     => __( 'Vintage', 'google-maps-builder' ),
 				'26'     => __( 'Vintage Blue', 'google-maps-builder' ),
 				'40'     => __( 'Vitamin C', 'google-maps-builder' ),
-			) )
+			) ),
 		) );
 
 	}
