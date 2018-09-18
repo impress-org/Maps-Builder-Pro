@@ -110,6 +110,7 @@ class Google_Maps_Builder_Mashups_Builder {
 				'add_button'    => __( 'Add Another Mashup', 'google-maps-builder' ),
 				'remove_button' => __( 'Remove', 'google-maps-builder' ),
 				'sortable'      => false, // beta
+				'label_cb' =>  Google_Maps_Builder_Core_Admin::render_maker_field_tooltip( 'render_marker_mashup_group_tooltip' ),
 
 			),
 		) );
@@ -155,13 +156,12 @@ class Google_Maps_Builder_Mashups_Builder {
 			'id'          => 'featured_img',
 			'default'     => 'yes',
 			'row_classes' => 'gmb-featured-image-field',
-			'description' => __( 'Would you like the featured image displayed in the marker\'s infowindow?', 'google-maps-builder' ),
 			'options'     => array(
 				'yes' => 'Yes',
 				'no'  => 'No',
 			),
 			'type'        => 'radio_inline',
-			'label_cb' =>  Google_Maps_Builder_Core_Admin::render_maker_field_tooltip( 'render_marker_longitude_tooltip' ),
+			'label_cb' =>  Google_Maps_Builder_Core_Admin::render_maker_field_tooltip( 'render_marker_featured_img_tooltip' ),
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
 			'name' => __( 'Customize Mashup Marker', 'google-maps-builder' ),
