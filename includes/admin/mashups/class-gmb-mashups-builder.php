@@ -512,7 +512,8 @@ class Google_Maps_Builder_Mashups_Builder {
 	 */
 	function get_mashup_markers_callback() {
 		// Infowindow template file loaded
-		require_once GMB_CORE_PATH . 'includes/views/infowindow.php';
+		$obj_gmb_engine = new Google_Maps_Builder_Engine();
+		include $obj_gmb_engine->get_google_maps_template( 'infowindow.php' );
 		wp_die();
 	}
 
