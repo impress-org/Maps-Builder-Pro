@@ -33,7 +33,7 @@ class Google_Maps_Builder_Admin extends Google_Maps_Builder_Core_Admin {
 					'yes' => 'Yes, Enable',
 				),
 				'select_all_button' => false,
-				'label_cb'          => $this->render_maker_field_tooltip( 'render_marker_animate_tooltip' ),
+				'label_cb'          => render_maker_field_tooltip( 'render_marker_animate_tooltip' ),
 			)
 		);
 		$this->marker_box->add_field(
@@ -46,7 +46,7 @@ class Google_Maps_Builder_Admin extends Google_Maps_Builder_Core_Admin {
 				),
 				'default'           => 'yes',
 				'select_all_button' => false,
-				'label_cb'          => $this->render_maker_field_tooltip( 'render_marker_centered_tooltip' ),
+				'label_cb'          => render_maker_field_tooltip( 'render_marker_centered_tooltip' ),
 			)
 		);
 		$this->marker_box->add_field(
@@ -58,7 +58,7 @@ class Google_Maps_Builder_Admin extends Google_Maps_Builder_Core_Admin {
 					'yes' => 'Yes, Enable',
 				),
 				'select_all_button' => false,
-				'label_cb'          => $this->render_maker_field_tooltip( 'render_marker_marker_cluster' ),
+				'label_cb'          => render_maker_field_tooltip( 'render_marker_marker_cluster' ),
 			)
 		);
 
@@ -72,7 +72,7 @@ class Google_Maps_Builder_Admin extends Google_Maps_Builder_Core_Admin {
 					'opened' => __( 'Opened by default', 'google-maps-builder' ),
 				),
 				'select_all_button' => false,
-				'label_cb'          => $this->render_maker_field_tooltip( 'render_marker_infowindow_open' ),
+				'label_cb'          => render_maker_field_tooltip( 'render_marker_infowindow_open' ),
 			)
 		);
 
@@ -96,7 +96,7 @@ class Google_Maps_Builder_Admin extends Google_Maps_Builder_Core_Admin {
 					'overlay' => __( 'Display in overlay panel', 'cmb' ),
 					'below'   => __( 'Display below map', 'cmb' ),
 				),
-				'label_cb' => $this->render_maker_field_tooltip( 'render_marker_text_directions_tooltip' ),
+				'label_cb' => render_maker_field_tooltip( 'render_marker_text_directions_tooltip' ),
 			)
 		);
 		$group_field_id = $directions_box->add_field( array(
@@ -109,7 +109,7 @@ class Google_Maps_Builder_Admin extends Google_Maps_Builder_Core_Admin {
 				'remove_button' => __( 'Remove Directions', 'google-maps-builder' ),
 				'sortable'      => false, // beta
 			),
-			'label_cb' => $this->render_maker_field_tooltip( 'render_marker_directions_group' ),
+			'label_cb' => render_maker_field_tooltip( 'render_marker_directions_group' ),
 
 		) );
 		$directions_box->add_group_field( $group_field_id, array(
