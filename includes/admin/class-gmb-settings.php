@@ -164,7 +164,7 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 			'type' => 'multicheck_posttype',
 		);
 		$this->plugin_options['fields'][] = array(
-			'name' => __( 'Load map in China', 'google-maps-builder' ),
+			'name' => __( 'China Maps Support', 'google-maps-builder' ),
 			'id'   => $prefix . 'enable_china',
 			'desc' => __( 'Select checkbox to load map in China.', 'google-maps-builder' ),
 			'type' => 'checkbox',
