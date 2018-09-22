@@ -78,7 +78,6 @@
 	 * @returns {*}
 	 */
 	gmb.set_mashup_marker = function( map, mashup_index, marker_data, mashup_value, map_data ) {
-
 		// Get latitude and longitude
 		var lat = (typeof marker_data.latitude !== 'undefined' ? marker_data.latitude : '');
 		var lng = (typeof marker_data.longitude !== 'undefined' ? marker_data.longitude : '');
@@ -117,20 +116,28 @@
 		// if it's set to "yes", then the image displays, else it doesn't.
 		marker_data[ 'featured_img' ] = (mashup_value[ 'featured_img' ] === 'yes');
 
+		// Check whether animate marker option enabled or not
+		var gmb_marker_animate = '';
+		if ( 'yes' === map_data.map_marker_animation[ 0 ] ) {
+			gmb_marker_animate = google.maps.Animation.BOUNCE;
+		} else {
+			gmb_marker_animate = 'no';
+		}
 		// make and place map maker.
 		var marker = new mapIcons.Marker( {
 			map: map,
 			position: marker_position,
 			marker_data: marker_data,
 			icon: marker_icon,
-			map_icon_label: marker_label
+			map_icon_label: marker_label,
+			animation: gmb_marker_animate,
 		} );
 
 		//Set click action for marker to open info_window
 		google.maps.event.addListener( marker, 'click', function() {
 			gmb.get_mashup_infowindow_content( map, marker, map_data );
 		} );
-
+		setTimeout( function() { marker.setAnimation( null ); }, 710 );
 		/**
 		 * Adds custom event so marker can be manipulated before it is set.
 		 *

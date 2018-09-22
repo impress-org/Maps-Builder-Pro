@@ -323,7 +323,6 @@ var gmb_mashup;
 	 * @param loop_index
 	 */
 	app.set_mashup_marker = function( mashup_index, marker_data, loop_index ) {
-
 		title = (typeof marker_data.title !== 'undefined' ? marker_data.title : '');
 		address = (typeof marker_data.address !== 'undefined' ? marker_data.address : '');
 		lat = (typeof marker_data.latitude !== 'undefined' ? marker_data.latitude : '');
@@ -365,6 +364,14 @@ var gmb_mashup;
 		// if it's set to "yes", then the image displays, else it doesn't.
 		var featured_img = marker_data[ 'featured_img' ] = $( '#gmb_mashup_group_' + mashup_index + '_featured_img1' ).is( ':checked' );
 
+		// Check whether animate marker option enabled or not
+		var gmb_marker_animate = '';
+		if ( $( '#gmb_marker_animate1' ).is( ':checked' ) ) {
+			gmb_marker_animate = google.maps.Animation.BOUNCE;
+		} else {
+			gmb_marker_animate = 'no';
+		}
+
 		// make and place map maker.
 		var marker = new mapIcons.Marker( {
 			map: window.map,
@@ -372,7 +379,8 @@ var gmb_mashup;
 			marker_data: marker_data,
 			featured_img: featured_img,
 			icon: marker_icon,
-			map_icon_label: marker_label
+			map_icon_label: marker_label,
+			animation: gmb_marker_animate,
 		} );
 
 		//Update status
@@ -387,7 +395,7 @@ var gmb_mashup;
 		} );
 
 		markers[ mashup_index ].push( marker ); //Add to markers array
-
+		setTimeout( function() { marker.setAnimation( null ); }, 710 );
 	};
 
     /**
