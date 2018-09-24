@@ -247,7 +247,7 @@ class Google_Maps_Builder_Admin extends Google_Maps_Builder_Core_Admin {
 					'40'     => __( 'Vitamin C', 'google-maps-builder' ),
 				)
 			),
-			'label_cb' => $this->render_maker_field_tooltip( 'render_snazzy_tooltip' ),
+			'label_cb' => $this->gmb_render_maker_field_tooltip( 'render_snazzy_tooltip' ),
 		) );
 	}
 
@@ -269,9 +269,4 @@ class Google_Maps_Builder_Admin extends Google_Maps_Builder_Core_Admin {
 
 		return $output;
 	}
-
-
-
-
-
 }
