@@ -110,7 +110,7 @@ class Google_Maps_Builder_Mashups_Builder {
 				'add_button'    => __( 'Add Another Mashup', 'google-maps-builder' ),
 				'remove_button' => __( 'Remove', 'google-maps-builder' ),
 				'sortable'      => false, // beta
-				'label_cb' =>  Google_Maps_Builder_Core_Admin::render_maker_field_tooltip( 'render_marker_mashup_group_tooltip' ),
+				'label_cb' =>  gmb_render_maker_field_tooltip( 'render_marker_mashup_group_tooltip' ),
 
 			),
 		) );
@@ -119,21 +119,21 @@ class Google_Maps_Builder_Mashups_Builder {
 			'id'          => 'post_type',
 			'row_classes' => 'gmb-mashup-post-type-field',
 			'type'        => 'select_post_type',
-			'label_cb' =>  Google_Maps_Builder_Core_Admin::render_maker_field_tooltip( 'render_marker_post_type_tooltip' ),
+			'label_cb' =>  gmb_render_maker_field_tooltip( 'render_marker_post_type_tooltip' ),
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
 			'name'        => __( 'Taxonomy Filter', 'google-maps-builder' ),
 			'id'          => 'taxonomy',
 			'row_classes' => 'gmb-taxonomy-select-field',
 			'type'        => 'select_taxonomies',
-			'label_cb' =>  Google_Maps_Builder_Core_Admin::render_maker_field_tooltip( 'render_marker_taxonomy_tooltip' ),
+			'label_cb' =>  gmb_render_maker_field_tooltip( 'render_marker_taxonomy_tooltip' ),
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
 			'name'        => __( 'Taxonomy Terms', 'google-maps-builder' ),
 			'id'          => 'terms',
 			'row_classes' => 'gmb-terms-multicheck-field',
 			'type'        => 'select_terms',
-			'label_cb' =>  Google_Maps_Builder_Core_Admin::render_maker_field_tooltip( 'render_marker_terms_tooltip' ),
+			'label_cb' =>  gmb_render_maker_field_tooltip( 'render_marker_terms_tooltip' ),
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
 			'name'        => __( 'Latitude Field', 'google-maps-builder' ),
@@ -141,7 +141,7 @@ class Google_Maps_Builder_Mashups_Builder {
 			'default'     => '_gmb_lat',
 			'row_classes' => 'gmb-latitude-select-field',
 			'type'        => 'select_custom_meta',
-			'label_cb' =>  Google_Maps_Builder_Core_Admin::render_maker_field_tooltip( 'render_marker_latitude_tooltip' ),
+			'label_cb' =>  gmb_render_maker_field_tooltip( 'render_marker_latitude_tooltip' ),
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
 			'name'        => __( 'Longitude Field', 'google-maps-builder' ),
@@ -149,7 +149,7 @@ class Google_Maps_Builder_Mashups_Builder {
 			'default'     => '_gmb_lng',
 			'row_classes' => 'gmb-longitude-select-field',
 			'type'        => 'select_custom_meta',
-			'label_cb' =>  Google_Maps_Builder_Core_Admin::render_maker_field_tooltip( 'render_marker_longitude_tooltip' ),
+			'label_cb' =>  gmb_render_maker_field_tooltip( 'render_marker_longitude_tooltip' ),
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
 			'name'        => __( 'Show Featured Image', 'google-maps-builder' ),
@@ -161,7 +161,7 @@ class Google_Maps_Builder_Mashups_Builder {
 				'no'  => 'No',
 			),
 			'type'        => 'radio_inline',
-			'label_cb' =>  Google_Maps_Builder_Core_Admin::render_maker_field_tooltip( 'render_marker_featured_img_tooltip' ),
+			'label_cb' =>  gmb_render_maker_field_tooltip( 'render_marker_featured_img_tooltip' ),
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
 			'name' => __( 'Customize Mashup Marker', 'google-maps-builder' ),
