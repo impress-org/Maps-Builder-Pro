@@ -110,7 +110,7 @@ class Google_Maps_Builder_Mashups_Builder {
 				'add_button'    => __( 'Add Another Mashup', 'google-maps-builder' ),
 				'remove_button' => __( 'Remove', 'google-maps-builder' ),
 				'sortable'      => false, // beta
-				'label_cb' =>  Google_Maps_Builder_Core_Admin::render_maker_field_tooltip( 'render_marker_mashup_group_tooltip' ),
+				'label_cb' =>  gmb_render_maker_field_tooltip( 'render_marker_mashup_group_tooltip' ),
 
 			),
 		) );
@@ -119,21 +119,21 @@ class Google_Maps_Builder_Mashups_Builder {
 			'id'          => 'post_type',
 			'row_classes' => 'gmb-mashup-post-type-field',
 			'type'        => 'select_post_type',
-			'label_cb' =>  Google_Maps_Builder_Core_Admin::render_maker_field_tooltip( 'render_marker_post_type_tooltip' ),
+			'label_cb' =>  gmb_render_maker_field_tooltip( 'render_marker_post_type_tooltip' ),
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
 			'name'        => __( 'Taxonomy Filter', 'google-maps-builder' ),
 			'id'          => 'taxonomy',
 			'row_classes' => 'gmb-taxonomy-select-field',
 			'type'        => 'select_taxonomies',
-			'label_cb' =>  Google_Maps_Builder_Core_Admin::render_maker_field_tooltip( 'render_marker_taxonomy_tooltip' ),
+			'label_cb' =>  gmb_render_maker_field_tooltip( 'render_marker_taxonomy_tooltip' ),
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
 			'name'        => __( 'Taxonomy Terms', 'google-maps-builder' ),
 			'id'          => 'terms',
 			'row_classes' => 'gmb-terms-multicheck-field',
 			'type'        => 'select_terms',
-			'label_cb' =>  Google_Maps_Builder_Core_Admin::render_maker_field_tooltip( 'render_marker_terms_tooltip' ),
+			'label_cb' =>  gmb_render_maker_field_tooltip( 'render_marker_terms_tooltip' ),
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
 			'name'        => __( 'Latitude Field', 'google-maps-builder' ),
@@ -141,7 +141,7 @@ class Google_Maps_Builder_Mashups_Builder {
 			'default'     => '_gmb_lat',
 			'row_classes' => 'gmb-latitude-select-field',
 			'type'        => 'select_custom_meta',
-			'label_cb' =>  Google_Maps_Builder_Core_Admin::render_maker_field_tooltip( 'render_marker_latitude_tooltip' ),
+			'label_cb' =>  gmb_render_maker_field_tooltip( 'render_marker_latitude_tooltip' ),
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
 			'name'        => __( 'Longitude Field', 'google-maps-builder' ),
@@ -149,7 +149,7 @@ class Google_Maps_Builder_Mashups_Builder {
 			'default'     => '_gmb_lng',
 			'row_classes' => 'gmb-longitude-select-field',
 			'type'        => 'select_custom_meta',
-			'label_cb' =>  Google_Maps_Builder_Core_Admin::render_maker_field_tooltip( 'render_marker_longitude_tooltip' ),
+			'label_cb' =>  gmb_render_maker_field_tooltip( 'render_marker_longitude_tooltip' ),
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
 			'name'        => __( 'Show Featured Image', 'google-maps-builder' ),
@@ -161,7 +161,7 @@ class Google_Maps_Builder_Mashups_Builder {
 				'no'  => 'No',
 			),
 			'type'        => 'radio_inline',
-			'label_cb' =>  Google_Maps_Builder_Core_Admin::render_maker_field_tooltip( 'render_marker_featured_img_tooltip' ),
+			'label_cb' =>  gmb_render_maker_field_tooltip( 'render_marker_featured_img_tooltip' ),
 		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
 			'name' => __( 'Customize Mashup Marker', 'google-maps-builder' ),
@@ -511,99 +511,9 @@ class Google_Maps_Builder_Mashups_Builder {
 	 * AJAX Taxonomies Callback
 	 */
 	function get_mashup_markers_callback() {
-		$taxonomy         = isset( $_POST['taxonomy'] ) ? sanitize_text_field( $_POST['taxonomy'] ) : '';
-		$terms            = isset( $_POST['terms'] ) && is_array( $_POST['terms'] ) ? array_map( 'intval', $_POST['terms'] ) : '';
-		$post_type        = isset( $_POST['post_type'] ) ? sanitize_text_field( $_POST['post_type'] ) : '';
-		$lat_field        = isset( $_POST['lat_field'] ) ? sanitize_text_field( $_POST['lat_field'] ) : '_gmb_lat';
-		$lng_field        = isset( $_POST['lng_field'] ) ? sanitize_text_field( $_POST['lng_field'] ) : '_gmb_lng';
-		$group_data_array = maybe_unserialize( get_post_meta( $_POST['map_post_id'], 'gmb_mashup_group', true ) );
-
-		$args = array(
-			'post_type'      => $post_type,
-			'posts_per_page' => - 1,
-			'post_status'    => 'publish',
-		);
-
-		// Filter posts by taxonomy terms if applicable.
-		if ( ! empty( $taxonomy ) && $taxonomy !== 'none' ) {
-			$args['tax_query'] = array(
-				array(
-					'taxonomy' => $taxonomy,
-					'field'    => 'term_id',
-					'terms'    => $terms,
-					'operator' => 'IN',
-				),
-			);
-		}
-
-		$transient_name = 'gmb_mashup_' . $post_type . '_' . md5( http_build_query( $args ) . '_' . uniqid() );
-
-		// Load marker data from transient if available.
-		if ( false === ( $response = get_transient( $transient_name ) ) ) {
-			// Transient does not exist or is expired. Proceed with query.
-			$wp_query = new WP_Query( $args );
-
-			if ( $wp_query->have_posts() ) : while ( $wp_query->have_posts() ) :
-				$wp_query->the_post();
-				$post_id = get_the_ID();
-
-				// Get latitude and longitude associated with post.
-				$lat = get_post_meta( $post_id, $lat_field, true );
-				$lng = get_post_meta( $post_id, $lng_field, true );
-
-				if ( empty( $lat ) || empty( $lng ) ) {
-					// Do not add marker if latitude or longitude are empty.
-					continue;
-				}
-
-				// Add marker data to response.
-				$response[ $post_id ]['title']     = get_the_title( $post_id );
-				$response[ $post_id ]['id']        = $post_id;
-				$response[ $post_id ]['address']   = get_post_meta( $post_id, '_gmb_address', true ); //Geocoding Coming soon
-				$response[ $post_id ]['latitude']  = $lat;
-				$response[ $post_id ]['longitude'] = $lng;
-
-				// Info bubble content set
-				$marker_post_content                = get_post_field( 'post_content', $post_id );
-				$marker_content                     = wp_trim_words( $marker_post_content, 55 );
-				$marker_thumbnail                   = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'large' );
-				$response[ $post_id ]['infowindow'] = '<div id="infobubble-content" class="main-place-infobubble-content">';
-				if ( 'yes' === $group_data_array[0]['featured_img'] ) {
-					$response[ $post_id ]['infowindow'] .= '<div class="place-thumb"><img src="' . $marker_thumbnail[0] . '" alt="' . $response[ $post_id ]['title'] . '"></div>';
-				}
-				if ( ! empty( $marker_title ) ) {
-					$response[ $post_id ]['infowindow'] .= '<p class="place-title">' . $response[ $post_id ]['title'] . '</p>';
-				}
-				if ( ! empty( $marker_content ) ) {
-					$response[ $post_id ]['infowindow'] .= '<p class="place-description">' . $marker_content . '</p>';
-				}
-				$response[ $post_id ]['infowindow'] .= '<a href="' . get_permalink( $post_id ) . '" title="' . $marker_title . '" class="gmb-mashup-single-link">' . apply_filters( 'gmb_mashup_infowindow_content_readmore', __( 'Read More &raquo;', 'google-maps-builder' ) ) . '</a>';
-				$response[ $post_id ]['infowindow'] .= '</div>';
-			endwhile; endif;
-			wp_reset_postdata();
-
-			/**
-			 * Filters the array of mash-up markers.
-			 *
-			 * @author Tobias Malikowski tobias.malikowski@gmail.com
-			 *
-			 * @param array    $response       Array of mash-up marker data.
-			 * @param WP_Query $wp_query       Query used to retrieve mash-up posts.
-			 * @param string   $transient_name Transient used to store marker data.
-			 * @param array    $args           Args passed to WP_Query.
-			 */
-			apply_filters( 'gmb_get_mashup_markers_callback', $response, $wp_query, $transient_name, $args );
-
-			if ( is_array( $response ) ) {
-				// Store marker data in transient to speed up future callbacks.
-				set_transient( $transient_name, $response, 30 * DAY_IN_SECONDS );
-			} else {
-				$response['error'] = __( 'Error - No posts found.', 'google-maps-builder' );
-			}
-		}
-
-		echo json_encode( $response );
-
+		// Infowindow template file loaded
+		$obj_gmb_engine = new Google_Maps_Builder_Engine();
+		include $obj_gmb_engine->get_google_maps_template( 'infowindow.php' );
 		wp_die();
 	}
 

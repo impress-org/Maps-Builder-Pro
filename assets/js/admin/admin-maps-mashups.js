@@ -398,15 +398,17 @@ var gmb_mashup;
 		setTimeout( function() { marker.setAnimation( null ); }, 710 );
 	};
 
-    /**
-     * Get Mashup Infowindow Content
-     *
-     * $current_user->IDRetrieves the marker content via AJAX request
-     */
-		app.get_infowindow_content = function( marker ) {
+	/**
+	 * Get Mashup Infowindow Content
+	 *
+	 * $current_user->IDRetrieves the marker content via AJAX request
+	 */
+	app.get_infowindow_content = function( marker ) {
+		setTimeout( function() {
 			info_bubble.open( map, marker );
-			info_bubble.setContent( marker.marker_data[ 'infowindow' ] );
-		};
+		}, 0 );
+		info_bubble.setContent( marker.marker_data[ 'infowindow' ] );
+	};
 
 
     /**
