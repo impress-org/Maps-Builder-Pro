@@ -163,6 +163,12 @@ class Google_Maps_Builder_Settings extends Google_Maps_Builder_Core_Settings {
 			'desc' => __( 'Select which post types you would like to display the mashup metabox.', 'google-maps-builder' ),
 			'type' => 'multicheck_posttype',
 		);
+		$this->plugin_options['fields'][] = array(
+			'name' => __( 'China Maps Support', 'google-maps-builder' ),
+			'id'   => $prefix . 'enable_china',
+			'desc' => __( 'Select checkbox to load map in China.', 'google-maps-builder' ),
+			'type' => 'checkbox',
+		);
 
 		return apply_filters( 'gmb_general_options_fields', $this->plugin_options );
 
