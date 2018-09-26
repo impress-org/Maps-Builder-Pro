@@ -6,66 +6,62 @@
 
 (function ($, gmb) {
 
+	/**
+	 * Create Mashup Marker.
+	 *
+	 * Loops through data and creates mashup markers.
+	 *
+	 * @param map
+	 * @param map_data
+	 */
+	gmb.set_mashup_markers_front = function( map, map_data ) {
 
-    /**
-     * Create Mashup Marker.
-     *
-     * Loops through data and creates mashup markers.
-     *
-     * @param map
-     * @param map_data
-     */
-    gmb.set_mashup_markers_front = function (map, map_data) {
+		if ( typeof map_data.mashup_markers === 'undefined' || ! map_data.mashup_markers ) {
+			return false;
+		}
 
+		// Store the markers
+		var markers = [];
 
-        if (typeof map_data.mashup_markers === 'undefined' || !map_data.mashup_markers) {
-            return false;
-        }
+		$( map_data.mashup_markers ).each( function( index, mashup_value ) {
 
-        // Store the markers
-        var markers = [];
+			//Setup our vars
+			var post_type = typeof mashup_value.post_type !== 'undefined' ? mashup_value.post_type : '';
+			var taxonomy = typeof mashup_value.taxonomy !== 'undefined' ? mashup_value.taxonomy : '';
+			var lat_field = typeof mashup_value.latitude !== 'undefined' ? mashup_value.latitude : '';
+			var lng_field = typeof mashup_value.longitude !== 'undefined' ? mashup_value.longitude : '';
+			var terms = typeof mashup_value.terms !== 'undefined' ? mashup_value.terms : '';
 
-        $(map_data.mashup_markers).each(function (index, mashup_value) {
+			var data = {
+				action: 'get_mashup_markers',
+				post_type: post_type,
+				taxonomy: taxonomy,
+				terms: terms,
+				index: index,
+				lat_field: lat_field,
+				lng_field: lng_field
+			};
 
-            //Setup our vars
-            var post_type = typeof mashup_value.post_type !== 'undefined' ? mashup_value.post_type : '';
-            var taxonomy = typeof mashup_value.taxonomy !== 'undefined' ? mashup_value.taxonomy : '';
-            var lat_field = typeof mashup_value.latitude !== 'undefined' ? mashup_value.latitude : '';
-            var lng_field = typeof mashup_value.longitude !== 'undefined' ? mashup_value.longitude : '';
-            var terms = typeof mashup_value.terms !== 'undefined' ? mashup_value.terms : '';
+			jQuery.post( map_data.ajax_url, data, function( response ) {
 
-            var data = {
-                action: 'get_mashup_markers',
-                post_type: post_type,
-                taxonomy: taxonomy,
-                terms: terms,
-                index: index,
-                lat_field: lat_field,
-                lng_field: lng_field
-            };
+				//Loop through marker data
+				$.each( response, function( index, marker_data ) {
+					//Set mashup markers
+					var marker = gmb.set_mashup_marker( map, data.index, marker_data, mashup_value, map_data );
+					if ( marker instanceof Marker ) {
+						// Add mashup marker to array with key equal to its post ID.
+						markers[ marker.marker_data.id ] = marker;
+					}
+				} );
 
-            jQuery.post(map_data.ajax_url, data, function (response) {
+				//Cluster?
+				if ( map_data.marker_cluster === 'yes' ) {
+					var markerCluster = new MarkerClusterer( map, markers );
+				}
 
-                //Loop through marker data
-                $.each(response, function (index, marker_data) {
-                    //Set mashup markers
-                    var marker = gmb.set_mashup_marker(map, data.index, marker_data, mashup_value, map_data);
-                    if (marker instanceof Marker) {
-                        // Add mashup marker to array with key equal to its post ID.
-                        markers[marker.marker_data.id] = marker;
-                    }
-                });
-
-                //Cluster?
-                if (map_data.marker_cluster === 'yes') {
-                    var markerCluster = new MarkerClusterer(map, markers);
-                }
-
-            }, 'json');
-
-        });
-
-    };
+			}, 'json' );
+		} );
+	};
 
 	/**
 	 * Set Mashup Marker
@@ -77,7 +73,7 @@
 	 * @param map_data
 	 * @returns {*}
 	 */
-	gmb.set_mashup_marker = function( map, mashup_index, marker_data, mashup_value, map_data ) {
+	gmb.set_mashup_marker = function( map, mashup_index, marker_data, mashup_value, map_data, animation_marker_loop, marker_arr ) {
 		// Get latitude and longitude
 		var lat = (typeof marker_data.latitude !== 'undefined' ? marker_data.latitude : '');
 		var lng = (typeof marker_data.longitude !== 'undefined' ? marker_data.longitude : '');
@@ -119,36 +115,44 @@
 		// Check whether animate marker option enabled or not
 		var gmb_marker_animate = '';
 		if ( 'yes' === map_data.map_marker_animation[ 0 ] ) {
-			gmb_marker_animate = google.maps.Animation.BOUNCE;
+			if ( 'DROP' === map_data.map_marker_animation_style ) {
+				gmb_marker_animate = google.maps.Animation.DROP;
+			} else {
+				gmb_marker_animate = google.maps.Animation.BOUNCE;
+			}
+			var animation_timeout = 500;
 		} else {
 			gmb_marker_animate = 'no';
+			var animation_timeout = 0;
 		}
 		// make and place map maker.
-		var marker = new mapIcons.Marker( {
-			map: map,
-			position: marker_position,
-			marker_data: marker_data,
-			icon: marker_icon,
-			map_icon_label: marker_label,
-			animation: gmb_marker_animate,
-		} );
+		window.setTimeout( function() {
+			var marker = new mapIcons.Marker( {
+				map: map,
+				position: marker_position,
+				marker_data: marker_data,
+				icon: marker_icon,
+				map_icon_label: marker_label,
+				animation: gmb_marker_animate,
+			} );
 
-		//Set click action for marker to open info_window
-		google.maps.event.addListener( marker, 'click', function() {
-			gmb.get_mashup_infowindow_content( map, marker, map_data );
-		} );
-		setTimeout( function() { marker.setAnimation( null ); }, 710 );
-		/**
-		 * Adds custom event so marker can be manipulated before it is set.
-		 *
-		 * @since 2.1.2
-		 * @author Tobias Malikowski tobias.malikowski@gmail.com
-		 * @see http://api.jquery.com/trigger/
-		 * @see http://api.jquery.com/on/
-		 */
-		$( document ).trigger( 'gmb.set_mashup_marker', [ marker, map, mashup_index, marker_data, mashup_value, map_data ] );
-
-		return marker;
+			//Set click action for marker to open info_window
+			google.maps.event.addListener( marker, 'click', function() {
+				gmb.get_mashup_infowindow_content( map, marker, map_data );
+			} );
+			setTimeout( function() { marker.setAnimation( null ); }, 710 );
+			/**
+			 * Adds custom event so marker can be manipulated before it is set.
+			 *
+			 * @since 2.1.2
+			 * @author Tobias Malikowski tobias.malikowski@gmail.com
+			 * @see http://api.jquery.com/trigger/
+			 * @see http://api.jquery.com/on/
+			 */
+			$( document ).trigger( 'gmb.set_mashup_marker', [ marker, map, mashup_index, marker_data, mashup_value, map_data ] );
+			marker_arr.push( marker );
+			return marker_arr;
+		}, animation_marker_loop * animation_timeout );
 
 	};
 

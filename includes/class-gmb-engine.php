@@ -60,6 +60,7 @@ class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 		$visual_info        = maybe_unserialize( $all_meta['gmb_width_height'][0] );
 		$lat_lng            = maybe_unserialize( $all_meta['gmb_lat_lng'][0] );
 		$gmb_marker_animate = isset( $all_meta['gmb_marker_animate'][0] ) ? maybe_unserialize( $all_meta['gmb_marker_animate'][0] ) : 'no';
+		$gmb_marker_animate_style = isset( $all_meta['gmb_marker_animate_style'][0] ) ? maybe_unserialize( $all_meta['gmb_marker_animate_style'][0] ) : 'no';
 		//Put markers into an array for JS usage
 		$map_marker_array   = array();
 		$markers_repeatable = isset( $all_meta['gmb_markers_group'][0] ) ? maybe_unserialize( $all_meta['gmb_markers_group'][0] ) : '';
@@ -138,6 +139,7 @@ class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 				),
 				'map_markers_icon'     => ! empty( $all_meta['gmb_map_marker'] ) ? $all_meta['gmb_map_marker'][0] : 'none',
 				'map_marker_animation' => ! empty( $gmb_marker_animate ) ? $gmb_marker_animate : 'no',
+				'map_marker_animation_style' => ! empty( $gmb_marker_animate_style ) ? $gmb_marker_animate_style : 'BOUNCE',
 			),
 		) );
 

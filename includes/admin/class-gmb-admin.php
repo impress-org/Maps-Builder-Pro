@@ -37,6 +37,19 @@ class Google_Maps_Builder_Admin extends Google_Maps_Builder_Core_Admin {
 				'label_cb'          => gmb_render_maker_field_tooltip( 'render_marker_animate_tooltip' ),
 			)
 		);
+		$this->marker_box->add_field( array(
+				'name'              => __( 'Select Animation Style', 'google-maps-builder' ),
+				'id'                => $prefix . 'marker_animate_style',
+				'type'              => 'select',
+				'default'           => 'DROP',
+				'options'           => array(
+					'DROP'   => __( 'Drop', 'google-maps-builder' ),
+					'BOUNCE' => __( 'Bounce', 'google-maps-builder' ),
+				),
+				'select_all_button' => false,
+				'label_cb'          => gmb_render_maker_field_tooltip( 'render_marker_animate_style_tooltip' ),
+			)
+		);
 		$this->marker_box->add_field(
 			array(
 				'name'              => __( 'Center Map upon Marker Click', 'google-maps-builder' ),
@@ -247,7 +260,7 @@ class Google_Maps_Builder_Admin extends Google_Maps_Builder_Core_Admin {
 					'40'     => __( 'Vitamin C', 'google-maps-builder' ),
 				)
 			),
-			'label_cb' => $this->gmb_render_maker_field_tooltip( 'render_snazzy_tooltip' ),
+			'label_cb' => gmb_render_maker_field_tooltip( 'render_snazzy_tooltip' ),
 		) );
 	}
 
