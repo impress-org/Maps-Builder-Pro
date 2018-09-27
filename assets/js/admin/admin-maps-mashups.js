@@ -269,50 +269,62 @@ var gmb_mashup;
 
     };
 
-    /**
-     * AJAX Load Mashup Markers
-     *
-     * @param data
-     */
-    app.load_mashup = function (data) {
-        var cluster_markers_admin = $('#gmb_marker_cluster1').prop('checked');
-        jQuery.post(ajaxurl, data, function (response) {
+	/**
+	 * AJAX Load Mashup Markers
+	 *
+	 * @param data
+	 */
+	app.load_mashup = function( data ) {
+		var cluster_markers_admin = $( '#gmb_marker_cluster1' ).prop( 'checked' );
+		var gmb_animate_marker_admin = $( '#gmb_marker_animate1' ).prop( 'checked' );
+		if ( gmb_animate_marker_admin ) {
+			var gmb_cluster_timeout = 1000;
+		} else {
+			var gmb_cluster_timeout = 0;
+		}
+		jQuery.post( ajaxurl, data, function( response ) {
 
-            //Setup Load Log
-            var load_panel = $('.cmb-repeatable-grouping[data-iterator="' + data.index + '"]').find('.cmb-type-mashups-load-panel');
-            load_log = load_panel.find('.mashup-load-status > ol');
-            load_log.empty();
+			//Setup Load Log
+			var load_panel = $( '.cmb-repeatable-grouping[data-iterator="' + data.index + '"]' ).find( '.cmb-type-mashups-load-panel' );
+			load_log = load_panel.find( '.mashup-load-status > ol' );
+			load_log.empty();
 
-            //Sanity check
-            if (typeof response.error !== 'undefined') {
-                load_log.html('<li class="gmb-error">' + response.error + '</li>');
-                ajax_spinner.hide(); //hide spinner
-                return false; //bounce
-            }
+			//Sanity check
+			if ( typeof response.error !== 'undefined' ) {
+				load_log.html( '<li class="gmb-error">' + response.error + '</li>' );
+				ajax_spinner.hide(); //hide spinner
+				return false; //bounce
+			}
 
-            //First clear markers
-            app.clear_mashup_markers(data.index);
-            //Then create new index for this array
-            markers[data.index] = [];
-            featured_img = $('#gmb_mashup_group_' + data.index + '_featured_img1').prop('checked');
+			//First clear markers
+			app.clear_mashup_markers( data.index );
+			//Then create new index for this array
+			markers[ data.index ] = [];
+			featured_img = $( '#gmb_mashup_group_' + data.index + '_featured_img1' ).prop( 'checked' );
 
-            //Loop through marker data
-            $.each(response, function (index, value) {
-                app.set_mashup_marker(data.index, value);
-            });
+			//Loop through marker data
+			var gmb_marker_loop = 0;
+			var cluster_loop = 0;
+			$.each( response, function( index, value ) {
+				app.set_mashup_marker( data.index, value, gmb_marker_loop, gmb_marker_loop );
+				gmb_marker_loop = gmb_marker_loop + 1;
+				cluster_loop = gmb_marker_loop * gmb_cluster_timeout;
+			} );
 
-            if (cluster_markers_admin === true) {
-                var markerCluster = new MarkerClusterer(map, markers[data.index]);
-            }
+			if ( cluster_markers_admin === true ) {
+				setTimeout( function() {
+					var markerCluster = new MarkerClusterer( map, markers[ data.index ] );
+				}, cluster_loop + 500 );
+			}
 
-            //Set mashup as configured
-            load_panel.find('#mashup_configured').val(true); //hidden field
-            load_panel.find('button').removeClass('button-primary').attr('disabled', 'disabled').text(gmb_mashup.i18n.mashup_configured); //button
-            ajax_spinner.hide(); //hide spinner
+			//Set mashup as configured
+			load_panel.find( '#mashup_configured' ).val( true ); //hidden field
+			load_panel.find( 'button' ).removeClass( 'button-primary' ).attr( 'disabled', 'disabled' ).text( gmb_mashup.i18n.mashup_configured ); //button
+			ajax_spinner.hide(); //hide spinner
 
-        }, 'json');
+		}, 'json' );
 
-    };
+	};
 
 	/**
 	 * Set Mashup Marker
@@ -322,8 +334,7 @@ var gmb_mashup;
 	 * @param marker_data
 	 * @param loop_index
 	 */
-	app.set_mashup_marker = function( mashup_index, marker_data, loop_index ) {
-
+	app.set_mashup_marker = function( mashup_index, marker_data, loop_index, animation_marker_loop ) {
 		title = (typeof marker_data.title !== 'undefined' ? marker_data.title : '');
 		address = (typeof marker_data.address !== 'undefined' ? marker_data.address : '');
 		lat = (typeof marker_data.latitude !== 'undefined' ? marker_data.latitude : '');
@@ -365,28 +376,45 @@ var gmb_mashup;
 		// if it's set to "yes", then the image displays, else it doesn't.
 		var featured_img = marker_data[ 'featured_img' ] = $( '#gmb_mashup_group_' + mashup_index + '_featured_img1' ).is( ':checked' );
 
-		// make and place map maker.
-		var marker = new mapIcons.Marker( {
-			map: window.map,
-			position: marker_position,
-			marker_data: marker_data,
-			featured_img: featured_img,
-			icon: marker_icon,
-			map_icon_label: marker_label
-		} );
-
-		//Update status
-		if ( marker ) {
-			var status = '<li class="gmb-marker-status gmb-loaded"><strong>Marker Loaded:</strong> ' + title + ' - Lat: ' + lat + ' Lng: ' + lng + '</liv>';
-			load_log.html( load_log.html() + status );
+		// Check whether animate marker option enabled or not
+		var gmb_marker_animate = '';
+		if ( $( '#gmb_marker_animate1' ).is( ':checked' ) ) {
+			if ( 'DROP' === $( '#gmb_marker_animate_style' ).val() ) {
+				gmb_marker_animate = google.maps.Animation.DROP;
+			} else {
+				gmb_marker_animate = google.maps.Animation.BOUNCE;
+			}
+			var animation_timeout = 500;
+		} else {
+			gmb_marker_animate = 'no';
+			var animation_timeout = 0;
 		}
 
-		//Set click action for marker to open infowindow
-		google.maps.event.addListener( marker, 'click', function() {
-			app.get_infowindow_content( marker );
-		} );
+		// make and place map maker.
+		window.setTimeout( function() {
+			var marker = new mapIcons.Marker( {
+				map: window.map,
+				position: marker_position,
+				marker_data: marker_data,
+				featured_img: featured_img,
+				icon: marker_icon,
+				map_icon_label: marker_label,
+				animation: gmb_marker_animate,
+			} );
+			//Update status
+			if ( marker ) {
+				var status = '<li class="gmb-marker-status gmb-loaded"><strong>Marker Loaded:</strong> ' + title + ' - Lat: ' + lat + ' Lng: ' + lng + '</liv>';
+				load_log.html( load_log.html() + status );
+			}
 
-		markers[ mashup_index ].push( marker ); //Add to markers array
+			//Set click action for marker to open infowindow
+			google.maps.event.addListener( marker, 'click', function() {
+				app.get_infowindow_content( marker );
+			} );
+			markers[ mashup_index ].push( marker ); //Add to markers array
+			setTimeout( function() { marker.setAnimation( null ); }, 500 );
+
+		}, animation_marker_loop * animation_timeout );
 
 	};
 

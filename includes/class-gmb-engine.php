@@ -57,9 +57,10 @@ class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 		$post     = get_post( $atts['id'] );
 		$all_meta = get_post_custom( $atts['id'] );
 
-		$visual_info = maybe_unserialize( $all_meta['gmb_width_height'][0] );
-		$lat_lng     = maybe_unserialize( $all_meta['gmb_lat_lng'][0] );
-
+		$visual_info        = maybe_unserialize( $all_meta['gmb_width_height'][0] );
+		$lat_lng            = maybe_unserialize( $all_meta['gmb_lat_lng'][0] );
+		$gmb_marker_animate = isset( $all_meta['gmb_marker_animate'][0] ) ? maybe_unserialize( $all_meta['gmb_marker_animate'][0] ) : 'no';
+		$gmb_marker_animate_style = isset( $all_meta['gmb_marker_animate_style'][0] ) ? maybe_unserialize( $all_meta['gmb_marker_animate_style'][0] ) : 'no';
 		//Put markers into an array for JS usage
 		$map_marker_array   = array();
 		$markers_repeatable = isset( $all_meta['gmb_markers_group'][0] ) ? maybe_unserialize( $all_meta['gmb_markers_group'][0] ) : '';
@@ -82,7 +83,7 @@ class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 				}
 			}
 		}
-		$text_directions  = isset( $all_meta['gmb_text_directions'][0] ) ? maybe_unserialize( $all_meta['gmb_text_directions'][0] ) : 'none';
+		$text_directions = isset( $all_meta['gmb_text_directions'][0] ) ? maybe_unserialize( $all_meta['gmb_text_directions'][0] ) : 'none';
 
 		//Assemble map marker array.
 		if ( is_array( $markers_repeatable ) ) {
@@ -96,9 +97,9 @@ class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 		//@see: http://benjaminrojas.net/using-wp_localize_script-dynamically/
 		$localized_data = apply_filters( 'gmb_localized_data', array(
 			$post->ID => array(
-				'id'                  => $atts['id'],
-				'ajax_url'            => admin_url( 'admin-ajax.php' ),
-				'map_params'          => array(
+				'id'                   => $atts['id'],
+				'ajax_url'             => admin_url( 'admin-ajax.php' ),
+				'map_params'           => array(
 					'title'          => $post->post_title,
 					'width'          => $visual_info['width'],
 					'height'         => $visual_info['height'],
@@ -107,7 +108,7 @@ class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 					'zoom'           => ! empty( $all_meta['gmb_zoom'][0] ) ? $all_meta['gmb_zoom'][0] : '15',
 					'default_marker' => apply_filters( 'gmb_default_marker', GMB_PLUGIN_URL . 'assets/img/spotlight-poi.png' ),
 				),
-				'map_controls'        => array(
+				'map_controls'         => array(
 					'zoom_control'      => ! empty( $all_meta['gmb_zoom_control'][0] ) ? strtoupper( $all_meta['gmb_zoom_control'][0] ) : 'STANDARD',
 					'pan_control'       => ! empty( $all_meta['gmb_pan'][0] ) ? $all_meta['gmb_pan'][0] : 'none',
 					'map_type_control'  => ! empty( $all_meta['gmb_map_type_control'][0] ) ? $all_meta['gmb_map_type_control'][0] : 'none',
@@ -116,27 +117,29 @@ class Google_Maps_Builder_Engine extends Google_Maps_Builder_Core_Engine {
 					'wheel_zoom'        => ! empty( $all_meta['gmb_wheel_zoom'][0] ) ? $all_meta['gmb_wheel_zoom'][0] : 'none',
 					'street_view'       => ! empty( $all_meta['gmb_street_view'][0] ) ? $all_meta['gmb_street_view'][0] : 'none',
 				),
-				'map_theme'           => array(
+				'map_theme'            => array(
 					'map_type'       => ! empty( $all_meta['gmb_type'][0] ) ? $all_meta['gmb_type'][0] : 'RoadMap',
 					'map_theme_json' => ! empty( $all_meta['gmb_theme_json'][0] ) ? $all_meta['gmb_theme_json'][0] : 'none',
 				),
-				'marker_centered'     => isset( $marker_centered[0] ) ? $marker_centered[0] : '',
-				'marker_cluster'      => isset( $cluster_option[0] ) ? $cluster_option[0] : '',
-				'plugin_url'          => GMB_PLUGIN_URL,
-				'site_name'           => get_bloginfo( 'name' ),
-				'site_url'            => get_bloginfo( 'url' ),
-				'mashup_markers'      => $mashup_marker_array,
-				'map_markers'         => $map_marker_array,
-				'destination_markers' => $destination_markers,
-				'text_directions'     => $text_directions,
-				'layers'              => ! empty( $all_meta['gmb_layers'][0] ) ? maybe_unserialize( $all_meta['gmb_layers'][0] ) : '',
-				'places_search'       => ! empty( $all_meta['gmb_places_search'][0] ) ? maybe_unserialize( $all_meta['gmb_places_search'][0] ) : '',
-				'places_api'          => array(
+				'marker_centered'      => isset( $marker_centered[0] ) ? $marker_centered[0] : '',
+				'marker_cluster'       => isset( $cluster_option[0] ) ? $cluster_option[0] : '',
+				'plugin_url'           => GMB_PLUGIN_URL,
+				'site_name'            => get_bloginfo( 'name' ),
+				'site_url'             => get_bloginfo( 'url' ),
+				'mashup_markers'       => $mashup_marker_array,
+				'map_markers'          => $map_marker_array,
+				'destination_markers'  => $destination_markers,
+				'text_directions'      => $text_directions,
+				'layers'               => ! empty( $all_meta['gmb_layers'][0] ) ? maybe_unserialize( $all_meta['gmb_layers'][0] ) : '',
+				'places_search'        => ! empty( $all_meta['gmb_places_search'][0] ) ? maybe_unserialize( $all_meta['gmb_places_search'][0] ) : '',
+				'places_api'           => array(
 					'show_places'   => ! empty( $all_meta['gmb_show_places'][0] ) ? $all_meta['gmb_show_places'][0] : 'no',
 					'search_radius' => ! empty( $all_meta['gmb_search_radius'][0] ) ? $all_meta['gmb_search_radius'][0] : '3000',
 					'search_places' => ! empty( $all_meta['gmb_places_search_multicheckbox'][0] ) ? maybe_unserialize( $all_meta['gmb_places_search_multicheckbox'][0] ) : '',
 				),
-				'map_markers_icon'    => ! empty( $all_meta['gmb_map_marker'] ) ? $all_meta['gmb_map_marker'][0] : 'none',
+				'map_markers_icon'     => ! empty( $all_meta['gmb_map_marker'] ) ? $all_meta['gmb_map_marker'][0] : 'none',
+				'map_marker_animation' => ! empty( $gmb_marker_animate ) ? $gmb_marker_animate : 'no',
+				'map_marker_animation_style' => ! empty( $gmb_marker_animate_style ) ? $gmb_marker_animate_style : 'BOUNCE',
 			),
 		) );
 
