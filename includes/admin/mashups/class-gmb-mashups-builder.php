@@ -163,6 +163,19 @@ class Google_Maps_Builder_Mashups_Builder {
 			'type'        => 'radio_inline',
 			'label_cb' =>  gmb_render_maker_field_tooltip( 'render_marker_featured_img_tooltip' ),
 		) );
+
+		$mashup_metabox->add_group_field( $group_field_id, array(
+			'name'        => __( 'Show Excerpts', 'google-maps-builder' ),
+			'id'          => 'show_excerpts',
+			'default'     => 'no',
+			'row_classes' => 'gmb-featured-image-field',
+			'options'     => array(
+				'no'  => 'No',
+				'yes' => 'Yes',
+			),
+			'type'        => 'radio_inline',
+			'label_cb'    => gmb_render_maker_field_tooltip( 'render_marker_show_excerpt_tooltip' ),
+		) );
 		$mashup_metabox->add_group_field( $group_field_id, array(
 			'name' => __( 'Customize Mashup Marker', 'google-maps-builder' ),
 			'id'   => 'set_custom',
