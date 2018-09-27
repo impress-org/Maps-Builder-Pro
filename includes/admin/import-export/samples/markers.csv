@@ -1,5 +1,5 @@
 title,description,place_id,latitude,longitude,marker_img,marker_data,marker_label_data,infowindow_open
-Awesome Marker 1,Cool Description 1,,32.7129,-117.15,http://googlemapsbuilderpro.dev/wp-content/plugins/google-maps-builder/assets/img/maps-icons-collection/number_05.png,,,
+Awesome Marker 1,"<img src=""http://loremflickr.com/320/240/dog"" /><p><strong>This place has dogs</strong></p><p>The description of my cool dog-filled place. You can talk all about this cool place.</p><p><a href=""http://example.com"">A link even works!</a></p>",,32.7129,-117.15,http://googlemapsbuilderpro.dev/wp-content/plugins/google-maps-builder/assets/img/maps-icons-collection/number_05.png,,,
 Awesome Marker 2,Cool Description 2,,32.713,-117.151,http://googlemapsbuilderpro.dev/wp-content/plugins/google-maps-builder/assets/img/maps-icons-collection/number_03.png,,,
 Awesome Marker 3,Cool Description 3,,32.714,-117.152,http://googlemapsbuilderpro.dev/wp-content/plugins/google-maps-builder/assets/img/maps-icons-collection/number_06.png,,,
 Awesome Marker 4,Cool Description 4,,32.715,-117.153,,,,
