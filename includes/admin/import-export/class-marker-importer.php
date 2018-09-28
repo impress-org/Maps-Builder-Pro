@@ -463,13 +463,16 @@ class GMB_CSV_Marker_Importer {
 		foreach ( $csv->data as $key => $row ) {
 			$new_row = array();
 			$i       = 0;
+			if ( empty( $row['latitude'] ) || empty( $row['longitude'] ) ) {
+				continue;
+			}
 			foreach ( $row as $column ) {
 				$new_row[ $i ] = $column;
 				$i ++;
 			}
 
 			// Set the metadata for this marker's data
-			$marker_data = array(
+			$marker_data               = array(
 				'title'           => $new_row[ $title_key ],
 				'description'     => $new_row[ $description_key ],
 				'reference'       => $new_row[ $reference_key ],
@@ -496,25 +499,25 @@ class GMB_CSV_Marker_Importer {
 		if ( ! empty( $file_errors ) ) {
 			$file_errors = serialize( $file_errors );
 			set_transient( 'gmb_file_errors', $file_errors );
-			 $response = admin_url() . add_query_arg( array(
+			$response = admin_url() . add_query_arg( array(
 					'tab'   => 'import',
 					'type'  => 'markers',
 					'step'  => '1',
-					'errno' => '3'
-				), $this->page ) ;
-			echo $response ;
+					'errno' => '3',
+				), $this->page );
+			echo $response;
 			exit;
 		}
 
 		//All good, we imported!
 		$response = admin_url() . add_query_arg( array(
-				'tab'   => 'import',
-				'type'  => 'markers',
-				'step'  => '3',
-				'errno' => '0',
-				'total_import' => count($new_markers_array)
+				'tab'          => 'import',
+				'type'         => 'markers',
+				'step'         => '3',
+				'errno'        => '0',
+				'total_import' => count( $new_markers_array ),
 			), $this->page );
-		echo  $response;
+		echo $response;
 		exit;
 	}
 
