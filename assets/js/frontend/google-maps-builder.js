@@ -150,7 +150,9 @@
 			 * @see http://api.jquery.com/on/
 			 */
 			$( document ).trigger( 'gmb.set_mashup_marker', [ marker, map, mashup_index, marker_data, mashup_value, map_data ] );
-			marker_arr.push( marker );
+			if ( typeof marker_arr !== 'undefined' ) {
+				marker_arr.push( marker );
+			}
 			return marker_arr;
 		}, animation_marker_loop * animation_timeout );
 
