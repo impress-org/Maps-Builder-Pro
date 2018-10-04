@@ -529,7 +529,7 @@ class GMB_CSV_Marker_Importer {
 	 * @return int $step on which step doest the import is on.
 	 */
 	public function gmb_get_step_id() {
-		$step    = (int) ( isset( $_GET['step'] ) ? give_clean( $_GET['step'] ) : 0 );
+		$step    = (int) ( isset( $_GET['step'] ) ? absint( $_GET['step'] ) : 0 );
 		$step_id = 1;
 		if ( empty( $step ) || 1 === $step ) {
 			$step_id = 1;
